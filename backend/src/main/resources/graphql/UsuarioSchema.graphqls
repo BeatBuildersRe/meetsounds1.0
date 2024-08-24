@@ -1,0 +1,164 @@
+type Query{
+    findByIdUser(id: String): Usuario
+    findAllUser : [Usuario]
+    findByTextUser(text: String): [Usuario]
+    findByAliasUser(alias: String): Usuario
+    #listarPublicaciones : [Publicacion]
+
+}
+
+type Mutation{
+    #Cambio
+    #Recordar que el nombre del la query o mutation deber ser igual al metodo en el controlador
+    #Los parametros a recibir deben ser iguales a los del controlador
+    #Para devolcer valores, graphql toma tambien los type que estan en otros files.graphqls
+    saveUser(user: userInput): Usuario
+    updateUser(user: userUpdate): Usuario
+    actualizarDescripcion(id: ID!, descripcion: String!): Boolean
+    actualizarContrasena(id: ID!, contrasena : String!) : Boolean
+    actualizarRedes(id: ID!, redes: RedesInput): Boolean
+
+    #Banda
+    #crearBanda(id: ID!, banda: bandaInput): Banda
+    #cambiarNombre(id: ID!, nombre: String): Banda
+    #cambiarDescripcion(id: ID!, descripcion: String): Banda
+    #eliminarBanda(id: ID!): Boolean
+    #nuevoIntegrante(idBanda: ID!, idIntegrante: ID!): Banda
+    #eliminarIntegrante(idBanda: ID!, idIntegrante: ID!): Banda
+
+}
+
+
+type Usuario{
+    #aqui faltan las fechas
+    id : String
+    nombre : String
+    apellido : String
+    alias : String
+    email : String
+    telefono : String
+    edad : Int
+    ubicacion : Ubicacion
+    c_seguidores : Int
+    c_seguidos : Int
+    misInstru : [Instrumento]
+    misBandas : [Banda]
+    descripcion : String
+    redes : Redes
+    contrasena : String
+}
+
+type Redes{
+    instagram : String
+    youtube : String
+    x : String
+    whatsapp : String
+    email : String
+}
+
+type Banda{
+    id : String
+    nombreBanda : String
+    descripcion: String
+    creador : Usuario
+    miembros : [Usuario]
+}
+
+type Ubicacion{
+    pais : Pais
+    estado : Estado
+    departamento : Departamento
+}
+
+type Pais{
+    nombre : String
+}
+
+type Estado{
+    nombre : String
+}
+
+type Departamento{
+    nombre : String
+}
+
+type Instrumento{
+    nombre : String
+    tipo : Tipo
+}
+
+type Tipo{
+    tipo : String
+}
+
+
+input userInput{
+    #Es la informacion escencial
+    nombre : String
+    apellido : String
+    email : String
+    telefono : String
+    edad : Int
+    ubicacion : UbicacionInput
+    #Borrar despues
+    descripcion : String
+    contrasena : String
+    redes: RedesInput
+}
+
+input userUpdate{
+    id : String
+    nombre : String
+    apellido : String
+    alias : String
+    email : String
+    contrasena : String
+    telefono : String
+    edad : Int
+    ubicacion : UbicacionInput
+    c_seguidores : Int
+    c_seguidos : Int
+    misInstru : [InstrumentoInput]
+    misBandas : [BandaInput]
+    descripcion : String
+    redes : RedesInput
+}
+
+input BandaInput{
+    id : String
+}
+
+input UbicacionInput{
+    pais : PaisInput
+    estado : EstadoInput
+    departamento : DepartamentoInput
+}
+
+input PaisInput{
+    nombre : String
+}
+
+input EstadoInput{
+    nombre : String
+}
+
+input DepartamentoInput{
+    nombre : String
+}
+
+input RedesInput{
+    instagram : String
+    youtube : String
+    x : String
+    whatsapp : String
+    email : String
+}
+
+input InstrumentoInput{
+    nombre : String
+    tipo : TipoInput
+}
+
+input TipoInput{
+    tipo : String
+}
