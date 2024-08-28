@@ -15,8 +15,8 @@ MeetSounds es una red social diseñada para conectar a personas apasionadas por 
 - **Backend**: Spring Boot
 - **Frontend**: React, Vite
 - **Base de Datos**: MongoDB
-- **Autenticación**: JWT (JSON Web Tokens)
-- **Despliegue**: Docker
+- **Autenticación**: JWT (JSON Web Tokens). POSTERGADO
+- **Despliegue**: A definir
 
 ## Instalación
 
@@ -46,13 +46,13 @@ MeetSounds es una red social diseñada para conectar a personas apasionadas por 
 
 ## Contribuir
 
-¡Las contribuciones son bienvenidas! Por favor, sigue estos pasos para contribuir:
+¡Las contribuciones son bienvenidas! Por favor, sigAN estos pasos para contribuir:
 
-1. Haz un fork del proyecto.
-2. Crea una nueva rama (`git checkout -b feature/nueva-caracteristica`).
-3. Realiza tus cambios y haz commit (`git commit -m 'Añadir nueva característica'`).
-4. Sube tus cambios (`git push origin feature/nueva-caracteristica`).
-5. Abre un Pull Request.
+1. Hacé un fork del proyecto.
+2. Creá una nueva rama (`git checkout -b feature/nueva-caracteristica`).
+3. Realizá tus cambios y haz commit (`git commit -m 'Añadir nueva característica'`).
+4. Subí tus cambios (`git push origin feature/nueva-caracteristica`).
+5. Abrí un Pull Request.
 
 ## Licencia
 
