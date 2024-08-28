@@ -46,14 +46,10 @@ MeetSounds es una red social diseñada para conectar a personas apasionadas por 
 
 ## Contribuir
 
-¡Las contribuciones son bienvenidas! Por favor, sigAN estos pasos para contribuir:
-
-1. Hacé un fork del proyecto.
-2. Creá una nueva rama (`git checkout -b feature/nueva-caracteristica`).
-3. Realizá tus cambios y haz commit (`git commit -m 'Añadir nueva característica'`).
-4. Subí tus cambios (`git push origin feature/nueva-caracteristica`).
-5. Abrí un Pull Request.
+Para obtener detalles sobre cómo contribuir a este proyecto, consulta [guía de contribución](CONTRIBUTING.md).
 
 ## Licencia
 
 Este proyecto está bajo la Licencia MIT. Consulta el archivo LICENSE para más detalles.
+
+
