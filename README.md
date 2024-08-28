@@ -44,6 +44,38 @@ MeetSounds es una red social diseñada para conectar a personas apasionadas por 
     npm run dev
     ```
 
+## Estructura de Carpetas
+```markdown
+meetsounds/
+├── backend/
+│   ├── src/
+│   │   ├── main/
+│   │   └── test/
+│   └── pom.xml
+├── frontend/
+│   ├── public/
+│   └── src/
+├── .gitignore
+├── CONTRIBUTING.md
+├── LICENSE
+└── README.md
+```
+### Descripción
+- 📁 backend/: Contiene el código del backend desarrollado con Spring Boot.
+    - 📁 src/main/: Código fuente principal del backend.
+    - 📁 src/test/: Contiene las pruebas unitarias y de integración del backend.
+- 📁 frontend/: Incluye el código del frontend, desarrollado con React.
+    - 📁 public/: Contiene archivos públicos como imágenes y el archivo index.html.
+    - 📁 src/: páginas y componentes de la aplicación.
+- 📄.gitignore: Archivo que especifica qué archivos y directorios deben ser ignorados por Git.
+- 📄CONTRIBUTING.md: Archivo con la guía de contribución del repositorio.
+- 📄LICENSE: Licensia del proyecto.
+- 📄README.md: Archivo de documentación del proyecto.
+
+Para obtener información detallada de la estructura del back end, consulta [README.md](backend/README.md)
+
+Para obtener información detallada de la estructura del front end, consulta [README.md](frontend/README.md)
+
 ## Contribuir
 
 Para obtener detalles sobre cómo contribuir a este proyecto, consulta [guía de contribución](CONTRIBUTING.md).
