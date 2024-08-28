@@ -79,7 +79,7 @@ En caso de que subas los cambios al main
 ```bash
 git push origin main 
 ```
-En caso de que subas los cambios de una rama
+En caso de que subas los cambios de una rama (por ahora solo en main)
 ```bash
 git push origin feature/nueva-caracteristica
 ```
