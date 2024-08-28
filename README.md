@@ -1,5 +1,3 @@
-# meetsounds
-MeetSounds es una red social innovadora diseñada para conectar a personas apasionadas por la música, músicos y bandas. Nuestra plataforma proporciona un espacio único para colaborar, interactuar y crecer dentro del mundo de la música.
 # MeetSounds 🎶
 
 MeetSounds es una red social diseñada para conectar a personas apasionadas por la música, músicos y bandas. La plataforma facilita la colaboración musical, la formación de bandas y la búsqueda de lugares para presentarse en vivo.
