@@ -4,48 +4,58 @@ MeetSounds es una red social innovadora diseñada para conectar a personas apasi
 
 MeetSounds es una red social diseñada para conectar a personas apasionadas por la música, músicos y bandas. La plataforma facilita la colaboración musical, la formación de bandas y la búsqueda de lugares para presentarse en vivo.
 
-## Tabla de Contenidos
-1. [Descripción General](#descripción-general)
-2. [Características](#características)
-3. [Tecnologías Utilizadas](#tecnologías-utilizadas)
-4. [Requisitos Previos](#requisitos-previos)
-5. [Instalación](#instalación)
-6. [Estructura del Proyecto](#estructura-del-proyecto)
-7. [Uso](#uso)
-8. [Contribuciones](#contribuciones)
-9. [Licencia](#licencia)
-10. [Contacto](#contacto)
-
-## Descripción General
-
-MeetSounds es una plataforma donde los músicos pueden registrarse, crear perfiles, buscar y conectarse con otros usuarios, compartir contenido musical, y encontrar lugares para tocar en vivo. Nuestro objetivo es fomentar la colaboración y la interacción dentro de la comunidad musical.
-
 ## Características
 
-- **Perfiles de Usuarios**: Crea y personaliza tu perfil musical.
-- **Búsqueda y Conexión**: Encuentra músicos y bandas con intereses similares.
-- **Formación de Bandas**: Conéctate con otros músicos para formar bandas.
-- **Eventos y Conciertos**: Encuentra lugares para tocar y promociona tus eventos.
-- **Interacción Social**: Comparte contenido musical y colabora en proyectos.
+- **Registro y autenticación de usuarios**: Los usuarios pueden registrarse e iniciar sesión.
+- **Perfiles de usuario**: Cada usuario tiene un perfil donde puede mostrar sus habilidades musicales, intereses y proyectos.
+- **Búsqueda de músicos**: Los usuarios pueden buscar otros músicos por instrumento, género musical, y ubicación.
+- **Mensajería**: Los usuarios pueden enviar mensajes directos para coordinar ensayos y colaboraciones.
+- **Publicaciones y comentarios**: Los usuarios pueden publicar actualizaciones y comentar en las publicaciones de otros.
 
 ## Tecnologías Utilizadas
 
-### Frontend
-
-
-### Backend
-- **Spring Boot**: Para la creación de APIs RESTful.
-- **MongoDB**: Base de datos NoSQL para el almacenamiento de datos.
-- **GraphQL**: Para consultas eficientes y flexibles entre el frontend y el backend.
-
-## Requisitos Previos
-
+- **Backend**: Spring Boot
+- **Frontend**: React, Vite
+- **Base de Datos**: MongoDB
+- **Autenticación**: JWT (JSON Web Tokens)
+- **Despliegue**: Docker
 
 ## Instalación
 
-Sigue estos pasos para configurar el proyecto localmente:
+1. Clona el repositorio:
+    ```bash
+    git clone https://github.com/beatbuilders/meetsounds.git
+    cd meetsounds
+    ```
 
-1. **Clonar el repositorio**
-   ```bash
-   git clone https://github.com/tu-usuario/meetsounds.git
-   cd meetsounds
+2. Configura las variables de entorno:
+    ```bash
+    cp .env.example .env
+    ```
+
+3. Inicia el backend:
+    ```bash
+    cd backend
+    ./mvnw spring-boot:run
+    ```
+
+4. Inicia el frontend:
+    ```bash
+    cd frontend
+    npm install
+    npm run dev
+    ```
+
+## Contribuir
+
+¡Las contribuciones son bienvenidas! Por favor, sigue estos pasos para contribuir:
+
+1. Haz un fork del proyecto.
+2. Crea una nueva rama (`git checkout -b feature/nueva-caracteristica`).
+3. Realiza tus cambios y haz commit (`git commit -m 'Añadir nueva característica'`).
+4. Sube tus cambios (`git push origin feature/nueva-caracteristica`).
+5. Abre un Pull Request.
+
+## Licencia
+
+Este proyecto está bajo la Licencia MIT. Consulta el archivo LICENSE para más detalles.
