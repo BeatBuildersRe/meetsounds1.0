@@ -1,6 +1,18 @@
 # Guía de Contribución
 ¡Gracias por tu interés en contribuir a MeetSounds! La participación es valiosa y ayuda a hacer de MeetSounds una mejor plataforma para todos. A continuación, se ofrece una guía para ayudarte a contribuir de manera efectiva.
 
+## Cómo bajar los cambios
+Cuando trabajes en el proyecto no olvides actualizar tu repositorio local o rama local con git.
+Ve a la carpeta de tu repositorio local y ejecuta GitBash ahí.
+En caso de la rama principal:
+```bash
+git pull origin main
+```
+En caso de una rama:
+```bash
+$ git pull REMOTE-NAME BRANCH-NAME
+```
+
 ## Cómo Contribuir
 ### 1. Fork del Proyecto
 Haz un fork del repositorio desde GitHub.
