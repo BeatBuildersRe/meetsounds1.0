@@ -96,6 +96,7 @@ input userInput{
     #Es la informacion escencial
     nombre : String
     apellido : String
+    alias: String
     email : String
     telefono : String
     edad : Int

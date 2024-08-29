@@ -43,7 +43,7 @@ public class UsuarioService {
         // Generar Alias
         //user.setAlias(String.valueOf(UUID.randomUUID()));
 
-        if (this.buscarPorAlias(user.getAlias()) != null){
+        if (this.buscarPorAlias(user.getAlias()) == null){
             return usuarioRepository.save(user);
         }else {
             throw new IllegalArgumentException("El alias " + user.getAlias() + " ya existe.");
