@@ -18,9 +18,9 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
 
-    @MutationMapping(name = "saveUser")
-    public Usuario saveUser(@Argument Usuario user){
-        return this.usuarioService.saveUser(user);
+    @MutationMapping(name = "guardarUsuario")
+    public Usuario guardarUsuario(@Argument Usuario user){
+        return this.usuarioService.guardarUsuario(user);
     }
 
     @MutationMapping(name = "deleteByIdUser")
@@ -43,9 +43,9 @@ public class UsuarioController {
         return this.usuarioService.findAllUser();
     }
 
-    @QueryMapping(name = "findByAliasUser")
-    public Usuario findByAliasUser(@Argument String alias){
-        return this.usuarioService.findByAliasUser(alias);
+    @QueryMapping(name = "buscarPorAlias")
+    public Usuario buscarPorAlias(@Argument String alias){
+        return this.usuarioService.buscarPorAlias(alias);
     }
 
     @QueryMapping(name = "findByTextUser") // Busqueda por nombre o apellido

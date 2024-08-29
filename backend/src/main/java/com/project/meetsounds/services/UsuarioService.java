@@ -26,7 +26,10 @@ public class UsuarioService {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    public Usuario saveUser(Usuario user) {
+    public Usuario guardarUsuario(Usuario user) {
+
+        user.setC_seguidores(0);
+        user.setC_seguidos(0);
 
         //Generar Fecha
         LocalDate fechaActual = LocalDate.now();
@@ -38,8 +41,13 @@ public class UsuarioService {
         //Encriptar contraseña
 
         // Generar Alias
-        user.setAlias(String.valueOf(UUID.randomUUID()));
-        return this.usuarioRepository.save(user);
+        //user.setAlias(String.valueOf(UUID.randomUUID()));
+
+        if (this.buscarPorAlias(user.getAlias()) != null){
+            return usuarioRepository.save(user);
+        }else {
+            throw new IllegalArgumentException("El alias " + user.getAlias() + " ya existe.");
+        }
     }
 
     public Optional<Usuario> findByIdUser(String id) {
@@ -47,9 +55,9 @@ public class UsuarioService {
     }
 
     public List<Usuario> findAllUser() {
-        List<Usuario> users = this.usuarioRepository.findAll();
-        users.forEach(user -> System.out.println(user.getNombre()));
-        return users;
+        //List<Usuario> users = this.usuarioRepository.findAll();
+        //users.forEach(user -> System.out.println(user.getNombre()));
+        return usuarioRepository.findAll();
     }
 
     public List<Usuario> findByText(String text) {
@@ -63,7 +71,7 @@ public class UsuarioService {
         this.deleteByIdUser(id);
     }
 
-    public Usuario findByAliasUser(String alias) {
+    public Usuario buscarPorAlias(String alias) {
         return this.usuarioRepository.findByAlias(alias);
     }
 

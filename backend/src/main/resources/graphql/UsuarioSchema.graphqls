@@ -2,7 +2,7 @@ type Query{
     findByIdUser(id: String): Usuario
     findAllUser : [Usuario]
     findByTextUser(text: String): [Usuario]
-    findByAliasUser(alias: String): Usuario
+    buscarPorAlias(alias: String): Usuario
     #listarPublicaciones : [Publicacion]
 
 }
@@ -12,7 +12,7 @@ type Mutation{
     #Recordar que el nombre del la query o mutation deber ser igual al metodo en el controlador
     #Los parametros a recibir deben ser iguales a los del controlador
     #Para devolcer valores, graphql toma tambien los type que estan en otros files.graphqls
-    saveUser(user: userInput): Usuario
+    guardarUsuario(user: userInput): Usuario
     updateUser(user: userUpdate): Usuario
     actualizarDescripcion(id: ID!, descripcion: String!): Boolean
     actualizarContrasena(id: ID!, contrasena : String!) : Boolean

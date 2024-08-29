@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "Usuarios")
+@Document(collection = "user")
 public class Usuario {
     private String id;
     private String fotoUrl;
