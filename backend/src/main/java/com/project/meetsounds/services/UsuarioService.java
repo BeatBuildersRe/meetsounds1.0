@@ -30,52 +30,50 @@ public class UsuarioService {
 
         user.setC_seguidores(0);
         user.setC_seguidos(0);
-
         //Generar Fecha
         LocalDate fechaActual = LocalDate.now();
         int year = fechaActual.getYear();
         int mes = fechaActual.getMonthValue();
         int dia = fechaActual.getDayOfMonth();
         user.setDate(LocalDate.of(year, mes, dia));
-
         //Encriptar contraseña
 
         // Generar Alias
         //user.setAlias(String.valueOf(UUID.randomUUID()));
 
-        if (this.buscarPorAlias(user.getAlias()) == null){
+        if (this.buscarPorAlias(user.getAlias()) == null){ //Si no se encuentra ningun usuario con el mismo alias, el usuario se crea.
             return usuarioRepository.save(user);
         }else {
             throw new IllegalArgumentException("El alias " + user.getAlias() + " ya existe.");
         }
     }
 
-    public Optional<Usuario> findByIdUser(String id) {
+    public Optional<Usuario> buscarUsuarioPorId(String id) {
         return this.usuarioRepository.findById(id);
     }
 
-    public List<Usuario> findAllUser() {
+    public List<Usuario> buscarTodosLosUsuarios() {
         //List<Usuario> users = this.usuarioRepository.findAll();
         //users.forEach(user -> System.out.println(user.getNombre()));
         return usuarioRepository.findAll();
     }
 
-    public List<Usuario> findByText(String text) {
+    public List<Usuario> buscarUsuarioPorTexto(String text) {
         List<Usuario> usuarios = new ArrayList<>();
         usuarios.addAll(this.usuarioRepository.findByNombre(text));
         usuarios.addAll(this.usuarioRepository.findByApellido(text));
         return usuarios;
     }
 
-    public void deleteByIdUser(String id) {
-        this.deleteByIdUser(id);
+    public void eliminarPorIdUsuario(String id) {
+        usuarioRepository.deleteById(id);
     }
 
     public Usuario buscarPorAlias(String alias) {
         return this.usuarioRepository.findByAlias(alias);
     }
 
-    public Usuario updateUser(Usuario user) {
+    public Usuario actualizarUsuario(Usuario user) {
         return this.usuarioRepository.save(user);
     }
 

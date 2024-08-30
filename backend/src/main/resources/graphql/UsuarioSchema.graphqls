@@ -1,10 +1,9 @@
 type Query{
-    findByIdUser(id: String): Usuario
-    findAllUser : [Usuario]
-    findByTextUser(text: String): [Usuario]
+    buscarUsuarioPorId(id: String): Usuario
+    buscarTodosLosUsuarios : [Usuario]
+    buscarUsuarioPorTexto(text: String): [Usuario]
     buscarPorAlias(alias: String): Usuario
     #listarPublicaciones : [Publicacion]
-
 }
 
 type Mutation{
@@ -13,10 +12,11 @@ type Mutation{
     #Los parametros a recibir deben ser iguales a los del controlador
     #Para devolcer valores, graphql toma tambien los type que estan en otros files.graphqls
     guardarUsuario(user: userInput): Usuario
-    updateUser(user: userUpdate): Usuario
+    actualizarUsuario(user: IactualizarUsuario): Usuario
     actualizarDescripcion(id: ID!, descripcion: String!): Boolean
     actualizarContrasena(id: ID!, contrasena : String!) : Boolean
     actualizarRedes(id: ID!, redes: RedesInput): Boolean
+    eliminarPorIdUsuario(id: ID!): Boolean
 
     #Banda
     #crearBanda(id: ID!, banda: bandaInput): Banda
@@ -96,7 +96,6 @@ input userInput{
     #Es la informacion escencial
     nombre : String
     apellido : String
-    alias: String
     email : String
     telefono : String
     edad : Int
@@ -107,7 +106,7 @@ input userInput{
     redes: RedesInput
 }
 
-input userUpdate{
+input IactualizarUsuario{
     id : String
     nombre : String
     apellido : String

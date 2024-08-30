@@ -23,24 +23,24 @@ public class UsuarioController {
         return this.usuarioService.guardarUsuario(user);
     }
 
-    @MutationMapping(name = "deleteByIdUser")
-    public void deleteByIdUser(@Argument String id){
-        this.usuarioService.deleteByIdUser(id);
+    @MutationMapping(name = "eliminarPorIdUsuario")
+    public void eliminarPorIdUsuario(@Argument String id){
+        this.usuarioService.eliminarPorIdUsuario(id);
     }
 
-    @MutationMapping
-    public Usuario updateUser(@Argument Usuario user){
-        return this.usuarioService.updateUser(user);
+    @MutationMapping(name ="actualizarUsuario")
+    public Usuario actualizarUsuario(@Argument Usuario user){
+        return this.usuarioService.actualizarUsuario(user);
     }
 
-    @QueryMapping(name = "findByIdUser")
-    public Optional<Usuario> findByIdUser(@Argument String id){
-        return this.usuarioService.findByIdUser(id);
+    @QueryMapping(name = "buscarUsuarioPorId")
+    public Optional<Usuario> buscarUsuarioPorId(@Argument String id){
+        return this.usuarioService.buscarUsuarioPorId(id);
     }
 
-    @QueryMapping(value = "findAllUser")
-    public List<Usuario> findAllUser(){
-        return this.usuarioService.findAllUser();
+    @QueryMapping(value = "buscarTodosLosUsuarios")
+    public List<Usuario> buscarTodosLosUsuarios(){
+        return this.usuarioService.buscarTodosLosUsuarios();
     }
 
     @QueryMapping(name = "buscarPorAlias")
@@ -48,9 +48,9 @@ public class UsuarioController {
         return this.usuarioService.buscarPorAlias(alias);
     }
 
-    @QueryMapping(name = "findByTextUser") // Busqueda por nombre o apellido
-    public List<Usuario> findByText(@Argument String text){
-        return this.usuarioService.findByText(text);
+    @QueryMapping(name = "buscarUsuarioPorTexto") // Busqueda por nombre o apellido
+    public List<Usuario> buscarUsuarioPorTexto(@Argument String text){
+        return this.usuarioService.buscarUsuarioPorTexto(text);
     }
 
 
