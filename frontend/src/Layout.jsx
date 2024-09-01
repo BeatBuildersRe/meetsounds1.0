@@ -92,6 +92,8 @@ export default function GridTemplateRows() {
             <BuildIcon sx={{ fontSize: 30 }} /><p>Configuracion</p>
           </Item>
         </Link>
+        
+        <Link to="/PerfilUsuario"></Link>
 
         {/* Nuevo enlace para el Login */}
         <Link id="Link"  to="/Login">
