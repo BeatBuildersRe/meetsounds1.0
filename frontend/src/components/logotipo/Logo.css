@@ -1,0 +1,13 @@
+
+.logotipo img {
+    width: 100px;
+    height: 15%;
+}
+.logotipo{
+    margin: 0;
+    padding: 0;
+    margin-bottom: 20px;
+    /* display: flex;
+    justify-content: space-around; */
+    
+}
