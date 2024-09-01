@@ -1,3 +1,4 @@
+import React from 'react'
 import { Routes, Route } from 'react-router-dom';
 import Layout from './Layout';
 import Home from './Pages/Home/Home';
@@ -7,20 +8,12 @@ import Mensajes from './Pages/Mensajes/Mensajes';
 import Bandas from './Pages/Bandas/Bandas';
 import Configuracion from './Pages/Configuracion/Configuracion';
 import Login from './Pages/Login/LoginForm';
-
-
-
-import React from 'react'
-import { Routes, Route } from 'react-router-dom'
-import Layout from './Layout'
-import Home from './Pages/Home/Home'
-import Busqueda from './Pages/Busqueda/Busqueda'
-import Notificaciones from './Pages/Notificaciones/Notificaciones'
-import Mensajes from './Pages/Mensajes/Mensajes'
-import Bandas from './Pages/Bandas/Bandas' 
-import Configuracion from './Pages/Configuracion/Configuracion'
-
 import PerfilUsuario from './Pages/PerfilUsuario/PerfilUsuario'
+
+
+
+
+
 
 
 
@@ -38,9 +31,9 @@ function App () {
           <Route  path="Bandas" element={<Bandas/>}/>
           <Route  path="Configuracion" element={<Configuracion/>}/>
           <Route  path="/PerfilUsuario" element={<PerfilUsuario/>}/>
-          
-          
         </Route>
+        {/* Ruta independiente para el login */}
+      <Route path="/login" element={<Login />} />
       </Routes>      
     </div>
     
