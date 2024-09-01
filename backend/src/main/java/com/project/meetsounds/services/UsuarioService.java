@@ -46,7 +46,7 @@ public class UsuarioService {
         }else {
             throw new IllegalArgumentException("El alias " + user.getAlias() + " ya existe.");
         }
-    }
+    } // Hay que actualizar este metodo de un modo parecido al de actualizarUsuario
 
     public Optional<Usuario> buscarUsuarioPorId(String id) {
         return this.usuarioRepository.findById(id);
@@ -73,8 +73,55 @@ public class UsuarioService {
         return this.usuarioRepository.findByAlias(alias);
     }
 
-    public Usuario actualizarUsuario(Usuario user) {
-        return this.usuarioRepository.save(user);
+    public Usuario actualizarUsuario(String id, Usuario user) {
+
+        Optional<Usuario> userOptional = buscarUsuarioPorId(id);
+        if (userOptional.isPresent()) {
+
+            Usuario usuarioExistente = userOptional.get();
+
+            if (user.getNombre() != null) {
+                if(user.getNombre().matches("^[a-zA-Z]+$")){
+                    usuarioExistente.setNombre(user.getNombre());
+                }else if (user.getNombre().matches("^[a-zA-Z]+$") == false) { /*
+                           El método matches evalúa cadenas según lo que le indiquemos.
+                           En este caso, solo quiero que tenga letras minúsculas y mayúsculas*/
+                    throw new IllegalArgumentException("El nombre solo puede contener letras.");
+                }
+            }
+            if (user.getApellido() != null) {
+                if(user.getApellido().matches("^[a-zA-Z]+$")){
+                    usuarioExistente.setApellido(user.getApellido());
+                }else if (user.getNombre().matches("^[a-zA-Z]+$") == false) {
+                    throw new IllegalArgumentException("El apellido solo puede contener letras.");
+                }
+            }
+            if (user.getAlias() != null) {
+                if(user.getAlias().matches("^[a-zA-Z0-9]+$")){
+
+                }else if (user.getAlias().matches("^[a-zA-Z0-9]+$") == false){
+                    throw new IllegalArgumentException("El alias solo puede contener letras y números.");
+                }
+                usuarioExistente.setAlias(user.getAlias());
+            }
+
+            if(user.getEmail() != null){
+                usuarioExistente.setEmail(user.getEmail());
+            }
+            if (user.getTelefono() != null) {
+                if(user.getTelefono().matches("^[0-9]+$")){
+                    usuarioExistente.setTelefono(user.getTelefono());
+                }else if (user.getTelefono().matches("^[0-9]+$")) {
+                    throw new IllegalArgumentException("El teléfono solo puede contener números.");
+               }
+            }
+            if (user.getUbicacion() != null){
+                usuarioExistente.setUbicacion(user.getUbicacion());
+            }
+            return this.usuarioRepository.save(usuarioExistente);
+        }else{
+            throw new RuntimeException("Usuario no encontrado con el ID: " + id);
+        }
     }
 
     public void actualizarContrasena(String id, String contrasena) {

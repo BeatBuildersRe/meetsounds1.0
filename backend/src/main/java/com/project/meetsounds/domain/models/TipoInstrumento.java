@@ -11,11 +11,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "instrumentos")
-public class Instrumento {
-
+@Document(collection = "tipoInstrumentos")
+public class TipoInstrumento {
     @Id
     private String id;
     private String nombre;
-    private TipoInstrumento tipoInstrumento;
 }

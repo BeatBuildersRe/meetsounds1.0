@@ -29,8 +29,8 @@ public class UsuarioController {
     }
 
     @MutationMapping(name ="actualizarUsuario")
-    public Usuario actualizarUsuario(@Argument Usuario user){
-        return this.usuarioService.actualizarUsuario(user);
+    public Usuario actualizarUsuario(@Argument String id ,@Argument Usuario user){
+        return this.usuarioService.actualizarUsuario(id,user);
     }
 
     @QueryMapping(name = "buscarUsuarioPorId")
@@ -52,7 +52,6 @@ public class UsuarioController {
     public List<Usuario> buscarUsuarioPorTexto(@Argument String text){
         return this.usuarioService.buscarUsuarioPorTexto(text);
     }
-
 
     @MutationMapping
     public void actualizarContrasena(@Argument String id,@Argument String contrasena){

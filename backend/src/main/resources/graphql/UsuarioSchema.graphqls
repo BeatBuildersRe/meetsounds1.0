@@ -3,7 +3,14 @@ type Query{
     buscarTodosLosUsuarios : [Usuario]
     buscarUsuarioPorTexto(text: String): [Usuario]
     buscarPorAlias(alias: String): Usuario
+
     #listarPublicaciones : [Publicacion]
+
+    #Instrumentos y TipoInstrumentos
+    buscarTodosLosInstrumentos : [Instrumento]
+    buscarTodosLosTiposInstrumento : [TipoInstrumento]
+    buscarInstrumentosPorTipo(tipo: String) : [Instrumento]
+
 }
 
 type Mutation{
@@ -12,7 +19,7 @@ type Mutation{
     #Los parametros a recibir deben ser iguales a los del controlador
     #Para devolcer valores, graphql toma tambien los type que estan en otros files.graphqls
     guardarUsuario(user: userInput): Usuario
-    actualizarUsuario(user: IactualizarUsuario): Usuario
+    actualizarUsuario(id: ID!, user: IactualizarUsuario): Usuario
     actualizarDescripcion(id: ID!, descripcion: String!): Boolean
     actualizarContrasena(id: ID!, contrasena : String!) : Boolean
     actualizarRedes(id: ID!, redes: RedesInput): Boolean
@@ -26,6 +33,9 @@ type Mutation{
     #nuevoIntegrante(idBanda: ID!, idIntegrante: ID!): Banda
     #eliminarIntegrante(idBanda: ID!, idIntegrante: ID!): Banda
 
+    #Instrumentos y TipoInstrumentos
+    guardarInstrumento(instrumento: InstrumentoInput, tipo:String) : Instrumento
+    guardarTipoInstrumento(tipoInstrumento: TipoInstrumentoInput): TipoInstrumento
 }
 
 
@@ -83,19 +93,21 @@ type Departamento{
 }
 
 type Instrumento{
+    id: String
     nombre : String
-    tipo : Tipo
+    tipoInstrumento : TipoInstrumento
 }
 
-type Tipo{
-    tipo : String
+type TipoInstrumento{
+    id: String
+    nombre : String
 }
-
 
 input userInput{
     #Es la informacion escencial
     nombre : String
     apellido : String
+    alias : String
     email : String
     telefono : String
     edad : Int
@@ -156,9 +168,7 @@ input RedesInput{
 
 input InstrumentoInput{
     nombre : String
-    tipo : TipoInput
 }
-
-input TipoInput{
-    tipo : String
+input TipoInstrumentoInput{
+    nombre : String
 }
