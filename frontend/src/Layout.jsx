@@ -93,12 +93,7 @@ export default function GridTemplateRows() {
           </Item>
         </Link>
         
-        <Link to="/PerfilUsuario"></Link>
-
-        {/* Nuevo enlace para el Login */}
-        <Link id="Link"  to="/Login">
-          <Item id="item_login"><p>Login</p></Item>
-        </Link>
+        
 
       </Box>
 

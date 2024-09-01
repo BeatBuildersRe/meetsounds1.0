@@ -8,7 +8,7 @@ import Mensajes from './Pages/Mensajes/Mensajes';
 import Bandas from './Pages/Bandas/Bandas';
 import Configuracion from './Pages/Configuracion/Configuracion';
 import Login from './Pages/Login/LoginForm';
-import PerfilUsuario from './Pages/PerfilUsuario/PerfilUsuario'
+
 
 
 
@@ -30,7 +30,6 @@ function App () {
           <Route  path="Mensajes" element={<Mensajes/>}/>
           <Route  path="Bandas" element={<Bandas/>}/>
           <Route  path="Configuracion" element={<Configuracion/>}/>
-          <Route  path="/PerfilUsuario" element={<PerfilUsuario/>}/>
         </Route>
         {/* Ruta independiente para el login */}
       <Route path="/login" element={<Login />} />
