@@ -107,7 +107,7 @@ export default function GridTemplateRows() {
           <Item id="item_configuracion"  sx={{color: grey[50], position: 'relative', bottom: '-5em',pb:1 }}><BuildIcon sx={{ fontSize: 30 }} /><p>Configuracion</p></Item>
         </Link>
         
-        
+        <Link to="/PerfilUsuario"></Link>
 
 
       </Box>
