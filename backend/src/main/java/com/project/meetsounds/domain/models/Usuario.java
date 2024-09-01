@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 @Getter
 @Setter
@@ -27,7 +28,7 @@ public class Usuario {
     private Ubicacion ubicacion;
     private int c_seguidores;
     private int c_seguidos;
-    private List<Instrumento> misIntru;
+    private List<Instrumento> misIntru = new ArrayList<>();;
     private List<Banda> misBandas;
     private String descripcion;
     private Redes redes;

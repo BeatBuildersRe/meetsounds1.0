@@ -1,5 +1,6 @@
 package com.project.meetsounds.services;
 
+import com.project.meetsounds.domain.models.Instrumento;
 import com.project.meetsounds.domain.models.Redes;
 import com.project.meetsounds.domain.models.Usuario;
 import com.project.meetsounds.repositories.IUsuarioRepository;
@@ -21,10 +22,10 @@ public class UsuarioService {
 
     @Autowired
     private IUsuarioRepository usuarioRepository;
-
-
     @Autowired
     private MongoTemplate mongoTemplate;
+    @Autowired
+    private InstrumentoService instrumentoService;
 
     public Usuario guardarUsuario(Usuario user) {
 
@@ -53,9 +54,16 @@ public class UsuarioService {
     }
 
     public List<Usuario> buscarTodosLosUsuarios() {
-        //List<Usuario> users = this.usuarioRepository.findAll();
-        //users.forEach(user -> System.out.println(user.getNombre()));
-        return usuarioRepository.findAll();
+        List<Usuario> users = this.usuarioRepository.findAll();
+        for(Usuario usuario : users){
+            System.out.println(usuario.getNombre());
+
+            for(Instrumento instrumento : usuario.getMisIntru()){
+                System.out.println(instrumento.getNombre());
+                System.out.println(instrumento.getTipoInstrumento());
+            }
+        }
+        return users;
     }
 
     public List<Usuario> buscarUsuarioPorTexto(String text) {
@@ -144,5 +152,30 @@ public class UsuarioService {
         Query query = new Query(Criteria.where("_id").is(id));
         Update update = new Update().set("descripcion",descripcion);
         mongoTemplate.updateFirst(query, update, Usuario.class);
+    }
+
+    public Usuario actualizarInstrumentosUsuario(String idInstrumento, String idUsuario){
+        Optional<Usuario> usuarioOptional = this.buscarUsuarioPorId(idUsuario);
+        Usuario usuario = new Usuario();
+        Optional<Instrumento> instrumentoOptional = instrumentoService.buscarInstrumentoPorId(idInstrumento);
+        Instrumento instrumento = new Instrumento();
+        if(usuarioOptional.isPresent()){
+            usuario=usuarioOptional.get();
+        }else {
+            throw new IllegalArgumentException("No existe usuario con la id: "+idUsuario);
+        }
+        if (instrumentoOptional.isPresent()){
+            instrumento=instrumentoOptional.get();
+        }else {
+            throw new IllegalArgumentException("No existe instrumento con la id: " +idInstrumento);
+        }
+        List<Instrumento> instrumentos = usuario.getMisIntru();
+        if (instrumentos == null) {
+            instrumentos = new ArrayList<>();  // Inicializa la lista si es null
+        }
+        //Falta validar si no se repiten los instrumentos.
+        instrumentos.add(instrumento);
+        usuario.setMisIntru(instrumentos);
+        return usuarioRepository.save(usuario);
     }
 }

@@ -7,9 +7,9 @@ type Query{
     #listarPublicaciones : [Publicacion]
 
     #Instrumentos y TipoInstrumentos
-    buscarTodosLosInstrumentos : [Instrumento]
+    buscarTodosLosInstrumentos : [instrumento]
     buscarTodosLosTiposInstrumento : [TipoInstrumento]
-    buscarInstrumentosPorTipo(tipo: String) : [Instrumento]
+    buscarInstrumentosPorTipo(tipo: String) : [instrumento]
 
 }
 
@@ -18,12 +18,14 @@ type Mutation{
     #Recordar que el nombre del la query o mutation deber ser igual al metodo en el controlador
     #Los parametros a recibir deben ser iguales a los del controlador
     #Para devolcer valores, graphql toma tambien los type que estan en otros files.graphqls
+    #Usuario
     guardarUsuario(user: userInput): Usuario
     actualizarUsuario(id: ID!, user: IactualizarUsuario): Usuario
     actualizarDescripcion(id: ID!, descripcion: String!): Boolean
     actualizarContrasena(id: ID!, contrasena : String!) : Boolean
     actualizarRedes(id: ID!, redes: RedesInput): Boolean
     eliminarPorIdUsuario(id: ID!): Boolean
+    actualizarInstrumentosUsuario(idInstrumento: ID!, idUsuario: ID!) : Usuario
 
     #Banda
     #crearBanda(id: ID!, banda: bandaInput): Banda
@@ -34,8 +36,11 @@ type Mutation{
     #eliminarIntegrante(idBanda: ID!, idIntegrante: ID!): Banda
 
     #Instrumentos y TipoInstrumentos
-    guardarInstrumento(instrumento: InstrumentoInput, tipo:String) : Instrumento
+    guardarInstrumento(instrumento: InstrumentoInput, tipo:String) : instrumento
+    eliminarInstrumentoPorId(id: ID!): Boolean
     guardarTipoInstrumento(tipoInstrumento: TipoInstrumentoInput): TipoInstrumento
+    eliminarTipoInstrumentoPorId(id: ID!): Boolean
+
 }
 
 
@@ -51,7 +56,7 @@ type Usuario{
     ubicacion : Ubicacion
     c_seguidores : Int
     c_seguidos : Int
-    misInstru : [Instrumento]
+    misInstru : [instrumento]
     misBandas : [Banda]
     descripcion : String
     redes : Redes
@@ -92,7 +97,7 @@ type Departamento{
     nombre : String
 }
 
-type Instrumento{
+type instrumento{
     id: String
     nombre : String
     tipoInstrumento : TipoInstrumento

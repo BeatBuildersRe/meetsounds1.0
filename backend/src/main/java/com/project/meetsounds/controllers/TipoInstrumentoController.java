@@ -26,4 +26,8 @@ public class TipoInstrumentoController{
         return tipoInstrumentoService.traerTodosLosTiposInstrumento();
     }
 
+    @MutationMapping(name = "eliminarTipoInstrumentoPorId")
+    public void eliminarTipoInstrumentoPorId(@Argument String id){
+        tipoInstrumentoService.eliminarTipoInstrumentoPorId(id);
+    }
 }

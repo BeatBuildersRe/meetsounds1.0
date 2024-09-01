@@ -23,4 +23,9 @@ public class TipoInstrumentoService {
     public TipoInstrumento buscarTipoInstrumentoPorNombre(String nombre){
         return iTipoInstrumentoRepository.findByNombre(nombre);
     }
+
+    public void eliminarTipoInstrumentoPorId(String id){
+        iTipoInstrumentoRepository.deleteById(id);
+    }
+
 }

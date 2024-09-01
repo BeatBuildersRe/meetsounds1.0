@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,5 +33,11 @@ public class InstrumentoService {
         return iInstrumentoRepository.findAll().stream()
                 .filter(instrumento -> instrumento.getTipoInstrumento().getNombre().equals(tipo))
                 .collect(Collectors.toList());
+    }
+    public void eliminarInstrumentoPorId(String id){
+        iInstrumentoRepository.deleteById(id);
+    }
+    public Optional<Instrumento> buscarInstrumentoPorId(String id){
+        return iInstrumentoRepository.findById(id);
     }
 }

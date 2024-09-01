@@ -40,7 +40,7 @@ public class UsuarioController {
 
     @QueryMapping(value = "buscarTodosLosUsuarios")
     public List<Usuario> buscarTodosLosUsuarios(){
-        return this.usuarioService.buscarTodosLosUsuarios();
+        return usuarioService.buscarTodosLosUsuarios();
     }
 
     @QueryMapping(name = "buscarPorAlias")
@@ -66,6 +66,11 @@ public class UsuarioController {
     @MutationMapping
     public void actualizarDescripcion(@Argument String id, @Argument String descripcion){
         this.usuarioService.actualizarDescripcion(id, descripcion);
+    }
+
+    @MutationMapping(name = "actualizarInstrumentosUsuario")
+    public Usuario actualizarInstrumentosUsuario(@Argument String idInstrumento, @Argument String idUsuario){
+        return usuarioService.actualizarInstrumentosUsuario(idInstrumento,idUsuario);
     }
 
 }

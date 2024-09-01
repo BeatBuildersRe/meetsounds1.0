@@ -29,4 +29,8 @@ public class InstrumentoController {
     public List<Instrumento> traerInstrumentosPorTipo(@Argument String tipo){
         return instrumentoService.traerInstrumentosPorTipo(tipo);
     }
+    @MutationMapping(name = "eliminarInstrumentoPorId")
+    public void eliminarInstrumentoPorId(@Argument String id){
+        instrumentoService.eliminarInstrumentoPorId(id);
+    }
 }
