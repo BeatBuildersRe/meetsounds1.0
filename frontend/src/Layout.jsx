@@ -1,108 +1,65 @@
 import React from 'react';
-import { Outlet, Link } from 'react-router-dom';
+import { Route, Routes, Link } from 'react-router-dom';
 import './layout.css';
-import { grey } from '@mui/material/colors';
-import Badge from '@mui/material/Badge';
-import BuildIcon from '@mui/icons-material/Build';
-import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
-import ButtonDesplegable from './components/botones/BotonDesplegable';
-import Buttonprincipal from './components/botones/BotonesPrincipales';
+import Configuracion from './Pages/Configuracion/Configuracion';
+
+import ButtonMenu from './components/botones/BotonesMenu'
 import { CiSearch } from "react-icons/ci";
 import { TiHome } from "react-icons/ti";
 import { GoPeople } from "react-icons/go";
 import { FaFire } from "react-icons/fa";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { LuCalendarHeart } from "react-icons/lu";
+import { IoSettingsSharp } from "react-icons/io5";
+import MeetLogo from './components/logotipo/Logo'
 
-function Item(props) {
-  const { sx, ...other } = props;
+// Componentes de página
+const Messages = () => <div>Esta es la página de mensajes</div>;
+const Settings = () => <div>Esta es la página de configuración</div>;
+
+const Layout = () => {
   return (
-    <Box
-      sx={{
-        width: 'fit-content',
-        bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#fff'),
-        color: (theme) => (theme.palette.mode === 'dark' ? 'grey.900' : 'grey.300'),
-        borderColor: (theme) => theme.palette.mode === 'dark' ? 'grey.800' : 'grey.300',
-        marginTop: 2,
-        marginLeft: 2,
-        background: '#18191a',
-        fontSize: '1.300vw',
-        fontWeight: '700',
-        display: 'flex',
-        alignItems: 'center',
-        ...sx,
-      }}
-      {...other}
-    />
-  );
-}
-
-Item.propTypes = {
-  sx: PropTypes.oneOfType([
-    PropTypes.arrayOf(
-      PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool]),
-    ),
-    PropTypes.func,
-    PropTypes.object,
-  ]),
-};
-
-export default function GridTemplateRows() {
-  return (
-    <div className="Layout_contenedor" style={{ background: '#18191a' }}>
-      
-      <Box id="box" sx={{ display: 'grid', height: '100vh', gridTemplateRows: 'repeat(7, 4rem)' }}>
-      
-        <div className="Div_logo">
-          <img id="logo1" src="/public/Logo5.png" alt="" />
-          <img id="logo2" src="/public/Logo6.png" alt="" />
+    <div className="Layout">
+      {/* Menú a la izquierda */}
+      <div id="left-menu">
+        <div className="meetsound-logo">
+        
         </div>
         
-        <Link id="Link" to="/">
-          <Item id="item_inicio"><Buttonprincipal icon={TiHome} label="Inicio"/></Item>
-        </Link>
+        <div id="box">
         
-        <Link id="Link" to="/Busqueda">
-          <Item id="item_busqueda"><Buttonprincipal icon={CiSearch} label="Buscar"/></Item>
+          <nav>
           
-        </Link>
+            <ul>
+            <MeetLogo/>
+              <li><Link to="/messages"><ButtonMenu icon={TiHome}/><span>Inicio</span></Link></li>
+              <li><Link to="/messages"><ButtonMenu icon={CiSearch}/><span>Buscar</span></Link></li>
+              <li><Link to="/messages"><ButtonMenu icon={GoPeople}/><span>Bandas</span></Link></li>
+              <li><Link to="/messages"><ButtonMenu icon={IoChatbubbleEllipsesOutline}/><span>Mensajes</span></Link></li>
+              <li><Link to="/messages"><ButtonMenu icon={FaFire}/><span>Notificaciones</span></Link></li>
+              <li><Link to="/messages"><ButtonMenu icon={LuCalendarHeart}/><span>Eventos</span></Link></li>
+              <li><Link to="/configuracion"><ButtonMenu icon={IoSettingsSharp}/><span>Configuracion</span></Link></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
 
-        <Link id="Link" to="/Notificaciones">
-          <Item id="item_notificaciones"><Buttonprincipal icon={GoPeople} label="Bandas"/></Item>
-        </Link>
+      {/* Contenido en el centro */}
+      <div id="main-content">
+        <Routes>
+          <Route path="messages" element={<Messages />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="configuracion" element={<Configuracion />} />
+        </Routes>
+      </div>
 
-        <Link id="Link" to="/Mensajes">
-          <Item id="item_mensajes">
-            <Badge badgeContent={4} color="primary">
-            <Buttonprincipal icon={IoChatbubbleEllipsesOutline} label="Mensajes"/>
-            </Badge>
-          </Item>
-        </Link>
-
-        <Link id="Link" className="Link_Bandas" to="/Bandas">
-        <Item id="icon_bandas">
-        <Badge badgeContent={4} color="primary">
-        <Buttonprincipal icon={FaFire } label="Notificaciones"/>
-        </Badge>
-        </Item>
-        </Link>
-
-        <Link id="Link" className="Link_Eventos" to="/Eventos">
-          <Item id="icon_eventos"><Buttonprincipal icon={LuCalendarHeart } label="Eventos"/></Item>
-        </Link>
-
-        <Link id="Link" className="link_configuracion" to="/Configuracion">
-          <Item id="item_configuracion" sx={{ color: grey[50], position: 'relative', bottom: '-5em', pb: 1 }}>
-          <ButtonDesplegable/>
-          </Item>
-        </Link>
-        
-        
-
-      </Box>
-
-      <Outlet />
+      {/* Sección derecha */}
+      <div id="right-section">
+        <p>Sección derecha</p>
+        {/* Contenido adicional o complementario */}
+      </div>
     </div>
   );
-}
+};
+
+export default Layout;

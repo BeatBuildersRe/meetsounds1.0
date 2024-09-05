@@ -26,7 +26,7 @@ export default function ConfigButton() {
     <div>
       <Button
         id="config-button"
-        sx={{ color: grey[50], position: 'relative', bottom: '-5em', pb: 1, }}
+        sx={{ color: grey[50] }}
         onClick={handleClick}
         startIcon={<LiaGripLinesSolid  sx={{ fontSize: 30 }} />}
       >
