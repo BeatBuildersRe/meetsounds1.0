@@ -98,7 +98,7 @@ type Departamento{
 }
 
 type instrumento{
-    id: String
+    id : String
     nombre : String
     tipoInstrumento : TipoInstrumento
 }
