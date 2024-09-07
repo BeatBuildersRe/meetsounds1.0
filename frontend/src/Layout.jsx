@@ -11,7 +11,10 @@ import { FaFire } from "react-icons/fa";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { LuCalendarHeart } from "react-icons/lu";
 import { IoSettingsSharp } from "react-icons/io5";
+import { CiCirclePlus } from "react-icons/ci";
 import MeetLogo from './components/logotipo/Logo'
+import Avatar from './components/avatar/Avatar'
+import ButtonPlus from './components/botones/BotonCrear'
 
 // Componentes de página
 const Messages = () => <div>Esta es la página de mensajes</div>;
@@ -27,21 +30,29 @@ const Layout = () => {
         </div>
         
         <div id="box">
-        
-          <nav>
-          
-            <ul>
-            <MeetLogo/>
-              <li><Link to="/messages"><ButtonMenu icon={TiHome}/><span>Inicio</span></Link></li>
-              <li><Link to="/messages"><ButtonMenu icon={CiSearch}/><span>Buscar</span></Link></li>
-              <li><Link to="/messages"><ButtonMenu icon={GoPeople}/><span>Bandas</span></Link></li>
-              <li><Link to="/messages"><ButtonMenu icon={IoChatbubbleEllipsesOutline}/><span>Mensajes</span></Link></li>
-              <li><Link to="/messages"><ButtonMenu icon={FaFire}/><span>Notificaciones</span></Link></li>
-              <li><Link to="/messages"><ButtonMenu icon={LuCalendarHeart}/><span>Eventos</span></Link></li>
-              <li><Link to="/configuracion"><ButtonMenu icon={IoSettingsSharp}/><span>Configuracion</span></Link></li>
-            </ul>
-          </nav>
-        </div>
+  <div >
+    <nav>
+      <ul>
+        <MeetLogo />
+        <li ><Link to="/home"><ButtonMenu icon={TiHome} /><span>Inicio</span></Link></li>
+        <li id='Buscar'><Link to="/messages"><ButtonMenu icon={CiSearch} /><span>Buscar</span></Link></li>
+        <li><Link to="/messages"><ButtonMenu icon={GoPeople} /><span>Bandas</span></Link></li>
+        <li><Link to="/messages"><ButtonMenu icon={IoChatbubbleEllipsesOutline} /><span>Mensajes</span></Link></li>
+        <li><Link to="/messages"><ButtonMenu icon={FaFire} /><span>Notificaciones</span></Link></li>
+        <li><Link to="/messages"><ButtonMenu icon={LuCalendarHeart} /><span>Eventos</span></Link></li>
+        <li id='Config'><Link to="/configuracion"><ButtonMenu icon={IoSettingsSharp} /><span>Configuración</span></Link></li>
+      </ul>
+    </nav>
+  </div>
+  
+  <div className='BottonCrear'>
+        <ButtonPlus icon={CiCirclePlus} />
+  </div>
+
+  <div className='Pefil'>
+    <Avatar/>
+  </div>
+</div>
       </div>
 
       {/* Contenido en el centro */}

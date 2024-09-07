@@ -5,7 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
 import { grey } from '@mui/material/colors';
 
-import Buttonprincipal from './BotonesPrincipales';
+import Buttonprincipal from './BotonCrear';
 import { LiaGripLinesSolid } from "react-icons/lia";
 import { IoSettingsSharp } from "react-icons/io5";
 

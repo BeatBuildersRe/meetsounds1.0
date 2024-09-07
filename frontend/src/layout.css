@@ -40,11 +40,46 @@
     color: #fff;
     text-decoration: none;
     border-radius: 50px;
+    transition: 0.3s;
 }
 
 #left-menu a:hover {
     background-color: #555;
+    transition: 0.3s;
 }
+
+#box{
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.BottonCrear{
+    margin-top: 30px;
+   }
+.Pefil{
+    margin-top: 80px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Contenido en el centro */
 #main-content {
@@ -69,16 +104,17 @@
     #left-menu a span {
         display: none; /* Oculta el texto en pantallas pequeñas */
     }
-   
+    #box{
+        margin: 0.5rem;
+    }
+    
 }
 @media (max-width: 900px) {
    
     #right-section {
         display: none; /* Mantener oculta la sección derecha */
     }
-    #box{
-        margin: 0.5rem;
-    }
+    
 }
 
 
@@ -106,7 +142,19 @@
     align-items: center;
     }
 
+    .BottonCrear{
+        margin-top: 0;
+       }
+       .Pefil{
+        margin-top: 0;
+    }
+   #box{
+    flex-direction: row; /* Cambia a horizontal */
     
+}
+#Config,#Buscar{
+    display: none;
+}
 
     
 }
