@@ -1,7 +1,6 @@
 import React from 'react';
-import { Route, Routes, Link } from 'react-router-dom';
+import { Route, Routes, Link, Outlet } from 'react-router-dom';
 import './layout.css';
-import Configuracion from './Pages/Configuracion/Configuracion';
 
 import ButtonMenu from './components/botones/BotonesMenu'
 import { CiSearch } from "react-icons/ci";
@@ -26,49 +25,72 @@ const Layout = () => {
       {/* Menú a la izquierda */}
       <div id="left-menu">
         <div className="meetsound-logo">
-        
-        </div>
-        
-        <div id="box">
-  <div >
-    <nav>
-      <ul>
-        <MeetLogo />
-        <li ><Link to="/home"><ButtonMenu icon={TiHome} /><span>Inicio</span></Link></li>
-        <li id='Buscar'><Link to="/messages"><ButtonMenu icon={CiSearch} /><span>Buscar</span></Link></li>
-        <li><Link to="/messages"><ButtonMenu icon={GoPeople} /><span>Bandas</span></Link></li>
-        <li><Link to="/messages"><ButtonMenu icon={IoChatbubbleEllipsesOutline} /><span>Mensajes</span></Link></li>
-        <li><Link to="/messages"><ButtonMenu icon={FaFire} /><span>Notificaciones</span></Link></li>
-        <li><Link to="/messages"><ButtonMenu icon={LuCalendarHeart} /><span>Eventos</span></Link></li>
-        <li id='Config'><Link to="/configuracion"><ButtonMenu icon={IoSettingsSharp} /><span>Configuración</span></Link></li>
-      </ul>
-    </nav>
-  </div>
-  
-  <div className='BottonCrear'>
-        <ButtonPlus icon={CiCirclePlus} />
-  </div>
 
-  <div className='Pefil'>
-    <Avatar/>
-  </div>
-</div>
+        </div>
+
+        <div id="box">
+          <div >
+            <nav>
+              <ul>
+                {/* ---El boton de inicio lleva la ruta "/home", lo que vos tenias
+                      hacia que cuando ingresaras por primera vez a la pagina
+                      si te mostraba el "inicio" por que el inicio usaba la "/"
+                      pero cuando tocabas el boton "inicio" te llevaba a "/home"
+                      donde no esta la pagina
+
+                      basicamente tenias dos rutas "/" y "/home" y solo en una de ella estaba 
+                      la pagina "Home"
+
+                       
+                
+                "--- */}
+                <MeetLogo />
+                <li ><Link to="/"><ButtonMenu icon={TiHome} /><span>Inicio</span></Link></li>
+                <li id='Buscar'><Link to="/busqueda"><ButtonMenu icon={CiSearch} /><span>Buscar</span></Link></li>
+                <  li><Link to="/bandas"><ButtonMenu icon={GoPeople} /><span>Bandas</span></Link></li>
+                <li><Link to="/mensajes"><ButtonMenu icon={IoChatbubbleEllipsesOutline} /><span>Mensajes</span></Link></li>
+                <li><Link to="/notificaciones"><ButtonMenu icon={FaFire} /><span>Notificaciones</span></Link></li>
+                <li><Link to="/eventos"><ButtonMenu icon={LuCalendarHeart} /><span>Eventos</span></Link></li>
+                <li id='Config'><Link to="/configuracion"><ButtonMenu icon={IoSettingsSharp} /><span>Configuración</span></Link></li>
+              </ul>
+            </nav>
+          </div>
+
+
+          
+
+          {/* <div className='BottonCrear'>
+            <ButtonPlus icon={CiCirclePlus} />
+          </div>
+
+          <div className='Pefil'>
+            <Avatar />
+          </div> */}
+        </div>
       </div>
 
+      {/* App.jsx es para manejas las rutas, y Layout es el "menu" que permite 
+          ingresar a las rutas que PERTENECEN al menu.
+          
+          El "menu" no tiene por que o no es recomendado manejar rutas que no le pertenecen :).
+
+      */}
+
       {/* Contenido en el centro */}
-      <div id="main-content">
+      {/* <div id="main-content">
         <Routes>
           <Route path="messages" element={<Messages />} />
           <Route path="settings" element={<Settings />} />
           <Route path="configuracion" element={<Configuracion />} />
         </Routes>
-      </div>
+      </div> */}
 
       {/* Sección derecha */}
-      <div id="right-section">
+      {/* <div id="right-section">
         <p>Sección derecha</p>
-        {/* Contenido adicional o complementario */}
-      </div>
+        {/* Contenido adicional o complementario 
+      </div> */}
+      <Outlet/> {/* ---TE OLVIDASTE ESTO: es para el manejo de rutas "hijas"--- */}
     </div>
   );
 };

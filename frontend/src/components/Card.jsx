@@ -4,14 +4,15 @@ import CardActionArea from '@mui/material/CardActionArea';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import { Link } from 'react-router-dom';
 
-export default function ActionAreaCard({ text, img, descripcion, onClick }) {
+export default function ActionAreaCard({ text, img, descripcion, to}) {
   return (
     <Card 
       sx={{ maxWidth: 150, maxHeight: '165px', borderRadius: '10%', padding: '0', margin: '1%' }}
-      onClick={onClick} // Aquí pasamos la función onClick
+    
     >
-      <CardActionArea>
+      <CardActionArea component={Link} to={to}>
         <CardMedia
           component="img"
           height="100px"
