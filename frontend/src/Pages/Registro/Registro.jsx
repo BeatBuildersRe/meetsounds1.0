@@ -40,7 +40,6 @@ const Registro = () => {
     return errors;
   };
 
-
   return (
     <body id='cuerpo'>
     <form onSubmit={handleSubmit}>
