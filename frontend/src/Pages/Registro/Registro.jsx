@@ -33,7 +33,6 @@ const Registro = () => {
     }
   };
 
-  /*botones*/
   const validateForm = (data) => {
     const errors = {};
     if (!data.email) errors.email = 'El email es requerido';
