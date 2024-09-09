@@ -26,7 +26,7 @@ const LoginForm = () => {
        {/* <SuffleHero/> */}
         
        
-            
+          
             <div className='wrapper'>                
                 <h1>Inicia Sesión
                 </h1>
