@@ -8,7 +8,7 @@ import Mensajes from './Pages/Mensajes/Mensajes';
 import Bandas from './Pages/Bandas/Bandas';
 import Configuracion from './Pages/Configuracion/Configuracion';
 import Login from './Pages/Login/LoginForm';
-
+import Registro from './Pages/Registro/Registro';
 
 
 
@@ -33,7 +33,8 @@ function App () {
         </Route>
         {/* Ruta independiente para el login */}
       <Route path="/login" element={<Login />} />
-      </Routes>      
+      <Route path="/registro" element={<Registro />} />
+      </Routes>
     </div>
     
   )

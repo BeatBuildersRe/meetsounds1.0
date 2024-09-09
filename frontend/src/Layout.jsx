@@ -93,8 +93,11 @@ export default function GridTemplateRows() {
           </Item>
         </Link>
         
+        <Link id="Link" className="Link_Eventos" to="/Registro">
+          <Item id="icon_eventos"><CelebrationIcon sx={{ color: grey[50], fontSize: 30 }} /><p>Eventos</p></Item>
+        </Link>
         
-
+        
       </Box>
 
       <Outlet />
