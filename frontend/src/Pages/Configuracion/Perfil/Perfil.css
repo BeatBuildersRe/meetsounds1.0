@@ -1,127 +1,121 @@
-.contenedor_perfil{
+.ContenedorPerfil2{
     position: absolute;
-    left: 20%;
     width: 55%;
-    
-    
 }
-.informacion_perfil{
-    
-    width: 100%;
-    margin-bottom: 1%;
-    
-}
-.advertencia_perfil{
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    margin: 1%;
-    padding: 1%;
-    background-color: rgba(255, 166, 0, 0.541);
-    #icon{
-        font-size: x-large;
-        color: orange;
-        margin-right: 1%;
-    }
-}
-
-.h2{
+#h2{
     text-align: center;
-    color:rgb(185, 185, 185);
-    background-color: #18191b;
-    width: auto;
-    
+    color: white;
+    background-color: #18191d;
+    box-shadow: 1px 5px 5px rgb(0, 0, 0);
 }
-.p{
-    color: rgb(236, 236, 236);
-    margin: 0.5rem;
-}
-.formulario_imagen{
-    width: 100%;
+.seccion_1{
     margin: 1%;
-    .imagen_de_fondo{
-        
-        width: 100%;
-        background-image: url("./ract.jpg");
-        height: 350px;
-        background-size: cover; /* Ajusta la imagen para cubrir todo el div */
-        background-position: center; /* Centra la imagen horizontal y verticalmente */
+    
+    
+    .advertencia{
+        word-break: break-all;
+        max-width: 100%;
+        padding: 1%;
+        display: flex;
+        align-items: center;
+        background-color: rgb(194, 126, 0);
         border-radius: 10px;
-        max-height:200px;
-        /* .imagen_de_fondo_img{
-            width: 100%;
-            height: 20%;
-            max-height: 200px;
-            border-radius: 10px;
-            
-        } */
-        .imagen_de_perfil_img{
-            position: relative;
-            left: -1rem;
-            top: 6rem;
-            width: 9rem;
+        
+        #p{
+            color: white;
 
         }
-    
+        #icon{
+            
+            min-height: 30px;
+            min-width: 30px;
+            margin-right: 2%;
+            margin-left: 0.5%;
+        }
     }
-
     
 }
-.btn_editar_fondo{
-    display: flex;
-    position: absolute;
-    left: 95%;
-    bottom:  4%;
-    background-color: white;
-    border-radius: 50%;
-    padding: 0.2rem;
-}
-.btn_editar_perfil{
-    display:flex;
-    position: absolute;
-    background-color: white;
-    border-radius: 50%;
-    padding: 0.2rem;
-}
-.formulario_inputs{
+.seccion_2{
+    position: relative;
     margin: 1%;
-    .textfiel{
-        margin-right: 2%;
-        margin-bottom: 2%;
-        color: white;
+    #img_fondo{
+        width: 100%;
+        max-height: 250px;
+        border-radius: 10px;
+    }
+    #img_perfil{
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        max-width: 150px;
+    }
+    .icon1{
+        position: absolute;
+        left: 10%;
+    }
+    .icon2{
+        position: absolute;
+    }
+    .custom-file-upload:nth-of-type(2) { /* boton de editar del perfil */
+        color: rgba(255, 255, 255, 0.568);
+        left: 12%;
+        bottom: 2%;
+        z-index: 1;
+        position: absolute;
+    }
+    .custom-file-upload:nth-of-type(1) { /* boton de editar del fondo */
+        color: rgba(255, 255, 255, 0.555);
+        
+        z-index: 1;
+        position: absolute;
     }
 }
-.formulario{
-    .NombreyApellido{
-        display: flex;
+.seccion_3{
+    
+    margin: 1%;
+   .NombreyApellido{
+    display: flex;
+
+   }
+   .textfiel{
+    margin-right: 2%;
+    margin-bottom: 2%;
+    align-items: center;
+
+    #select_edad{
+        background-color: white;
+        margin-left: 1%;
+        height: 2rem;
+        width:  3rem;
+        color: rgb(0, 0, 0);
+        border-radius: 10px;
+    }
+}
+}
+
+
+/* Responsividad: pantalla media */
+@media (max-width: 1200px) {
+   
+    
+}
+@media (max-width: 900px) {
+   
+    .ContenedorPerfil2{
+        position: absolute;
+        width: auto;
+        border: 0.5px solid rgb(83, 83, 83);
     }
     
 }
-.edad{
-    display: flex;
-    width: fit-content;
-    border: 1px solid white;
-    border-radius: 5px;
-    padding: 2%;
-    color: white;
-    label{
-        padding-right: 8%;
-    }
-    margin-bottom: 1%;
-    select{
-        
-        padding-left: 1%;
-        background: white;
-        border-radius: 10px;
-        border: none;
-        
-    }
 
+
+
+/* Responsividad: pantalla pequeña */
+@media (max-width: 500px) {
+   
+    
 }
-.telefono{
-    display: flex;
-    flex-direction: column;
-    color: white;
-    width: fit-content;
-    margin-bottom: 1%;
-}
+
+
+

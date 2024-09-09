@@ -1,7 +1,7 @@
 import React from 'react'
 import { MuiTelInput } from 'mui-tel-input'
 
-const Formulario_telefono = () => {
+const Formulario_telefono = ({placeholder, errors}) => {
   const [value, setValue] = React.useState('')
 
   const handleChange = (newValue) => {
@@ -9,6 +9,7 @@ const Formulario_telefono = () => {
   }
 
   return <MuiTelInput sx={{
+                          
                           '& .MuiOutlinedInput-root': {
                               color:'white',
                               '& fieldset': {
@@ -18,7 +19,7 @@ const Formulario_telefono = () => {
                           '& .MuiInputLabel-root': {
                               color: 'white', // Cambia 'blue' por el color deseado
                           },
-  }} value={value} onChange={handleChange} />
+  }} color={errors} placeholder={placeholder} label="Telefono" value={value} onChange={handleChange}/>
 }
 
 export default Formulario_telefono;

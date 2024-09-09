@@ -8,6 +8,7 @@
 /* Contenedor principal del Layout */
 .Layout {
     display: flex;
+    position: static;
     height: 100vh;
 }
 
