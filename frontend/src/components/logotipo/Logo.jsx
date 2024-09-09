@@ -5,8 +5,8 @@ import logotipo2 from '../../assets/Logo3.png';
 const Isologo = () => {
   return (
     <div className="logotipo">
-      <img src={logotipo} alt="Logo" />
-      <img src={logotipo2} alt="Logo" />
+      <img id='dibujo' src={logotipo} alt="Logo" />
+      <img id='texto' src={logotipo2} alt="Logo" />
     </div>
   );
 };

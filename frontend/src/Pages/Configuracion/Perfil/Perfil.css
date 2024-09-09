@@ -1,0 +1,215 @@
+.ContenedorPerfil2{
+    position: absolute;
+    width: 55%;
+    background-color: #18191a;
+}
+#h2{
+    text-align: center;
+    color: white;
+    background-color: #18191d;
+    box-shadow: 1px 5px 5px rgb(0, 0, 0);
+}
+.seccion_1{
+    margin: 1%;
+    
+    
+    .advertencia{
+        word-break: break-all;
+        max-width: 100%;
+        padding: 1%;
+        display: flex;
+        align-items: center;
+        background-color: rgb(194, 126, 0);
+        border-radius: 10px;
+        
+        #p{
+            color: white;
+
+        }
+        #icon{
+            
+            min-height: 30px;
+            min-width: 30px;
+            margin-right: 2%;
+            margin-left: 0.5%;
+        }
+    }
+    
+}
+.seccion_2{
+    position: relative;
+    margin: 1%;
+    #img_fondo{
+        width: 100%;
+        max-height: 250px;
+        border-radius: 10px;
+    }
+    #img_perfil{
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        max-width: 150px;
+    }
+    .icon1{
+        position: absolute;
+        left: 10%;
+    }
+    .icon2{
+        position: absolute;
+    }
+    .custom-file-upload:nth-of-type(2) { /* boton de editar del perfil */
+        color: rgba(255, 255, 255, 0.568);
+        left: 12%;
+        bottom: 2%;
+        z-index: 1;
+        position: absolute;
+    }
+    .custom-file-upload:nth-of-type(1) { /* boton de editar del fondo */
+        color: rgba(255, 255, 255, 0.555);
+        
+        z-index: 1;
+        position: absolute;
+    }
+}
+.seccion_3{
+    margin: 1%;
+    margin-bottom: 2%;
+    color: white;
+    .descripcion{
+        background-color: #27292e;
+        padding: 2%;
+        border-radius: 10px;
+    }
+    #interes_musical{
+        word-wrap: break-word;
+        color: white;
+        border: none;
+        background: none;
+        width: 100%;
+        height: 4rem;
+        resize: none;
+    }  
+}
+.seccion_4{
+    margin: 1%;
+    margin-bottom: 2%;
+    color: white;
+    .social_media{
+        
+        background-color: #27292e;
+        padding: 2%;
+        border-radius: 10px;
+        .inputs_social{
+            display: flex;
+            flex-wrap: wrap;
+            flex: 1;
+            .social{
+                display: flex;
+                align-items: center;
+                margin: 1%;
+                #input_social{
+                    background: none;
+                    border: none;
+                    border-bottom: 1px solid white;
+                    margin: 1%;
+                    color: rgb(148, 148, 148);
+                }
+                #input-with-icon-textfield{
+                    color: w;
+                }
+                #input_icon{
+                    font-size: x-large;
+                }
+            }
+        }
+    }
+}
+.seccion_5{
+    margin: 1%;
+    margin-bottom: 2%;
+    color: white;
+    .descripcion{
+        background-color: #27292e;
+        padding: 2%;
+        border-radius: 10px;
+        #interes_musical{
+            word-wrap: break-word;
+            color: white;
+            border: none;
+            background: none;
+            width: 100%;
+            height: 4rem;
+            resize: none;
+        }   
+    }
+}
+.seccion_6{
+    position: relative;
+    .formulario_inputs{
+        display: flex;
+        flex-wrap: wrap;
+        
+    }
+    margin: 1%;
+   .NombreyApellido{
+    display: flex;
+
+   }
+   .textfiel{
+    margin-right: 2%;
+    margin-bottom: 2%;
+    align-items: center;
+    background-color: #18191a;
+    
+
+    #select_edad{
+        background-color: white;
+        margin-left: 1%;
+        height: 2rem;
+        width:  3rem;
+        color: rgb(0, 0, 0);
+        border-radius: 10px;
+    }
+    #submit{
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+}
+}
+#submit{
+    position: absolute;
+    bottom: 0;
+    right:0;
+}
+#submit{
+    position: absolute;
+    bottom: 0;
+    right:0;
+}
+
+/* Responsividad: pantalla media */
+@media (max-width: 1200px) {
+   
+    
+}
+@media (max-width: 900px) {
+   
+    .ContenedorPerfil2{
+        position: absolute;
+        width: auto;
+        border: 0.5px solid rgb(83, 83, 83);
+    }
+    
+}
+
+
+
+/* Responsividad: pantalla pequeña */
+@media (max-width: 500px) {
+   
+    
+}
+
+
+

@@ -16,7 +16,7 @@ const LoginForm = () => {
     
   return (
     
-    <div className="contenedor">
+    <div className="contenedor1">
         
        <div className="contenedor-logo">
        <Meetsounds/>

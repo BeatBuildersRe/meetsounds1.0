@@ -28,7 +28,7 @@ public class Usuario {
     private Ubicacion ubicacion;
     private int c_seguidores;
     private int c_seguidos;
-    private List<Instrumento> misIntru = new ArrayList<>();;
+    private List<Instrumento> misInstru = new ArrayList<>();;
     private List<Banda> misBandas;
     private String descripcion;
     private Redes redes;

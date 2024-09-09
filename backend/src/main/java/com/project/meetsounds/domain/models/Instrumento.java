@@ -13,7 +13,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Document(collection = "instrumentos")
 public class Instrumento {
-
     @Id
     private String id;
     private String nombre;

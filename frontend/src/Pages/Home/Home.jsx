@@ -1,10 +1,10 @@
 
 import React from 'react'
-import App from './App';
-import '../../css/App.css'
+import InicioPublicaciones from './Inicio';
+import '../../css/Home.css'
 const Home = () =>{
     return(   
-        <App/>
+        <InicioPublicaciones/>
     )
 }
 

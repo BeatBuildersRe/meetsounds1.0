@@ -1,92 +1,67 @@
 import React from 'react';
-import { Outlet, Link } from 'react-router-dom';
+import { Route, Routes, Link, Outlet } from 'react-router-dom';
 import './layout.css';
-import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
-import { grey } from '@mui/material/colors';
-import BallotIcon from '@mui/icons-material/Ballot';
-import SearchIcon from '@mui/icons-material/Search';
-import MessageIcon from '@mui/icons-material/Message';
-import Badge from '@mui/material/Badge';
-import CottageIcon from '@mui/icons-material/Cottage';
-import CelebrationIcon from '@mui/icons-material/Celebration';
-import BuildIcon from '@mui/icons-material/Build';
-import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
 
-function Item(props) {
-  const { sx, ...other } = props;
+import ButtonMenu from './components/botones/BotonesMenu'
+import { CiSearch } from "react-icons/ci";
+import { TiHome } from "react-icons/ti";
+import { GoPeople } from "react-icons/go";
+import { FaFire } from "react-icons/fa";
+import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
+import { LuCalendarHeart } from "react-icons/lu";
+import { IoSettingsSharp } from "react-icons/io5";
+import { CiCirclePlus } from "react-icons/ci";
+import MeetLogo from './components/logotipo/Logo'
+import Avatar from './components/avatar/Avatar'
+import ButtonPlus from './components/botones/BotonCrear'
+
+// Componentes de página
+const Messages = () => <div>Esta es la página de mensajes</div>;
+const Settings = () => <div>Esta es la página de configuración</div>;
+
+const Layout = () => {
   return (
-    <Box
-      sx={{
-        width: 'fit-content',
-        bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#fff'),
-        color: (theme) => (theme.palette.mode === 'dark' ? 'grey.900' : 'grey.300'),
-        borderColor: (theme) => theme.palette.mode === 'dark' ? 'grey.800' : 'grey.300',
-        marginTop: 2,
-        marginLeft: 2,
-        background: '#18191a',
-        fontSize: '1.300vw',
-        fontWeight: '700',
-        display: 'flex',
-        alignItems: 'center',
-        ...sx,
-      }}
-      {...other}
-    />
-  );
-}
+    <div className="Layout">
+      {/* Menú a la izquierda */}
+      <div id="left-menu">
+        <div className="meetsound-logo">
 
-Item.propTypes = {
-  sx: PropTypes.oneOfType([
-    PropTypes.arrayOf(
-      PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool]),
-    ),
-    PropTypes.func,
-    PropTypes.object,
-  ]),
-};
-
-export default function GridTemplateRows() {
-  return (
-    <div className="Layout_contenedor" style={{ background: '#18191a' }}>
-      <Box id="box" sx={{ display: 'grid', height: '100vh', gridTemplateRows: 'repeat(7, 4rem)' }}>
-        <div className="Div_logo">
-          <img id="logo1" src="/public/Logo5.png" alt="" />
-          <img id="logo2" src="/public/Logo6.png" alt="" />
         </div>
 
-        <Link id="Link" to="/">
-          <Item id="item_inicio"><CottageIcon sx={{ color: grey[50], fontSize: 30 }} /><p>Inicio</p></Item>
-        </Link>
+        <div id="box">
+          <div >
+            <nav>
+              <ul>
+                {/* ---El boton de inicio lleva la ruta "/home", lo que vos tenias
+                      hacia que cuando ingresaras por primera vez a la pagina
+                      si te mostraba el "inicio" por que el inicio usaba la "/"
+                      pero cuando tocabas el boton "inicio" te llevaba a "/home"
+                      donde no esta la pagina
 
-        <Link id="Link" to="/Busqueda">
-          <Item id="item_busqueda"><SearchIcon sx={{ color: grey[50], fontSize: 30 }} /><p>Busqueda</p></Item>
-        </Link>
+                      basicamente tenias dos rutas "/" y "/home" y solo en una de ella estaba 
+                      la pagina "Home"
 
-        <Link id="Link" to="/Notificaciones">
-          <Item id="item_notificaciones">
-            <Badge badgeContent={1} color="primary">
-              <NotificationsActiveIcon sx={{ color: grey[50], fontSize: 30 }} />
-            </Badge><p>Notificaciones</p>
-          </Item>
-        </Link>
+                       
+                
+                "--- */}
+                <MeetLogo />
+                <li ><Link to="/"><ButtonMenu icon={TiHome} /><span>Inicio</span></Link></li>
+                <li id='Buscar'><Link to="/busqueda"><ButtonMenu icon={CiSearch} /><span>Buscar</span></Link></li>
+                <  li><Link to="/bandas"><ButtonMenu icon={GoPeople} /><span>Bandas</span></Link></li>
+                <li><Link to="/mensajes"><ButtonMenu icon={IoChatbubbleEllipsesOutline} /><span>Mensajes</span></Link></li>
+                <li><Link to="/notificaciones"><ButtonMenu icon={FaFire} /><span>Notificaciones</span></Link></li>
+                <li><Link to="/eventos"><ButtonMenu icon={LuCalendarHeart} /><span>Eventos</span></Link></li>
+                <li id='Config'><Link to="/configuracion"><ButtonMenu icon={IoSettingsSharp} /><span>Configuración</span></Link></li>
+              </ul>
+            </nav>
+          </div>
 
-        <Link id="Link" to="/Mensajes">
-          <Item id="item_mensajes">
-            <Badge badgeContent={4} color="primary">
-              <MessageIcon sx={{ color: grey[50], fontSize: 30 }} />
-            </Badge><p>Mensajes</p>
-          </Item>
-        </Link>
 
-        <Link id="Link" className="Link_Bandas" to="/Bandas">
-          <Item id="icon_bandas"><BallotIcon sx={{ color: grey[50], fontSize: 30 }} /><p>Bandas</p></Item>
-        </Link>
+          
 
-        <Link id="Link" className="Link_Eventos" to="/Eventos">
-          <Item id="icon_eventos"><CelebrationIcon sx={{ color: grey[50], fontSize: 30 }} /><p>Eventos</p></Item>
-        </Link>
-
+          {/* <div className='BottonCrear'>
+            <ButtonPlus icon={CiCirclePlus} />
+          </div>
         <Link id="Link" className="link_configuracion" to="/Configuracion">
           <Item id="item_configuracion" sx={{ color: grey[50], position: 'relative', bottom: '-5em', pb: 1 }}>
             <BuildIcon sx={{ fontSize: 30 }} /><p>Configuracion</p>
@@ -96,11 +71,39 @@ export default function GridTemplateRows() {
         <Link id="Link" className="Link_Eventos" to="/Registro">
           <Item id="icon_eventos"><CelebrationIcon sx={{ color: grey[50], fontSize: 30 }} /><p>Eventos</p></Item>
         </Link>
-        
-        
       </Box>
 
-      <Outlet />
+          <div className='Pefil'>
+            <Avatar />
+          </div> */}
+        </div>
+      </div>
+
+      {/* App.jsx es para manejas las rutas, y Layout es el "menu" que permite 
+          ingresar a las rutas que PERTENECEN al menu.
+          
+          El "menu" no tiene por que o no es recomendado manejar rutas que no le pertenecen :).
+
+
+      */}
+
+      {/* Contenido en el centro */}
+      {/* <div id="main-content">
+        <Routes>
+          <Route path="messages" element={<Messages />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="configuracion" element={<Configuracion />} />
+        </Routes>
+      </div> */}
+
+      {/* Sección derecha */}
+      {/* <div id="right-section">
+        <p>Sección derecha</p>
+        {/* Contenido adicional o complementario 
+      </div> */}
+      <Outlet/> {/* ---TE OLVIDASTE ESTO: es para el manejo de rutas "hijas"--- */}
     </div>
   );
-}
+};
+
+export default Layout;
