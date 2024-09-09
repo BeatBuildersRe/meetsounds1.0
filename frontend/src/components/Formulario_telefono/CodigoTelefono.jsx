@@ -1,25 +1,54 @@
-import React from 'react'
-import { MuiTelInput } from 'mui-tel-input'
+import React, { useState, useEffect } from 'react';
+import { MuiTelInput } from 'mui-tel-input';
+import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
-const Formulario_telefono = ({placeholder, errors}) => {
-  const [value, setValue] = React.useState('')
+const Formulario_telefono = ({ register, name, placeholder, errors }) => {
+  const [value, setValue] = useState('');
+  const [isValid, setIsValid] = useState(true);
 
   const handleChange = (newValue) => {
-    setValue(newValue)
-  }
+    setValue(newValue);
 
-  return <MuiTelInput sx={{
-                          
-                          '& .MuiOutlinedInput-root': {
-                              color:'white',
-                              '& fieldset': {
-                                borderColor: 'white',
-                              },
-                          },
-                          '& .MuiInputLabel-root': {
-                              color: 'white', // Cambia 'blue' por el color deseado
-                          },
-  }} color={errors} placeholder={placeholder} label="Telefono" value={value} onChange={handleChange}/>
-}
+    const phoneNumber = parsePhoneNumberFromString(newValue);
+    if (phoneNumber) {
+      setIsValid(phoneNumber.isValid());
+    } else {
+      setIsValid(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isValid) {
+      console.log('Número de teléfono ingresado:', value);
+    } else {
+      console.log('Número de teléfono inválido');
+    }
+  }, [value, isValid]);
+
+  return (
+    <>
+      <MuiTelInput
+        {...register(name)} // Registra el campo con react-hook-form
+        sx={{
+          '& .MuiOutlinedInput-root': {
+            color: 'white',
+            '& fieldset': {
+              borderColor: isValid ? 'white' : 'red',
+            },
+          },
+          '& .MuiInputLabel-root': {
+            color: 'white',
+          },
+        }}
+        color={errors}
+        placeholder={placeholder}
+        label="Telefono"
+        value={value}
+        onChange={handleChange}
+      />
+  
+    </>
+  );
+};
 
 export default Formulario_telefono;
