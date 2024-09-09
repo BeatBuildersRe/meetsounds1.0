@@ -136,6 +136,7 @@
         bottom: 0; /* Ubica el menú en la parte inferior de la pantalla */
         top: unset; /* Elimina la posición top */
         left: unset; /* Elimina la posición left */
+        z-index: 999;
     }
     #box nav ul{
     display: flex;
@@ -153,9 +154,9 @@
     flex-direction: row; /* Cambia a horizontal */
     
 }
-#Config,#Buscar{
+/* #Config,#Buscar{
     display: none;
-}
+} */
 
     
 }

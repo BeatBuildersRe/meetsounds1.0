@@ -41,9 +41,38 @@
     }
   }
   /* Main styles */
-  bod { 
-    
-    
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.contenedor1 {
+    backdrop-filter: blur(2px);
+    border: 1px solid #222;
+    padding: 10px;
+    border-radius: 25px;
+    margin: 50px;
+    display: flex;
+    flex-direction: column;
     font: 400 16px/1.5 exo, ubuntu, "segoe ui", helvetica, arial, sans-serif;
     text-align: center;
     
@@ -60,40 +89,6 @@
     -moz-animation-timing-function: linear;
     -o-animation-timing-function: linear;
     animation-timing-function: linear;
-  }
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.contenedor {
-    backdrop-filter: blur(2px);
-    border: 1px solid #222;
-    padding: 10px;
-    border-radius: 25px;
-    margin: 50px;
-    display: flex;
-    flex-direction: column;
 }
 
 .contenedor-logo {
