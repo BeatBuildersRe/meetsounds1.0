@@ -33,14 +33,14 @@ const Formulario_telefono = ({ register, name, placeholder, errors }) => {
           '& .MuiOutlinedInput-root': {
             color: 'white',
             '& fieldset': {
-              borderColor: isValid ? 'white' : 'red',
+              borderColor: 'white',
             },
           },
           '& .MuiInputLabel-root': {
             color: 'white',
           },
         }}
-        color={errors}
+        color={!isValid && 'error'}
         placeholder={placeholder}
         label="Telefono"
         value={value}

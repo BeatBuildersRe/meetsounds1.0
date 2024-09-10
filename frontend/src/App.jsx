@@ -33,6 +33,8 @@ function App () {
           <Route  path="Mensajes" element={<Mensajes/>}/>
           <Route  path="Bandas" element={<Bandas/>}/>
           <Route  path="Configuracion" element={<Configuracion/>}/>
+          <Route path="configuracion/perfil" element={<Perfil />} />
+          <Route path="configuracion/seguridad" element={<Seguridad />} />
         </Route>
         {/* Ruta independiente para el login */}
       <Route path="/login" element={<Login />} />
@@ -41,26 +43,5 @@ function App () {
     </div>
     
   )
-
-function App() {
-  return (
-    <Routes>
-      {/* Ruta base para Layout */}
-      <Route path="*" element={<Layout />}>
-        <Route index element={<Home />} /> {/* Ruta predeterminada para "/" */}
-        <Route path="busqueda" element={<Busqueda />} />
-        <Route path="notificaciones" element={<Notificaciones />} />
-        <Route path="mensajes" element={<Mensajes />} />
-        <Route path="bandas" element={<Bandas />} />
-        <Route path="configuracion" element={<Configuracion />} />
-        <Route path="configuracion/perfil" element={<Perfil />} />
-      
-      </Route>
-
-      {/* Ruta independiente para el login */}
-      <Route path="/login" element={<Login />} />
-    </Routes>
-  );
-}
 }
 export default App;
