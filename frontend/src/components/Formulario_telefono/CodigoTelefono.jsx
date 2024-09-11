@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { MuiTelInput } from 'mui-tel-input';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
-
-const Formulario_telefono = ({ register, name, placeholder, errors }) => {
-  const [value, setValue] = useState('');
+const Formulario_telefono = ({ register, name, placeholder, errors, defaultValue }) => {
+  const [value, setValue] = useState(defaultValue || '');
   const [isValid, setIsValid] = useState(true);
 
   const handleChange = (newValue) => {
@@ -28,7 +27,10 @@ const Formulario_telefono = ({ register, name, placeholder, errors }) => {
   return (
     <>
       <MuiTelInput
-        {...register(name)} // Registra el campo con react-hook-form
+        {...register(name, {
+          required: 'El número de teléfono es obligatorio',
+          validate: () => isValid || 'El número de teléfono es inválido',
+        })}
         sx={{
           '& .MuiOutlinedInput-root': {
             color: 'white',
@@ -42,13 +44,13 @@ const Formulario_telefono = ({ register, name, placeholder, errors }) => {
         }}
         color={!isValid && 'error'}
         placeholder={placeholder}
-        label="Telefono"
+        label="Teléfono"
         value={value}
         onChange={handleChange}
+        error={!!errors[name]}
+        helperText={errors[name] ? errors[name].message : ''}
       />
-  
     </>
   );
 };
-
 export default Formulario_telefono;

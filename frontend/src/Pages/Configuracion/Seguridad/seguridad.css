@@ -1,0 +1,87 @@
+.Contenedor-seguridad{
+    background-color: #18191a;
+    width: 55%;
+    padding: 1%;
+    height: 100%;
+}
+.card{
+    background-color: #2b2929;
+    border: 1px solid rgb(70, 65, 65);
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 1%;
+    
+}
+.form-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 2%;
+    label{
+        color: rgb(158, 158, 158);
+    }
+
+    #standard-password-input-1{
+        flex: 1;
+        color: white;
+            
+        
+    }
+    #standard-password-input-2{
+        flex:1;
+        color: white;
+    }
+    #standard-password-input-3{
+        flex:1;
+        color: white;
+    }
+    #standard-password-input-4{
+        flex:1;
+        color: white;
+        min-width: 235px;
+    }
+   
+}
+
+#img_card {
+    max-width: 150px;
+    height: auto;
+    border-radius: 8px;
+    border-radius: 10px;
+}
+
+.buttons{
+    position: relative;
+    display: flex;
+    width: 100%;
+    margin-top: 1%;
+    #btn-1{
+        position: absolute;
+        left: 0;
+    }
+    #btn-2{
+        position: absolute;
+        right: 0;
+    }
+}
+
+
+
+@media (max-width: 768px) {
+    .Contenedor-seguridad{
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    #img_card{
+        max-width:90px;
+        max-height: 90px;
+    }
+    .card{
+        
+        margin-bottom: 3%;
+        
+    }
+}
