@@ -7,7 +7,7 @@ export default function IconButtons({ icon: Icon}) {
     <IconButton 
     sx={{
       background:'Transparent',
-      color:'#f2f2f2',
+      color:'#222222',
       fontSize: '2rem', // Ajusta el tamaño del icono
       transition:'0.3s',
       '&:hover': {

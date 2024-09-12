@@ -1,8 +1,12 @@
 /* Reset */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+}
+body{
+    font-family: "Quicksand", sans-serif;
 }
 
 /* Contenedor principal del Layout */
@@ -18,7 +22,8 @@
     top: 0;
     left: 0;
     height: 100%;
-    background-color: #333;
+    background-color: #e8e8e8;
+    border-right: 1px solid #222;
 }
 
 /* Estilos para los elementos del menú */
@@ -38,14 +43,15 @@
     display: flex;
     align-items: center;
     padding: 5px;
-    color: #fff;
+    color: #222222;
     text-decoration: none;
     border-radius: 50px;
     transition: 0.3s;
 }
 
 #left-menu a:hover {
-    background-color: #555;
+    background-color: #dddddd;
+    
     transition: 0.3s;
 }
 
@@ -137,6 +143,7 @@
         top: unset; /* Elimina la posición top */
         left: unset; /* Elimina la posición left */
         z-index: 999;
+        border-top: 1px solid #222;
     }
     #box nav ul{
     display: flex;
