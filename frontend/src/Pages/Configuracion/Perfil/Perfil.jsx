@@ -4,7 +4,6 @@ import { FiUpload, FiAlertCircle } from "react-icons/fi"; // Iconos
 import TextField from '@mui/material/TextField'; // Material UI
 import Button from '@mui/material/Button'; // Botón de Material UI
 import { useForm, Controller } from "react-hook-form"; // Formulario
-import Formulario_telefono from '../../../components/Formulario_telefono/CodigoTelefono'; // Componente para el teléfono
 import imagen_de_perfil from '../../../../public/perfil_imagen.png'; // Imagen de perfil por defecto
 import imagen_de_fondo from '../../../../public/ract.jpg'; // Imagen de fondo por defecto
 import './Perfil.css'; // Estilos personalizados
@@ -175,23 +174,7 @@ function Perfil() {
                                     hacer con un if(!campo) eso comprobara si la variable esta vacia
                                     o no 
                                 */}
-                                <div className='textfiel'>
-                                    <Controller
-                                        
-                                        name="telefono" // Nombre del campo en el objeto de datos
-                                        control={control}
-                                        render={({ field }) => (
-                                            <Formulario_telefono
-                                                {...field}
-                                                register={register}
-                                                
-                                                name="telefono"
-                                                placeholder="Ingresa tu número de teléfono"
-                                                errors={errors.telefono}
-                                            />
-                                        )}
-                                    />
-                                </div>
+                               
 
                                 {/* Campo de Edad */}
                                 <TextField
