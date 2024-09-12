@@ -1,4 +1,4 @@
-/* * {
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box; 
@@ -15,7 +15,7 @@
   }
   
   
-  form {
+  .cuerpoRegistro {
     width: 600px;
     height: 500px;
     padding: 2rem;
@@ -26,23 +26,23 @@
   }
   
   
-  div {
+  .divCampos {
     margin-bottom: 1rem;
     text-align: center;
   }
   
-  h1 {
+  .titRegistro {
     margin-bottom: 20px;
   }
 
-  label {
+  .nombreCampo {
     display: block;
     font-weight: bold; 
     margin-bottom: 0.5rem; 
   }
   
   
-  input {
+  .formCampo {
     width: 100%;
     padding: 0.75rem;
     border: 1px solid #ddd;
@@ -51,7 +51,7 @@
     transition: border-color 0.3s ease;
   }
   
-  input:focus {
+  .formCampo:focus {
     border-color: #00f7d6;
     outline: none; 
   }
@@ -84,11 +84,10 @@
     color: #fff;
   }
 
-  p {
+  .separador {
     color: #333;
     font-size: 0.9rem;
   }
-  
   
   .apiRegistro {
     display: flex;
@@ -96,4 +95,8 @@
     margin-top: 1rem;
     gap: 20px;
   }
-   */
+  
+  .linkLogin{
+    margin-top: 20px;
+  }
+  
