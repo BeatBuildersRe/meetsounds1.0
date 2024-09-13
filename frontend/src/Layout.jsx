@@ -76,7 +76,8 @@ const Layout = () => {
           
         </div>
         <div className='Perfil'>
-            <Avatar />
+        <Link to="/cuenta"><Avatar /></Link>
+            
           </div>
       </div>
 
