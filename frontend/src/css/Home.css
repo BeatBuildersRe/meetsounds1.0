@@ -32,6 +32,14 @@
     width: 100%;
     
   }
+  
+  #Dark .izquierda {
+
+    background-color: #18191a;
+    
+    
+  }
+
   .izquierda::-webkit-scrollbar {
     display: none;
   }

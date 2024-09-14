@@ -24,7 +24,12 @@ body{
     height: 100%;
     background-color: #e8e8e8;
     border-right: 1px solid #222;
+    color: black;
     
+}
+#Dark #left-menu {    
+    background-color: #2b2c2e;
+    border-right: 1px solid #818181;    
 }
 
 /* Estilos para los elementos del menú */
@@ -48,6 +53,9 @@ body{
     text-decoration: none;
     border-radius: 50px;
     transition: 0.3s;
+}
+#Dark #left-menu a {
+   color: #ffffff;
 }
 
 #left-menu a:hover {
