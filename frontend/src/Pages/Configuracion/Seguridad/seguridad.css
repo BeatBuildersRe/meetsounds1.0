@@ -1,8 +1,9 @@
 .Contenedor-seguridad{
-    background-color: #18191a;
+    background-color: rgb(230, 215, 215);
     width: 55%;
     padding: 1%;
     height: 100%;
+    
 }
 .card{
     background-color: #2b2929;

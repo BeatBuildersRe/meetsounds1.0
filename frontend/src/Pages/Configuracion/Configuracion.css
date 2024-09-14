@@ -6,16 +6,24 @@
 .contenedor-configuraci{
     width: 100%;
     width: 55%;
-    background-color: #18191a;
     padding: 1%;
+}
+#Dark .contenedor-configuraci{
+    color: white;
 }
 .R_Contenedor-Card{
     width: 100%;
     border-radius: 10px;
-    background-color: rgb(13, 14, 14);
     border: 0.5px solid rgb(66, 61, 61);
     margin-bottom: 1%;
     padding: 0;
+    background-color: rgb(180, 180, 180);
+    
+}
+#Dark .R_Contenedor-Card{
+    
+    background-color: rgb(136, 49, 49);
+    
 }
 .R-image-section{
     max-width: 125px;
@@ -32,7 +40,6 @@
         max-width: 70%;
         margin: 1%;
         word-wrap: break-word;
-        color: rgb(182, 175, 175);
     }
 }
 
