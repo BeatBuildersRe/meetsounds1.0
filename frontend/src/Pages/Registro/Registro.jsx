@@ -42,12 +42,12 @@ const Registro = () => {
 
   return (
     <body id='cuerpo'>
-    <form onSubmit={handleSubmit}>
-      
-      <div>
-        <h1>Registrate</h1>
-        <label>Email</label>
-        <input
+    <form class="cuerpoRegistro" onSubmit={handleSubmit}>
+
+      <center><h1 class="titRegistro">Registrate</h1></center>
+      <div class="divCampos">
+        <label class="nombreCampo">Email</label>
+        <input class="formCampo"
           type="email"
           name="email"
           value={formData.email}
@@ -56,9 +56,9 @@ const Registro = () => {
         />
         {errors.email && <p className="error">{errors.email}</p>}
       </div>
-      <div>
-        <label>Contraseña</label>
-        <input
+      <div class="divCampos">
+        <label class="nombreCampo">Contraseña</label>
+        <input class="formCampo"
           type="password"
           name="password"
           value={formData.password}
@@ -70,14 +70,14 @@ const Registro = () => {
       <div class="contenedorRegistro">
         <button class="btnRegistro">Registrate</button>
       </div>
-      <p>o</p>
-      <h3>Regístrate con:</h3>
+      <center><p className='separador'>o</p></center>
+      <center><h3>Regístrate con:</h3></center>
       <div className='apiRegistro'>
           <BotonGoogle icon={FaGoogle}/>
           <BotonGoogle icon={FaSpotify}/>
       </div>
-      <div>
-        <p>¿Ya tienes una cuenta? <a href="/login">Inicia Sesión</a></p>
+      <div class="linkLogin">
+        <center><p class="textLogin">¿Ya tienes una cuenta? <a href="/login">Inicia Sesión</a></p></center>
       </div>
     </form>
     </body>
