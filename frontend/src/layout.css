@@ -12,7 +12,7 @@ body{
 /* Contenedor principal del Layout */
 .Layout {
     display: flex;
-    position: static;
+    
     height: 100vh;
 }
 
@@ -24,6 +24,12 @@ body{
     height: 100%;
     background-color: #e8e8e8;
     border-right: 1px solid #222;
+    color: black;
+    
+}
+#Dark #left-menu {    
+    background-color: #2b2c2e;
+    border-right: 1px solid #818181;    
 }
 
 /* Estilos para los elementos del menú */
@@ -48,6 +54,9 @@ body{
     border-radius: 50px;
     transition: 0.3s;
 }
+#Dark #left-menu a {
+   color: #ffffff;
+}
 
 #left-menu a:hover {
     background-color: #dddddd;
@@ -64,8 +73,9 @@ body{
 .BottonCrear{
     margin-top: 30px;
    }
-.Pefil{
+.Perfil{
     margin-top: 80px;
+    margin-left: 1rem;
 }
 
 
@@ -161,9 +171,9 @@ body{
     flex-direction: row; /* Cambia a horizontal */
     
 }
-/* #Config,#Buscar{
+#Config,#Buscar,.Perfil{
     display: none;
-} */
+}
 
     
 }

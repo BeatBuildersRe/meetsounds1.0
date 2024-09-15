@@ -1,176 +1,109 @@
-:root {
-    --blanco: rgb(255, 255, 255);
-    --gris: rgb(177, 177, 177);
-    --negro_claro: #232425;
+*{
+    padding: 0;
+    margin: 0;
 }
-
-.body {
-    color: var(--blanco);
-    position: absolute;
-    left: 20%;
+.contenedor-cuenta{
     width: 55%;
-}
+    height: 100vh;
+    background-color: #e8e8e8;
 
-.perfil {
+}
+#Dark .contenedor-cuenta{
+    background-color: #18191a;
+}
+.seccion-1{
     position: relative;
-}
-
-.img-fondo {
-    top: 0;
     width: 100%;
-    max-height: 15em;
-}
-
-.img-perfil {
-    width: 15%;
-    height: 30%;
-    border-radius: 50%;
-    position: absolute;
-    left: 1%;
-    bottom: -1rem;
-    border: 3px solid #18191a;
-    
-}
-
-.user-nombre {
-    position: absolute;
-    left: 16.8%;
-    bottom: -0rem;
-    font-size: 1.5rem;
-}
-.user-arrova{
-    position: absolute;
-    left: 15%;
-    bottom: -1.1rem;
-    color: var(--gris);
-    
-}
-
-.boton-menu {
-    position: absolute;
-    left: 95%;
-    top: 2%;
-}
-.boton-span {
-    position: absolute;
-    left: 96%;
-    color: white;
-    font-size: 25px;
-    background: none;
-    border: none;
-}
-.boton-conectar{
-    position: absolute;
-    left: 90%;
-    bottom: 0.5rem;
-    padding: 0.4rem;
-    border-radius: 15px 15px ;
-}
-.icon-seguidores{
-    position: absolute;
-    display: flex;
-    left: 70%;
-    color: red;
-    bottom: -1rem;
-}
-.user-nav {
-    position: relative;
-    width: fit-content;
-    left: 18%;
-
-    ul {
-
+    #img-fondo{
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        max-height: 300px;
+    }
+    #img-perfil{
+        position: absolute;
+        width: 20%;
+        bottom: 0;
+        left: -2%;
+        
+    }
+    #btn-menu{
+        position: absolute;
+        right: 7px;
+        top: 0px;
+        font-size: x-large;
+        cursor: pointer;
+    }
+    #btn-menu2{
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        font-size: x-large;
+        cursor: pointer;
+    }
+    #nombre{
+        position: absolute;
+        bottom:  0.5rem;
+        left: 14%;
+        font-size: large;
+        font-weight: bold;
+        color: white;
+    }
+    #icons{
+        right: 2%;
+        bottom: 0.5rem;
+        position: absolute;
         display: flex;
         flex-direction: row;
-
-
-    }
-
-    li {
-        padding: 0.3em;
-        text-decoration: none;
-        list-style: none;
-    }
-}
-
-.user-info {
-    color: white;
-    margin-top: 2rem;
-    .info {
-        height: auto;
-        padding: 0.5rem;
-        padding-bottom: 1rem;
-        overflow: hidden;
-    }
-
-    .mas-info {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        /* Define tres columnas iguales */
-        gap: 0.5rem;
-        padding: 0.5rem;
-        li{
-            width: fit-content;
-            
+        align-items: center;
+        #icon{
+            font-size: x-large;
+            display: flex;
+            color: white;
         }
-        /* Espacio entre las columnas */
-        ul {
-            list-style: none;
-            /* Elimina los puntos de la lista */
-            padding: 0;
-            /* Elimina el padding por defecto */
-            margin: 0;
-            /* Elimina el margen por defecto */
-            display: contents;
-            /* Hace que el <ul> no afecte el layout */
+        p{
+            font-size: medium;
+            display: flex;
+            margin-right: 3px;
+            color: white;
         }
     }
-    .item1, .item2, .item3, .item4, .item5{
-        grid-column: 1;
-    }
-    .item6, .item10{
-        grid-column: 2;
-        grid-row: 1;
-    }
-    .item7{
-        grid-column: 3;
-        grid-row: 3;
-    }   
-    .item8{
-        grid-column: 3;
-        grid-row: 2;
-    }   
-    .item9{
-        grid-column: 3;
-        grid-row: 4;
-    }   
-    .item10{
-        grid-column: 3;
-        grid-row: 1;
-    }
-    .item11{
-        grid-column: 2;
-        grid-row: 2;
-    }
-    .item12{
-        grid-column: 2;
-        grid-row: 3;
+}
+.seccion-2{
+    margin:1%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+#Dark .seccion-3{
+    #btn-ui{
+        color: rgb(177, 177, 177);
     }
 }
-.boton{
-    display: flex;
+@media (max-width: 768px) {
+    .contenedor-cuenta{
+        width: 100%;
+        height: 100vh;
+    }
+    .seccion-1{
+        #img-perfil{
+            width: 25%;
+            left: -4%;
+        }
+        #nombre{
+            left: 16%;
+        }
+    }
+    }
+@media (max-width: 480px) {
+    .seccion-1{
+        #img-perfil{
+            width: 30%;
+            left: -5%;
+        }
+        #nombre{
+            left: 19%;
+        }
+    }
     
-    width: 100%;
-    border-bottom: 0.5px solid rgba(100, 100, 100, 0.568);
-    border-top: 0.5px solid rgba(100, 100, 100, 0.568);
-    margin-top: 0.5rem;
-}
-.boton-publicacion{
-    
-    border: none;
-    padding: 0.2rem;
-    background: none;
-    color: white;
-    font-family: 'Times New Roman', Times, serif;
-    font-size: large;
 }

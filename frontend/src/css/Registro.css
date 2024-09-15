@@ -1,12 +1,5 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box; 
-  }
-  
-  
   #cuerpo {
-    background: linear-gradient(to top, #fffeff8f, #04ecb2);
+    background: linear-gradient(to top, #e000e08f, #04ecb2);
     font-family: 'Arial', sans-serif; 
     display: flex;
     justify-content: center;
@@ -17,7 +10,8 @@
   
   .cuerpoRegistro {
     width: 600px;
-    height: 500px;
+    height: 600px;
+    margin: 100px auto;
     padding: 2rem;
     border: 2px solid #333; 
     border-radius: 8px;

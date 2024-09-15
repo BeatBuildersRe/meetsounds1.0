@@ -71,12 +71,14 @@ const Layout = () => {
         <Link id="Link" className="Link_Eventos" to="/Registro">
           <Item id="icon_eventos"><CelebrationIcon sx={{ color: grey[50], fontSize: 30 }} /><p>Eventos</p></Item>
         </Link>
-      </Box>
+      </Box> */}
 
-          <div className='Pefil'>
-            <Avatar />
-          </div> */}
+          
         </div>
+        <div className='Perfil'>
+        <Link to="/cuenta"><Avatar /></Link>
+            
+          </div>
       </div>
 
       {/* App.jsx es para manejas las rutas, y Layout es el "menu" que permite 
