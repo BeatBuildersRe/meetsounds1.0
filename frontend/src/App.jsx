@@ -12,6 +12,7 @@ import Seguridad from './Pages/Configuracion/Seguridad/Seguridad';
 import Error_404 from './Pages/Error/Error-404';
 import Login from './Pages/Login/LoginForm';
 import Registro from './Pages/Registro/Registro';
+import Registro2 from './Pages/Registro/Registro2';
 
 
 
@@ -36,9 +37,10 @@ function App () {
           <Route path="configuracion/perfil" element={<Perfil />} />
           <Route path="configuracion/seguridad" element={<Seguridad />} />
         </Route>
-        {/* Ruta independiente para el login */}
+        {/* Ruta independiente para el login y el registro */}
       <Route path="/login" element={<Login />} />
       <Route path="/registro" element={<Registro />} />
+      <Route path="/registro2" element={<Registro2 />} />
       </Routes>
     </div>
     
