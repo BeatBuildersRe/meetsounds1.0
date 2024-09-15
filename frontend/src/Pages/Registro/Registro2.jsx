@@ -52,7 +52,7 @@ function App() {
       setOtroGenero('');
     }
   };
-
+   
   return (
     <body id="cuerpo2">
       <div className="login-container">
