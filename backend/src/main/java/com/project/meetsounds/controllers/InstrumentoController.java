@@ -10,6 +10,7 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class InstrumentoController {
@@ -32,5 +33,9 @@ public class InstrumentoController {
     @MutationMapping(name = "eliminarInstrumentoPorId")
     public void eliminarInstrumentoPorId(@Argument String id){
         instrumentoService.eliminarInstrumentoPorId(id);
+    }
+    @QueryMapping(name = "buscarInstrumentoPorNombre")
+    public Optional<Instrumento> buscarInstrumentoPorNombre(@Argument String nombre){
+        return instrumentoService.buscarInstrumentoPorNombre(nombre);
     }
 }

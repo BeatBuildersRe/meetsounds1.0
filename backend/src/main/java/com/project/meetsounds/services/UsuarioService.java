@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class UsuarioService {
@@ -56,9 +57,8 @@ public class UsuarioService {
     public List<Usuario> buscarTodosLosUsuarios() {
         List<Usuario> users = this.usuarioRepository.findAll();
         for(Usuario usuario : users){
-            System.out.println(usuario.getNombre());
 
-            for(Instrumento instrumento : usuario.getMisIntru()){
+            for(Instrumento instrumento : usuario.getMisInstru() ){
                 System.out.println(instrumento.getNombre());
                 System.out.println(instrumento.getTipoInstrumento());
             }
@@ -139,7 +139,7 @@ public class UsuarioService {
         mongoTemplate.updateFirst(query2, update2, Usuario.class);
     }
 
-    public Boolean actulizarRedes(String id, Redes redes) {
+    public Boolean actualizarRedes(String id, Redes redes) {
         if(this.usuarioRepository.existsById(id)){
             Query query = new Query(Criteria.where("_id").is(id));
             Update update = new Update().set("redes",redes);
@@ -154,28 +154,41 @@ public class UsuarioService {
         mongoTemplate.updateFirst(query, update, Usuario.class);
     }
 
-    public Usuario actualizarInstrumentosUsuario(String idInstrumento, String idUsuario){
+    public Usuario actualizarInstrumentosUsuario(String idInstrumento, String idUsuario) {
         Optional<Usuario> usuarioOptional = this.buscarUsuarioPorId(idUsuario);
-        Usuario usuario = new Usuario();
         Optional<Instrumento> instrumentoOptional = instrumentoService.buscarInstrumentoPorId(idInstrumento);
-        Instrumento instrumento = new Instrumento();
-        if(usuarioOptional.isPresent()){
-            usuario=usuarioOptional.get();
-        }else {
-            throw new IllegalArgumentException("No existe usuario con la id: "+idUsuario);
+
+        if (!usuarioOptional.isPresent()) {
+            throw new IllegalArgumentException("No existe usuario con la id: " + idUsuario);
         }
-        if (instrumentoOptional.isPresent()){
-            instrumento=instrumentoOptional.get();
-        }else {
-            throw new IllegalArgumentException("No existe instrumento con la id: " +idInstrumento);
+
+        if (!instrumentoOptional.isPresent()) {
+            throw new IllegalArgumentException("No existe instrumento con la id: " + idInstrumento);
         }
-        List<Instrumento> instrumentos = usuario.getMisIntru();
+
+        Usuario usuario = usuarioOptional.get();
+        Instrumento instrumento = instrumentoOptional.get();
+
+        List<Instrumento> instrumentos = usuario.getMisInstru();
         if (instrumentos == null) {
-            instrumentos = new ArrayList<>();  // Inicializa la lista si es null
+            instrumentos = new ArrayList<>();
         }
-        //Falta validar si no se repiten los instrumentos.
-        instrumentos.add(instrumento);
-        usuario.setMisIntru(instrumentos);
+
+        // Verifica si el instrumento ya está en la lista
+        if (instrumentos.stream().noneMatch(instr -> instr.getId().equals(instrumento.getId()))) {
+            instrumentos.add(instrumento);
+        } else {
+            throw new IllegalArgumentException("El instrumento: " + instrumento.getNombre() + " ya está asignado al usuario.");
+        }
+
+        usuario.setMisInstru(instrumentos);
         return usuarioRepository.save(usuario);
+    }
+
+    public List<Usuario> buscarUsuariosPorInstrumentos(List<String> nombresInstrumentos) {
+        return usuarioRepository.findAll().stream()
+                .filter(usuario -> usuario.getMisInstru().stream()
+                        .anyMatch(instr -> nombresInstrumentos.contains(instr.getNombre())))
+                .collect(Collectors.toList());
     }
 }

@@ -60,7 +60,7 @@ public class UsuarioController {
 
     @MutationMapping
     public Boolean actualizarRedes(@Argument String id, @Argument Redes redes){
-        return this.usuarioService.actulizarRedes(id, redes);
+        return this.usuarioService.actualizarRedes(id, redes);
     }
 
     @MutationMapping
@@ -71,6 +71,11 @@ public class UsuarioController {
     @MutationMapping(name = "actualizarInstrumentosUsuario")
     public Usuario actualizarInstrumentosUsuario(@Argument String idInstrumento, @Argument String idUsuario){
         return usuarioService.actualizarInstrumentosUsuario(idInstrumento,idUsuario);
+    }
+
+    @QueryMapping(name = "buscarUsuariosPorInstrumentos")
+    public List<Usuario> buscarUsuariosPorInstrumentos(@Argument List<String> instrumentos) {
+        return usuarioService.buscarUsuariosPorInstrumentos(instrumentos);
     }
 
 }

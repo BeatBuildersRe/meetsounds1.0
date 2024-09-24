@@ -24,11 +24,9 @@ public class InstrumentoService {
         instrumento.setTipoInstrumento(tipoInstrumentoService.buscarTipoInstrumentoPorNombre(tipo));
         return iInstrumentoRepository.save(instrumento);
     }
-
     public List<Instrumento> traerTodosLosInstrumentos(){
         return iInstrumentoRepository.findAll();
     }
-
     public List<Instrumento> traerInstrumentosPorTipo(String tipo){
         return iInstrumentoRepository.findAll().stream()
                 .filter(instrumento -> instrumento.getTipoInstrumento().getNombre().equals(tipo))
@@ -39,5 +37,8 @@ public class InstrumentoService {
     }
     public Optional<Instrumento> buscarInstrumentoPorId(String id){
         return iInstrumentoRepository.findById(id);
+    }
+    public Optional<Instrumento> buscarInstrumentoPorNombre(String nombre){
+        return iInstrumentoRepository.findByNombre(nombre);
     }
 }

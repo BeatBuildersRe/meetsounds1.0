@@ -3,13 +3,14 @@ type Query{
     buscarTodosLosUsuarios : [Usuario]
     buscarUsuarioPorTexto(text: String): [Usuario]
     buscarPorAlias(alias: String): Usuario
-
+    buscarUsuariosPorInstrumentos(instrumentos: [String!]!): [Usuario]
     #listarPublicaciones : [Publicacion]
 
     #Instrumentos y TipoInstrumentos
-    buscarTodosLosInstrumentos : [instrumento]
+    buscarTodosLosInstrumentos : [Instrumento]
     buscarTodosLosTiposInstrumento : [TipoInstrumento]
-    buscarInstrumentosPorTipo(tipo: String) : [instrumento]
+    buscarInstrumentosPorTipo(tipo: String) : [Instrumento]
+    buscarInstrumentoPorNombre(nombre: String) : Instrumento
 
 }
 
@@ -36,7 +37,7 @@ type Mutation{
     #eliminarIntegrante(idBanda: ID!, idIntegrante: ID!): Banda
 
     #Instrumentos y TipoInstrumentos
-    guardarInstrumento(instrumento: InstrumentoInput, tipo:String) : instrumento
+    guardarInstrumento(instrumento: InstrumentoInput, tipo:String) : Instrumento
     eliminarInstrumentoPorId(id: ID!): Boolean
     guardarTipoInstrumento(tipoInstrumento: TipoInstrumentoInput): TipoInstrumento
     eliminarTipoInstrumentoPorId(id: ID!): Boolean
@@ -56,7 +57,7 @@ type Usuario{
     ubicacion : Ubicacion
     c_seguidores : Int
     c_seguidos : Int
-    misInstru : [instrumento]
+    misInstru : [Instrumento]
     misBandas : [Banda]
     descripcion : String
     redes : Redes
@@ -97,7 +98,7 @@ type Departamento{
     nombre : String
 }
 
-type instrumento{
+type Instrumento{
     id : String
     nombre : String
     tipoInstrumento : TipoInstrumento
