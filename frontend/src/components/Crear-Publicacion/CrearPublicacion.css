@@ -1,0 +1,155 @@
+#textarea {
+    width: auto;
+    min-width: 350px;
+    /* ajusta por media query */
+    overflow: 'hidden';
+    resize: unset;
+    min-height: 50px;
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 15px;
+    padding: 7px;
+}
+
+#textarea::-webkit-scrollbar {
+    width: 10px;
+    /* Ancho del scroll */
+}
+
+/* Estilo del track (fondo del scroll) */
+#textarea::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    /* Color del fondo */
+    border-radius: 10px;
+}
+
+/* Estilo del thumb (la parte que se arrastra) */
+#textarea::-webkit-scrollbar-thumb {
+    background-color: #888;
+    /* Color del thumb */
+    border-radius: 10px;
+}
+
+/* Estilo del thumb cuando está siendo activamente arrastrado */
+#textarea::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+    /* Cambia el color cuando el usuario lo arrastra */
+}
+
+.new-publicacion {
+    display: flex;
+    justify-content: center;
+
+
+    .Form-new-publicacion {
+
+        margin-top: 3%;
+        background-color: #18191a;
+        padding: 3%;
+        width: auto;
+        height: fit-content;
+        /* ajustar por media query */
+        border-radius: 15px;
+        position: relative;
+
+        #form {
+            margin-top: 3%;
+            /* ajustar para celular */
+        }
+
+        #btn-subir {
+            position: absolute;
+            top: 2%;
+            right: 2%;
+            margin: 1%;
+        }
+
+        #btn-cancelar {
+            position: absolute;
+            top: 2%;
+            left: 2%;
+            margin: 1%;
+        }
+
+        #imagenes-preview::-webkit-scrollbar {
+            width: 7px;
+        }
+
+        #imagenes-preview::-webkit-scrollbar-track {
+            background: #302f2f;
+            /* Color del fondo */
+            border-radius: 10px;
+        }
+
+        #imagenes-preview {
+
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 350px;
+            overflow-y: auto;
+            max-height: 400px;
+
+            #div-img-preview {
+                position: relative;
+                margin: 1%;
+
+                #img-preview {
+                    border-radius: 10px;
+                }
+
+                #img-delete {
+                    all: unset;
+                    color: red;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    font-size: larger;
+                }
+            }
+
+        }
+
+    }
+}
+
+@media (max-width: 768px) {
+    .new-publicacion {
+        .Form-new-publicacion {
+           
+
+            #form {
+                margin-top: 7%;
+                /* ajustar para celular */
+            }
+
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .new-publicacion {
+        .Form-new-publicacion {
+           
+
+            #form {
+                margin-top: 10%;
+                /* ajustar para celular */
+            }
+
+            #btn-subir {}
+
+            #btn-cancelar {}
+
+            #imagenes-preview::-webkit-scrollbar {}
+
+            #imagenes-preview::-webkit-scrollbar-track {}
+
+            #imagenes-preview {
+                #div-img-preview {
+                    #img-preview {}
+
+                    #img-delete {}
+                }
+            }
+        }
+    }
+}
