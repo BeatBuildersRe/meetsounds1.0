@@ -19,6 +19,7 @@ public class Usuario {
     private String fotoUrl;
     private String nombre;
     private String apellido;
+    private String nombreUsuario;
     private String alias;
     private String contrasena; //A veces no reconoce la Ñ
     private String email;
@@ -28,7 +29,8 @@ public class Usuario {
     private Ubicacion ubicacion;
     private int c_seguidores;
     private int c_seguidos;
-    private List<Instrumento> misInstru = new ArrayList<>();;
+    private List<Instrumento> misInstru;
+    private List<Interes> misIntereses;
     private List<Banda> misBandas;
     private String descripcion;
     private Redes redes;

@@ -1,5 +1,6 @@
 package com.project.meetsounds.controllers;
 
+import com.project.meetsounds.domain.models.Interes;
 import com.project.meetsounds.domain.models.Redes;
 import com.project.meetsounds.domain.models.Usuario;
 import com.project.meetsounds.services.UsuarioService;
@@ -76,6 +77,11 @@ public class UsuarioController {
     @QueryMapping(name = "buscarUsuariosPorInstrumentos")
     public List<Usuario> buscarUsuariosPorInstrumentos(@Argument List<String> instrumentos) {
         return usuarioService.buscarUsuariosPorInstrumentos(instrumentos);
+    }
+
+    @QueryMapping(name = "actualizarMisIntereses")
+    public void actualizarMisIntereses( @Argument String id, @Argument List<String> intereses){
+        usuarioService.actualizarMisIntereses(id, intereses);
     }
 
 }

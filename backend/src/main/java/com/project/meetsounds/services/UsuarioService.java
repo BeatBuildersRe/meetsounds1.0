@@ -1,6 +1,7 @@
 package com.project.meetsounds.services;
 
 import com.project.meetsounds.domain.models.Instrumento;
+import com.project.meetsounds.domain.models.Interes;
 import com.project.meetsounds.domain.models.Redes;
 import com.project.meetsounds.domain.models.Usuario;
 import com.project.meetsounds.repositories.IUsuarioRepository;
@@ -190,5 +191,11 @@ public class UsuarioService {
                 .filter(usuario -> usuario.getMisInstru().stream()
                         .anyMatch(instr -> nombresInstrumentos.contains(instr.getNombre())))
                 .collect(Collectors.toList());
+    }
+
+    public void actualizarMisIntereses(String id, List<String> intereses) {
+        Query query = new Query(Criteria.where("_id").is(id));
+        Update update = new Update().set("misIntereses",intereses);
+        mongoTemplate.updateFirst(query, update, Usuario.class);
     }
 }
