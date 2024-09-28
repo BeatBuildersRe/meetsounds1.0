@@ -1,9 +1,6 @@
 package com.project.meetsounds.services;
 
-import com.project.meetsounds.domain.models.Instrumento;
-import com.project.meetsounds.domain.models.Interes;
-import com.project.meetsounds.domain.models.Redes;
-import com.project.meetsounds.domain.models.Usuario;
+import com.project.meetsounds.domain.models.*;
 import com.project.meetsounds.repositories.IUsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -197,5 +194,42 @@ public class UsuarioService {
 
 
 
+    }
+
+    public void crearPublicacion(String id, Publicacion publi) {
+        Optional<Usuario> usu = usuarioRepository.findById(id);
+        if(usu != null){
+            Usuario usu2 = usu.get();
+            usu2.getMisPublicaciones().add(publi);
+            usuarioRepository.save(usu2);
+
+        }
+    }
+
+    public void crearBanda(String idUsuario, Banda b) {
+        Optional<Usuario> usu = usuarioRepository.findById(idUsuario);
+        if(usu != null){
+            Usuario usu2 = usu.get();
+            usu2.getMisBandas().add(b);
+            usuarioRepository.save(usu2);
+        }
+    }
+
+    public void añadirMiembro(String idMiembro, Banda banda2) {
+        Optional<Usuario> usu = usuarioRepository.findById(idMiembro);
+        if(usu != null){
+            Usuario usu2 = usu.get();
+            usu2.getMisBandas().add(banda2);
+            usuarioRepository.save(usu2);
+        }
+    }
+
+    public void eliminarMiembro(String idUsuario, Banda banda2) {
+        Optional<Usuario> usu = usuarioRepository.findById(idUsuario);
+        if(usu != null){
+            Usuario usu2 = usu.get();
+            usu2.getMisBandas().remove(banda2);
+            usuarioRepository.save(usu2);
+        }
     }
 }

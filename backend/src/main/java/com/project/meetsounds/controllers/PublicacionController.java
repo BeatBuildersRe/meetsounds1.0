@@ -17,6 +17,8 @@ public class PublicacionController {
     @Autowired
     private PublicacionService publicacionService;
 
+
+
     @QueryMapping
     public List<Publicacion> listarPublicaciones(){
         return this.publicacionService.listarPublicaciones();

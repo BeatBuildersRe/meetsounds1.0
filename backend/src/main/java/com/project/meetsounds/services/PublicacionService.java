@@ -22,6 +22,9 @@ public class PublicacionService {
     private IPublicacionRepository iPublicacionRepository;
 
     @Autowired
+    private UsuarioService usuarioService;
+
+    @Autowired
     private S3Service s3Service;
 
     @Autowired
@@ -48,16 +51,8 @@ public class PublicacionService {
 
         //publi.setMediaUrl(this.s3Service.uploadFile(file));
 
-        //Guardar en la lista de publicaciones del usuario
-        Query query = new Query(Criteria.where("_id").is(id));
-        query.fields().include("misPublicaciones");
-        Usuario usu = mongoTemplate.findOne(query, Usuario.class);
-        if(usu != null){
-            usu.getMisPublicaciones().add(publi);
-            Query queryUp = new Query(Criteria.where("_id").is(id));
-            Update update = new Update().set("misPublicaciones", usu.getMisPublicaciones());
-            mongoTemplate.updateFirst(queryUp, update, Usuario.class);
-        }
+        //Guardamos la publicacion en la lista de "misPublicaciones" del usuario
+        usuarioService.crearPublicacion(id, publi);
 
         return this.iPublicacionRepository.save(publi);
     }
