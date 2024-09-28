@@ -42,7 +42,7 @@ public class InstrumentoService {
     public Optional<Instrumento> buscarInstrumentoPorId(String id){
         return iInstrumentoRepository.findById(id);
     }
-    
+
     public Optional<Instrumento> buscarInstrumentoPorNombre(String nombre){
         return iInstrumentoRepository.findByNombre(nombre);
     }
