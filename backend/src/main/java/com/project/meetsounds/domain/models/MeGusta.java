@@ -1,6 +1,5 @@
 package com.project.meetsounds.domain.models;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,11 +10,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "Ubicaciones")
-public class Ubicacion {
+@Document(collection = "MeGusta")
+public class MeGusta {
     private String id;
-    private Pais pais;
-    private Estado estado;
-    private Departamento departamento;
-    private String urlMapa;
+    private Publicacion publicacion;
+    private Usuario usuario;
 }

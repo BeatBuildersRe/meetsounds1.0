@@ -11,11 +11,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "Ubicaciones")
-public class Ubicacion {
+@Document(collection = "Estados")
+public class Estado {
     private String id;
-    private Pais pais;
-    private Estado estado;
-    private Departamento departamento;
-    private String urlMapa;
+    private String nombre;
 }
