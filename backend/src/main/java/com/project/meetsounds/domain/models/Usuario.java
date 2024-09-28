@@ -29,9 +29,12 @@ public class Usuario {
     private Ubicacion ubicacion;
     private int c_seguidores;
     private int c_seguidos;
+
     private List<Instrumento> misInstru;
     private List<Interes> misIntereses;
     private List<Banda> misBandas;
+    private List<Publicacion> misPublicaciones;
+
     private String descripcion;
     private Redes redes;
     private LocalDate date;

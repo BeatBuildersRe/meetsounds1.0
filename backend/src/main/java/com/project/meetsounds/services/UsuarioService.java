@@ -194,8 +194,8 @@ public class UsuarioService {
     }
 
     public void actualizarMisIntereses(String id, List<String> intereses) {
-        Query query = new Query(Criteria.where("_id").is(id));
-        Update update = new Update().set("misIntereses",intereses);
-        mongoTemplate.updateFirst(query, update, Usuario.class);
+
+
+
     }
 }

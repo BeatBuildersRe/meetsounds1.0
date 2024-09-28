@@ -23,7 +23,12 @@ public class PublicacionController {
     }
 
     @MutationMapping
-    public Publicacion crearPublicacion(@Argument String descripcion, @Argument MultipartFile file){
-        return publicacionService.crearPublicacion(descripcion, file);
+    public Publicacion crearPublicacion(@Argument String id, @Argument String descripcion, @Argument MultipartFile file){
+        return publicacionService.crearPublicacion(id, descripcion, file);
+    }
+
+    @MutationMapping
+    public void eliminarPublicacion(@Argument String idUsuario, @Argument String idPublicacion){
+        publicacionService.eliminarPublicacion(idUsuario, idPublicacion);
     }
 }

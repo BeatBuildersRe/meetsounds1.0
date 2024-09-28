@@ -1,8 +1,13 @@
 package com.project.meetsounds.services;
 
 import com.project.meetsounds.domain.models.Publicacion;
+import com.project.meetsounds.domain.models.Usuario;
 import com.project.meetsounds.repositories.IPublicacionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,8 +24,12 @@ public class PublicacionService {
     @Autowired
     private S3Service s3Service;
 
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
-    public Publicacion crearPublicacion(String descripcion, MultipartFile file) {
+
+
+    public Publicacion crearPublicacion(String id, String descripcion, MultipartFile file) {
         Publicacion publi = new Publicacion();
 
         publi.setDescription(descripcion);
@@ -39,6 +48,17 @@ public class PublicacionService {
 
         //publi.setMediaUrl(this.s3Service.uploadFile(file));
 
+        //Guardar en la lista de publicaciones del usuario
+        Query query = new Query(Criteria.where("_id").is(id));
+        query.fields().include("misPublicaciones");
+        Usuario usu = mongoTemplate.findOne(query, Usuario.class);
+        if(usu != null){
+            usu.getMisPublicaciones().add(publi);
+            Query queryUp = new Query(Criteria.where("_id").is(id));
+            Update update = new Update().set("misPublicaciones", usu.getMisPublicaciones());
+            mongoTemplate.updateFirst(queryUp, update, Usuario.class);
+        }
+
         return this.iPublicacionRepository.save(publi);
     }
 
@@ -46,6 +66,24 @@ public class PublicacionService {
 
     public List<Publicacion> listarPublicaciones() {
         return this.iPublicacionRepository.findAll();
+    }
+
+    public void eliminarPublicacion(String idUsuario, String idPublicacion) {
+
+        Query query = new Query(Criteria.where("_id").is(idUsuario));
+        query.fields().include("misPublicaciones");
+        Usuario usu = mongoTemplate.findOne(query, Usuario.class);
+
+        List<Publicacion> publis = usu.getMisPublicaciones();
+        publis.removeIf( p -> p.getId().equals(idPublicacion));
+        usu.setMisPublicaciones(publis);
+
+        Query queryUp = new Query(Criteria.where("_id").is(idUsuario));
+        Update update = new Update().set("misPublicaciones", usu.getMisPublicaciones());
+        mongoTemplate.updateFirst(queryUp, update, Usuario.class);
+
+        iPublicacionRepository.deleteById(idPublicacion);
+
     }
 
     /*
