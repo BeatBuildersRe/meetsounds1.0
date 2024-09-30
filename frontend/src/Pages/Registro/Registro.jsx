@@ -4,7 +4,10 @@ import { FaGoogle } from 'react-icons/fa';
 import BotonGoogle from '../../components/boton-google/ButtonGoogle';
 import { FaSpotify } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-
+import Boton from '../../components/input/input';
+import '../../css/LoginForm.css';
+import { CiUser, CiLock  } from "react-icons/ci";
+import { AiOutlineMail } from "react-icons/ai";
 const Registro = () => {
   const [formData, setFormData] = useState({
     email: '',
@@ -44,8 +47,36 @@ const Registro = () => {
 
   return (
     <body id="cuerpo">
+
       <form className="cuerpoRegistro" onSubmit={handleSubmit}>
         <center><h1 className="titRegistro">Regístrate</h1></center>
+
+
+
+        <div className="ingreso">
+                <Boton  
+                    label="Email" 
+                    id="outlined-email-text" 
+                    Icon={AiOutlineMail} 
+                    
+                    
+                />
+                <Boton  
+                    label="Contraseña" 
+                    id="outlined-email-password" 
+                    Icon={CiLock}
+                    type="password" 
+                />
+                <Boton  
+                    label="Usuario" 
+                    id="outlined-email-text" 
+                    Icon={CiUser} 
+                />
+
+
+                </div>
+
+
 
         <div className="divCampos">
           <label className="nombreCampo">Email</label>

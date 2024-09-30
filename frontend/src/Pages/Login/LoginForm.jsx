@@ -64,7 +64,7 @@ const LoginForm = () => {
                 
                 <div className="register-link">
                     <p>¿No tenés una cuenta?</p>
-                    <BotonRegistro/>
+                    <a href="/registro"><BotonRegistro/></a>
                 </div>
                 <div className="terminos-condiciones">
                 <p>Al iniciar sesión, usted acepta nuestros <a href="#">Términos y Condiciones</a> y <a href="#">Políticas de Privacidad</a></p>
