@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../../css/Registro2.css';
+
 
 function App() {
   const [nombre, setNombre] = useState('');
@@ -54,12 +56,12 @@ function App() {
   };
    
   return (
-    <body id="cuerpo2">
+    <div id="cuerpo2">
       <div className="login-container">
-        <h1 class="titulo">Datos Personales</h1>
+        <h1 className="titulo">Datos Personales</h1>
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group">
-            <label class="labelRegistro2" htmlFor="nombre">Nombre</label>
+            <label className="labelRegistro2" htmlFor="nombre">Nombre</label>
             <input 
               className="formCampos"
               type="text" 
@@ -70,7 +72,7 @@ function App() {
             />
           </div>
           <div className="form-group">
-            <label class="labelRegistro2" htmlFor="apellido">Apellido</label>
+            <label className="labelRegistro2" htmlFor="apellido">Apellido</label>
             <input 
               className="formCampos"
               type="text" 
@@ -81,15 +83,20 @@ function App() {
             />
           </div>
           <div className="form-group">
-            <label class="labelRegistro2" htmlFor="telefono">Teléfono</label>
+          <div className="form-group">
+            <label className="labelRegistro2" htmlFor="telefono">Teléfono</label>
             <input 
               className="formCampos"
               type="tel" 
               id="telefono" 
               value={telefono} 
-              onChange={(e) => setTelefono(e.target.value)} 
+              onChange={(e) => {
+                const soloNumeros = e.target.value.replace(/[^0-9]/g, '');
+                setTelefono(soloNumeros);
+              }}
               placeholder="Ingresa tu teléfono"
             />
+          </div>
           </div>
 
           {/* Barra de selección de género */}
@@ -122,7 +129,7 @@ function App() {
           {/* Campo que se muestra al seleccionar 'otro' */}
           {genero === 'otro' && (
             <div className="form-group">
-              <label class="labelRegistro2" htmlFor="otroGenero">Especifica tu género</label>
+              <label className="labelRegistro2" htmlFor="otroGenero">Especifica tu género</label>
               <input 
                 className="formCampos"
                 type="text" 
@@ -136,7 +143,7 @@ function App() {
 
           {/* Selección de país */}
           <div className="form-group">
-            <label class="labelRegistro2" htmlFor="pais">País</label>
+            <label className="labelRegistro2" htmlFor="pais">País</label>
             <select 
               className="formCampos" 
               id="pais" 
@@ -152,7 +159,7 @@ function App() {
 
           {/* Selección de provincia */}
           <div className="form-group">
-            <label class="labelRegistro2" htmlFor="provincia">Provincia</label>
+            <label className="labelRegistro2" htmlFor="provincia">Provincia</label>
             <select 
               className="formCampos" 
               id="provincia" 
@@ -166,12 +173,13 @@ function App() {
             </select>
           </div>
 
-          <button class="siguiente" type="submit">Siguiente</button>
+          <button className="siguiente" type="submit">Siguiente</button>
         </form>
       </div>
-    </body>
+    </div>
   );
 }
 
 export default App;
+
 

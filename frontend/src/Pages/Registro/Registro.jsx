@@ -4,6 +4,8 @@ import { FaGoogle } from 'react-icons/fa';
 import BotonGoogle from '../../components/boton-google/ButtonGoogle';
 import { FaSpotify } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import botonRegistro2 from '../Registro/Registro2';
+
 
 const Registro = () => {
   const [formData, setFormData] = useState({
@@ -95,7 +97,7 @@ const Registro = () => {
         </div>
 
         <div className="linkLogin">
-          <center><p className="textLogin">¿Ya tienes una cuenta? <a href="/login">Inicia Sesión</a></p></center>
+          <center><p className="textLogin">¿Ya tienes una cuenta? Inicia Sesión</p><botonRegistro2/></center>
         </div>
       </form>
     </body>
