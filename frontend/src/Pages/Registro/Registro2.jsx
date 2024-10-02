@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../css/Registro2.css';
+import { useForm } from "react-hook-form";
 
 
 function App() {
@@ -53,6 +54,11 @@ function App() {
     if (selectedGenero !== 'otro') {
       setOtroGenero('');
     }
+  };
+
+  const OnSubmit = (data) => {
+    console.log(data);
+    navigate('/'); 
   };
    
   return (

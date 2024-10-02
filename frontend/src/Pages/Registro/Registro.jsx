@@ -1,121 +1,104 @@
 import React, { useState } from 'react';
 import '../../css/Registro.css';
-import { FaGoogle } from 'react-icons/fa';
+import { FaGoogle, FaSpotify } from 'react-icons/fa';
 import BotonGoogle from '../../components/boton-google/ButtonGoogle';
-import { FaSpotify } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import Boton from '../../components/input/input';
-import '../../css/LoginForm.css';
-import { CiUser, CiLock  } from "react-icons/ci";
-import { AiOutlineMail } from "react-icons/ai";
-const Registro = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    username: ''
-  });
+import { useForm } from "react-hook-form";
 
+const Registro = () => {
   const navigate = useNavigate(); 
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const [password, setPassword] = useState('');
+  const [passwordStrength, setPasswordStrength] = useState('');
+
+  const validatePassword = (password) => {
+    const strength = getPasswordStrength(password);
+    setPasswordStrength(strength.text);
+    return strength.valid;
   };
 
-  /* Se cambia al registro 2 si todos los datos son correctos */
+  const getPasswordStrength = (password) => {
+    const lengthValid = password.length >= 12;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validationErrors = validateForm(formData);
-    if (Object.keys(validationErrors).length === 0) {
-      console.log('Formulario enviado', formData);
-      navigate('/Registro2');
-    } else {
-      alert(`Faltan los siguientes campos: ${Object.values(validationErrors).join(', ')}`);
+    if (lengthValid && hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar) {
+      return { text: 'Fuerte', valid: true };
     }
+    if (lengthValid) {
+      return { text: 'Normal', valid: true };
+    }
+    return { text: 'Débil', valid: false };
   };
 
-  const validateForm = (data) => {
-    const errors = {};
-    if (!data.email) errors.email = 'Email';
-    if (!data.password) errors.password = 'Contraseña';
-    if (!data.username) errors.username = 'Nombre de usuario';
-    return errors;
+  const getStrengthClass = () => {
+    if (passwordStrength === 'Fuerte') return 'strong';
+    if (passwordStrength === 'Normal') return 'normal';
+    return 'weak';
+  };
+
+  const OnSubmit = (data) => {
+    console.log(data);
+    navigate('/registro2'); 
   };
 
   return (
-    <body id="cuerpo">
-
-      <form className="cuerpoRegistro" onSubmit={handleSubmit}>
+    <div id="cuerpo">
+      <form className="cuerpoRegistro" onSubmit={handleSubmit(OnSubmit)}>
         <center><h1 className="titRegistro">Regístrate</h1></center>
 
-
-
         <div className="ingreso">
-                <Boton  
-                    label="Email" 
-                    id="outlined-email-text" 
-                    Icon={AiOutlineMail} 
-                    
-                    
-                />
-                <Boton  
-                    label="Contraseña" 
-                    id="outlined-email-password" 
-                    Icon={CiLock}
-                    type="password" 
-                />
-                <Boton  
-                    label="Usuario" 
-                    id="outlined-email-text" 
-                    Icon={CiUser} 
-                />
-
-
-                </div>
-
-
-
-        <div className="divCampos">
-          <label className="nombreCampo">Email</label>
-          <input
-            className="formCampo"
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Ingresa tu email"
+          {/* Campo de Email */}
+          <input 
+            className="formCampo" 
+            type="email" 
+            placeholder='Correo Electrónico'
+            {...register('correoElectronico', {
+              required: 'El campo Correo Electrónico es requerido',
+              maxLength: {
+                value: 100,
+                message: 'El campo Correo Electrónico debe tener como máximo 100 caracteres'
+              }
+            })} 
           />
-        </div>
+          {errors.correoElectronico && <p>{errors.correoElectronico.message}</p>}
 
-        <div className="divCampos">
-          <label className="nombreCampo">Contraseña</label>
-          <input
-            className="formCampo"
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="Ingresa tu contraseña"
+          {/* Campo de Contraseña */}
+          <input 
+            className="formCampo" 
+            type="password" 
+            placeholder='Contraseña'
+            {...register('contraseña', {
+              required: 'El campo Contraseña es requerido',
+              validate: validatePassword 
+            })} 
+            onChange={(e) => {
+              setPassword(e.target.value);
+              validatePassword(e.target.value);
+            }}
           />
-        </div>
+          {errors.contraseña && <p>{errors.contraseña.message}</p>}
+          
+          {/* Indicador de fortaleza de contraseña */}
+          <div className={`passwordStrength ${getStrengthClass()}`}>
+            {passwordStrength}
+          </div>
 
-        <div className="divCampos">
-          <label className="nombreCampo">Nombre de Usuario</label>
-          <input
-            className="formCampo"
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            placeholder="Ingresa tu nombre de usuario"
+          {/* Campo de Usuario */}
+          <input 
+            className="formCampo" 
+            type="text" 
+            placeholder='Nombre de usuario'
+            {...register('nombreUsuario', { required: 'El campo Nombre de usuario es requerido' })} 
           />
+          {errors.nombreUsuario && <p>{errors.nombreUsuario.message}</p>}
         </div>
 
         <div className="contenedorRegistro">
-          <button className="btnRegistro">Regístrate</button>
+          <button className="btnRegistro" type="submit">Regístrate</button>
         </div>
 
         <center><p className='separador'>o</p></center>
@@ -126,13 +109,11 @@ const Registro = () => {
         </div>
 
         <div className="linkLogin">
-          <center><p className="textLogin">¿Ya tienes una cuenta? Inicia Sesión</p><botonRegistro2/></center>
+          <center><p className="textLogin">¿Ya tienes una cuenta? Inicia Sesión</p></center>
         </div>
       </form>
-    </body>
+    </div>
   );
 };
 
 export default Registro;
-
-
