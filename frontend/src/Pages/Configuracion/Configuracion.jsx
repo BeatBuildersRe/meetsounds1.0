@@ -21,7 +21,7 @@ const Configuracion = () => {
     return (
         <div className={`contenedor-configuraci ${contextTheme === 'Dark' ? 'dark-theme' : 'light-theme'}`}>
             <h2>Configuración</h2>
-            <R_Card2 to="seguridad" text="Perfil" icon={<FcBusinessman />} />
+            <R_Card2 to="perfil" text="Perfil" icon={<FcBusinessman />} />
             <R_Card2 to="seguridad" text="Seguridad" icon={<FcSafe />} />
             <R_Card2 to="/login" text="Cerrar Sesión" icon={<FcImport />} />
 

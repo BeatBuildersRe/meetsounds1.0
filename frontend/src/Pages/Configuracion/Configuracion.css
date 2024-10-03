@@ -4,12 +4,15 @@
 }
 
 .contenedor-configuraci{
-    width: 100%;
-    width: 55%;
+    margin-left: 18vw;
+    width: 55vw;
     padding: 1%;
 }
 #Dark .contenedor-configuraci{
-    color: rgb(175, 175, 175);
+    background-color: #18191a;
+}
+#Dark .contenedor-configuraci{
+    color: rgb(255, 255, 255);
 }
 .R_Contenedor-Card{
     width: 100%;

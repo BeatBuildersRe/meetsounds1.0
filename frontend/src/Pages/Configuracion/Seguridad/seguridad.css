@@ -1,67 +1,83 @@
-.Contenedor-seguridad{
-    background-color: rgb(230, 215, 215);
-    width: 55%;
-    padding: 1%;
-    height: 100%;
+.Contenedor-seguridad {
+    margin-left: 18vw;
+    width: 55vw;
+    padding-left: 1%;
+    height: 100vh;
+    position: relative;
     
 }
-.card{
-    background-color: #2b2929;
-    border: 1px solid rgb(70, 65, 65);
-    border-radius: 10px;
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 1%;
-    
+
+.card {
+    margin-right: 3%;
 }
-.form-section{
+#titulo{
+    margin-bottom: 2%;
+}
+.form-section {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-left: 2%;
-    label{
-        color: rgb(158, 158, 158);
+
+    .textfield{
+        margin-right: 5%;
+        margin-bottom: 4%;
+    }
+    label {
     }
 
-    #standard-password-input-1{
-        flex: 1;
-        color: white;
-            
+    #standard-password-input-1 {
         
     }
-    #standard-password-input-2{
-        flex:1;
-        color: white;
+       
+    #standard-password-input-2 {}
+
+    #standard-password-input-3 {
+        /*    flex:1;
+        color: white; */
     }
-    #standard-password-input-3{
-        flex:1;
-        color: white;
-    }
-    #standard-password-input-4{
-        flex:1;
-        color: white;
-        min-width: 235px;
-    }
-   
+
+    #standard-password-input-4 {}
+
 }
 
-#img_card {
-    max-width: 150px;
-    height: auto;
-    border-radius: 8px;
-    border-radius: 10px;
+#Dark .form-section {
+
+    label {
+        color: white;
+    }
+
+    #standard-password-input-1 {
+
+        color: white;
+    }
+
+    #standard-password-input-2 {
+        color: white;
+    }
+
+    #standard-password-input-3 {
+
+        color: white;
+    }
+
+    #standard-password-input-4 {
+        color: white;
+    }
+
 }
 
-.buttons{
+#img_card {}
+
+.buttons {
     position: relative;
     display: flex;
     width: 100%;
     margin-top: 1%;
-    #btn-1{
+
+    #btn-1 {
         position: absolute;
         left: 0;
     }
-    #btn-2{
+
+    #btn-2 {
         position: absolute;
         right: 0;
     }
@@ -70,19 +86,20 @@
 
 
 @media (max-width: 768px) {
-    .Contenedor-seguridad{
+    .Contenedor-seguridad {
         width: 100%;
     }
 }
 
 @media only screen and (max-width: 480px) {
-    #img_card{
-        max-width:90px;
+    #img_card {
+        max-width: 90px;
         max-height: 90px;
     }
-    .card{
-        
+
+    .card {
+
         margin-bottom: 3%;
-        
+
     }
 }

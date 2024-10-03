@@ -14,7 +14,7 @@ const R_Card2 = (props) => {
         padding: '5px',
         alignItems: 'center',
         marginBottom: '2%',
-
+        cursor: 'pointer'
 
     }
     const icon = {
@@ -27,15 +27,16 @@ const R_Card2 = (props) => {
 
     return (
         <>
-            <div className="R_Contenedor-Card2" style={R_Contenedor_Card2}>
-                <div style={icon}>
-                    {props.icon}
-                </div>
+            <Link to={props.to} style={{ all: 'unset' }}>
+                <div className="R_Contenedor-Card2" style={R_Contenedor_Card2}>
+                    <div style={icon}>
+                        {props.icon}
+                    </div>
 
-                <Link to={props.to} style={{ all: 'unset' }}>
+
                     <h5 style={textp}>{props.text}</h5>
-                </Link>
-            </div>
+                </div>
+            </Link>
         </>
     )
 

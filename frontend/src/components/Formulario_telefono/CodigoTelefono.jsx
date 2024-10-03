@@ -26,22 +26,24 @@ const Formulario_telefono = ({ register, name, placeholder, errors, defaultValue
 
   return (
     <>
-      <MuiTelInput
+      <MuiTelInput 
         {...register(name, {
           required: 'El número de teléfono es obligatorio',
           validate: () => isValid || 'El número de teléfono es inválido',
         })}
         sx={{
+          
           '& .MuiOutlinedInput-root': {
-            color: 'white',
+            color: 'gray',
             '& fieldset': {
-              borderColor: 'white',
+              borderColor: 'gray',
             },
           },
           '& .MuiInputLabel-root': {
             color: 'white',
           },
         }}
+        
         color={!isValid && 'error'}
         placeholder={placeholder}
         label="Teléfono"

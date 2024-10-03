@@ -18,7 +18,7 @@ export const ThemeContextProvider = ({ children }) => {
   const values = { contextTheme, setContextTheme };
 
   return (
-    <ThemeContext.Provider value={values}>
+    <ThemeContext.Provider  value={values}>
       {children}
     </ThemeContext.Provider>
   );

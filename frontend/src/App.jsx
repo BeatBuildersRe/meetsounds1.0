@@ -31,10 +31,7 @@ function App() {
   return (
     <div id={contextTheme}>
       {/* El valor de checked depende directamente de contextTheme */}
-      <ReactSwitch 
-        onChange={handleSwitch} 
-        checked={contextTheme === "Dark"} 
-      />
+    
 
       <Routes>
         <Route path="/" element={<Layout />}>
@@ -55,6 +52,10 @@ function App() {
         <Route path="/registro2" element={<Registro2 />} />
         <Route path="*" element={<Error_404 />} />
       </Routes>
+      <ReactSwitch 
+        onChange={handleSwitch} 
+        checked={contextTheme === "Dark"} 
+      />
     </div>
   );
 }

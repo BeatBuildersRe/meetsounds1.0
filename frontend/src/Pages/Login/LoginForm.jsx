@@ -1,17 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Boton from '../../components/input/input';
-import '../../css/LoginForm.css';
+import Boton from '@c/input/input';
+import '@css/LoginForm.css';
 import { CiUser, CiLock  } from "react-icons/ci";
-import Meetsounds from '../../components/logotipo/Logo';
-import Remember from '../../components/switch/Switch';
-import BotonGoogle from '../../components/boton-google/ButtonGoogle'
+import Meetsounds from '@c/logotipo/Logo';
+import Remember from '@c/switch/Switch';
+import BotonGoogle from '@c/boton-google/ButtonGoogle'
 import { FaGoogle, FaSpotify, FaInstagram } from 'react-icons/fa';
-import Divider from '../../components/divider/Divider';
-import BotonInicio from '../../components/boton-inicio/BotonInicio'
-import BotonRegistro from '../../components/boton-registro/BotonRegistro'
+import Divider from '@c/divider/Divider';
+import BotonInicio from '@c/boton-inicio/BotonInicio'
+import BotonRegistro from '@c/boton-registro/BotonRegistro'
 // import SuffleHero from '../suffle-hero/SuffleHero'
-
 const LoginForm = () => {
     
   return (

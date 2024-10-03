@@ -18,7 +18,9 @@ body{
 
 
 /* Menú a la izquierda */
-#left-menu {    
+#left-menu {  
+    position: fixed;  
+    width: 18vw;
     top: 0;
     left: 0;
     height: 100%;

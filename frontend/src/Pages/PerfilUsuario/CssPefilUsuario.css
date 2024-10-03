@@ -39,7 +39,8 @@
 }
 
 .contenedor-cuenta {
-    width: 55%;
+    margin-left: 18vw;
+    width: 55vw;
     height: 100vh;
     background-color: #e8e8e8;
 

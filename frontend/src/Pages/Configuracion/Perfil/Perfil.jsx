@@ -12,6 +12,8 @@ import { TiSocialTwitter } from "react-icons/ti";
 import { TiSocialInstagram } from "react-icons/ti";
 import { TiSocialYoutube } from "react-icons/ti";
 import { MdEmail } from "react-icons/md";
+import { useThemeContext } from '@contex/ThemeContext';
+
 import { FaMusic } from "react-icons/fa6";
 import R_Input from '../../../components/input/R_input';
 // Componente para subir imagen
@@ -34,7 +36,7 @@ function SubirImagen({ id, setImagen }) {
                     style={{ display: 'none' }}
                 />
             </div>
-            <label htmlFor={id} className="custom-file-upload">
+            <label htmlFor={id} className="custom-file-upload" >
                 <FiUpload size={24} />
             </label>
         </>
@@ -42,6 +44,12 @@ function SubirImagen({ id, setImagen }) {
 }
 
 function Perfil() {
+    const { contextTheme, setContextTheme } = useThemeContext();
+
+    // Función para alternar entre Light y Dark
+    const toggleTheme = () => {
+        setContextTheme(contextTheme === "Light" ? "Dark" : "Light");
+    };
     // Estado para almacenar imágenes
     const [imagenPerfil, setImagenPerfil] = useState(null);
     const [imagenFondo, setImagenFondo] = useState(null);
@@ -73,7 +81,8 @@ function Perfil() {
     return (
         <html lang="en">
             <body>
-                <div className="ContenedorPerfil2">
+            
+                <div className={`ContenedorPerfil2 ${contextTheme === 'Dark' ? 'dark-theme' : 'light-theme'}`}>
                     <h2 id="h2">Perfil</h2>
 
                     {/* Sección de advertencia */}
@@ -187,24 +196,25 @@ function Perfil() {
                                     label='Edad'
                                     type="number"
                                     color={errors.Edad && 'error'}
-                                    sx={{
-                                        '& .MuiOutlinedInput-root': {
-                                            color: 'white',
-                                            '& fieldset': {
-                                                borderColor: 'white',
+                                    /* sx={{
+                                        
+                                            '& .MuiOutlinedInput-root': {
+                                                color: 'white',
+                                                '& fieldset': {
+                                                    borderColor: 'white',
+                                                },
                                             },
-                                        },
-                                        '& .MuiInputLabel-root': {
-                                            color: 'white',
-                                        },
-                                    }}
+                                            '& .MuiInputLabel-root': {
+                                                color: 'white',
+                                            },
+                                    }} */
                                 />
                                
 
                                 {/* Botón para enviar el formulario */}
                             </div>
                             <Button id="submit" type='submit' /* disabled={!isValid}  */variant="outlined">Guardar</Button>
-                            <Button id="cancel" type='' variant="outlined">Cancelar</Button>
+                            <Button id="cancel" type='' color='error' variant="outlined">Cancelar</Button>
                         </form>
                     </div>
                 </div>
