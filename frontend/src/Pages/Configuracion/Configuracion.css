@@ -1,70 +1,86 @@
-*{
+* {
     padding: 0;
     margin: 0;
 }
 
-.contenedor-configuraci{
+.contenedor-configuraci {
     margin-left: 18vw;
     width: 55vw;
     padding: 1%;
 }
-#Dark .contenedor-configuraci{
+
+#Dark .contenedor-configuraci {
     background-color: #18191a;
 }
-#Dark .contenedor-configuraci{
+
+#Dark .contenedor-configuraci {
     color: rgb(255, 255, 255);
 }
-.R_Contenedor-Card{
+
+.R_Contenedor-Card {
     width: 100%;
     border-radius: 10px;
     border: 0.5px solid rgb(66, 61, 61);
     margin-bottom: 1%;
     padding: 0;
     background-color: rgb(180, 180, 180);
-    
+
 }
-#Dark .R_Contenedor-Card{
-    
+
+#Dark .R_Contenedor-Card {
+
     background-color: rgb(136, 49, 49);
-    
+
 }
-.R-image-section{
+
+.R-image-section {
     max-width: 125px;
 }
 
-#R-img-card{
+#R-img-card {
     max-width: 125px;
     border-radius: 10px;
 }
-.R_Card{
+
+.R_Card {
     display: flex;
     flex-wrap: wrap;
-    .R-form-section{
+
+    .R-form-section {
         max-width: 70%;
         margin: 1%;
         word-wrap: break-word;
     }
 }
 
-@media (max-width: 768px) {
-    .contenedor-configuraci{
+@media (max-width: 1100px) {
+    .contenedor-configuraci {
         width: 100%;
+        margin-left: 14vw;
     }
-    #p_short{
+
+    #p_short {
         display: none;
     }
 }
 
-@media only screen and (max-width: 480px) {
-    #R-img-card{
+@media (max-width: 500px) {
+
+    .contenedor-configuraci {
+        margin: 1%;
+    }
+
+    #R-img-card {
         max-width: 75px;
         max-height: 75px;
         border-radius: 10px;
     }
-    #p_long{
+
+    #p_long {
         display: none;
     }
-    #p_short{
+
+    #p_short {
         display: initial;
     }
-  }
+}

@@ -29,35 +29,22 @@ const Layout = () => {
         </div>
 
         <div id="box">
-          <div >
             <nav>
               <ul>
-                {/* ---El boton de inicio lleva la ruta "/home", lo que vos tenias
-                      hacia que cuando ingresaras por primera vez a la pagina
-                      si te mostraba el "inicio" por que el inicio usaba la "/"
-                      pero cuando tocabas el boton "inicio" te llevaba a "/home"
-                      donde no esta la pagina
-
-                      basicamente tenias dos rutas "/" y "/home" y solo en una de ella estaba 
-                      la pagina "Home"
-
-                       
-                
-                "--- */}
                 <MeetLogo />
                 <li ><Link to="/"><ButtonMenu icon={TiHome} /><span>Inicio</span></Link></li>
                 <li id='Buscar'><Link to="/busqueda"><ButtonMenu icon={CiSearch} /><span>Buscar</span></Link></li>
-                <  li><Link to="/bandas"><ButtonMenu icon={GoPeople} /><span>Bandas</span></Link></li>
+                <li><Link to="/bandas"><ButtonMenu icon={GoPeople} /><span>Bandas</span></Link></li>
                 <li><Link to="/mensajes"><ButtonMenu icon={IoChatbubbleEllipsesOutline} /><span>Mensajes</span></Link></li>
                 <li><Link to="/notificaciones"><ButtonMenu icon={FaFire} /><span>Notificaciones</span></Link></li>
                 <li><Link to="/eventos"><ButtonMenu icon={LuCalendarHeart} /><span>Eventos</span></Link></li>
                 <li id='Config'><Link to="/configuracion"><ButtonMenu icon={IoSettingsSharp} /><span>Configuración</span></Link></li>
               </ul>
             </nav>
-          </div>
-
-
           
+
+
+
 
           {/* <div className='BottonCrear'>
             <ButtonPlus icon={CiCirclePlus} />
@@ -73,12 +60,12 @@ const Layout = () => {
         </Link>
       </Box> */}
 
-          
+
         </div>
         <div className='Perfil'>
-        <Link to="/cuenta"><Avatar /></Link>
-            
-          </div>
+          <Link to="/cuenta"><Avatar /></Link>
+
+        </div>
       </div>
 
       {/* App.jsx es para manejas las rutas, y Layout es el "menu" que permite 
@@ -103,7 +90,7 @@ const Layout = () => {
         <p>Sección derecha</p>
         {/* Contenido adicional o complementario 
       </div> */}
-      <Outlet/> {/* ---TE OLVIDASTE ESTO: es para el manejo de rutas "hijas"--- */}
+      <Outlet /> {/* ---TE OLVIDASTE ESTO: es para el manejo de rutas "hijas"--- */}
     </div>
   );
 };

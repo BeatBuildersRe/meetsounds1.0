@@ -2,6 +2,7 @@
     width: 55vw;
     margin-left: 18vw;
     color: black;
+    z-index: -1;
 }
 #Dark .ContenedorPerfil2{
     background-color: #18191a;
@@ -83,12 +84,12 @@
         position: absolute;
         left: 12%;
         bottom: 2%;
-        z-index: 1;
+         
     }
 
     .custom-file-upload:nth-of-type(1) { /* boton de editar del fondo */
         position: absolute;
-        z-index: 1;
+       
     }
 }
 
@@ -238,11 +239,16 @@
 
 @media (max-width: 900px) {
     .ContenedorPerfil2{
+        margin-left:14vw ;
         position: absolute;
         width: auto;
-        border: 0.5px solid rgb(83, 83, 83);
     }
 }
 
 /* Responsividad: pantalla pequeña */
-@media (max-width: 500px) {}
+@media (max-width: 500px) {
+    .ContenedorPerfil2{
+        width: 100%;
+        margin-left: 0;
+    }
+}
