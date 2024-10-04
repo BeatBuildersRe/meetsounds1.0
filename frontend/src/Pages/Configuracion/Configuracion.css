@@ -3,19 +3,18 @@
     margin: 0;
 }
 
-.contenedor-configuraci {
-    margin-left: 18vw;
-    width: 55vw;
-    padding: 1%;
-}
-
-#Dark .contenedor-configuraci {
-    background-color: #18191a;
-}
-
-#Dark .contenedor-configuraci {
-    color: rgb(255, 255, 255);
-}
+.izquierda-configuracion {
+    flex: 2;
+    background-color: var(--color-fondo);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    
+    overflow-y: auto;
+    /* Habilita el desplazamiento vertical */
+    width: 100%;
+  
+  }
 
 .R_Contenedor-Card {
     width: 100%;
@@ -54,11 +53,7 @@
 }
 
 @media (max-width: 1100px) {
-    .contenedor-configuraci {
-        width: 100%;
-        margin-left: 14vw;
-    }
-
+  
     #p_short {
         display: none;
     }
@@ -66,10 +61,7 @@
 
 @media (max-width: 500px) {
 
-    .contenedor-configuraci {
-        margin: 1%;
-    }
-
+ 
     #R-img-card {
         max-width: 75px;
         max-height: 75px;

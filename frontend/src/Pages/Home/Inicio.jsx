@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../../css/Home.css'
 import Foto from '../../assets/Img-Card-Seg.png';
+import MenuDerecho from '@c/Menu/Menu';
 const Inicio = () => {
   const [activeDiv, setActiveDiv] = useState('div1');
   const [isVisible, setIsVisible] = useState(true);
@@ -55,7 +56,7 @@ const Inicio = () => {
         </div>
         <div className="derecha">
           {/* Aquí puedes poner contenido para la parte izquierda */}
-          <h2>Contenido Izquierda</h2>
+          <MenuDerecho></MenuDerecho>
         </div>
       </div>
     </>

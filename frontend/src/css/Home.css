@@ -2,7 +2,20 @@
   padding: 0;
   margin: 0;
 }
+:root {
 
+  --color-fondo: #e8e8e8;
+  --color-fondoDiv: #d8d8d8;
+  --color-fondoDivHover: #c4c4c4;
+  --color-texto: #000000;
+
+  #Dark {
+      --color-fondo: #18191a;
+      --color-fondoDiv: #232224;
+      --color-texto: #ffffff;
+
+  }
+}
 
 /* Estilos base para la división en dos columnas */
 .Contenedor {
@@ -12,13 +25,13 @@
   height: 100vh;
   /* cambiado por MB */
   width: 100vw;
-
+  
 }
 
 /* La parte izquierda será más pequeña */
 .derecha {
   flex: 1;
-
+  background-color: var(--color-fondo);
   padding: 20px;
   border-left: 1px solid #222;
 }
@@ -26,7 +39,7 @@
 /* La parte derecha será más grande */
 .izquierda {
   flex: 2;
-  background-color: #e8e8e8;
+  background-color: var(--color-fondo);
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -37,12 +50,6 @@
 
 }
 
-#Dark .izquierda {
-
-  background-color: #18191a;
-
-
-}
 
 .izquierda::-webkit-scrollbar {
   display: none;

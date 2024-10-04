@@ -1,0 +1,41 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+:root {
+
+
+    --color-fondoDiv: #d8d8d8;
+    --color-fondoDivHover: #c4c4c4;
+    --color-texto: #000000;
+
+    #Dark {
+        --color-fondoDiv: #232224;
+        --color-texto: #ffffff;
+
+    }
+}
+.ads{
+    margin-top: 4%;
+    background-color: var(--color-fondoDiv);
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    padding: 4%;
+    
+    flex-direction: column;
+    .publicidad{
+        width: 100%;
+        display: flex;
+        align-items: center; 
+        justify-content: center;
+        height: auto;
+        
+        img{
+            width: 100%;
+            max-height: 155px;
+            border-radius: 20px;
+        }
+    }
+    
+}

@@ -1,0 +1,152 @@
+* {
+    padding: 0;
+    margin: 0;
+    user-select: none;
+}
+
+:root {
+
+
+    --color-fondoDiv: #d8d8d8;
+    --color-fondoDivHover: #c4c4c4;
+    --color-texto: #000000;
+    --color-btn: black;
+
+    #Dark {
+        --color-fondoDiv: #232224;
+        --color-texto: #ffffff;
+        --color-btn: black;
+        --color-fondoDivHover: #2d2c2e;
+    }
+    
+}
+
+.Contenedor-menu {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    label {
+        border-radius: 25px;
+        padding: 3%;
+        width: 100%;
+        display: flex;
+        background-color: var(--color-fondoDiv);
+        align-items: center;
+        margin-bottom: 5%;
+
+        #icon {
+            font-size: x-large;
+            cursor: pointer;
+        }
+
+        input {
+            all: unset;
+            width: 90%;
+            height: 100%;
+
+            border-radius: 25px;
+            padding-left: 4%;
+            background-color: var(--color-fondoDiv);
+        }
+    }
+
+    .tendencia {
+        border-radius: 15px;
+        background-color: var(--color-fondoDiv);
+        width: 100%;
+        padding: 4%;
+
+        ul,
+        li {
+            list-style: none;
+        }
+
+        li {
+            
+            
+            cursor: pointer;
+            border-radius: 10px;
+            display: flex;
+            position: relative;
+            align-items: center;
+            padding-top: 1%;
+            padding-bottom: 1%;
+            padding-left: 4%;
+            
+            margin: 1%;
+            
+            
+
+            #p {
+                position: absolute;
+                right: 2%;
+                font-size: small;
+                display: inline-flex;
+                
+                
+            }
+
+            #icon {
+            
+                color: gray;
+                font-size: medium;
+            }
+        }
+
+        li:hover {
+            background-color: var(--color-fondoDivHover);
+        }
+        #btn-mas{
+            cursor: pointer;
+        }
+       
+        /* Aplicamos la animación al ícono con la clase .iconM */
+       
+
+    }
+
+    .seguir{
+        margin-top: 4%;
+        border-radius: 15px;
+        background-color: var(--color-fondoDiv);
+        width: 100%;
+        padding: 4%;
+        #avatar{
+            margin-top: 2%;
+            border-radius: 25px;
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            align-items: center;
+            position: relative;
+            
+            .avatari{
+                cursor: pointer;
+            }
+            #info{
+                flex-direction: column;
+                p{
+                    font-size: small;
+                    color: rgb(94, 94, 94);
+                    font-weight: bold;
+                }
+            }
+            #btn{
+                all: unset;
+                display: flex;
+                background-color: rgb(255, 255, 255);
+                position: absolute;
+                right: 0%;
+                height: 90%;
+                width: 25%;
+                align-items: center;
+                justify-content: center;
+                border-radius: 25px;
+                font-weight: bold;
+                color: var(--color-btn);
+                cursor: pointer;
+            }
+        }
+    }
+}

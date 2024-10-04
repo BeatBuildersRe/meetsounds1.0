@@ -1,0 +1,29 @@
+:root {
+
+    --color-fondo: #e8e8e8;
+    --color-fondoDiv: #d8d8d8;
+    --color-fondoDivHover: #dddddd;
+    --color-icon: #000000;
+
+    #Dark {
+        --color-fondo: #18191a;
+        --color-fondoDiv: #232224;
+        --color-fondoDivHover: #dddddd;
+
+        --color-icon: #e4dbdb;
+
+    }
+}
+#IconButtom{
+    background:transparent;
+    color:var(--color-icon);
+    
+    font-size: 2rem;
+    transition:0.3s;
+    
+}
+
+.Icon{
+    font-size: 5rem;
+    
+}

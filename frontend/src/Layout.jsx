@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Routes, Link, Outlet } from 'react-router-dom';
 import './layout.css';
+import { useThemeContext } from './context/ThemeContext';
 
 import ButtonMenu from './components/botones/BotonesMenu'
 import { CiSearch } from "react-icons/ci";
@@ -20,8 +21,14 @@ const Messages = () => <div>Esta es la página de mensajes</div>;
 const Settings = () => <div>Esta es la página de configuración</div>;
 
 const Layout = () => {
+  const { contextTheme, setContextTheme } = useThemeContext();
+
+  // Función para manejar el cambio de tema
+  const handleSwitch = () => {
+    setContextTheme((prevTheme) => (prevTheme === "Light" ? "Dark" : "Light"));
+  };
   return (
-    <div className="Layout">
+    <div className="Layout" id={contextTheme}>
       {/* Menú a la izquierda */}
       <div id="left-menu">
         <div className="meetsound-logo">
