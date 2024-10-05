@@ -3,6 +3,39 @@
     margin: 0;
 }
 
+/* Estilos base para la división en dos columnas */
+.Contenedor-perfil-usuario {
+    margin-left: 18vw;
+    /* agregado por MB */
+    display: flex;
+    height: 100vh;
+    /* cambiado por MB */
+    width: 100vw;
+    
+  }
+  
+  /* La parte izquierda será más pequeña */
+  .derecha-perfil-usuario {
+    flex: 1;
+    background-color: var(--color-fondo);
+    padding: 20px;
+    border-left: 1px solid #222;
+  }
+  
+  /* La parte derecha será más grande */
+  .izquierda-perfil-usuario {
+    flex: 2;
+    background-color: var(--color-fondo);
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    /* Habilita el desplazamiento vertical */
+    width: 100%;
+  
+  }
+  
+
 .Ver-img {
     z-index: 1;
     position: absolute;
@@ -189,7 +222,18 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
+    .derecha-perfil-usuario {
+        display: none;
+      }
+    
+      .Contenedor-perfil-usuario {
+        margin-left: 30vw;
+      }
+    
+      .izquierda-perfil-usuario {
+        flex: 1;
+      }
     .Ver-img {
         #Ver-img-fondo {
             max-width: 100%;
@@ -213,7 +257,7 @@
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 500px) {
     .seccion-1 {
         #img-perfil {
             width: 30%;

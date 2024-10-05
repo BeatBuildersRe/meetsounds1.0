@@ -2,6 +2,10 @@
   padding: 0;
   margin: 0;
 }
+body{
+  background-color: var(--color-fondo);
+
+}
 :root {
 
   --color-fondo: #e8e8e8;
@@ -10,60 +14,90 @@
   --color-texto: #000000;
 
   #Dark {
-      --color-fondo: #18191a;
-      --color-fondoDiv: #232224;
-      --color-texto: #ffffff;
+    --color-fondo: #18191a;
+    --color-fondoDiv: #232224;
+    --color-texto: #ffffff;
 
   }
 }
 
 /* Estilos base para la división en dos columnas */
+.contenedor2 {
+  display: flex;
+  background-color: var(--color-fondo);
+}
+
 .Contenedor {
   margin-left: 18vw;
   /* agregado por MB */
-  display: flex;
-  height: 100vh;
+  display: inline-block;
+  background-color: var(--color-fondo);
+  
   /* cambiado por MB */
   width: 100vw;
-  
 }
 
 /* La parte izquierda será más pequeña */
 .derecha {
   flex: 1;
+  overflow-y: hidden;
   background-color: var(--color-fondo);
-  padding: 20px;
-  border-left: 1px solid #222;
+  position: sticky;
+  top: 20px; /* El div se mantendrá a 20px de la parte superior */
+  align-self: flex-start;
+  height: fit-content; /* Asegura que el div tenga un tamaño adecuado */
+  
 }
 
 /* La parte derecha será más grande */
 .izquierda {
+  height: auto;
   flex: 2;
-  background-color: var(--color-fondo);
-  padding: 20px;
+  align-items: center;
+  height: fit-content;
+  background-color: var(--color-fondo); 
+  padding-top: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  overflow-y: auto;
   /* Habilita el desplazamiento vertical */
   width: 100%;
+  position: relative;
 
+  .barra {
+    position: sticky; /* Mantener la barra fija en la parte superior */
+    top: 10px;
+    left: 0;
+    right: 0;
+    transition: transform 0.3s ease; /* Para una transición suave */
+    transform: translateY(0); /* Por defecto, visible */
+    z-index: 1000; /* Para asegurarse de que esté por encima del contenido */
+  }
+  
+  .barra.oculta {
+    transform: translateY(-120%); /* Ocultar la barra moviéndola hacia arriba */
+  }
+
+  .barra.visible {
+    transform: translateY(0);
+    /* Muestra la barra */
+  }
 }
 
 
-.izquierda::-webkit-scrollbar {
-  display: none;
-}
+
 
 /* From Uiverse.io by zanina-yassine */
 .tab-container {
-  position: relative;
 
+  position: relative;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-
+  max-width: fit-content;
   padding: 10px;
+
 
   background-color: #dadadb;
   border-radius: 25px;
@@ -164,11 +198,19 @@
 
 .Div_1 {
 
-  height: 100%;
+  height: auto;
   width: 100%;
 
 
 }
+.Div_2 {
+
+  height: auto;
+  width: 100%;
+
+
+}
+
 
 
 
@@ -205,7 +247,13 @@
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width:800px) {
+  .Contenedor {
+    margin-left: 15vw;
+  }
+}
+
+@media (max-width: 600px) {
   .derecha {
     display: none;
   }

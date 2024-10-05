@@ -44,6 +44,7 @@ function App() {
           <Route path="configuracion/perfil" element={<Perfil />} />
           <Route path="configuracion/seguridad" element={<Seguridad />} />
           <Route path="cuenta" element={<Cuenta />} />
+          <Route path="cuenta/:id" element={<Cuenta />} />
         </Route>
 
         {/* Ruta independiente para el login y el registro */}

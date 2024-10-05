@@ -56,7 +56,7 @@ const MenuDerecho = () => {
 
 
     return (
-        <div className="Contenedor-menu">
+        <div className="Contenedor-menu" id='Contenedor-menuu'> 
             <label id='label'>
                 <CiSearch id='icon'></CiSearch>
                 <input type="search" placeholder='Buscar' />

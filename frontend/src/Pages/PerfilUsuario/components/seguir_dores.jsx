@@ -1,7 +1,6 @@
 import React from 'react';
 import { IoHeartCircle, IoHeartCircleOutline } from 'react-icons/io5';
 import UseToggle from "../../../components/Boton-seguir/btnSegui";
-import Usuario from '../../Diccionario';
 
 // Función para formatear números grandes en 'k' o 'M'
 const formatNumber = (number) => {
@@ -10,15 +9,25 @@ const formatNumber = (number) => {
     return Math.floor(number / 1000000) + 'M';
 };
 
-const SeguirDores = () => {
+const SeguirDores = ({ seguidos, seguidores, amigo, condicion }) => {
     // Obtener seguidores y seguidos desde Usuario
-    const seguidores = Usuario[1].Seguidores;
-    const seguidos = Usuario[1].Seguidos;
+
 
     // Formatear números
     const seguidores_i = formatNumber(seguidores);
     const seguidos_i = formatNumber(seguidos);
-
+    const Menu = () => {
+        if (condicion) {
+            return (
+                <div id="btn-seguir">
+                    <UseToggle amigo={(amigo)} />
+                </div>
+            )
+        }else{
+            
+            
+        }
+    }
     return (
         <>
             <div id="icons">
@@ -27,9 +36,9 @@ const SeguirDores = () => {
                 <IoHeartCircleOutline id="icon" />
                 <p>{seguidos_i}</p> {/* Mostrar el valor de seguidos */}
             </div>
-            <div id="btn-seguir">
-                <UseToggle />
-            </div>
+
+            <Menu></Menu>
+
         </>
     );
 };

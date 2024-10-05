@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Routes, Link, Outlet } from 'react-router-dom';
 import './layout.css';
 import { useThemeContext } from './context/ThemeContext';
+import { useNavigate } from 'react-router-dom';
 
 import ButtonMenu from './components/botones/BotonesMenu'
 import { CiSearch } from "react-icons/ci";
@@ -21,6 +22,11 @@ const Messages = () => <div>Esta es la página de mensajes</div>;
 const Settings = () => <div>Esta es la página de configuración</div>;
 
 const Layout = () => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/cuenta/1'); // Navega a la página del producto con ID 123
+  };
   const { contextTheme, setContextTheme } = useThemeContext();
 
   // Función para manejar el cambio de tema
@@ -31,21 +37,18 @@ const Layout = () => {
     <div className="Layout" id={contextTheme}>
       {/* Menú a la izquierda */}
       <div id="left-menu">
-        <div className="meetsound-logo">
-
-        </div>
 
         <div id="box">
             <nav>
               <ul>
                 <MeetLogo />
-                <li ><Link to="/"><ButtonMenu icon={TiHome} /><span>Inicio</span></Link></li>
-                <li id='Buscar'><Link to="/busqueda"><ButtonMenu icon={CiSearch} /><span>Buscar</span></Link></li>
-                <li><Link to="/bandas"><ButtonMenu icon={GoPeople} /><span>Bandas</span></Link></li>
-                <li><Link to="/mensajes"><ButtonMenu icon={IoChatbubbleEllipsesOutline} /><span>Mensajes</span></Link></li>
-                <li><Link to="/notificaciones"><ButtonMenu icon={FaFire} /><span>Notificaciones</span></Link></li>
-                <li><Link to="/eventos"><ButtonMenu icon={LuCalendarHeart} /><span>Eventos</span></Link></li>
-                <li id='Config'><Link to="/configuracion"><ButtonMenu icon={IoSettingsSharp} /><span>Configuración</span></Link></li>
+                <li ><Link to="/"><ButtonMenu icon={TiHome} /><p>Inicio</p></Link></li>
+                <li id='Buscar'><Link to="/busqueda"><ButtonMenu icon={CiSearch} /><p>Buscar</p></Link></li>
+                <li><Link to="/bandas"><ButtonMenu icon={GoPeople} /><p>Bandas</p></Link></li>
+                <li><Link to="/mensajes"><ButtonMenu icon={IoChatbubbleEllipsesOutline} /><p>Mensajes</p></Link></li>
+                <li><Link to="/notificaciones"><ButtonMenu icon={FaFire} /><p>Notificaciones</p></Link></li>
+                <li><Link to="/eventos"><ButtonMenu icon={LuCalendarHeart} /><p>Eventos</p></Link></li>
+                <li id='Config'><Link to="/configuracion"><ButtonMenu icon={IoSettingsSharp} /><p>Configuración</p></Link></li>
               </ul>
             </nav>
           
@@ -70,8 +73,9 @@ const Layout = () => {
 
         </div>
         <div className='Perfil'>
-          <Link to="/cuenta"><Avatar /></Link>
-
+          <button style={{all:'none'}} onClick={handleClick}>
+            <Avatar />
+          </button>
         </div>
       </div>
 

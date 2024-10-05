@@ -178,15 +178,24 @@ body {
 
 }
 
-
+@media (max-width:800px) {
+    #left-menu {
+        width: 15vw;
+    }
+    nav ul li p {
+        display: none;
+    }
+}
 
 /* Responsividad: pantalla pequeña */
-@media (max-width: 500px) {
+@media (max-width:600px) {
 
     #left-menu {
         width: 0;
+        
+      
     }
-
+   
     nav {
         position: fixed;
         bottom: 0;
@@ -194,7 +203,7 @@ body {
         left: 0;
         width: 100%;
         /* Hace que el menú ocupe todo el ancho */
-        background-color: #fff;
+        background-color: var(--color-fondo);
         /* Color de fondo (puedes ajustarlo) */
         box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
         /* Sombra opcional */
@@ -221,35 +230,22 @@ body {
         /* Alinea los ítems en el centro */
     }
 
-    nav ul li a {
-        display: flex;
-        flex-direction: column;
-        /* Alinea el icono y el texto en columna */
-        align-items: center;
-        /* Centra ambos en el eje vertical */
-        text-decoration: none;
-        /* Elimina el subrayado de los enlaces */
-        color: #333;
-        /* Color del texto */
-        font-size: 12px;
-        /* Tamaño de la fuente para el texto debajo del icono */
+    nav ul li p {
+        display: none;
     }
 
-    nav ul li a span {
-        margin-top: 5px;
-        /* Espacio entre el icono y el texto */
-    }
 
-    nav ul li a svg {
+    nav ul li  svg {
         /* Aplica estilos a los iconos SVG */
         width: 24px;
         /* Tamaño uniforme para todos los iconos */
         height: 24px;
-        fill: #333;
         /* Color del icono */
     }
 
-
+    #meetsound-logo{
+        display: none;
+    }
 
 
     .BottonCrear {
@@ -263,6 +259,9 @@ body {
     #box {
         flex-direction: row;
         /* Cambia a horizontal */
+        .logotipo{
+            display: none;
+        }
 
     }
 

@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { AiFillMessage } from "react-icons/ai";
 import { BsPersonFillAdd, BsPersonFillCheck } from "react-icons/bs";
-import Usuario from '../../Pages/Diccionario';
 // Hook personalizado para alternar entre true y false
-function UseToggle() {
+function UseToggle({amigo}) {
     // Estilos del contenedor del botón
     const divStyle = {
         all: 'unset',
@@ -25,16 +24,14 @@ function UseToggle() {
     };
 
     // Estado para controlar el toggle (seguido/no seguido)
-    const [isFollowed, setIsFollowed] = useState(Usuario[1].seguir); /* <== aqui va si el usuario lo sigue, funciona con true y false */
+    const [isFollowed, setIsFollowed] = useState(amigo); /* <== aqui va si el usuario lo sigue, funciona con true y false */
 
     // Función para alternar entre seguido y no seguido
     const toggleFollow = () => {
         setIsFollowed((prevState) => !prevState); // Alterna el estado
         if (!isFollowed) {
-            Usuario[1].Seguidores += 1; // Incrementa seguidores
             console.log("seguido");
         } else {
-            Usuario[1].Seguidores -= 1; // Decrementa seguidores
             console.log("NO seguido");
         }
     };
