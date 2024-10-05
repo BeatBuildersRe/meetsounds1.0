@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../../css/Home.css'
 import Foto from '../../assets/ads.png';
-import Derecha from './Derecha';
+import MenuDerechoDiv from './Derecha';
 const Inicio = () => {
   const [activeDiv, setActiveDiv] = useState('div1');
   const [isVisible, setIsVisible] = useState(true);
@@ -63,26 +63,17 @@ const Inicio = () => {
 
             <div className="Div_1" style={{ display: activeDiv === 'div1' ? 'block' : 'none' }}>
               <h1>Hola</h1>
-              <img src={Foto} />
-              <img src={Foto} />
-              <img src={Foto} />
-              <img src={Foto} />
-              <img src={Foto} />
-              <img src={Foto} />
+            
 
 
             </div>
             <div className="Div_2" style={{ display: activeDiv === 'div2' ? 'block' : 'none' }}>
               <h1>Explorar contenido</h1>
-              <img src={Foto} />
-              <img src={Foto} />
-              <img src={Foto} />
-              <img src={Foto} />
-              <img src={Foto} />
+            
             </div>
           </div>
 
-          <Derecha></Derecha>
+          <MenuDerechoDiv></MenuDerechoDiv>
         </div>
       </div>
     </>

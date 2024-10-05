@@ -43,6 +43,8 @@ body{
   overflow-y: hidden;
   background-color: var(--color-fondo);
   position: sticky;
+  padding-right: 20px;
+  margin-top: 20px; /* agredo hoy*/
   top: 20px; /* El div se mantendrá a 20px de la parte superior */
   align-self: flex-start;
   height: fit-content; /* Asegura que el div tenga un tamaño adecuado */

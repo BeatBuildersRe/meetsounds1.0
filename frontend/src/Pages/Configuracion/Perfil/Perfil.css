@@ -1,9 +1,9 @@
-.ContenedorPerfil2{
+/* .ContenedorPerfil2{
     width: 55vw;
     margin-left: 18vw;
     color: black;
     z-index: -1;
-}
+} */
 #Dark .ContenedorPerfil2{
     background-color: #18191a;
 }
@@ -18,6 +18,21 @@
         --color-texto: #ffffff;
 
     }
+}
+
+.izquierda-perfil {
+    height: auto;
+    flex: 2;
+    height: fit-content;
+    background-color: var(--color-fondo);
+    padding-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    /* Habilita el desplazamiento vertical */
+    width: 100%;
+    position: relative;
 }
 
 

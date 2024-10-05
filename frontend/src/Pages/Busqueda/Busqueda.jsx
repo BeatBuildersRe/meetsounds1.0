@@ -1,11 +1,22 @@
-
+import MenuDerechoDiv from "../Home/Derecha";
+import '@css/Busqueda.css'
 const Busqueda = () => {
     return (
-        <div className="Contenedor"> 
-            
-            <h1>hola</h1>
+        <>
+            <div className="Contenedor">
+                <div className="contenedor2">
+                    <div className="izquierda-busqueda">
 
-        </div>
+                    {/* AREA DE TRABAJO */}
+                    {/* MANTERNER ESTE FORMATO DE DIVS PARA OTRAS PAGINAS Y SU CSS */}
+
+
+                    </div>
+                    <MenuDerechoDiv></MenuDerechoDiv>
+                </div>
+            </div>
+            <div />
+        </>
     )
 }
 

@@ -13,7 +13,7 @@ import { TiSocialInstagram } from "react-icons/ti";
 import { TiSocialYoutube } from "react-icons/ti";
 import { MdEmail } from "react-icons/md";
 import { useThemeContext } from '@contex/ThemeContext';
-
+import MenuDerechoDiv from '../../Home/Derecha';
 import { FaMusic } from "react-icons/fa6";
 import R_Input from '../../../components/input/R_input';
 // Componente para subir imagen
@@ -79,123 +79,126 @@ function Perfil() {
     };
 
     return (
-        <html lang="en">
-            <body>
-            
-                <div className={`ContenedorPerfil2 ${contextTheme === 'Dark' ? 'dark-theme' : 'light-theme'}`}>
-                    <h2 id="h2">Perfil</h2>
+        <>
+            <div className="Contenedor">
+                <div className="contenedor2">
+                    <div className="izquierda-perfil">
 
-                    {/* Sección de advertencia */}
-                    <div className='seccion_1'>
-                        <div className='advertencia'>
-                            <FiAlertCircle id='icon' />
-                            <p id='p'>{texto}</p>
+                        {/* AREA DE TRABAJO */}
+                        {/* MANTERNER ESTE FORMATO DE DIVS PARA OTRAS PAGINAS Y SU CSS */}
+                        <h2 id="h2">Perfil</h2>
+
+                        {/* Sección de advertencia */}
+                        <div className='seccion_1'>
+                            <div className='advertencia'>
+                                <FiAlertCircle id='icon' />
+                                <p id='p'>{texto}</p>
+                            </div>
                         </div>
-                    </div>
 
-                    {/* Sección de imágenes (perfil y fondo) */}
-                    <div className='seccion_2'>
-                        <SubirImagen id="fondo-input" setImagen={setImagenFondo} />
-                        <img
-                            id="img_fondo"
-                            src={imagenFondo ? imagenFondo : imagen_de_fondo}
-                            alt="Imagen de fondo"
-                        />
+                        {/* Sección de imágenes (perfil y fondo) */}
+                        <div className='seccion_2'>
+                            <SubirImagen id="fondo-input" setImagen={setImagenFondo} />
+                            <img
+                                id="img_fondo"
+                                src={imagenFondo ? imagenFondo : imagen_de_fondo}
+                                alt="Imagen de fondo"
+                            />
 
-                        <SubirImagen id="perfil-input" setImagen={setImagenPerfil} />
-                        <img
-                            id="img_perfil"
-                            src={imagenPerfil ? imagenPerfil : imagen_de_perfil}
-                            alt="Imagen de perfil"
-                        />
-                    </div>
-
-                    <div className="seccion_3">
-                        <div className='descripcion'>
-                            <h4>Descripcion</h4>
-                            <textarea
-                                defaultValue={texto}
-                                name="Descripcion"
-                                maxLength="350"
-                                id="interes_musical"
-                                {...register('descripcion')}
-
-                            ></textarea>
+                            <SubirImagen id="perfil-input" setImagen={setImagenPerfil} />
+                            <img
+                                id="img_perfil"
+                                src={imagenPerfil ? imagenPerfil : imagen_de_perfil}
+                                alt="Imagen de perfil"
+                            />
                         </div>
-                    </div>
-                    <div className="seccion_4">
-                        <div className='social_media'>
-                            <h4>Contacto</h4>
-                            <div className='inputs_social'>
 
-                                <div className="social">
-                                    <TiSocialFacebookCircular id='input_icon' />
-                                    <input id='input_social' type="text" defaultValue="Facebook"   {...register('facebook')} />
-                                </div>
-                                <div className="social">
-                                    <TiSocialTwitter id='input_icon' />
-                                    <input id='input_social' type="text" defaultValue="twiter"  {...register('twitter')} />
+                        <div className="seccion_3">
+                            <div className='descripcion'>
+                                <h4>Descripcion</h4>
+                                <textarea
+                                    defaultValue={texto}
+                                    name="Descripcion"
+                                    maxLength="350"
+                                    id="interes_musical"
+                                    {...register('descripcion')}
 
-                                </div>
-                                <div className="social">
-                                    <TiSocialInstagram id='input_icon' />
-                                    <input id='input_social' type="text" defaultValue="Instagra"  {...register('instagram')} />
+                                ></textarea>
+                            </div>
+                        </div>
+                        <div className="seccion_4">
+                            <div className='social_media'>
+                                <h4>Contacto</h4>
+                                <div className='inputs_social'>
 
-                                </div>
-                                <div className="social">
-                                    <TiSocialYoutube id='input_icon' />
-                                    <input id='input_social' type="text" defaultValue="Youtube"  {...register('youtube')} />
+                                    <div className="social">
+                                        <TiSocialFacebookCircular id='input_icon' />
+                                        <input id='input_social' type="text" defaultValue="Facebook"   {...register('facebook')} />
+                                    </div>
+                                    <div className="social">
+                                        <TiSocialTwitter id='input_icon' />
+                                        <input id='input_social' type="text" defaultValue="twiter"  {...register('twitter')} />
 
-                                </div>
-                                <div className="social">
-                                    <MdEmail id='input_icon' />
-                                    <input id='input_social' type="text" defaultValue="email" {...register('email')} />
+                                    </div>
+                                    <div className="social">
+                                        <TiSocialInstagram id='input_icon' />
+                                        <input id='input_social' type="text" defaultValue="Instagra"  {...register('instagram')} />
 
+                                    </div>
+                                    <div className="social">
+                                        <TiSocialYoutube id='input_icon' />
+                                        <input id='input_social' type="text" defaultValue="Youtube"  {...register('youtube')} />
+
+                                    </div>
+                                    <div className="social">
+                                        <MdEmail id='input_icon' />
+                                        <input id='input_social' type="text" defaultValue="email" {...register('email')} />
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="seccion_5">
-                        <div className='descripcion'>
-                            <h4>Interes Musical <FaMusic /> </h4>
-                            <textarea
-                                defaultValue={texto2}
-                                name="interes_musical"
-                                maxLength="250"
-                                id="interes_musical"
-                                {...register('interes_musical')}
-                            ></textarea>
+                        <div className="seccion_5">
+                            <div className='descripcion'>
+                                <h4>Interes Musical <FaMusic /> </h4>
+                                <textarea
+                                    defaultValue={texto2}
+                                    name="interes_musical"
+                                    maxLength="250"
+                                    id="interes_musical"
+                                    {...register('interes_musical')}
+                                ></textarea>
+                            </div>
                         </div>
-                    </div>
-                    {/* Formulario para actualizar datos */}
-                    <div className="seccion_6">
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                            <div className="formulario_inputs">
-                                <div className='NombreyApellido'>
-                                    {/* Campo de Nombre */}
-                                    <R_Input form={register} nombre='Nombre' type='text' defaultValue="variable" errores={errors.Nombre} />
-                                    {/* Campo de Apellido */}
-                                    <R_Input form={register} nombre='Apellido' type='text' defaultValue="variable" errores={errors.Apellido} />   
-                                </div>
-                                {/* Componente para el teléfono */}
-                                {/* El telefono no tiene defaulValue habra que comprobrar si 
-                                    el usuario edito el campo para asi cambiarlo, esto se puede
-                                    hacer con un if(!campo) eso comprobara si la variable esta vacia
-                                    o no 
-                                */}
-                               
+                        {/* Formulario para actualizar datos */}
+                        <div className="seccion_6">
+                            <form onSubmit={handleSubmit(onSubmit)}>
+                                <div className="formulario_inputs">
+                                    <div className='NombreyApellido'>
+                                        {/* Campo de Nombre */}
+                                        <R_Input form={register} nombre='Nombre' type='text' defaultValue="variable" errores={errors.Nombre} />
+                                        {/* Campo de Apellido */}
+                                        <R_Input form={register} nombre='Apellido' type='text' defaultValue="variable" errores={errors.Apellido} />
+                                    </div>
+                                    {/* Componente para el teléfono */}
+                                    {/* El telefono no tiene defaulValue habra que comprobrar si 
+                el usuario edito el campo para asi cambiarlo, esto se puede
+                hacer con un if(!campo) eso comprobara si la variable esta vacia
+                o no 
+            */}
 
-                                {/* Campo de Edad */}
-                                <TextField
-                                    className='textfiel'
-                                    {...register('Edad', {
-                                        maxLength: 2,
-                                        validate: value => value <= 99,
-                                    })}
-                                    defaultValue={UsuarioXDefecto.Usuario.edad}
-                                    label='Edad'
-                                    type="number"
-                                    color={errors.Edad && 'error'}
+
+                                    {/* Campo de Edad */}
+                                    <TextField
+                                        className='textfiel'
+                                        {...register('Edad', {
+                                            maxLength: 2,
+                                            validate: value => value <= 99,
+                                        })}
+                                        defaultValue={UsuarioXDefecto.Usuario.edad}
+                                        label='Edad'
+                                        type="number"
+                                        color={errors.Edad && 'error'}
                                     /* sx={{
                                         
                                             '& .MuiOutlinedInput-root': {
@@ -208,88 +211,28 @@ function Perfil() {
                                                 color: 'white',
                                             },
                                     }} */
-                                />
-                               
+                                    />
 
-                                {/* Botón para enviar el formulario */}
-                            </div>
-                            <Button id="submit" type='submit' /* disabled={!isValid}  */variant="outlined">Guardar</Button>
-                            <Button id="cancel" type='' color='error' variant="outlined">Cancelar</Button>
-                        </form>
+
+                                    {/* Botón para enviar el formulario */}
+                                </div>
+                                <Button id="submit" type='submit' /* disabled={!isValid}  */ variant="outlined">Guardar</Button>
+                                <Button id="cancel" type='' color='error' variant="outlined">Cancelar</Button>
+                            </form>
+                        </div>
+
                     </div>
+                    <MenuDerechoDiv></MenuDerechoDiv>
                 </div>
-            </body>
-        </html>
+            </div>
+            <div />
+        </>
     );
 }
 
 export default Perfil;
 
-{/* <TextField
-                                        className='textfiel'
-                                        {...register('Nombre', { maxLength: 20 })}
-                                        label='Nombre'
-                                        type="text"
-                                        color={errors.Nombre && 'error'}
-                                        defaultValue={UsuarioXDefecto.Usuario.nombre}
-                                        sx={{
-                                            '& .MuiOutlinedInput-root': {
-                                                color: 'white',
-                                                '& fieldset': {
-                                                    borderColor: 'white',
-                                                },
-                                            },
-                                            '& .MuiInputLabel-root': {
-                                                color: 'white',
-                                            },
-                                        }}
-                                    /> */}
+/* 
+<div className={`ContenedorPerfil2 ${contextTheme === 'Dark' ? 'dark-theme' : 'light-theme'}`}>
 
-
-                                    {/* <TextField
-                                        className='textfiel'
-                                        {...register('Apellido', { maxLength: 20 })}
-                                        label="Apellido"
-                                        type="text"
-                                        defaultValue={UsuarioXDefecto.Usuario.apellido}
-
-                                        color={errors.Apellido && 'error'}
-                                        sx={{
-                                            '& .MuiOutlinedInput-root': {
-                                                color: 'white',
-                                                '& fieldset': {
-                                                    borderColor: 'white',
-                                                },
-                                            },
-                                            '& .MuiInputLabel-root': {
-                                                color: 'white',
-                                            },
-                                        }}
-                                    /> */}
-
-                                     {/* Campo de Gmail */}
-                                {/*  <TextField
-                                    className='textfiel'
-                                    {...register('Gmail', {
-                                        maxLength: 20,
-                                        pattern: {
-                                            value: /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
-                                            message: 'Solo se permiten correos de Gmail',
-                                        },
-                                    })}
-                                    label="Gmail"
-                                    type="email"
-                                    color={errors.Gmail ? 'error' : ''}
-                                    placeholder={UsuarioXDefecto.Usuario.gmail}
-                                    sx={{
-                                        '& .MuiOutlinedInput-root': {
-                                            color: 'white',
-                                            '& fieldset': {
-                                                borderColor: 'white',
-                                            },
-                                        },
-                                        '& .MuiInputLabel-root': {
-                                            color: 'white',
-                                        },
-                                    }}
-                                /> */}
+</div> */

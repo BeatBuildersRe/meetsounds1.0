@@ -1,6 +1,6 @@
 import MenuDerecho from '@c/Menu/Menu';
 
-const Derecha = () => {
+const MenuDerechoDiv = () => {
     return ( 
         <div className="derecha">
             <MenuDerecho></MenuDerecho>
@@ -8,4 +8,4 @@ const Derecha = () => {
      );
 }
  
-export default Derecha;
+export default MenuDerechoDiv;

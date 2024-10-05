@@ -1,0 +1,20 @@
+/* HAY CSS APLICADO DE MANERA GLOBAL EN "CONTENEDOR" Y CONTENEDOR2 */
+/* SI NECESITA CAMBIARLO CAMBIAR EL NOMBRE  */
+
+/* ESTE YA FUE CAMBIADO :) */
+/* BORRAR SI YA LO LEISTE :v */
+
+.izquierda-bandas {
+    height: auto;
+    flex: 2;
+    height: fit-content;
+    background-color: var(--color-fondo);
+    padding-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    /* Habilita el desplazamiento vertical */
+    width: 100%;
+    position: relative;
+}
