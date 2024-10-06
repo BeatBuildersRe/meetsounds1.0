@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './ads.css'
 import ads from '@assets/ads.png'
-import ads1 from '@assets/ads1.png'
+import img_lit from '@assets/img_lit.png'
 import ads2 from '@assets/ads2.png'
 const Carrusel = () => {
   // Array con las imágenes del carrusel
   const imagenes = [
     ads,
-    ads1,
+    img_lit,
     ads2
   ];
 

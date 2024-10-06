@@ -1,119 +1,76 @@
 import React, { useState } from 'react';
-import '../../css/Registro.css';
-import { FaGoogle, FaSpotify } from 'react-icons/fa';
-import BotonGoogle from '../../components/boton-google/ButtonGoogle';
 import { useNavigate } from 'react-router-dom';
-import { useForm } from "react-hook-form";
+import '../../css/Registro.css';
 
-const Registro = () => {
-  const navigate = useNavigate(); 
-
-  const { register, handleSubmit, formState: { errors } } = useForm();
+function Registro1() {
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordStrength, setPasswordStrength] = useState('');
+  
+  const navigate = useNavigate();
 
-  const validatePassword = (password) => {
-    const strength = getPasswordStrength(password);
-    setPasswordStrength(strength.text);
-    return strength.valid;
-  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  const getPasswordStrength = (password) => {
-    const lengthValid = password.length >= 12;
-    const hasUpperCase = /[A-Z]/.test(password);
-    const hasLowerCase = /[a-z]/.test(password);
-    const hasNumber = /\d/.test(password);
-    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-
-    if (lengthValid && hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar) {
-      return { text: 'Fuerte', valid: true };
+    // Validación
+    if (!email || !username || !password) {
+      alert("Todos los campos son obligatorios.");
+      return;
     }
-    if (lengthValid) {
-      return { text: 'Normal', valid: true };
-    }
-    return { text: 'Débil', valid: false };
-  };
 
-  const getStrengthClass = () => {
-    if (passwordStrength === 'Fuerte') return 'strong';
-    if (passwordStrength === 'Normal') return 'normal';
-    return 'weak';
-  };
-
-  const OnSubmit = (data) => {
-    console.log(data);
-    navigate('/registro2'); 
+    // Guardar datos en localStorage
+    const userData = { email, username, password };
+    localStorage.setItem('userData', JSON.stringify(userData));
+    // Navegar a la siguiente página
+    navigate('/registro2');
   };
 
   return (
-    <div id="cuerpo">
-      <form className="cuerpoRegistro" onSubmit={handleSubmit(OnSubmit)}>
-        <center><h1 className="titRegistro">Regístrate</h1></center>
-
-        <div className="ingreso">
-          {/* Campo de Email */}
-          <input 
-            className="formCampo" 
-            type="email" 
-            placeholder='Correo Electrónico'
-            {...register('correoElectronico', {
-              required: 'El campo Correo Electrónico es requerido',
-              maxLength: {
-                value: 100,
-                message: 'El campo Correo Electrónico debe tener como máximo 100 caracteres'
-              }
-            })} 
-          />
-          {errors.correoElectronico && <p>{errors.correoElectronico.message}</p>}
-
-          {/* Campo de Contraseña */}
-          <input 
-            className="formCampo" 
-            type="password" 
-            placeholder='Contraseña'
-            {...register('contraseña', {
-              required: 'El campo Contraseña es requerido',
-              validate: validatePassword 
-            })} 
-            onChange={(e) => {
-              setPassword(e.target.value);
-              validatePassword(e.target.value);
-            }}
-          />
-          {errors.contraseña && <p>{errors.contraseña.message}</p>}
-          
-          {/* Indicador de fortaleza de contraseña */}
-          <div className={`passwordStrength ${getStrengthClass()}`}>
-            {passwordStrength}
+    <div id="cuerpo1">
+      <div className="login-container">
+        <h1 className="titulo">Registro</h1>
+        <form onSubmit={handleSubmit} className="login-form">
+          <div className="form-group">
+            <label className="labelRegistro1" htmlFor="email">Correo Electrónico</label>
+            <input
+              className="formCampos"
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Ingresa tu correo"
+            />
           </div>
-
-          {/* Campo de Usuario */}
-          <input 
-            className="formCampo" 
-            type="text" 
-            placeholder='Nombre de usuario'
-            {...register('nombreUsuario', { required: 'El campo Nombre de usuario es requerido' })} 
-          />
-          {errors.nombreUsuario && <p>{errors.nombreUsuario.message}</p>}
-        </div>
-
-        <div className="contenedorRegistro">
-          <button className="btnRegistro" type="submit">Regístrate</button>
-        </div>
-
-        <center><p className='separador'>o</p></center>
-        <center><h3>Regístrate con:</h3></center>
-        <div className='apiRegistro'>
-          <BotonGoogle icon={FaGoogle} />
-          <BotonGoogle icon={FaSpotify} />
-        </div>
-
-        <div className="linkLogin">
-          <center><p className="textLogin">¿Ya tienes una cuenta? Inicia Sesión</p></center>
-        </div>
-      </form>
+          <div className="form-group">
+            <label className="labelRegistro1" htmlFor="username">Nombre de Usuario</label>
+            <input
+              className="formCampos"
+              type="text"
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Ingresa tu nombre de usuario"
+            />
+          </div>
+          <div className="form-group">
+            <label className="labelRegistro1" htmlFor="password">Contraseña</label>
+            <input
+              className="formCampos"
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Ingresa tu contraseña"
+            />
+          </div>
+          <div className="contenedorRegistro">
+            <button className="btnRegistro" type="submit">Siguiente</button>
+          </div>
+        </form>
+      </div>
     </div>
   );
-};
+}
 
-export default Registro;
+export default Registro1;
+

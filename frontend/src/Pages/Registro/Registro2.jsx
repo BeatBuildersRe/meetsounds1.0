@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import '../../css/Registro2.css';
-import { useForm } from "react-hook-form";
 
-
-function App() {
+function Registro2() {
   const [nombre, setNombre] = useState('');
   const [apellido, setApellido] = useState('');
   const [telefono, setTelefono] = useState('');
   const [genero, setGenero] = useState('');
   const [otroGenero, setOtroGenero] = useState('');
   const [pais, setPais] = useState('Argentina');
-  const [provincia, setProvincia] = useState(''); 
-  const [provincias, setProvincias] = useState([]); 
+  const [provincia, setProvincia] = useState('');
+  const [provincias, setProvincias] = useState([]);
+  const [userData, setUserData] = useState(null);
 
   const paisesConProvincias = {
     Argentina: ['Buenos Aires', 'Catamarca', 'Chaco', 'Chubut', 'Córdoba', 'Corrientes', 'Entre Ríos', 'Formosa', 'Jujuy', 'La Pampa', 'La Rioja', 'Mendoza', 'Misiones', 'Neuquen', 'Río Negro', 'Salta', 'San Juan', 'San Luís', 'Santa Cruz', 'Santa Fe', 'Santiago del Estero', 'Tierra del Fuego', 'Tucumán'],
@@ -21,19 +19,29 @@ function App() {
     Uruguay: ['Montevideo', 'Canelones', 'Maldonado', 'Salto', 'Paysandú']
   };
 
+  // Actualizar las provincias según el país seleccionado
   useEffect(() => {
     setProvincias(paisesConProvincias[pais]);
-    setProvincia(''); 
+    setProvincia('');
   }, [pais]);
+
+  // Obtengo los datos de registro1
+  useEffect(() => {
+    const storedUserData = localStorage.getItem('userData');
+    if (storedUserData) {
+      setUserData(JSON.parse(storedUserData));
+    }
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     const generoFinal = genero === 'otro' ? otroGenero : genero;
     const validationErrors = validateForm({ nombre, apellido, telefono, generoFinal, provincia });
 
     if (Object.keys(validationErrors).length === 0) {
       console.log(`Nombre: ${nombre}, Apellido: ${apellido}, Teléfono: ${telefono}, Género: ${generoFinal}, País: ${pais}, Provincia: ${provincia}`);
+      console.log(`Email: ${userData.email}, Usuario: ${userData.username}, Contraseña: ${userData.password}`);
     } else {
       alert(`Faltan los siguientes campos: ${Object.values(validationErrors).join(', ')}`);
     }
@@ -49,25 +57,24 @@ function App() {
     return errors;
   };
 
-  const handleSelectGenero = (selectedGenero) => {
-    setGenero(selectedGenero);
-    if (selectedGenero !== 'otro') {
-      setOtroGenero('');
-    }
-  };
-
-  const OnSubmit = (data) => {
-    console.log(data);
-    navigate('/'); 
-  };
-   
   return (
     <div id="cuerpo2">
       <div className="login-container">
         <h1 className="titulo">Datos Personales</h1>
+
+        {/* codigo de abajo para probar los datos */}
+        {/* {userData && (
+          <div className="user-data">
+            <h2>Datos de Registro Anterior</h2>
+            <p>Email: {userData.email}</p>
+            <p>Usuario: {userData.username}</p>
+            <p>Contraseña: {userData.password}</p>
+          </div>
+        )} */}
+
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group">
-            <label className="labelRegistro2" htmlFor="nombre">Nombre</label>
+            <label className="labelRegistro2" htmlFor="nombre"></label>
             <input 
               className="formCampos"
               type="text" 
@@ -78,7 +85,7 @@ function App() {
             />
           </div>
           <div className="form-group">
-            <label className="labelRegistro2" htmlFor="apellido">Apellido</label>
+            <label className="labelRegistro2" htmlFor="apellido"></label>
             <input 
               className="formCampos"
               type="text" 
@@ -89,8 +96,7 @@ function App() {
             />
           </div>
           <div className="form-group">
-          <div className="form-group">
-            <label className="labelRegistro2" htmlFor="telefono">Teléfono</label>
+            <label className="labelRegistro2" htmlFor="telefono"></label>
             <input 
               className="formCampos"
               type="tel" 
@@ -102,7 +108,6 @@ function App() {
               }}
               placeholder="Ingresa tu teléfono"
             />
-          </div>
           </div>
 
           {/* Barra de selección de género */}
@@ -132,7 +137,6 @@ function App() {
             </div>
           </div>
 
-          {/* Campo que se muestra al seleccionar 'otro' */}
           {genero === 'otro' && (
             <div className="form-group">
               <label className="labelRegistro2" htmlFor="otroGenero">Especifica tu género</label>
@@ -147,7 +151,6 @@ function App() {
             </div>
           )}
 
-          {/* Selección de país */}
           <div className="form-group">
             <label className="labelRegistro2" htmlFor="pais">País</label>
             <select 
@@ -163,7 +166,6 @@ function App() {
             </select>
           </div>
 
-          {/* Selección de provincia */}
           <div className="form-group">
             <label className="labelRegistro2" htmlFor="provincia">Provincia</label>
             <select 
@@ -179,13 +181,13 @@ function App() {
             </select>
           </div>
 
-          <button className="siguiente" type="submit">Siguiente</button>
+          <div className="contenedorRegistro">
+            <button className="btnRegistro" type="submit">Siguiente</button>
+          </div>
         </form>
       </div>
     </div>
   );
 }
 
-export default App;
-
-
+export default Registro2;
