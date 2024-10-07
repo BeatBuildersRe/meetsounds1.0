@@ -36,7 +36,7 @@ public class BandaController {
         return bandaService.crearBanda(nombreBanda, idUsuario);
     }
 
-    @MutationMapping(name = "actualizarDescripcion")
+    @MutationMapping(name = "actualizarDescripcionBanda")
     public void actualizarDescripcion(@Argument String idBanda, @Argument String descripcion){
         bandaService.actualizarDescripcion(idBanda, descripcion);
     }

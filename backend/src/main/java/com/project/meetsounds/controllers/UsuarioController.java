@@ -21,6 +21,7 @@ public class UsuarioController {
 
     @MutationMapping(name = "guardarUsuario")
     public Usuario guardarUsuario(@Argument Usuario user){
+        System.out.println("Recibido: " + user);
         return this.usuarioService.guardarUsuario(user);
     }
 

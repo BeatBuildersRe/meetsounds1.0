@@ -36,11 +36,6 @@ public class UsuarioService {
         int mes = fechaActual.getMonthValue();
         int dia = fechaActual.getDayOfMonth();
         user.setDate(LocalDate.of(year, mes, dia));
-        //Encriptar contraseña
-
-        // Generar Alias
-        //user.setAlias(String.valueOf(UUID.randomUUID()));
-
         if (this.buscarPorAlias(user.getAlias()) == null){ //Si no se encuentra ningun usuario con el mismo alias, el usuario se crea.
             return usuarioRepository.save(user);
         }else {

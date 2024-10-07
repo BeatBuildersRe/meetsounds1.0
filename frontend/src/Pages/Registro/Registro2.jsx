@@ -1,12 +1,56 @@
 import React, { useState, useEffect } from 'react';
 import '../../css/Registro2.css';
 
+const registerUser = async (userData) => {
+    const query = `
+        mutation {
+            guardarUsuario(user: {
+                nombre: "${userData.nombre}",
+                apellido: "${userData.apellido}",
+                alias: "${userData.username}",
+                email: "${userData.email}",
+                genero: "${userData.genero}",
+                contrasena: "${userData.password}",
+                telefono: "${userData.telefono}",
+                ubicacion:{
+                  pais:{
+                    nombre:"${userData.pais}"
+                  }
+                  estado:{
+                    nombre:"${userData.provincia}"
+                  }
+                }
+            }) {
+                nombre
+            }
+        }
+    `;
+
+    try {
+        const response = await fetch('http://localhost:8080/graphql', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ query })
+        });
+    
+        if (!response.ok) {
+            throw new Error('Error en la respuesta del servidor');
+        }
+    
+        const result = await response.json();
+        console.log('Respuesta del servidor:', result);
+    } catch (error) {
+        console.error('Error durante el registro:', error);
+    }
+};
+
 function Registro2() {
   const [nombre, setNombre] = useState('');
   const [apellido, setApellido] = useState('');
   const [telefono, setTelefono] = useState('');
   const [genero, setGenero] = useState('');
-  const [otroGenero, setOtroGenero] = useState('');
   const [pais, setPais] = useState('Argentina');
   const [provincia, setProvincia] = useState('');
   const [provincias, setProvincias] = useState([]);
@@ -19,13 +63,11 @@ function Registro2() {
     Uruguay: ['Montevideo', 'Canelones', 'Maldonado', 'Salto', 'Paysandú']
   };
 
-  // Actualizar las provincias según el país seleccionado
   useEffect(() => {
     setProvincias(paisesConProvincias[pais]);
     setProvincia('');
   }, [pais]);
 
-  // Obtengo los datos de registro1
   useEffect(() => {
     const storedUserData = localStorage.getItem('userData');
     if (storedUserData) {
@@ -36,49 +78,36 @@ function Registro2() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const generoFinal = genero;
-    const validationErrors = validateForm({ nombre, apellido, telefono, generoFinal, provincia });
-
-    if (Object.keys(validationErrors).length === 0) {
-      console.log(`Nombre: ${nombre}, Apellido: ${apellido}, Teléfono: ${telefono}, Género: ${generoFinal}, País: ${pais}, Provincia: ${provincia}`);
-      console.log(`Email: ${userData.email}, Usuario: ${userData.username}, Contraseña: ${userData.password}`);
-    } else {
-      alert(`Faltan los siguientes campos: ${Object.values(validationErrors).join(', ')}`);
+    if (!nombre || !apellido || !telefono || !genero || !provincia) {
+      alert('Faltan campos obligatorios.');
+      return;
     }
+
+    const finalUserData = {
+      nombre,
+      apellido,
+      telefono,
+      genero,
+      pais,
+      provincia,
+      ...userData // Incluye datos de Registro1 (email, username, password)
+    };
+
+    console.log('Datos a registrar:', finalUserData);
+    registerUser(finalUserData);  // Enviar datos al servidor
   };
 
   const handleSelectGenero = (generoSeleccionado) => {
     setGenero(generoSeleccionado);
   };
 
-  const validateForm = (data) => {
-    const errors = {};
-    if (!data.nombre) errors.nombre = 'Nombre';
-    if (!data.apellido) errors.apellido = 'Apellido';
-    if (!data.telefono) errors.telefono = 'Teléfono';
-    if (!data.generoFinal) errors.genero = 'Género';
-    if (!data.provincia) errors.provincia = 'Provincia';
-    return errors;
-  };
-
   return (
     <div id="cuerpo2">
       <div className="login-container">
         <h1 className="titulo">Datos Personales</h1>
-
-        {/* codigo de abajo para probar los datos */}
-        {/* {userData && (
-          <div className="user-data">
-            <h2>Datos de Registro Anterior</h2>
-            <p>Email: {userData.email}</p>
-            <p>Usuario: {userData.username}</p>
-            <p>Contraseña: {userData.password}</p>
-          </div>
-        )} */}
-
         <form onSubmit={handleSubmit} className="login-form">
+          {/* Campos de Registro2 */}
           <div className="form-group">
-            <label className="labelRegistro2" htmlFor="nombre"></label>
             <input 
               className="formCampos"
               type="text" 
@@ -89,7 +118,6 @@ function Registro2() {
             />
           </div>
           <div className="form-group">
-            <label className="labelRegistro2" htmlFor="apellido"></label>
             <input 
               className="formCampos"
               type="text" 
@@ -100,49 +128,26 @@ function Registro2() {
             />
           </div>
           <div className="form-group">
-            <label className="labelRegistro2" htmlFor="telefono"></label>
             <input 
               className="formCampos"
               type="tel" 
               id="telefono" 
               value={telefono} 
-              onChange={(e) => {
-                const soloNumeros = e.target.value.replace(/[^0-9]/g, '');
-                setTelefono(soloNumeros);
-              }}
+              onChange={(e) => setTelefono(e.target.value)} 
               placeholder="Ingresa tu teléfono"
             />
           </div>
-
-          {/* Barra de selección de género */}
+          
           <div className="form-group">
             <label>Género</label>
             <div className="barra-genero">
-              <div 
-                className={`third ${genero === 'masculino' ? 'active-azul' : ''}`} 
-                onClick={() => handleSelectGenero('masculino')}
-              >
-                Masculino
-              </div>
-
-              <div 
-                className={`third ${genero === 'femenino' ? 'active-rosada' : ''}`} 
-                onClick={() => handleSelectGenero('femenino')}
-              >
-                Femenino
-              </div>
-
-              <div 
-                className={`third ${genero === 'otro' ? 'active-verde' : ''}`} 
-                onClick={() => handleSelectGenero('otro')}
-              >
-                Otro
-              </div>
+              <div className={`third ${genero === 'masculino' ? 'active-azul' : ''}`} onClick={() => handleSelectGenero('masculino')}>Masculino</div>
+              <div className={`third ${genero === 'femenino' ? 'active-rosada' : ''}`} onClick={() => handleSelectGenero('femenino')}>Femenino</div>
+              <div className={`third ${genero === 'otro' ? 'active-verde' : ''}`} onClick={() => handleSelectGenero('otro')}>Otro</div>
             </div>
           </div>
 
           <div className="form-group">
-            <label className="labelRegistro2" htmlFor="pais">País</label>
             <select 
               className="formCampos" 
               id="pais" 
@@ -157,7 +162,6 @@ function Registro2() {
           </div>
 
           <div className="form-group">
-            <label className="labelRegistro2" htmlFor="provincia">Provincia</label>
             <select 
               className="formCampos" 
               id="provincia" 
@@ -172,7 +176,7 @@ function Registro2() {
           </div>
 
           <div className="contenedorRegistro">
-            <button className="btnRegistro" type="submit">Siguiente</button>
+            <button className="btnRegistro" type="submit">Registrarse</button>
           </div>
         </form>
       </div>

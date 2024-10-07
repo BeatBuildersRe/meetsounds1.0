@@ -25,12 +25,13 @@ public class Usuario {
     private String email;
     private String telefono;
     private int edad;
+    private String genero;
     private LocalDate fecha_nac;
     private Ubicacion ubicacion;
     private int c_seguidores;
     private int c_seguidos;
 
-    private List<Instrumento> misInstru;
+    private List<Instrumento> misInstru = new ArrayList<>();
     private List<Interes> misIntereses;
     private List<Banda> misBandas;
     private List<Publicacion> misPublicaciones;

@@ -54,6 +54,7 @@ type Usuario{
     email : String
     telefono : String
     edad : Int
+    genero : String
     ubicacion : Ubicacion
     c_seguidores : Int
     c_seguidos : Int
@@ -118,10 +119,9 @@ input userInput{
     telefono : String
     edad : Int
     ubicacion : UbicacionInput
+    genero : String
     #Borrar despues
-    descripcion : String
     contrasena : String
-    redes: RedesInput
 }
 
 input IactualizarUsuario{
