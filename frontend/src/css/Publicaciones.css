@@ -1,0 +1,97 @@
+*{
+    padding:0 ;
+    margin: 0;
+}
+
+.Publicaciones{
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.404);
+    margin-bottom: 6px;
+    margin-top: 6px;
+    .seccion_1{
+    
+    }
+    .seccion_2{
+        flex: 2;
+    
+ 
+        #usuario{
+            display: flex;
+            flex-direction: row;
+        
+            #usuario-info{
+                flex: 2;
+                
+                #p-nombre{
+                    font-size: 0.9em;
+                    font-weight: bold;
+                }
+                #p-id{
+                    font-size: small;
+                    color: gray;
+                }
+            }
+            #usuario-btn{
+                z-index: 1;
+                #btn-menu{
+                    /* en el componente minimenu : sx={{all: 'unset'}} */      
+                }
+            }
+        }
+
+        #usuario-texto{
+            display: flex;
+            padding-top: 2%;
+            padding-bottom: 1%;
+            font-size: 0.9rem;
+
+            #btn-mostar-mas{
+                all: unset;
+                font-weight: bold;
+            }
+        }
+
+        #usuario-media{
+            max-width: fit-content;
+            max-height: fit-content;
+
+            #img{
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+                border-radius: 15px;
+            }
+        }
+
+        #btn-reacciones{
+            display: flex;
+            
+            padding-left: 1%;
+            padding-right: 1%;
+
+            #btn_1{
+                display: flex;
+                flex-direction: row;
+                font-size: 1.2rem;
+                flex: 2;
+                
+                p{
+                    font-weight: 600;
+                    color: gray;
+                    font-size: 0.9rem;
+                    margin-left: 5px;
+                }
+            }
+            #btn_2{
+                p{
+                    font-weight: 600;
+                    color: gray;
+                    font-size: 0.9rem;
+                    margin-left: 5px;
+                }
+            }
+        }
+        
+    }
+}

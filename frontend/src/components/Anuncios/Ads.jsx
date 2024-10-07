@@ -6,8 +6,8 @@ import ads2 from '@assets/ads2.png'
 const Carrusel = () => {
   // Array con las imágenes del carrusel
   const imagenes = [
-    ads,
     img_lit,
+    ads,
     ads2
   ];
 
@@ -18,7 +18,7 @@ const Carrusel = () => {
   useEffect(() => {
     const intervalo = setInterval(() => {
       setImagenActual((prevImagenActual) => (prevImagenActual + 1) % imagenes.length);
-    }, 60000); // 60,000 milisegundos = 1 minuto
+    }, 6000); // 60,000 milisegundos = 1 minuto
 
     // Limpiar el intervalo cuando el componente se desmonta
     return () => clearInterval(intervalo);

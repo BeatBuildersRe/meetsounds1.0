@@ -2,68 +2,95 @@
 /* Animations */
 
 @-webkit-keyframes bg-scrolling-reverse {
-    100% {
-      background-position: 50px 50px;
-    }
+  100% {
+    background-position: 50px 50px;
   }
-  @-moz-keyframes bg-scrolling-reverse {
-    100% {
-      background-position: 50px 50px;
-    }
+}
+
+@-moz-keyframes bg-scrolling-reverse {
+  100% {
+    background-position: 50px 50px;
   }
-  @-o-keyframes bg-scrolling-reverse {
-    100% {
-      background-position: 50px 50px;
-    }
+}
+
+@-o-keyframes bg-scrolling-reverse {
+  100% {
+    background-position: 50px 50px;
   }
-  @keyframes bg-scrolling-reverse {
-    100% {
-      background-position: 50px 50px;
-    }
+}
+
+@keyframes bg-scrolling-reverse {
+  100% {
+    background-position: 50px 50px;
   }
-  @-webkit-keyframes bg-scrolling {
-    0% {
-      background-position: 50px 50px;
-    }
+}
+
+@-webkit-keyframes bg-scrolling {
+  0% {
+    background-position: 50px 50px;
   }
-  @-moz-keyframes bg-scrolling {
-    0% {
-      background-position: 50px 50px;
-    }
+}
+
+@-moz-keyframes bg-scrolling {
+  0% {
+    background-position: 50px 50px;
   }
-  @-o-keyframes bg-scrolling {
-    0% {
-      background-position: 50px 50px;
-    }
+}
+
+@-o-keyframes bg-scrolling {
+  0% {
+    background-position: 50px 50px;
   }
-  @keyframes bg-scrolling {
-    0% {
-      background-position: 50px 50px;
-    }
+}
+
+@keyframes bg-scrolling {
+  0% {
+    background-position: 50px 50px;
   }
-  /* Main styles */
-  bod { /* colocar la "y" de "body" */
-    
-    
-    font: 400 16px/1.5 exo, ubuntu, "segoe ui", helvetica, arial, sans-serif;
-    text-align: center;
-    /* img size is 50x50 */
-    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAIAAACRXR/mAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAABnSURBVHja7M5RDYAwDEXRDgmvEocnlrQS2SwUFST9uEfBGWs9c97nbGtDcquqiKhOImLs/UpuzVzWEi1atGjRokWLFi1atGjRokWLFi1atGjRokWLFi1af7Ukz8xWp8z8AAAA//8DAJ4LoEAAlL1nAAAAAElFTkSuQmCC") repeat 0 0;
-    -webkit-animation: bg-scrolling-reverse 8s infinite;
-    /* Safari 4+ */
-    -moz-animation: bg-scrolling-reverse 8s infinite;
-    /* Fx 5+ */
-    -o-animation: bg-scrolling-reverse 8s infinite;
-    /* Opera 12+ */
-    animation: bg-scrolling-reverse 8s infinite;
-    /* IE 10+ */
-    -webkit-animation-timing-function: linear;
-    -moz-animation-timing-function: linear;
-    -o-animation-timing-function: linear;
-    animation-timing-function: linear;
+}
+
+/* Main styles */
+.contenedor11 {
+  /* colocar la "y" de "body" */
+  height: 100%;
+
+  font: 400 16px/1.5 exo, ubuntu, "segoe ui", helvetica, arial, sans-serif;
+  text-align: center;
+  /* img size is 50x50 */
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAIAAACRXR/mAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAABnSURBVHja7M5RDYAwDEXRDgmvEocnlrQS2SwUFST9uEfBGWs9c97nbGtDcquqiKhOImLs/UpuzVzWEi1atGjRokWLFi1atGjRokWLFi1atGjRokWLFi1af7Ukz8xWp8z8AAAA//8DAJ4LoEAAlL1nAAAAAElFTkSuQmCC") repeat 0 0;
+  -webkit-animation: bg-scrolling-reverse 8s infinite;
+  /* Safari 4+ */
+  -moz-animation: bg-scrolling-reverse 8s infinite;
+  /* Fx 5+ */
+  -o-animation: bg-scrolling-reverse 8s infinite;
+  animation: bg-scrolling-reverse 8s infinite;
+  -webkit-animation-timing-function: linear;
+  -moz-animation-timing-function: linear;
+  -o-animation-timing-function: linear;
+  animation-timing-function: linear;
+  /* Opera 12+ */
+  /* IE 10+ */
+}
+
+
+:root {
+
+  --color-fondo: #e8e8e8;
+  --color-fondoDiv: #d8d8d8;
+  --color-fondoDivHover: #c4c4c4;
+  --color-texto: #000000;
+  --color-btn: black;
+
+  #Dark {
+      --color-fondoDiv: #232224;
+      --color-texto: #ffffff;
+      --color-btn: black;
+      --color-fondo: #18191a;
+
+      --color-fondoDivHover: #2d2c2e;
   }
   
-
+}
 
 
 
@@ -81,163 +108,174 @@
 
 
 .contenedor {
-    backdrop-filter: blur(2px);
-    border: 1px solid #222;
-    padding: 10px;
-    border-radius: 25px;
-    margin: 50px;
-    display: flex;
-    flex-direction: column;
+  backdrop-filter: blur(2px);
+  border: 1px solid #222;
+  padding: 10px;
+  border-radius: 25px;
+  margin: 50px;
+  display: flex;
+  flex-direction: column;
 }
 
 .contenedor-logo {
-    display: flex;
-    justify-content: start;
-    align-items: center;
+  display: flex;
+  justify-content: start;
+  align-items: center;
 }
 
 .contenedor-formulario-imagen {
-    display: flex;
-    flex-direction: column; /* Cambiar a columna en pantallas pequeñas */
-    align-items: center;
-    margin: 1%;
+  display: flex;
+  flex-direction: column;
+  /* Cambiar a columna en pantallas pequeñas */
+  align-items: center;
+  margin: 1%;
 }
 
 .contenedor-social {
-    display: flex;
-    flex-direction: column;
-    gap: 10px; 
-    margin-bottom: 5px;
-    
-}
-.ingreso {
-    max-width: 100%;
-  width: 100%;
-  margin: 0 auto; /* Centra el contenedor horizontalmente */
   display: flex;
   flex-direction: column;
-  align-items: center; /* Asegura que los hijos estén centrados */
-  justify-content: center; /* Centra verticalmente si es necesario */
-    
-  }
+  gap: 10px;
+  margin-bottom: 5px;
+
+}
+
+.ingreso {
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto;
+  /* Centra el contenedor horizontalmente */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Asegura que los hijos estén centrados */
+  justify-content: center;
+  /* Centra verticalmente si es necesario */
+
+}
+
 .row {
-    display: flex;
-    gap: 10px; /* Espacio entre elementos en la fila */
+  display: flex;
+  gap: 10px;
+  /* Espacio entre elementos en la fila */
 }
 
 .wrapper {
-    width: 420px;
-    margin: 1%;
-    color: #111;
-    border-radius: 10px;
-    padding: 30px 40px;
-    transition: 0.3s ease;
+  width: 420px;
+  margin: 1%;
+  color: black;
+  border-radius: 10px;
+  padding: 30px 40px;
+  transition: 0.3s ease;
+  
 }
 
 .wrapper h1 {
-    font-size: 36px;
-    text-align: center;
-    margin-bottom: 10px;
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 10px;
+  
 }
 
 .memoria {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    font-size: 12px;
-    color: #222;
-    text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 12px;
+  color: #222;
+  text-decoration: none;
 }
 
 .memoria a {
-    font-size: 12px;
-    color: #222;
-    text-decoration: none;
+  font-size: 12px;
+  color: #222;
+  text-decoration: none;
 }
 
 .memoria a:hover {
-    color: #111;
-    text-decoration: underline;
+  color: #111;
+  text-decoration: underline;
 }
 
 .relleno {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .wrapper .register-link {
-    font-size: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 20px 0 15px;
-    width: 80%;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0 15px;
+  width: 80%;
 }
 
 .terminos-condiciones {
-    width: 95%;
-    font-size: 11px;
-    color: #333;
+  width: 95%;
+  font-size: 11px;
+  color: #333;
 }
 
 .terminos-condiciones a {
-    text-decoration: none;
-    color: #000;
+  text-decoration: none;
+  color: #000;
 }
 
 .terminos-condiciones a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 /* Media Queries para Responsividad */
 
 @media (max-width: 768px) {
-    .wrapper {
-        width: 90%;
-        padding: 20px;
-    }
+  .wrapper {
+    width: 90%;
+    padding: 20px;
+  }
 
-    .wrapper h1 {
-        font-size: 28px;
-    }
+  .wrapper h1 {
+    font-size: 28px;
+  }
 
-    .contenedor-logo {
-        justify-content: center; /* Centrar logo en pantallas pequeñas */
-    }
-    
-    .contenedor-formulario-imagen {
-        flex-direction: column; /* Cambiar a columna */
-        align-items: center;
-    }
+  .contenedor-logo {
+    justify-content: center;
+    /* Centrar logo en pantallas pequeñas */
+  }
 
-    .memoria {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+  .contenedor-formulario-imagen {
+    flex-direction: column;
+    /* Cambiar a columna */
+    align-items: center;
+  }
 
-    .memoria a {
-        margin-top: 5px;
-    }
+  .memoria {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .memoria a {
+    margin-top: 5px;
+  }
 }
 
 @media (max-width: 480px) {
-    .wrapper {
-        width: 100%;
-        padding: 15px;
-    }
+  .wrapper {
+    width: 100%;
+    padding: 15px;
+  }
 
-    .wrapper h1 {
-        font-size: 24px;
-    }
- 
-    .memoria {
-        font-size: 10px;
-    }
+  .wrapper h1 {
+    font-size: 24px;
+  }
 
-    .terminos-condiciones {
-        font-size: 9px;
-    }
+  .memoria {
+    font-size: 10px;
+  }
+
+  .terminos-condiciones {
+    font-size: 9px;
+  }
 }

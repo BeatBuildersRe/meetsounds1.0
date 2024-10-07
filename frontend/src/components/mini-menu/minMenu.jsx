@@ -8,6 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import Stack from '@mui/material/Stack';
 import { FcMenu } from "react-icons/fc";
+import { AiOutlineMenu } from "react-icons/ai";
 
 export default function MenuListComposition() {
   const [open, setOpen] = React.useState(false);
@@ -55,6 +56,7 @@ export default function MenuListComposition() {
           aria-expanded={open ? 'true' : undefined}
           aria-haspopup="true"
           onClick={handleToggle}
+          sx={{all:'unset' }}
         >
           <FcMenu id="btn-menu" />
         </Button>
