@@ -25,7 +25,7 @@ const Configuracion = () => {
                         <R_Card2 to="perfil" text="Perfil" icon={<CiUser />} />
                         <R_Card2 to="seguridad" text="Seguridad" icon={<CiLock/>} />
                         <R_Card2 to="/login" text="Cerrar Sesión" icon={<CiLogout />} />
-                        <R_Card2 to="/" text="Apariencia" icon={<CiLight />} />
+                        <R_Card2 to="apariencia" text="Apariencia" icon={<CiLight />} />
 
                     </div>
 

@@ -9,6 +9,7 @@ import Bandas from './Pages/Bandas/Bandas';
 import Configuracion from './Pages/Configuracion/Configuracion';
 import Perfil from './Pages/Configuracion/Perfil/Perfil';
 import Seguridad from './Pages/Configuracion/Seguridad/Seguridad';
+import Apariencia from './Pages/Configuracion/Apariencia/Apariencia';
 import Error_404 from './Pages/Error/Error-404';
 import Login from './Pages/Login/LoginForm';
 import Registro from './Pages/Registro/Registro';
@@ -43,6 +44,7 @@ function App() {
           <Route path="Configuracion" element={<Configuracion />} />
           <Route path="configuracion/perfil" element={<Perfil />} />
           <Route path="configuracion/seguridad" element={<Seguridad />} />
+          <Route path="configuracion/apariencia" element={<Apariencia />} />
           <Route path="cuenta" element={<Cuenta />} />
           <Route path="cuenta/:id" element={<Cuenta />} />
         </Route>
