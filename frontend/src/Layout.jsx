@@ -70,13 +70,13 @@ const Layout = () => {
         </Link>
       </Box> */}
 
-
-        </div>
-        <div className='Perfil'>
+<div className='Perfil'>
           <button style={{all:'none'}} onClick={handleClick}>
             <Avatar />
           </button>
         </div>
+        </div>
+        
       </div>
 
       {/* App.jsx es para manejas las rutas, y Layout es el "menu" que permite 
