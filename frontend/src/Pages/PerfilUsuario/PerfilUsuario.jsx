@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useThemeContext } from '../../context/ThemeContext';
-import imgFondo from '../../img/ract.jpg';
+import imgFondo from '../../img/react.jpg';
 import fondo from '@assets/fondo2.png';
 import perfil from '@assets/perfil2.png';
 import imgPerfil from '../../img/perfil_imagen.png';
@@ -14,7 +14,6 @@ import CrearPublicacion from '../../components/Crear-Publicacion/CrearPublicacio
 import SeguirDores from './components/seguir_dores';
 import './CssPefilUsuario.css';
 import MenuDerecho from '@c/Menu/Menu';
-
 import { FcAudioFile } from "react-icons/fc";
 import { FcCamera } from "react-icons/fc";
 import { FcAlphabeticalSortingAz } from "react-icons/fc";
@@ -23,7 +22,6 @@ import { FcGallery } from "react-icons/fc";
 import { FcMusic } from "react-icons/fc";
 import { FcPlus } from "react-icons/fc";
 import { useParams } from 'react-router-dom';
-import { style } from '@mui/system';
 
 const PerfilUsuario = () => {
     const { id } = useParams(); // Extrae el parámetro "id" de la URL
