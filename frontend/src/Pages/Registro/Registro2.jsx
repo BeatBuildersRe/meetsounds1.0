@@ -36,7 +36,7 @@ function Registro2() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const generoFinal = genero === 'otro' ? otroGenero : genero;
+    const generoFinal = genero;
     const validationErrors = validateForm({ nombre, apellido, telefono, generoFinal, provincia });
 
     if (Object.keys(validationErrors).length === 0) {
@@ -45,6 +45,10 @@ function Registro2() {
     } else {
       alert(`Faltan los siguientes campos: ${Object.values(validationErrors).join(', ')}`);
     }
+  };
+
+  const handleSelectGenero = (generoSeleccionado) => {
+    setGenero(generoSeleccionado);
   };
 
   const validateForm = (data) => {
@@ -136,20 +140,6 @@ function Registro2() {
               </div>
             </div>
           </div>
-
-          {genero === 'otro' && (
-            <div className="form-group">
-              <label className="labelRegistro2" htmlFor="otroGenero">Especifica tu género</label>
-              <input 
-                className="formCampos"
-                type="text" 
-                id="otroGenero" 
-                value={otroGenero} 
-                onChange={(e) => setOtroGenero(e.target.value)} 
-                placeholder="Especifica tu género"
-              />
-            </div>
-          )}
 
           <div className="form-group">
             <label className="labelRegistro2" htmlFor="pais">País</label>
