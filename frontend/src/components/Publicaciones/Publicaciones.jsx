@@ -5,24 +5,27 @@ import '@css/Publicaciones.css'
 import MenuListComposition from '@c/mini-menu/minMenu';
 import TextoConVerMas from './TextoVerMas';
 import Avatar from '@mui/material/Avatar';
+import ImageGallery from './Galeria';
 import Reacciones from './Reacciones';
 /* Iconos */
 import { AiOutlineMenu } from "react-icons/ai";
 import { TbMusicHeart } from "react-icons/tb";
 import { CiRead } from "react-icons/ci";
-
-
 import { TiMessages } from "react-icons/ti";
 import { VscShare } from "react-icons/vsc";
-import { IoIosSave } from "react-icons/io";
-
+/* Imagenes */
 import img from '@public/perfill.png'
 import img_media from '@public/ract.jpg'
+import imgTest from '@public/imgtest.png'
+import imgTest2 from '@public/imgtest2.png'
+import imgTest3 from '@public/imgtest3.png'
+import imgTest4 from '@public/imgtest4.png'
 
 const Publicaciones = () => {
-    const textoLargo = "Este es el texto";
+    const textoLargo = "Este es el texto que es muy largo y sale el cartel de 'VER MAS' se puede configura la longitud de caracterres que queres que muestre y tambien sale el bton de mostar menos, que largo aun no sale jajaj, ya me canse de escribir XD, aaah ahi esta, taraaaan! ta zarpado no? yo se que si UwU y se expande y todo me quedaron guchi las imagenes tambien ";
+    const media = [imgTest, imgTest2]
 
-
+    
     return (
         <>
             <div className="Publicaciones">
@@ -46,7 +49,7 @@ const Publicaciones = () => {
                         <TextoConVerMas texto={textoLargo} maxLength={200} />
                     </div>
                     <div id="usuario-media">
-                        <img id='img' src={img_media} alt="" />
+                        <ImageGallery></ImageGallery>
                     </div>
                     <div id='btn-reacciones'>
                         <div id='btn_1'>
