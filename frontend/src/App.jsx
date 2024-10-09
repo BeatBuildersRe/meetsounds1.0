@@ -15,22 +15,16 @@ import Login from './Pages/Login/LoginForm';
 import Registro from './Pages/Registro/Registro';
 import Registro2 from './Pages/Registro/Registro2';
 import Cuenta from './Pages/PerfilUsuario/PerfilUsuario'
-import ReactSwitch from 'react-switch';
+
 
 
 import './App.css';
-import { useThemeContext } from './context/ThemeContext';
+
 
 function App() {
-  const { contextTheme, setContextTheme } = useThemeContext();
-
-  // Función para manejar el cambio de tema
-  const handleSwitch = () => {
-    setContextTheme((prevTheme) => (prevTheme === "Light" ? "Dark" : "Light"));
-  };
-
+ 
   return (
-    <div id={contextTheme}>
+    <div>
       {/* El valor de checked depende directamente de contextTheme */}
     
 
@@ -55,10 +49,7 @@ function App() {
         <Route path="/registro2" element={<Registro2 />} />
         <Route path="*" element={<Error_404 />} />
       </Routes>
-      <ReactSwitch className='Modo-Oscuro'
-        onChange={handleSwitch} 
-        checked={contextTheme === "Dark"} 
-      />
+      
     </div>
   );
 }
