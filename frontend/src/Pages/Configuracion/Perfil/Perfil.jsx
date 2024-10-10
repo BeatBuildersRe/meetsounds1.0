@@ -150,7 +150,7 @@ function Perfil() {
                                     <button id='btn-editar' onClick={MostrarEditarImg}>
 
 
-                                        {EditarImagen ? 'Ocultar Componente' : <TbEdit id='icon-edit' />}
+                                        {EditarImagen ? <TbEdit id='icon-edit' /> : <TbEdit id='icon-edit' />}
                                     </button>
                                     {EditarImagen && <UploadAvatar btn_cancelar={MostrarEditarImg} onImageSave={handleImageSave} />}
 
