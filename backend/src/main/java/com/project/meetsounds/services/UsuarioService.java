@@ -43,6 +43,18 @@ public class UsuarioService {
         }
     } // Hay que actualizar este metodo de un modo parecido al de actualizarUsuario
 
+    public boolean loginUsuario(String username, String contrasena) {
+        Optional<Usuario> usuarioOpt = usuarioRepository.findByAlias(username);
+
+        if (usuarioOpt.isPresent()) {
+            Usuario usuario = usuarioOpt.get();
+            // Aquí puedes implementar un hash o algún algoritmo de seguridad para comparar las contraseñas
+            return usuario.getContrasena().equals(contrasena);
+        }
+
+        return false;
+    }
+
     public Optional<Usuario> buscarUsuarioPorId(String id) {
         return this.usuarioRepository.findById(id);
     }
@@ -70,7 +82,7 @@ public class UsuarioService {
         usuarioRepository.deleteById(id);
     }
 
-    public Usuario buscarPorAlias(String alias) {
+    public Optional<Usuario> buscarPorAlias(String alias) {
         return this.usuarioRepository.findByAlias(alias);
     }
 

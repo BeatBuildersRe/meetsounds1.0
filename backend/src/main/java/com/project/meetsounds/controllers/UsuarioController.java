@@ -46,7 +46,7 @@ public class UsuarioController {
     }
 
     @QueryMapping(name = "buscarPorAlias")
-    public Usuario buscarPorAlias(@Argument String alias){
+    public Optional<Usuario> buscarPorAlias(@Argument String alias){
         return this.usuarioService.buscarPorAlias(alias);
     }
 

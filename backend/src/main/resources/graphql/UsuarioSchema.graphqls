@@ -56,6 +56,8 @@ type Usuario{
     edad : Int
     genero : String
     ubicacion : Ubicacion
+    longitud: Float
+    latitud: Float
     c_seguidores : Int
     c_seguidos : Int
     misInstru : [Instrumento]

@@ -1,5 +1,7 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { useThemeContext } from './context/ThemeContext';
+import { AuthContext } from './js/otro/AuthContext'; // Asegúrate de importar el contexto de autenticación
 import Layout from './Layout';
 import Home from './Pages/Home/Home';
 import Busqueda from './Pages/Busqueda/Busqueda';
@@ -14,22 +16,25 @@ import Error_404 from './Pages/Error/Error-404';
 import Login from './Pages/Login/LoginForm';
 import Registro from './Pages/Registro/Registro';
 import Registro2 from './Pages/Registro/Registro2';
+import ReactSwitch from 'react-switch';
 import Cuenta from './Pages/PerfilUsuario/PerfilUsuario'
-
-
-
 import './App.css';
-
+import { useNavigate } from 'react-router-dom';
 
 function App() {
- 
-  return (
-    <div>
-      {/* El valor de checked depende directamente de contextTheme */}
-    
+  const { contextTheme, setContextTheme } = useThemeContext();
+  const { isAuthenticated } = useContext(AuthContext); // Usar el contexto de autenticación
+  const navigate = useNavigate();
 
+  // Función para manejar el cambio de tema
+  const handleSwitch = () => {
+    setContextTheme((prevTheme) => (prevTheme === "Light" ? "Dark" : "Light"));
+  };
+
+  return (
+    <div id={contextTheme}>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={isAuthenticated ? <Layout /> : <Navigate to="/login" />}>
           <Route path="busqueda" element={<Busqueda />} />
           <Route path="/" element={<Home />} />
           <Route path="notificaciones" element={<Notificaciones />} />
@@ -43,13 +48,20 @@ function App() {
           <Route path="cuenta/:id" element={<Cuenta />} />
         </Route>
 
-        {/* Ruta independiente para el login y el registro */}
-        <Route path="/login" element={<Login />} />
+        {/* Ruta para el login, redirigir si ya está autenticado */}
+        <Route 
+          path="/login" 
+          element={isAuthenticated ? <Navigate to="/" /> : <Login />} 
+        />
         <Route path="/registro" element={<Registro />} />
         <Route path="/registro2" element={<Registro2 />} />
         <Route path="*" element={<Error_404 />} />
       </Routes>
-      
+      <ReactSwitch 
+        className='Modo-Oscuro'
+        onChange={handleSwitch} 
+        checked={contextTheme === "Dark"} 
+      />
     </div>
   );
 }
