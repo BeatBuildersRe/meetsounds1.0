@@ -49,6 +49,8 @@ type Usuario{
     #aqui faltan las fechas
     id : String
     nombre : String
+    fotoPerfilUrl : String
+    fotoPortadaUrl : String
     apellido : String
     alias : String
     email : String
@@ -122,7 +124,6 @@ input userInput{
     edad : Int
     ubicacion : UbicacionInput
     genero : String
-    #Borrar despues
     contrasena : String
 }
 

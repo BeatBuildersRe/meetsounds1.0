@@ -10,10 +10,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,6 +33,7 @@ public class UsuarioService {
         int mes = fechaActual.getMonthValue();
         int dia = fechaActual.getDayOfMonth();
         user.setDate(LocalDate.of(year, mes, dia));
+        user.setAlias(user.getAlias().toLowerCase(Locale.ROOT));
         if (!(usuarioRepository.findByAlias(user.getAlias()).isPresent() || usuarioRepository.findByEmail(user.getEmail()).isPresent())){ //Si no se encuentra ningun usuario con el mismo alias, el usuario se crea.
             return usuarioRepository.save(user);
         }else {

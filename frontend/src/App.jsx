@@ -19,17 +19,20 @@ import Registro2 from './Pages/Registro/Registro2';
 import ReactSwitch from 'react-switch';
 import Cuenta from './Pages/PerfilUsuario/PerfilUsuario'
 import './App.css';
-import { useNavigate } from 'react-router-dom';
 
 function App() {
   const { contextTheme, setContextTheme } = useThemeContext();
   const { isAuthenticated } = useContext(AuthContext); // Usar el contexto de autenticación
-  const navigate = useNavigate();
 
   // Función para manejar el cambio de tema
   const handleSwitch = () => {
     setContextTheme((prevTheme) => (prevTheme === "Light" ? "Dark" : "Light"));
   };
+
+  if (isAuthenticated === null) {
+    // Mostrar pantalla de carga si la autenticación aún no se ha determinado
+    return <div>Cargando...</div>;
+  }
 
   return (
     <div id={contextTheme}>
@@ -44,8 +47,9 @@ function App() {
           <Route path="configuracion/perfil" element={<Perfil />} />
           <Route path="configuracion/seguridad" element={<Seguridad />} />
           <Route path="configuracion/apariencia" element={<Apariencia />} />
-          <Route path="cuenta" element={<Cuenta />} />
-          <Route path="cuenta/:id" element={<Cuenta />} />
+          
+          {/* Esta ruta maneja perfiles de usuarios */}
+          <Route path="cuenta/:alias" element={<Cuenta />} />
         </Route>
 
         {/* Ruta para el login, redirigir si ya está autenticado */}
@@ -53,6 +57,7 @@ function App() {
           path="/login" 
           element={isAuthenticated ? <Navigate to="/" /> : <Login />} 
         />
+        
         <Route path="/registro" element={<Registro />} />
         <Route path="/registro2" element={<Registro2 />} />
         <Route path="*" element={<Error_404 />} />

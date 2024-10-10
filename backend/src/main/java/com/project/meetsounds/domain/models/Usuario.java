@@ -16,7 +16,8 @@ import java.util.List;
 @Document(collection = "user")
 public class Usuario {
     private String id;
-    private String fotoUrl;
+    private String fotoPerfilUrl;
+    private String fotoPortadaUrl;
     private String nombre;
     private String apellido;
     private String nombreUsuario;

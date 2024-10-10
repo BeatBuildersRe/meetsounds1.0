@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';  // Asegúrate de importar useEffect
+import React, { useState, useEffect } from 'react';
 import { useThemeContext } from '../../context/ThemeContext';
 import imgFondo from '../../img/react.jpg';
 import imgPerfil from '../../img/perfil_imagen.png';
@@ -10,23 +10,22 @@ import SeguirDores from './components/seguir_dores';
 import './CssPefilUsuario.css';
 import MenuDerecho from '@c/Menu/Menu';
 import { FcAudioFile, FcCamera, FcAlphabeticalSortingAz, FcFilmReel, FcGallery, FcMusic, FcPlus } from "react-icons/fc";
-import { useParams } from 'react-router-dom';
-import Cookies from 'js-cookie';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const PerfilUsuario = () => {
+  const { alias } = useParams();  // Extrae el alias de la URL
+  const navigate = useNavigate();  // Para redirigir
   const [userData, setUserData] = useState({
     nombre: '',
     apellido: '',
+    alias: '',
     c_seguidores: '',
     c_seguidos: '',
     descripcion: ''
-  });  // Mueve el estado aquí, dentro del componente
+  });
 
   useEffect(() => {
-    const alias = Cookies.get('alias');  // Obtener el alias de la cookie
-
     if (alias) {
-      // Realizamos la consulta a la API de GraphQL para obtener los datos del usuario
       const fetchUserData = async () => {
         try {
           const response = await fetch("http://localhost:8080/graphql", {
@@ -40,6 +39,7 @@ const PerfilUsuario = () => {
                   buscarPorAlias(alias: "${alias}") {
                     nombre
                     apellido
+                    alias
                     c_seguidores
                     c_seguidos
                     descripcion
@@ -50,49 +50,39 @@ const PerfilUsuario = () => {
           });
 
           const result = await response.json();
+
+          // Verificamos si el usuario existe
           if (result.data && result.data.buscarPorAlias) {
             setUserData(result.data.buscarPorAlias);
           } else {
-            console.error("Error al obtener datos del usuario");
+            // Si el usuario no existe, redirigir a la página 404
+            navigate('/404');
           }
         } catch (error) {
           console.error("Error al conectar con el servidor", error);
+          navigate('/404'); // Redirigir también en caso de error en la conexión
         }
       };
 
       fetchUserData();
     } else {
-      console.log("Alias no encontrado en las cookies.");
+      console.log("Alias no encontrado en la URL.");
+      navigate('/404'); // Redirigir si no hay alias
     }
-  }, []);  // useEffect se ejecuta al montar el componente
+  }, [alias, navigate]);
 
-  const { id } = useParams();  // Extrae el parámetro "id" de la URL
-  const Usuarios = {
-    1: {
-      Nombre: userData.nombre + " " + userData.apellido,
-      Descripcion: userData.descripcion,
-      ImgFondo: imgFondo,
-      ImgPerfil: imgPerfil,
-      Seguidores: userData.c_seguidores,
-      Seguidos: userData.c_seguidos,
-      Amigo: true
-    }
-  };
+  const { contextTheme } = useThemeContext();  
+  const [alignment, setAlignment] = useState('web');  
+  const [isDivVisible, setIsDivVisible] = useState(false);  
+  const [isDivVisible2, setIsDivVisible2] = useState(false);  
+  const [isDivVisible3, setIsDivVisible3] = useState(false);  
 
-  const { contextTheme } = useThemeContext();  // Usar el contexto de tema
-  const [alignment, setAlignment] = useState('web');  // Estado para el ToggleButtonGroup
-  const [isDivVisible, setIsDivVisible] = useState(false);  // Estado para la visibilidad del primer div
-  const [isDivVisible2, setIsDivVisible2] = useState(false);  // Estado para la visibilidad del segundo div
-  const [isDivVisible3, setIsDivVisible3] = useState(false);  // Estado para la visibilidad del segundo div
-
-  // Maneja el cambio en el ToggleButtonGroup
   const handleChange = (event, newAlignment) => {
     if (newAlignment !== null) {
       setAlignment(newAlignment);
     }
   };
 
-  // Renderiza el componente basado en el valor seleccionado
   const renderComponent = () => {
     switch (alignment) {
       case 'web': return <h1>1</h1>;
@@ -102,7 +92,6 @@ const PerfilUsuario = () => {
     }
   };
 
-  // Alterna la visibilidad del div
   const handleImageClick = () => setIsDivVisible(!isDivVisible);
   const handleImageClick2 = () => setIsDivVisible2(!isDivVisible2);
   const handleImageClick3 = () => setIsDivVisible3(!isDivVisible3);
@@ -110,32 +99,31 @@ const PerfilUsuario = () => {
   return (
     <div className="Contenedor-perfil-usuario">
       <div className="izquierda-perfil-usuario">
-        {/* Componentes de fondo y perfil */}
         <CrearPublicacion condicion={isDivVisible3} funcion={handleImageClick3} />
         <div className='seccion-1'>
           <img
             id="img-fondo"
             onClick={handleImageClick}
-            src={Usuarios[id].ImgFondo}
+            src={imgFondo}  
             alt="Imagen de fondo"
           />
           <img
             id="img-perfil"
             onClick={handleImageClick2}
-            src={Usuarios[id].ImgPerfil}
+            src={imgPerfil}  
             alt="Imagen de perfil"
           />
           <MenuListComposition />
-          <p id="nombre">{Usuarios[id].Nombre}</p>
+          <p id="nombre">{userData.nombre} {userData.apellido}</p> 
           <SeguirDores
-            seguidores={Usuarios[id].Seguidores}
-            seguidos={Usuarios[id].Seguidos}
-            amigo={Usuarios[id].Amigo}
+            seguidores={userData.c_seguidores}
+            seguidos={userData.c_seguidos}
+            amigo={true}  
             condicion={false}
           />
         </div>
         <div className="seccion-2">
-          <p>{Usuarios[id].Descripcion}</p>
+          <p>{userData.descripcion}</p> 
         </div>
         <div className="seccion-3">
           <div className='btn-nueva-publicacion'>
@@ -167,8 +155,7 @@ const PerfilUsuario = () => {
         </div>
       </div>
       <div className="derecha-perfil-usuario">
-        {/* Aquí puedes poner contenido para la parte izquierda */}
-        <MenuDerecho></MenuDerecho>
+        <MenuDerecho />
       </div>
     </div>
   );

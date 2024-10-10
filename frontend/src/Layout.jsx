@@ -16,16 +16,19 @@ import { CiCirclePlus } from "react-icons/ci";
 import MeetLogo from './components/logotipo/Logo'
 import Avatar from './components/avatar/Avatar'
 import ButtonPlus from './components/botones/BotonCrear'
+import Cookies from 'js-cookie';
 
 // Componentes de página
 const Messages = () => <div>Esta es la página de mensajes</div>;
 const Settings = () => <div>Esta es la página de configuración</div>;
-
+const alias = Cookies.get('alias');
 const Layout = () => {
   const navigate = useNavigate();
 
+  
   const handleClick = () => {
-    navigate('/cuenta/1'); // Navega a la página del producto con ID 123
+    
+    navigate('/cuenta/'+alias);// Navega a la página del producto con ID 123
   };
   const { contextTheme, setContextTheme } = useThemeContext();
 
@@ -51,7 +54,7 @@ const Layout = () => {
                 <li id='Config'><Link to="/configuracion"><ButtonMenu icon={IoSettingsSharp} /><p>Configuración</p></Link></li>
               </ul>
             </nav>
-          
+          {console.log(alias)}
 
 
 
