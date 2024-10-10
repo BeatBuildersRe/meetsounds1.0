@@ -33,7 +33,7 @@ public class UsuarioService {
         int mes = fechaActual.getMonthValue();
         int dia = fechaActual.getDayOfMonth();
         user.setDate(LocalDate.of(year, mes, dia));
-        user.setAlias(user.getAlias().toLowerCase(Locale.ROOT));
+        user.setAlias(user.getAlias());
         if (!(usuarioRepository.findByAlias(user.getAlias()).isPresent() || usuarioRepository.findByEmail(user.getEmail()).isPresent())){ //Si no se encuentra ningun usuario con el mismo alias, el usuario se crea.
             return usuarioRepository.save(user);
         }else {

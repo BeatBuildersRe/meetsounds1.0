@@ -51,7 +51,7 @@ const LoginForm = () => {
       if (data === "Login exitoso") {
         console.log("Login exitoso, redirigiendo...");
         setMensajeError("");
-        const alias = username.toLowerCase;  // Cambia esto para que sea el alias real del usuario
+        const alias = username;  // Cambia esto para que sea el alias real del usuario
         Cookies.set('alias', alias, { expires: 7 }); // Guarda el alias en una cookie con duración de 7 días
         setIsAuthenticated(true);
         navigate("/");  // Redirige al usuario a la página principal
