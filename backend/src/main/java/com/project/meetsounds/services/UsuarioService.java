@@ -36,12 +36,12 @@ public class UsuarioService {
         int mes = fechaActual.getMonthValue();
         int dia = fechaActual.getDayOfMonth();
         user.setDate(LocalDate.of(year, mes, dia));
-        if (this.buscarPorAlias(user.getAlias()) == null){ //Si no se encuentra ningun usuario con el mismo alias, el usuario se crea.
+        if (!(usuarioRepository.findByAlias(user.getAlias()).isPresent() || usuarioRepository.findByEmail(user.getEmail()).isPresent())){ //Si no se encuentra ningun usuario con el mismo alias, el usuario se crea.
             return usuarioRepository.save(user);
         }else {
-            throw new IllegalArgumentException("El alias " + user.getAlias() + " ya existe.");
+            throw new IllegalArgumentException("El alias " + user.getAlias() + " ya existe. O el email ya existe "+ user.getEmail());
         }
-    } // Hay que actualizar este metodo de un modo parecido al de actualizarUsuario
+    }// Hay que actualizar este metodo de un modo parecido al de actualizarUsuario
 
     public boolean loginUsuario(String username, String contrasena) {
         Optional<Usuario> usuarioOpt = usuarioRepository.findByAlias(username);
