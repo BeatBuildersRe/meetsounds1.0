@@ -19,18 +19,23 @@ public class PublicacionController {
 
 
 
-    @QueryMapping
+    @QueryMapping(name = "listarPublicaciones")
     public List<Publicacion> listarPublicaciones(){
         return this.publicacionService.listarPublicaciones();
     }
 
-    @MutationMapping
+    @QueryMapping(name = "buscarPublicacionPorId")
+    public Publicacion buscarPublicacionPorId(String id){
+        return this.publicacionService.buscarPublicacionPorId(id);
+    }
+
+    @MutationMapping(name = "crearPublicacion")
     public Publicacion crearPublicacion(@Argument String id, @Argument String descripcion, @Argument MultipartFile file){
         return publicacionService.crearPublicacion(id, descripcion, file);
     }
 
-    @MutationMapping
-    public void eliminarPublicacion(@Argument String idUsuario, @Argument String idPublicacion){
+    @MutationMapping(name = "eliminarPublicacionPorId")
+    public void eliminarPublicacionPorId(@Argument String idUsuario, @Argument String idPublicacion){
         publicacionService.eliminarPublicacion(idUsuario, idPublicacion);
     }
 }
