@@ -69,12 +69,18 @@ public class UsuarioService {
         return users;
     }
 
-    public List<Usuario> buscarUsuarioPorTexto(String text) {
-        List<Usuario> usuarios = new ArrayList<>();
-        usuarios.addAll(this.usuarioRepository.findByNombre(text));
-        usuarios.addAll(this.usuarioRepository.findByApellido(text));
-        return usuarios;
+    public Set<Usuario> buscarUsuarioPorTexto(String text) {
+
+        if (text == null || text.isEmpty()) {
+            return Collections.emptySet(); // O puedes lanzar una excepción según tu caso
+        }
+        Set<Usuario> usuarios = new HashSet<>();
+        usuarios.addAll(usuarioRepository.findByNombre(text));
+        usuarios.addAll(usuarioRepository.findByApellido(text));
+        usuarios.addAll(usuarioRepository.findByAliasBrrBusqueda(text));
+        return usuarios.stream().limit(5).collect(Collectors.toSet());
     }
+
 
     public void eliminarPorIdUsuario(String id) {
         usuarioRepository.deleteById(id);

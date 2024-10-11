@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 public class UsuarioController {
@@ -51,7 +52,7 @@ public class UsuarioController {
     }
 
     @QueryMapping(name = "buscarUsuarioPorTexto") // Busqueda por nombre o apellido
-    public List<Usuario> buscarUsuarioPorTexto(@Argument String text){
+    public Set<Usuario> buscarUsuarioPorTexto(@Argument String text){
         return this.usuarioService.buscarUsuarioPorTexto(text);
     }
 
