@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CiSearch } from "react-icons/ci";
+import { useNavigate } from 'react-router-dom'; // Cambiar a useNavigate
 import MenuDerechoDiv from "../Home/Derecha";
 import '@css/Busqueda.css';
 
@@ -7,6 +8,7 @@ const Busqueda = () => {
     const [query, setQuery] = useState(""); // Estado para la búsqueda
     const [results, setResults] = useState([]); // Estado para almacenar los resultados
     const [loading, setLoading] = useState(false); // Estado para manejar la carga
+    const navigate = useNavigate(); // Inicializar navigate
 
     // Manejador de cambio en el input
     const handleChange = (e) => {
@@ -15,7 +17,7 @@ const Busqueda = () => {
 
     // Efecto para hacer la búsqueda cuando el query cambia
     useEffect(() => {
-        if (query.length >= 1) { // Solo busca si el usuario ha escrito más de 2 caracteres
+        if (query.length >= 1) { // Busca si el usuario ha escrito al menos una letra
             const fetchUsers = async () => {
                 setLoading(true);
                 try {
@@ -35,22 +37,22 @@ const Busqueda = () => {
                                 }
                             `,
                             variables: {
-                                text: query.trim(), // Cambia alias a text
+                                text: query.trim(),
                             },
                         }),
                     });
-    
+
                     if (!response.ok) {
                         throw new Error('Error en la respuesta del servidor');
                     }
-    
+
                     const data = await response.json();
-    
+
                     if (data.errors) {
                         console.error('Errores de GraphQL:', data.errors);
                         setResults([]);
                     } else {
-                        setResults(data.data.buscarUsuarioPorTexto); // Cambia buscarUsuariosPorTexto a buscarUsuarioPorTexto
+                        setResults(data.data.buscarUsuarioPorTexto);
                     }
                 } catch (error) {
                     console.error('Error fetching users:', error);
@@ -59,26 +61,27 @@ const Busqueda = () => {
                     setLoading(false); // Termina la carga
                 }
             };
-    
+
             const debounceFetch = setTimeout(() => {
                 fetchUsers();
-            }, 300); // Espera de 300ms antes de realizar la búsqueda
-    
+            }, 300);
+
             return () => clearTimeout(debounceFetch);
         } else {
             setResults([]); // Limpia los resultados si el query es muy corto
         }
     }, [query]); // Escucha cambios en el valor de 'query'
     
-    
+    const handleUserClick = (usuario) => {
+        // Redirige a la página del perfil del usuario
+        navigate(`/cuenta/${usuario.alias}`); // Usar navigate en lugar de history.push
+    };
 
     return (
         <>
             <div className="Contenedor">
                 <div className="contenedor2">
                     <div className="izquierda-busqueda">
-                        {/* AREA DE TRABAJO */}
-                        {/* MANTENER ESTE FORMATO DE DIVS PARA OTRAS PAGINAS Y SU CSS */}
                         <div className="barra">
                             <div className="card">
                                 <label id="label">
@@ -98,13 +101,13 @@ const Busqueda = () => {
                         {loading && <p>Cargando...</p>}
                         <ul className="result-list">
                             {results.length > 0 ? (
-                                results.map((user, index) => (
-                                    <li key={index}>
+                                results.map((user) => (
+                                    <li key={user.alias} onClick={() => handleUserClick(user)} style={{ cursor: 'pointer' }}>
                                         {user.nombre} {user.apellido} ({user.alias})
                                     </li>
                                 ))
                             ) : (
-                                !loading && query.length > 2 && <li>No se encontraron resultados</li>
+                                !loading && query.length >= 1 && <li>No se encontraron resultados</li>
                             )}
                         </ul>
                     </div>
