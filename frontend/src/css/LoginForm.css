@@ -1,23 +1,6 @@
-/* Background data (Original source: https://subtlepatterns.com/grid-me/) */
-/* Animations */
-:root {
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
-  --color-fondo: #e8e8e8;
-  --color-fondoDiv: #d8d8d8;
-  --color-fondoDivHover: #c4c4c4;
-  --color-texto: #000000;
-  --color-btn: black;
 
-  #Dark {
-      --color-fondoDiv: #232224;
-      --color-texto: #ffffff;
-      --color-btn: black;
-      --color-fondo: #18191a;
-
-      --color-fondoDivHover: #2d2c2e;
-  }
-  
-}
 @-webkit-keyframes bg-scrolling-reverse {
   100% {
     background-position: 50px 50px;
@@ -66,11 +49,9 @@
   }
 }
 
-/* Main styles */
-.contenedor_de_todo {
-  height: 100vh;
-  font: 400 16px/1.5 exo, ubuntu, "segoe ui", helvetica, arial, sans-serif;
-  text-align: center;
+
+/* Contenedor del fondo */
+.background-container {
   /* img size is 50x50 */
   background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAIAAACRXR/mAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAABnSURBVHja7M5RDYAwDEXRDgmvEocnlrQS2SwUFST9uEfBGWs9c97nbGtDcquqiKhOImLs/UpuzVzWEi1atGjRokWLFi1atGjRokWLFi1atGjRokWLFi1af7Ukz8xWp8z8AAAA//8DAJ4LoEAAlL1nAAAAAElFTkSuQmCC") repeat 0 0;
   -webkit-animation: bg-scrolling-reverse 8s infinite;
@@ -85,22 +66,262 @@
   animation-timing-function: linear;
   /* Opera 12+ */
   /* IE 10+ */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* Filtro de fondo con degradado */
+.background-filter {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* background: linear-gradient(to bottom right, #000000eb 30%, #ff1053);  */
+  z-index: 5; /* Asegúrate de que esté encima del fondo, pero debajo del contenido */
+}
+/* Contenedor de las columnas de imágenes */
+.background-columns {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Animación para las columnas de imágenes */
+.background-scroll {
+  display: flex;
+  flex-direction: column;
+  position: relative; /* Agregado para contener las imágenes dentro */
+  animation: scrollUp 50s linear infinite; /* Ajusta la duración a 30s para un movimiento más rápido */
+  margin: 0.5%;
+}
+
+/* Ajusta el tamaño de las imágenes */
+.background-scroll img {
+  width: 20vw;
+  height: 50vh;
+  object-fit: cover;
+  border-radius: 10px;
+  margin: 3%;
+}
+
+/* Animación de desplazamiento suave hacia arriba */
+@keyframes scrollUp {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-100%); /* Desplazamiento hasta el 100% */
+  }
+  100% {
+    transform: translateY(-100%); /* Mantiene el desplazamiento hasta el final */
+  }
+}
+
+/* Añadimos diferentes delays a cada columna */
+.background-scroll:nth-child(1) {
+  animation-delay: 0s; /* Primera columna, sin delay */
+}
+
+.background-scroll:nth-child(2) {
+  animation-delay: 5s; /* Segunda columna empieza con un retraso de 5 segundos */
+}
+
+.background-scroll:nth-child(3) {
+  animation-delay: 10s; /* Tercera columna empieza con un retraso de 10 segundos */
+}
+
+.background-scroll:nth-child(4) {
+  animation-delay: 15s; /* Cuarta columna empieza con un retraso de 15 segundos */
+}
+
+.background-scroll:nth-child(5) {
+  animation-delay: 20s; /* Quinta columna empieza con un retraso de 20 segundos */
+}
+
+/* Contenido centrado */
+/* .container {
+  z-index: 10;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  
+} */
+
+.modal {
+  /* img size is 50x50 */
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAIAAACRXR/mAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAABnSURBVHja7M5RDYAwDEXRDgmvEocnlrQS2SwUFST9uEfBGWs9c97nbGtDcquqiKhOImLs/UpuzVzWEi1atGjRokWLFi1atGjRokWLFi1atGjRokWLFi1af7Ukz8xWp8z8AAAA//8DAJ4LoEAAlL1nAAAAAElFTkSuQmCC") repeat 0 0;
+  -webkit-animation: bg-scrolling-reverse 8s infinite;
+  /* Safari 4+ */
+  -moz-animation: bg-scrolling-reverse 8s infinite;
+  /* Fx 5+ */
+  -o-animation: bg-scrolling-reverse 8s infinite;
+  animation: bg-scrolling-reverse 8s infinite;
+  -webkit-animation-timing-function: linear;
+  -moz-animation-timing-function: linear;
+  -o-animation-timing-function: linear;
+  animation-timing-function: linear;
+  /* Opera 12+ */
+  /* IE 10+ */
+  width: 100%;
+  padding: 5%;
+  border-radius: 25px;
+  text-align: center;
+  
+  color: #000;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+}
+.modal h1{
+  font-family: "Montserrat", sans-serif;
+  font-size: 20px;
+  margin: 25px;
+}
+
+.modal a{
+  text-decoration: none;
+}
+
+.boton_login_registro {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 350px;
+  height: 50px;
+  margin: 2%;
+  border-radius: 15px;
+  background-color: #ff1053;
+  border: none;
+  cursor: pointer;
+  transition: 400ms;
+}
+
+.boton_login_registro .text {
+  color: white;
+  font-weight: 700;
+  font-size: 1em;
+  transition: 400ms;
+}
+
+
+
+.boton_login_registro:hover {
+  background-color: #181717;
+}
+
+.boton_login_registro:hover .text {
+  color: #f2f2f2;
+}
+
+
+.container {
+  z-index: 10;
+  position: absolute;
+  
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.welcome-container, .new-section-container {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.6s ease-in-out;
+  
+}
+
+/* Animaciones de deslizamiento */
+.slide-in-left {
+  transform: translateY(0);
+}
+
+.slide-out-left {
+  transform: translateY(-200%);
+}
+
+.slide-in-right {
+  transform: translateY(0);
+}
+
+.slide-out-right {
+  transform: translateY(200%);
+}
+
+/* Estilo de los botones */
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #555;
+}
+
+
+/* Main styles */
+.contenedor_de_todo {
+  
+  
+  text-align: center;
+   /* img size is 50x50 */
+   background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAIAAACRXR/mAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAABnSURBVHja7M5RDYAwDEXRDgmvEocnlrQS2SwUFST9uEfBGWs9c97nbGtDcquqiKhOImLs/UpuzVzWEi1atGjRokWLFi1atGjRokWLFi1atGjRokWLFi1af7Ukz8xWp8z8AAAA//8DAJ4LoEAAlL1nAAAAAElFTkSuQmCC") repeat 0 0;
+   -webkit-animation: bg-scrolling-reverse 8s infinite;
+   /* Safari 4+ */
+   -moz-animation: bg-scrolling-reverse 8s infinite;
+   /* Fx 5+ */
+   -o-animation: bg-scrolling-reverse 8s infinite;
+   animation: bg-scrolling-reverse 8s infinite;
+   -webkit-animation-timing-function: linear;
+   -moz-animation-timing-function: linear;
+   -o-animation-timing-function: linear;
+   animation-timing-function: linear;
+   /* Opera 12+ */
+   /* IE 10+ */
+   height: 80vh;
+   border-radius: 25px;
 }
 
 .contenedor_formulario_con_algo_mas {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
   
-  height: 100vh;
-  margin-right: 5%;
+  
+  
 }
 .contenedor_formulario {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 350px;
-  width: 450px;
+  width: 500px;
+  
   flex-direction: column;
   gap: 35px;
   /* background: #e3e3e3; */
@@ -108,6 +329,7 @@
   
   backdrop-filter: blur(1.5px);
   border-radius: 15px;
+ 
 }
 .contenedor-logo {
   display: flex;
@@ -369,7 +591,6 @@
 
 
 
-
 .boton_mandar_al_registro {
   
   --secondary-color: #fff;
@@ -382,7 +603,7 @@
   color: var(--secondary-color);
   padding: 1em 1.8em;
   background: #ff1053;
-  
+  margin-top: -20px;
   display: flex;
   transition: 0.2s background;
   align-items: center;
@@ -443,6 +664,7 @@
   width: 95%;
   font-size: 11px;
   color: #333;
+  margin-top: -20px;
 }
 
 .terminos-condiciones a {
@@ -513,6 +735,4 @@
     font-size: 9px;
   }
 }
-
-
 

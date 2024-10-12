@@ -13,10 +13,11 @@ import Perfil from './Pages/Configuracion/Perfil/Perfil';
 import Seguridad from './Pages/Configuracion/Seguridad/Seguridad';
 import Apariencia from './Pages/Configuracion/Apariencia/Apariencia';
 import Error_404 from './Pages/Error/Error-404';
+
 import Login from './Pages/Login/LoginForm';
 import Registro from './Pages/Registro/Registro';
 import Registro2 from './Pages/Registro/Registro2';
-import ReactSwitch from 'react-switch';
+
 import Cuenta from './Pages/PerfilUsuario/PerfilUsuario'
 import './App.css';
 
@@ -61,6 +62,7 @@ function App() {
         <Route path="/registro" element={<Registro />} />
         <Route path="/registro2" element={<Registro2 />} />
         <Route path="*" element={<Error_404 />} />
+        
       </Routes>
       {/* <ReactSwitch 
         className='Modo-Oscuro'
