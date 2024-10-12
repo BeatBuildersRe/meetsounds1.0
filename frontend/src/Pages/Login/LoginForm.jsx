@@ -165,16 +165,20 @@ const InfiniteBackground = () => {
               <Meetsounds />
             </div>
             <h1>Bienvenido a MeetSounds</h1>
-            <button class="boton_login_registro"onClick={handleToggle}>
+            <div className="contenedor_botones_redirecionantes">
+            <button className="boton_login_"onClick={handleToggle}>
               <CiLogin size={30}style={{ marginRight: '10px' }} /> 
-              <p class="text">Iniciar Sesión</p>
+              <p className="text">Iniciar Sesión</p>
             </button>
-            <a href="/registro">
-              <button class="boton_login_registro">
+            <a href="/registro" className="boton_a_link">
+              <button className="boton_registro">
                 <CiCirclePlus size={30} style={{ marginRight: '10px' }} />
-                <p class="text">Registrarte</p>
+                <p className="text">Registrarte</p>
               </button>
-            </a>          
+            </a>         
+
+            </div>
+             
           </div>
         </div>
       
@@ -191,7 +195,7 @@ const InfiniteBackground = () => {
                     <BotonGoogle icon={FaGoogle} />
                   </div>
                   <Divider />
-                  <div class="contenedor_inputs">
+                  <div className="contenedor_inputs">
                     <input
                       className="input"
                       placeholder=""
@@ -200,7 +204,7 @@ const InfiniteBackground = () => {
                     />
                     <span className="texto_inputs"><CiUser size={20}style={{ marginRight: '10px' }}  />Usuario</span>
                   </div>
-                  <div class="contenedor_inputs">
+                  <div className="contenedor_inputs">
                     <input
                       className="input"
                       placeholder=""
@@ -211,19 +215,19 @@ const InfiniteBackground = () => {
                     <span className="texto_inputs"><CiLock size={20}  style={{ marginRight: '10px' }}/>Contraseña</span>
                   </div>
                   <div className="contenedor_recordarme">
-                    <div class="contenedor_switch">
+                    <div className="contenedor_switch">
                       <input type="checkbox" role="switch" class="formulario" />
-                      <span class="text_switch">Recordarme</span>
+                      <span className="text_switch">Recordarme</span>
                     </div>
                   </div>
-                  <button class="boton_de_inicio" onClick={manejarLogin}>
+                  <button className="boton_de_inicio" onClick={manejarLogin}>
                     <svg viewBox="0 0 24 24" class="arr-2" xmlns="http://www.w3.org/2000/svg">
                       <path
                         d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
                       ></path>
                     </svg>
-                    <span class="text">Iniciar Sesión</span>
-                    <span class="circle"></span>
+                    <span className="text">Iniciar Sesión</span>
+                    <span className="circle"></span>
                     <svg viewBox="0 0 24 24" class="arr-1" xmlns="http://www.w3.org/2000/svg">
                       <path
                         d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
@@ -237,8 +241,8 @@ const InfiniteBackground = () => {
                     <a href="/registro">
                       <button className='boton_mandar_al_registro'>
                         Crear cuenta nueva
-                        <div class="arrow-wrapper">
-                            <div class="arrow"></div>
+                        <div className="arrow-wrapper">
+                            <div className="arrow"></div>
                         </div>
                       </button>
                     </a>
