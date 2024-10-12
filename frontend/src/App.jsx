@@ -62,11 +62,11 @@ function App() {
         <Route path="/registro2" element={<Registro2 />} />
         <Route path="*" element={<Error_404 />} />
       </Routes>
-      <ReactSwitch 
+      {/* <ReactSwitch 
         className='Modo-Oscuro'
         onChange={handleSwitch} 
         checked={contextTheme === "Dark"} 
-      />
+      /> */}
     </div>
   );
 }

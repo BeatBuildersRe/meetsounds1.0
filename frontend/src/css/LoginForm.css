@@ -106,7 +106,7 @@
   /* background: #e3e3e3; */
   background: transparent;
   
-  backdrop-filter: blur(1px);
+  backdrop-filter: blur(1.5px);
   border-radius: 15px;
 }
 .contenedor-logo {
