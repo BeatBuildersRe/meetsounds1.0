@@ -42,7 +42,7 @@ function Registro1() {
             />
           </div>
           <div className="form-group">
-            <label className="labelRegistro1" htmlFor="username">Nombre de Usuario</label>
+            <label className="labelRegistro1" htmlFor="username"></label>
             <input
               className="formCampos"
               type="text"
@@ -53,7 +53,7 @@ function Registro1() {
             />
           </div>
           <div className="form-group">
-            <label className="labelRegistro1" htmlFor="password">Contraseña</label>
+            <label className="labelRegistro1" htmlFor="password"></label>
             <input
               className="formCampos"
               type="password"

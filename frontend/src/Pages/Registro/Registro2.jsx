@@ -1,55 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import '../../css/Registro2.css';
 
-const registerUser = async (userData) => {
-    const query = `
-        mutation {
-            guardarUsuario(user: {
-                nombre: "${userData.nombre}",
-                apellido: "${userData.apellido}",
-                alias: "${userData.username}",
-                email: "${userData.email}",
-                genero: "${userData.genero}",
-                contrasena: "${userData.password}",
-                telefono: "${userData.telefono}",
-                ubicacion:{
-                  pais:{
-                    nombre:"${userData.pais}"
-                  }
-                  estado:{
-                    nombre:"${userData.provincia}"
-                  }
-                }
-            }) {
-                nombre
-            }
-        }
-    `;
-
-    try {
-        const response = await fetch('http://localhost:8080/graphql', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ query })
-        });
-    
-        if (!response.ok) {
-            throw new Error('Error en la respuesta del servidor');
-        }
-    
-        const result = await response.json();
-        console.log('Respuesta del servidor:', result);
-    } catch (error) {
-        console.error('Error durante el registro:', error);
-    }
-};
-
 function Registro2() {
   const [nombre, setNombre] = useState('');
   const [apellido, setApellido] = useState('');
   const [telefono, setTelefono] = useState('');
+  const [fechaNacimiento, setFechaNacimiento] = useState('');
   const [genero, setGenero] = useState('');
   const [pais, setPais] = useState('Argentina');
   const [provincia, setProvincia] = useState('');
@@ -63,11 +19,13 @@ function Registro2() {
     Uruguay: ['Montevideo', 'Canelones', 'Maldonado', 'Salto', 'Paysandú']
   };
 
+  // Actualizar las provincias según el país seleccionado
   useEffect(() => {
     setProvincias(paisesConProvincias[pais]);
     setProvincia('');
   }, [pais]);
 
+  // Obtener los datos de registro1
   useEffect(() => {
     const storedUserData = localStorage.getItem('userData');
     if (storedUserData) {
@@ -78,76 +36,114 @@ function Registro2() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!nombre || !apellido || !telefono || !genero || !provincia) {
-      alert('Faltan campos obligatorios.');
-      return;
+    const validationErrors = validateForm({ nombre, apellido, telefono, fechaNacimiento, genero, provincia });
+
+    if (Object.keys(validationErrors).length === 0) {
+      console.log(`Nombre: ${nombre}, Apellido: ${apellido}, Teléfono: ${telefono}, Fecha de nacimiento: ${fechaNacimiento}, Género: ${genero}, País: ${pais}, Provincia: ${provincia}`);
+      console.log(`Email: ${userData.email}, Usuario: ${userData.username}, Contraseña: ${userData.password}`);
+    } else {
+      alert(`Faltan los siguientes campos: ${Object.values(validationErrors).join(', ')}`);
     }
-
-    const finalUserData = {
-      nombre,
-      apellido,
-      telefono,
-      genero,
-      pais,
-      provincia,
-      ...userData // Incluye datos de Registro1 (email, username, password)
-    };
-
-    console.log('Datos a registrar:', finalUserData);
-    registerUser(finalUserData);  // Enviar datos al servidor
   };
 
   const handleSelectGenero = (generoSeleccionado) => {
     setGenero(generoSeleccionado);
   };
 
+  const validateForm = (data) => {
+    const errors = {};
+    if (!data.nombre) errors.nombre = 'Nombre';
+    if (!data.apellido) errors.apellido = 'Apellido';
+    if (!data.telefono) errors.telefono = 'Teléfono';
+    if (!data.fechaNacimiento) errors.fechaNacimiento = 'Fecha de Nacimiento';
+    if (!data.genero) errors.genero = 'Género';
+    if (!data.provincia) errors.provincia = 'Provincia';
+    return errors;
+  };
+
   return (
     <div id="cuerpo2">
       <div className="login-container">
         <h1 className="titulo">Datos Personales</h1>
+
         <form onSubmit={handleSubmit} className="login-form">
-          {/* Campos de Registro2 */}
           <div className="form-group">
+            Nombre
             <input 
               className="formCampos"
               type="text" 
               id="nombre" 
               value={nombre} 
               onChange={(e) => setNombre(e.target.value)} 
-              placeholder="Ingresa tu nombre"
+              required
             />
           </div>
           <div className="form-group">
+            Apellido
             <input 
               className="formCampos"
               type="text" 
               id="apellido" 
               value={apellido} 
               onChange={(e) => setApellido(e.target.value)} 
-              placeholder="Ingresa tu apellido"
+              required
             />
           </div>
+          Telefono
           <div className="form-group">
             <input 
               className="formCampos"
               type="tel" 
               id="telefono" 
               value={telefono} 
-              onChange={(e) => setTelefono(e.target.value)} 
-              placeholder="Ingresa tu teléfono"
+              onChange={(e) => {
+                const soloNumeros = e.target.value.replace(/[^0-9]/g, '');
+                setTelefono(soloNumeros);
+              }}
+              required
             />
           </div>
-          
+          <div className="form-group">
+            <label className="labelRegistro2" htmlFor="fechaNacimiento">Fecha de nacimiento</label>
+            <input 
+              className="formCampos"
+              type="date" 
+              id="fechaNacimiento" 
+              value={fechaNacimiento} 
+              onChange={(e) => setFechaNacimiento(e.target.value)} 
+              required
+            />
+          </div>
+
+          {/* Barra de selección de género */}
           <div className="form-group">
             <label>Género</label>
             <div className="barra-genero">
-              <div className={`third ${genero === 'masculino' ? 'active-azul' : ''}`} onClick={() => handleSelectGenero('masculino')}>Masculino</div>
-              <div className={`third ${genero === 'femenino' ? 'active-rosada' : ''}`} onClick={() => handleSelectGenero('femenino')}>Femenino</div>
-              <div className={`third ${genero === 'otro' ? 'active-verde' : ''}`} onClick={() => handleSelectGenero('otro')}>Otro</div>
+              <div 
+                className={`third1 ${genero === 'masculino' ? 'active-azul' : ''}`} 
+                onClick={() => handleSelectGenero('masculino')}
+              >
+                Masculino
+              </div>
+
+              <div 
+                className={`third2 ${genero === 'femenino' ? 'active-rosada' : ''}`} 
+                onClick={() => handleSelectGenero('femenino')}
+              >
+                Femenino
+              </div>
+
+              <div 
+                className={`third3 ${genero === 'otro' ? 'active-verde' : ''}`} 
+                onClick={() => handleSelectGenero('otro')}
+              >
+                Otro
+              </div>
             </div>
           </div>
 
           <div className="form-group">
+            <label className="labelRegistro2" htmlFor="pais">País</label>
             <select 
               className="formCampos" 
               id="pais" 
@@ -162,11 +158,13 @@ function Registro2() {
           </div>
 
           <div className="form-group">
+            <label className="labelRegistro2" htmlFor="provincia">Provincia</label>
             <select 
               className="formCampos" 
               id="provincia" 
               value={provincia} 
               onChange={(e) => setProvincia(e.target.value)} 
+              required
             >
               <option value="">Selecciona una provincia</option>
               {provincias.map((prov, index) => (
@@ -176,7 +174,7 @@ function Registro2() {
           </div>
 
           <div className="contenedorRegistro">
-            <button className="btnRegistro" type="submit">Registrarse</button>
+            <button className="btnRegistro" type="submit">Siguiente</button>
           </div>
         </form>
       </div>
