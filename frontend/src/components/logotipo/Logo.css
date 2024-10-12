@@ -1,7 +1,7 @@
 
 .logotipo img {
-    width: 100px;
-    height: 15%;
+    width: 200px;
+    height: 100%;
 }
 .logotipo{
     margin: 0;
@@ -16,7 +16,7 @@
     
 }
 #texto{
-    width: 100px;
+    width: 200px;
 }
 
 @media (max-width: 1200px) {
@@ -25,7 +25,7 @@
     }
     #dibujo{
         display: flex;
-        width: 50px;
+        width: 100px;
         height: auto;
         margin-top: 15px;
     }
@@ -35,7 +35,7 @@
         display: none;
     }
     #dibujo{
-        display: none;
+        width: 50px;
        
     }
 }

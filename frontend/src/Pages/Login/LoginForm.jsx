@@ -1,19 +1,18 @@
 import { Link } from 'react-router-dom';
-import Boton from '@c/input/input';
+
 import '@css/LoginForm.css';
 import { CiUser, CiLock } from "react-icons/ci";
 import Meetsounds from '@c/logotipo/Logo';
-import Remember from '@c/switch/Switch';
+
 import BotonGoogle from '@c/boton-google/ButtonGoogle'
-import { FaGoogle, FaSpotify, FaInstagram } from 'react-icons/fa';
+import { FaGoogle} from 'react-icons/fa';
 import Divider from '@c/divider/Divider';
-import BotonInicio from '@c/boton-inicio/BotonInicio'
-import BotonRegistro from '@c/boton-registro/BotonRegistro'
+
 import React, { useState,useContext } from "react";
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { AuthContext } from '../../js/otro/AuthContext';
-// import SuffleHero from '../suffle-hero/SuffleHero'
+
 const LoginForm = () => {
 
   const navigate = useNavigate();
@@ -65,44 +64,97 @@ const LoginForm = () => {
     }
   };
 
-  return (
-<div className="contenedor11">
-      <div className="contenedor-logo">
-        <Meetsounds />
-      </div>
-      <div className="contenedor-formulario-imagen">
-        <div className="wrapper">
-          <h1>Inicia Sesión</h1>
-          <div className="ingreso">
-            <input
-              className="input"
-              placeholder="Usuario"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <input
-              className="input"
-              placeholder="Contraseña"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-
-          <div className="iniciar">
-            <button onClick={manejarLogin}>Iniciar Sesión</button>
-          </div>
-
-          {mensajeError && <p style={{ color: "Black" }}>{mensajeError}</p>}
-
-          <div className="register-link">
-            <p>¿No tenés una cuenta?</p>
-            <a href="/registro">Regístrate</a>
+return (
+  <div className="contenedor_de_todo">
+    <div className="contenedor_formulario_con_algo_mas">
+      <div className="contenedor_formulario">
+        <div className="contenedor-logo">
+          <Meetsounds />
+        </div>
+        <div className="contenedor_social">
+          <BotonGoogle icon={FaGoogle} />
+        </div>
+        <Divider />
+        <div class="contenedor_inputs">
+          <input
+            className="input"
+            placeholder=""
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <span className="texto_inputs"><CiUser size={20}style={{ marginRight: '10px' }}  />Usuario</span>
+        </div>
+        <div class="contenedor_inputs">
+          <input
+            className="input"
+            placeholder=""
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <span className="texto_inputs"><CiLock size={20}  style={{ marginRight: '10px' }}/>Contraseña</span>
+        </div>
+        <div className="contenedor_recordarme">
+          <div class="contenedor_switch">
+            <input type="checkbox" role="switch" class="formulario" />
+            <span class="text_switch">Recordarme</span>
           </div>
         </div>
+        <button class="boton_de_inicio" onClick={manejarLogin}>
+          <svg viewBox="0 0 24 24" class="arr-2" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
+            ></path>
+          </svg>
+          <span class="text">Iniciar Sesión</span>
+          <span class="circle"></span>
+          <svg viewBox="0 0 24 24" class="arr-1" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
+            ></path>
+          </svg>
+        </button>
+        <div className="link_recuperar_contraseña">
+          <a href="#">¿Olvidaste tu contraseña?</a>
+        </div>           
+        <div className="link_registro">
+          <a href="/registro">
+            <button className='boton_mandar_al_registro'>
+              Crear cuenta nueva
+              <div class="arrow-wrapper">
+                  <div class="arrow"></div>
+              </div>
+            </button>
+          </a>
+        </div>
+        <div className="terminos-condiciones">
+          <p>Al iniciar sesión, usted acepta nuestros <a href="#">Términos y Condiciones</a> y <a href="#">Políticas de Privacidad</a></p>
+        </div>
       </div>
+      
     </div>
-  );
+        
+    {mensajeError && (
+  <div
+    style={{
+      color: "white", // Color del texto
+      backgroundColor: "red", // Fondo rojo para destacar el error
+      padding: "10px", // Espaciado interno
+      borderRadius: "5px", // Bordes redondeados
+      position: "absolute", // Posicionamiento absoluto
+      top: "20px", // Espaciado desde la parte superior
+      left: "50%", // Centra horizontalmente
+      transform: "translateX(-50%)", // Asegura el centrado en toda la página
+      zIndex: 1000, // Asegura que se muestre por encima de otros elementos
+    }}
+  >
+    {mensajeError}
+  </div>
+)}
+
+      
+  </div>
+);
 }
 
 export default LoginForm
