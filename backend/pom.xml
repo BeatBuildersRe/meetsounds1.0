@@ -82,6 +82,14 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Amazon S3 para el almacenamiento multimedia (Esta comentado para que no cargue cada vez que iniciamos el proyecto)
+		 <dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk</artifactId>
+			<version>1.11.723</version>
+		</dependency>
+		-->
+
 		<!-- GraphQL Java Tools (opcional, para usar resolvers y manejo avanzado de errores) -->
 		<dependency>
 			<groupId>com.graphql-java-kickstart</groupId>

@@ -2,7 +2,11 @@ package com.project.meetsounds.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
+import com.project.meetsounds.domain.models.Usuario;
+import com.project.meetsounds.repositories.IUsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +20,9 @@ public class SeguidosService {
     @Autowired
     private ISeguirRepository iSeguirRepository;
 
+    @Autowired
+    private IUsuarioRepository iUsuarioRepository;
+
     public void seguirUsuario(String idUsuario, String idSeguir) {
         Seguido seguido = iSeguirRepository.findByidUsuario(idUsuario);
         List<String> misSeguidos = new ArrayList<>();
@@ -23,6 +30,19 @@ public class SeguidosService {
         misSeguidos.add(idSeguir);
         seguido.setMisSeguidos(misSeguidos);
         iSeguirRepository.save(seguido);
+
+        //Incrementamos el contador de seguidos en el usuario
+        Optional<Usuario> usu = this.iUsuarioRepository.findById(idUsuario);
+
+        if (usu.isPresent()){
+            Usuario usuario = usu.get();
+            int countSeguidos = usuario.getC_seguidos();
+            countSeguidos += 1;
+            usuario.setC_seguidos(countSeguidos);
+            this.iUsuarioRepository.save(usuario);
+
+        }
+
     }
 
     public void dejarDeSegir(String idUsuario, String idSeguido) {
@@ -38,6 +58,23 @@ public class SeguidosService {
         
         seguido.setMisSeguidos(misSeguidos);
         iSeguirRepository.save(seguido);
+
+        //Disminuimos el contador de seguidos en el usuario
+        Optional<Usuario> usu = this.iUsuarioRepository.findById(idUsuario);
+
+        if (usu.isPresent()){
+            Usuario usuario = usu.get();
+            int countSeguidos = usuario.getC_seguidos();
+            countSeguidos =- 1;
+            usuario.setC_seguidos(countSeguidos);
+            this.iUsuarioRepository.save(usuario);
+
+        }
     }
 
+    public List<Usuario> misSeguidos(String idUsuario) {
+        Seguido seguido = this.iSeguirRepository.findByidUsuario(idUsuario);
+        List<Usuario> usuariosSeguidos = this.iUsuarioRepository.findAllById(seguido.getMisSeguidos());
+        return usuariosSeguidos;
+    }
 }
