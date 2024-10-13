@@ -1,6 +1,6 @@
 package com.project.meetsounds.controllers;
 
-import com.project.meetsounds.domain.models.Interes;
+
 import com.project.meetsounds.domain.models.Redes;
 import com.project.meetsounds.domain.models.Usuario;
 import com.project.meetsounds.services.UsuarioService;
