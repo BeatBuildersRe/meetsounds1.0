@@ -19,7 +19,23 @@ public class SeguidosService {
     public void seguirUsuario(String idUsuario, String idSeguir) {
         Seguido seguido = iSeguirRepository.findByidUsuario(idUsuario);
         List<String> misSeguidos = new ArrayList<>();
+        misSeguidos = seguido.getMisSeguidos();
         misSeguidos.add(idSeguir);
+        seguido.setMisSeguidos(misSeguidos);
+        iSeguirRepository.save(seguido);
+    }
+
+    public void dejarDeSegir(String idUsuario, String idSeguido) {
+        Seguido seguido = iSeguirRepository.findByidUsuario(idUsuario);
+        List<String> misSeguidos = new ArrayList<>();
+        misSeguidos = seguido.getMisSeguidos();
+
+        for (String string : misSeguidos) {
+            if (string.equals(idSeguido)) {
+                misSeguidos.remove(string);            
+            }
+        }
+        
         seguido.setMisSeguidos(misSeguidos);
         iSeguirRepository.save(seguido);
     }

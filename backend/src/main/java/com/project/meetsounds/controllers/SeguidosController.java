@@ -15,4 +15,9 @@ public class SeguidosController {
     public void seguirUsuario(String idUsuario, String idSeguir){ //idSeguir es del usuario al cual vamos a seguir
         this.seguidosService.seguirUsuario(idUsuario, idSeguir);
     }
+
+    @MutationMapping(name = "dejarDeSegir")
+    public void dejarDeSeguir(String idUsuario, String idSeguido){ //idSeguido es la id del que vamos a dejar de seguir
+        this.seguidosService.dejarDeSegir(idUsuario, idSeguido);
+    }
 }
