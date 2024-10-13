@@ -25,6 +25,11 @@ public class UsuarioController {
         System.out.println("Recibido: " + user);
         return this.usuarioService.guardarUsuario(user);
     }
+    @MutationMapping(name = "comprobarCredenciales")
+    public void comprobarCredenciales(@Argument Usuario user){
+        System.out.println("Recibido: " + user);
+        usuarioService.comprobarCredenciales(user);
+    }
 
     @MutationMapping(name = "eliminarPorIdUsuario")
     public void eliminarPorIdUsuario(@Argument String id){

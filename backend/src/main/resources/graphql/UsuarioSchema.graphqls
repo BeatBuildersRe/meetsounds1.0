@@ -24,6 +24,7 @@ type Mutation{
     #Para devolcer valores, graphql toma tambien los type que estan en otros files.graphqls
     #Usuario
     guardarUsuario(user: userInput): Usuario
+    comprobarCredenciales(user:userInput) : Usuario
     actualizarUsuario(id: ID!, user: IactualizarUsuario): Usuario
     actualizarDescripcion(id: ID!, descripcion: String!): Boolean
     actualizarContrasena(id: ID!, contrasena : String!) : Boolean
