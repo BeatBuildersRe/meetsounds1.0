@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../css/Registro.css';
 
@@ -8,6 +8,11 @@ function Registro1() {
   const [password, setPassword] = useState('');
   
   const navigate = useNavigate();
+
+  // Limpiar el localStorage al montar el componente
+  useEffect(() => {
+    localStorage.removeItem('userData');
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,6 +26,8 @@ function Registro1() {
     // Guardar datos en localStorage
     const userData = { email, username, password };
     localStorage.setItem('userData', JSON.stringify(userData));
+    console.log('Datos guardados en localStorage:', userData);
+
     // Navegar a la siguiente página
     navigate('/registro2');
   };
@@ -39,10 +46,11 @@ function Registro1() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Ingresa tu correo"
+              required
             />
           </div>
           <div className="form-group">
-            <label className="labelRegistro1" htmlFor="username"></label>
+            <label className="labelRegistro1" htmlFor="username">Nombre de Usuario</label>
             <input
               className="formCampos"
               type="text"
@@ -50,10 +58,11 @@ function Registro1() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Ingresa tu nombre de usuario"
+              required
             />
           </div>
           <div className="form-group">
-            <label className="labelRegistro1" htmlFor="password"></label>
+            <label className="labelRegistro1" htmlFor="password">Contraseña</label>
             <input
               className="formCampos"
               type="password"
@@ -61,6 +70,7 @@ function Registro1() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Ingresa tu contraseña"
+              required
             />
           </div>
           <div className="contenedorRegistro">
@@ -73,4 +83,3 @@ function Registro1() {
 }
 
 export default Registro1;
-
