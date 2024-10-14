@@ -1,14 +1,46 @@
-.ContenedorPerfil2{
-    position: absolute;
-    width: 55%;
+/* .ContenedorPerfil2{
+    width: 55vw;
+    margin-left: 18vw;
+    color: black;
+    z-index: -1;
+} */
+#Dark .ContenedorPerfil2{
     background-color: #18191a;
 }
 
+:root {
+
+    --color-fondoDiv: #d5dde2;
+    --color-texto: #000000;
+    
+    #Dark{
+        --color-fondoDiv: #232224;
+        --color-texto: #ffffff;
+
+    }
+}
+
+.izquierda-perfil {
+    height: auto;
+    flex: 2;
+    height: fit-content;
+    background-color: var(--color-fondo);
+    padding-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    /* Habilita el desplazamiento vertical */
+    width: 100%;
+    position: relative;
+}
+
+
 #h2{
     text-align: center;
-    color: white;
-    background-color: #18191d;
-    box-shadow: 1px 5px 5px rgb(0, 0, 0);
+}
+#Dark #h2{
+    color: rgb(255, 255, 255);
 }
 
 .seccion_1{
@@ -22,11 +54,10 @@
         background-color: rgb(194, 126, 0);
         border-radius: 10px;
         word-break: break-all;
-
         #p{
-            color: white;
+            color: var(--color-texto);
         }
-
+      
         #icon{
             min-width: 30px;
             min-height: 30px;
@@ -46,13 +77,44 @@
         border-radius: 10px;
     }
 
-    #img_perfil{
+    .imagenperfil{
         position: absolute;
-        left: 0;
+        left: 2%;
         bottom: 0;
-        max-width: 150px;
-    }
+        box-shadow: 2px 0px 15px 2px black;
+        border-radius: 50%;
+        background-color: black;
+        max-width: 100px;
+        #img_perfil{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .edit{
+            position: absolute;
+            bottom: -5px;
+            width: fit-content;
+            left: 37%;
 
+            #btn-editar{
+                all: unset;
+                color: black;
+                background-color: #ffffff;
+                padding: 3px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+            }
+            #icon-edit{
+                border-radius: 50%;
+            }
+        }
+    }
+    .custom-file-upload{
+        color: white;
+    }
     .icon1{
         position: absolute;
         left: 10%;
@@ -62,71 +124,69 @@
         position: absolute;
     }
 
-    .custom-file-upload:nth-of-type(2) { /* boton de editar del perfil */
+ /* boton de editar del fondo */
+    /* .custom-file-upload:nth-of-type(1) {
         position: absolute;
-        left: 12%;
-        bottom: 2%;
-        z-index: 1;
-        color: rgba(255, 255, 255, 0.568);
-    }
-
-    .custom-file-upload:nth-of-type(1) { /* boton de editar del fondo */
-        position: absolute;
-        z-index: 1;
-        color: rgba(255, 255, 255, 0.555);
-    }
+       
+    } */
 }
 
 .seccion_3{
     margin: 1%;
     margin-bottom: 2%;
-    color: white;
-
+    h4{
+        color: var(--color-texto);
+    }
+    
     .descripcion{
         padding: 2%;
-        background-color: #27292e;
         border-radius: 10px;
+        background-color: var(--color-fondoDiv);
     }
+  
 
     #interes_musical{
         width: 100%;
         height: 4rem;
+        color: var(--color-texto);
         border: none;
         background: none;
-        color: white;
         font-family: Arial, Helvetica, sans-serif;
         word-wrap: break-word;
         resize: none;
+        
     }
 }
 
 .seccion_4{
     margin: 1%;
     margin-bottom: 2%;
-    color: white;
-
+    h4{
+        color: var(--color-texto);
+    }
     .social_media{
         padding: 2%;
-        background-color: #27292e;
         border-radius: 10px;
+        background-color: var(--color-fondoDiv);
 
         .inputs_social{
             display: flex;
             flex-wrap: wrap;
             flex: 1;
-
+            color: var(--color-texto);
             .social{
                 display: flex;
                 align-items: center;
                 margin: 1%;
 
                 #input_social{
+                    color: var(--color-texto);
                     background: none;
                     border: none;
-                    border-bottom: 1px solid white;
+                    border-bottom: 1px solid gray;
                     margin: 1%;
-                    color: rgb(148, 148, 148);
                 }
+               
 
                 #input-with-icon-textfield{
                     color: w;
@@ -143,19 +203,20 @@
 .seccion_5{
     margin: 1%;
     margin-bottom: 2%;
-    color: white;
-
+    h4{
+        color: var(--color-texto);
+    }
     .descripcion{
         padding: 2%;
-        background-color: #27292e;
         border-radius: 10px;
 
+        background-color:  var(--color-fondoDiv);
         #interes_musical{
             width: 100%;
+            color: var(--color-texto);
             height: 4rem;
             border: none;
             background: none;
-            color: white;
             font-family: Arial, Helvetica, sans-serif;
             word-wrap: break-word;
             resize: none;
@@ -180,14 +241,20 @@
         align-items: center;
         margin-right: 2%;
         margin-bottom: 2%;
-        background-color: #18191a;
+        & .MuiOutlinedInput-root {
+            color: var(--color-texto);
+            & fieldset {
+                border-color: var(--color-texto);
+            }
+        }
+        & .MuiInputLabel-root {
+            color: var(--color-texto);
+        }
 
         #select_edad{
             width: 3rem;
             height: 2rem;
             margin-left: 1%;
-            background-color: white;
-            color: rgb(0, 0, 0);
             border-radius: 10px;
         }
 
@@ -210,11 +277,16 @@
 
 @media (max-width: 900px) {
     .ContenedorPerfil2{
+        margin-left:14vw ;
         position: absolute;
         width: auto;
-        border: 0.5px solid rgb(83, 83, 83);
     }
 }
 
 /* Responsividad: pantalla pequeña */
-@media (max-width: 500px) {}
+@media (max-width: 500px) {
+    .ContenedorPerfil2{
+        width: 100%;
+        margin-left: 0;
+    }
+}

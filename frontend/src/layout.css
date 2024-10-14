@@ -1,43 +1,71 @@
 /* Reset */
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
-body{
+
+:root {
+
+    --color-fondo: #e8e8e8;
+    --color-fondoDiv: #d8d8d8;
+    --color-fondoDivHover: #dddddd;
+    --color-texto: #000000;
+
+    #Dark {
+        --color-fondo: #18191a;
+        --color-fondoDiv: #232224;
+        --color-fondoDivHover: #dddddd;
+
+        --color-texto: #ffffff;
+
+    }
+}
+
+body {
     font-family: "Quicksand", sans-serif;
+    background-color: var(--color-fondo);
 }
 
 /* Contenedor principal del Layout */
 .Layout {
     display: flex;
-    
     height: 100vh;
 }
 
 
 /* Menú a la izquierda */
-#left-menu {    
+#left-menu {
+
+    position: fixed;
+    width: 18vw;
     top: 0;
     left: 0;
     height: 100%;
     background-color: #e8e8e8;
     border-right: 1px solid #222;
     color: black;
-    
+
 }
-#Dark #left-menu {    
+
+#Dark #left-menu {
     background-color: #2b2c2e;
-    border-right: 1px solid #818181;    
+    border-right: 1px solid #818181;
 }
 
 /* Estilos para los elementos del menú */
-#box{
+#box {
     margin: 2rem;
+    display: flex;
+
+    align-items: center;
 }
+
 #left-menu ul {
-    list-style: none; /* Elimina la decoración de lista */
+    list-style: none;
+    /* Elimina la decoración de lista */
     padding: 0;
 }
 
@@ -54,27 +82,34 @@ body{
     border-radius: 50px;
     transition: 0.3s;
 }
+
 #Dark #left-menu a {
-   color: #ffffff;
+    color: #ffffff;
 }
 
 #left-menu a:hover {
-    background-color: #dddddd;
-    
+    background-color: var(--color-fondoDivHover);
+
+    transition: 0.3s;
+}
+#Dark #left-menu a:hover {
+    background-color: #3f3c3c;
+
     transition: 0.3s;
 }
 
-#box{
+#box {
     display: flex;
     flex-direction: column;
-    
+
 }
 
-.BottonCrear{
+.BottonCrear {
     margin-top: 30px;
-   }
-.Perfil{
-    margin-top: 80px;
+}
+
+.Perfil {
+    margin-top: 200px;
     margin-left: 1rem;
 }
 
@@ -101,79 +136,138 @@ body{
 /* Contenido en el centro */
 #main-content {
     flex: auto;
-    
-    background: #00aaff; /* Color de fondo azul */
-    
-    
+
+    background: #00aaff;
+    /* Color de fondo azul */
+
+
 }
 
 /* Sección derecha */
 #right-section {
-    background: #00ff00; /* Color de fondo verde */
+    background: #00ff00;
+    /* Color de fondo verde */
     min-width: 300px;
-    
-    
-    
+
+
+
 }
 
 /* Responsividad: pantalla media */
 @media (max-width: 1200px) {
-    #left-menu a span {
-        display: none; /* Oculta el texto en pantallas pequeñas */
-    }
-    #box{
+
+    /* #left-menu a span {
+        display: none;
+        /* Oculta el texto en pantallas pequeñas */
+    */ #box {
         margin: 0.5rem;
     }
-    
+
 }
-@media (max-width: 900px) {
-   
-    #right-section {
-        display: none; /* Mantener oculta la sección derecha */
+
+@media (max-width: 1000px) {
+    #left-menu {
+        width: 30vw;
     }
-    
+
+    #right-section {
+        display: none;
+        /* Mantener oculta la sección derecha */
+    }
+
+
 }
 
-
+@media (max-width:800px) {
+    #left-menu {
+        width: 15vw;
+    }
+    nav ul li p {
+        display: none;
+    }
+}
 
 /* Responsividad: pantalla pequeña */
-@media (max-width: 500px) {
-    .Layout {
-        flex-direction: column; /* Coloca el menú abajo */
-    }
+@media (max-width:600px) {
 
-     #left-menu {
+    #left-menu {
+        width: 0;
+        
+      
+    }
+   
+    nav {
+        position: fixed;
+        bottom: 0;
+        /* Posiciona el menú en la parte inferior */
+        left: 0;
         width: 100%;
-        height: auto; /* Ajusta la altura del menú en pantallas pequeñas */
+        /* Hace que el menú ocupe todo el ancho */
+        background-color: var(--color-fondo);
+        /* Color de fondo (puedes ajustarlo) */
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        /* Sombra opcional */
+        z-index: 1000;
+        /* Asegura que el menú esté sobre otros elementos */
+    }
+
+    nav ul {
+        list-style: none;
+        /* Elimina los puntos de la lista */
         display: flex;
-        flex-direction: row; /* Menú horizontal en pantallas pequeñas */
-        justify-content: space-around; /* Espacio uniforme entre los elementos del menú */
-        position: fixed; /* El menú se fija en la parte inferior */
-        bottom: 0; /* Ubica el menú en la parte inferior de la pantalla */
-        top: unset; /* Elimina la posición top */
-        left: unset; /* Elimina la posición left */
-        z-index: 999;
-        border-top: 1px solid #222;
-    }
-    #box nav ul{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+        /* Usa Flexbox para alinear los ítems en línea */
+        justify-content: space-around;
+        /* Distribuye uniformemente el espacio entre los ítems */
+        margin: 0;
+        padding: 10px 0;
+        /* Espaciado vertical para el menú */
     }
 
-    .BottonCrear{
-        margin-top: 0;
-       }
-       .Pefil{
+    nav ul li {
+        flex: 1;
+        /* Cada elemento del menú ocupa el mismo espacio */
+        text-align: center;
+        /* Alinea los ítems en el centro */
+    }
+
+    nav ul li p {
+        display: none;
+    }
+
+
+    nav ul li  svg {
+        /* Aplica estilos a los iconos SVG */
+        width: 24px;
+        /* Tamaño uniforme para todos los iconos */
+        height: 24px;
+        /* Color del icono */
+    }
+
+    #meetsound-logo{
+        display: none;
+    }
+
+
+    .BottonCrear {
         margin-top: 0;
     }
-   #box{
-    flex-direction: row; /* Cambia a horizontal */
-    
-}
-#Config,#Buscar,.Perfil{
-    display: none;
-}
 
-    
+    .Pefil {
+        margin-top: 0;
+    }
+
+    #box {
+        flex-direction: row;
+        /* Cambia a horizontal */
+        .logotipo{
+            display: none;
+        }
+
+    }
+
+    .Perfil {
+        display: none;
+    }
+
+
 }

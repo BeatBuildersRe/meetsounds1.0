@@ -1,7 +1,12 @@
 package com.project.meetsounds.services;
 
+import com.project.meetsounds.controlErrores.AliasAlreadyExistsException;
+import com.project.meetsounds.controlErrores.AliasAndEmailAlreadyExistsException;
+import com.project.meetsounds.controlErrores.EmailAlreadyExistsException;
+import com.project.meetsounds.controlErrores.MenorDeEdadException;
 import com.project.meetsounds.domain.models.*;
 import com.project.meetsounds.repositories.IUsuarioRepository;
+import graphql.GraphQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -10,10 +15,8 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.time.Period;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,6 +29,20 @@ public class UsuarioService {
     @Autowired
     private InstrumentoService instrumentoService;
 
+    public void comprobarCredenciales(Usuario user){
+        if (usuarioRepository.findByAlias(user.getAlias()).isPresent() && usuarioRepository.findByEmail(user.getEmail()).isPresent()){ //Si no se encuentra ningun usuario con el mismo alias, el usuario se crea.
+            throw new AliasAndEmailAlreadyExistsException("El Alias y el Email ya existen!");
+        }
+
+        if(usuarioRepository.findByAlias(user.getAlias()).isPresent()){
+            throw new AliasAlreadyExistsException("El Alias ya existe!");
+        }
+
+        if(usuarioRepository.findByEmail(user.getEmail()).isPresent()){
+            throw new EmailAlreadyExistsException("El Email ya existe!");
+        }
+    }
+
     public Usuario guardarUsuario(Usuario user) {
 
         user.setC_seguidores(0);
@@ -36,17 +53,43 @@ public class UsuarioService {
         int mes = fechaActual.getMonthValue();
         int dia = fechaActual.getDayOfMonth();
         user.setDate(LocalDate.of(year, mes, dia));
-        //Encriptar contraseña
+        user.setAlias(user.getAlias());
 
-        // Generar Alias
-        //user.setAlias(String.valueOf(UUID.randomUUID()));
-
-        if (this.buscarPorAlias(user.getAlias()) == null){ //Si no se encuentra ningun usuario con el mismo alias, el usuario se crea.
-            return usuarioRepository.save(user);
-        }else {
-            throw new IllegalArgumentException("El alias " + user.getAlias() + " ya existe.");
+        if(!esMayorDeEdad(user.getFechaNacimiento())){
+            throw new MenorDeEdadException("Debe ser mayor de 18 años");
         }
-    } // Hay que actualizar este metodo de un modo parecido al de actualizarUsuario
+
+        if (usuarioRepository.findByAlias(user.getAlias()).isPresent() && usuarioRepository.findByEmail(user.getEmail()).isPresent()){ //Si no se encuentra ningun usuario con el mismo alias, el usuario se crea.
+            throw new AliasAndEmailAlreadyExistsException("El Alias y el Email ya existen!");
+        }
+
+        if(usuarioRepository.findByAlias(user.getAlias()).isPresent()){
+            throw new AliasAlreadyExistsException("El Alias ya existe!");
+        }
+
+        if(usuarioRepository.findByEmail(user.getEmail()).isPresent()){
+            throw new EmailAlreadyExistsException("El Email ya existe!");
+        }
+        return usuarioRepository.save(user);
+    }
+
+    private boolean esMayorDeEdad(LocalDate fechaNacimiento){
+        LocalDate hoy = LocalDate.now();
+        Period periodo = Period.between(fechaNacimiento, hoy);
+        return periodo.getYears() >= 18;
+    }
+
+    public boolean loginUsuario(String username, String contrasena) {
+        Optional<Usuario> usuarioOpt = usuarioRepository.findByAlias(username);
+
+        if (usuarioOpt.isPresent()) {
+            Usuario usuario = usuarioOpt.get();
+            // Aquí puedes implementar un hash o algún algoritmo de seguridad para comparar las contraseñas
+            return usuario.getContrasena().equals(contrasena);
+        }
+
+        return false;
+    }
 
     public Optional<Usuario> buscarUsuarioPorId(String id) {
         return this.usuarioRepository.findById(id);
@@ -64,18 +107,24 @@ public class UsuarioService {
         return users;
     }
 
-    public List<Usuario> buscarUsuarioPorTexto(String text) {
-        List<Usuario> usuarios = new ArrayList<>();
-        usuarios.addAll(this.usuarioRepository.findByNombre(text));
-        usuarios.addAll(this.usuarioRepository.findByApellido(text));
-        return usuarios;
+    public Set<Usuario> buscarUsuarioPorTexto(String text) {
+
+        if (text == null || text.isEmpty()) {
+            return Collections.emptySet(); // O puedes lanzar una excepción según tu caso
+        }
+        Set<Usuario> usuarios = new HashSet<>();
+        usuarios.addAll(usuarioRepository.findByNombre(text));
+        usuarios.addAll(usuarioRepository.findByApellido(text));
+        usuarios.addAll(usuarioRepository.findByAliasBrrBusqueda(text));
+        return usuarios.stream().limit(5).collect(Collectors.toSet());
     }
+
 
     public void eliminarPorIdUsuario(String id) {
         usuarioRepository.deleteById(id);
     }
 
-    public Usuario buscarPorAlias(String alias) {
+    public Optional<Usuario> buscarPorAlias(String alias) {
         return this.usuarioRepository.findByAlias(alias);
     }
 

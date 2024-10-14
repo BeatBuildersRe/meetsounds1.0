@@ -1,6 +1,6 @@
 package com.project.meetsounds.controllers;
 
-import com.project.meetsounds.domain.models.Interes;
+
 import com.project.meetsounds.domain.models.Redes;
 import com.project.meetsounds.domain.models.Usuario;
 import com.project.meetsounds.services.UsuarioService;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 public class UsuarioController {
@@ -21,7 +22,14 @@ public class UsuarioController {
 
     @MutationMapping(name = "guardarUsuario")
     public Usuario guardarUsuario(@Argument Usuario user){
+        System.out.println("Recibido: " + user);
         return this.usuarioService.guardarUsuario(user);
+    }
+
+    @MutationMapping(name = "comprobarCredenciales")
+    public void comprobarCredenciales(@Argument Usuario user){
+        System.out.println("Recibido: " + user);
+        usuarioService.comprobarCredenciales(user);
     }
 
     @MutationMapping(name = "eliminarPorIdUsuario")
@@ -45,12 +53,12 @@ public class UsuarioController {
     }
 
     @QueryMapping(name = "buscarPorAlias")
-    public Usuario buscarPorAlias(@Argument String alias){
+    public Optional<Usuario> buscarPorAlias(@Argument String alias){
         return this.usuarioService.buscarPorAlias(alias);
     }
 
     @QueryMapping(name = "buscarUsuarioPorTexto") // Busqueda por nombre o apellido
-    public List<Usuario> buscarUsuarioPorTexto(@Argument String text){
+    public Set<Usuario> buscarUsuarioPorTexto(@Argument String text){
         return this.usuarioService.buscarUsuarioPorTexto(text);
     }
 

@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
+
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
@@ -14,6 +17,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Seguido {
     private String id;
     private Usuario user;
-    private Usuario segudio;
+    private List<String> misSeguidos;
 }
 

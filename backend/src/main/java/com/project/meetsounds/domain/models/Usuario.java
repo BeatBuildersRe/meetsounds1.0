@@ -9,6 +9,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,7 +18,8 @@ import java.util.List;
 @Document(collection = "user")
 public class Usuario {
     private String id;
-    private String fotoUrl;
+    private String fotoPerfilUrl;
+    private String fotoPortadaUrl;
     private String nombre;
     private String apellido;
     private String nombreUsuario;
@@ -25,12 +28,13 @@ public class Usuario {
     private String email;
     private String telefono;
     private int edad;
-    private LocalDate fecha_nac;
+    private String genero;
+    private LocalDate fechaNacimiento;
     private Ubicacion ubicacion;
     private int c_seguidores;
     private int c_seguidos;
 
-    private List<Instrumento> misInstru;
+    private List<Instrumento> misInstru = new ArrayList<>();
     private List<Interes> misIntereses;
     private List<Banda> misBandas;
     private List<Publicacion> misPublicaciones;
@@ -38,4 +42,17 @@ public class Usuario {
     private String descripcion;
     private Redes redes;
     private LocalDate date;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Usuario)) return false;
+        Usuario usuario = (Usuario) o;
+        return Objects.equals(id, usuario.id); // Asegúrate de usar un campo único
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id); // Asegúrate de usar un campo único
+    }
 }

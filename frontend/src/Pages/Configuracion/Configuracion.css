@@ -1,67 +1,149 @@
-*{
+* {
     padding: 0;
     margin: 0;
 }
 
-.contenedor-configuraci{
+.izquierda-configuracion {
+    height: auto;
+    flex: 2;
+        
+    height: fit-content;
+    background-color: var(--color-fondo); 
+    padding-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    /* Habilita el desplazamiento vertical */
     width: 100%;
-    width: 55%;
-    padding: 1%;
-}
-#Dark .contenedor-configuraci{
-    color: rgb(175, 175, 175);
-}
-.R_Contenedor-Card{
+    position: relative;
+}  
+
+.R_Contenedor-Card {
     width: 100%;
     border-radius: 10px;
     border: 0.5px solid rgb(66, 61, 61);
     margin-bottom: 1%;
     padding: 0;
     background-color: rgb(180, 180, 180);
-    
+
 }
-#Dark .R_Contenedor-Card{
-    
+
+#Dark .R_Contenedor-Card {
+
     background-color: rgb(136, 49, 49);
-    
+
 }
-.R-image-section{
+
+.R-image-section {
     max-width: 125px;
 }
 
-#R-img-card{
+#R-img-card {
     max-width: 125px;
     border-radius: 10px;
 }
-.R_Card{
+
+.R_Card {
     display: flex;
     flex-wrap: wrap;
-    .R-form-section{
+
+    .R-form-section {
         max-width: 70%;
         margin: 1%;
         word-wrap: break-word;
     }
 }
-
-@media (max-width: 768px) {
-    .contenedor-configuraci{
-        width: 100%;
-    }
-    #p_short{
+/* From Uiverse.io by TomMussard */ 
+.Btn_LogOut {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 45px;
+    height: 45px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition-duration: .3s;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+    background-color: rgb(255, 65, 65);
+  }
+  
+  /* plus sign */
+  .sign_Btn_LogOut {
+    width: 100%;
+    transition-duration: .3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .sign_Btn_LogOut svg {
+    width: 17px;
+  }
+  
+  .sign_Btn_LogOut svg path {
+    fill: white;
+  }
+  /* text */
+  .text_LogOut  {
+    position: absolute;
+    right: 0%;
+    width: 0%;
+    opacity: 0;
+    color: white;
+    font-size: 1.2em;
+    font-weight: 600;
+    transition-duration: .3s;
+    
+  }
+  /* hover effect on button width */
+  .Btn_LogOut:hover {
+    width: 125px;
+    border-radius: 40px;
+    transition-duration: .3s;
+  }
+  
+  .Btn_LogOut:hover .sign_Btn_LogOut{
+    width: 30%;
+    transition-duration: .3s;
+    padding-left: 20px;
+  }
+  /* hover effect button's text */
+  .Btn_LogOut:hover .text_LogOut {
+    opacity: 1;
+    width: 70%;
+    transition-duration: .3s;
+    padding-right: 10px;
+    
+  }
+  /* button click effect*/
+  .Btn_LogOut:active {
+    transform: translate(2px ,2px);
+  }
+@media (max-width: 1100px) {
+  
+    #p_short {
         display: none;
     }
 }
 
-@media only screen and (max-width: 480px) {
-    #R-img-card{
+@media (max-width: 500px) {
+
+ 
+    #R-img-card {
         max-width: 75px;
         max-height: 75px;
         border-radius: 10px;
     }
-    #p_long{
+
+    #p_long {
         display: none;
     }
-    #p_short{
+
+    #p_short {
         display: initial;
     }
-  }
+}

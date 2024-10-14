@@ -1,41 +1,41 @@
 
 .logotipo img {
-    width: 100px;
-    height: 15%;
+    width: 200px;
+    height: 100%;
 }
 .logotipo{
     margin: 0;
     padding: 0;
-    margin-bottom: 20px;
+    margin-top: 1px;
     /* display: flex;
     justify-content: space-around; */
     
 }
 #dibujo{
-    display: none;
+    width: 100px;
     
 }
-#texto{
-    width: 100px;
-}
+/* #texto{
+    width: 200px;
+} */
 
 @media (max-width: 1200px) {
-    #texto{
+    /* #texto{
         display: none;
-    }
+    } */
     #dibujo{
         display: flex;
-        width: 50px;
+        width: 80px;
         height: auto;
         margin-top: 15px;
     }
 }
 @media (max-width: 500px) {
-    #texto{
+    /* #texto{
         display: none;
-    }
+    } */
     #dibujo{
-        display: none;
+        width: 50px;
        
     }
 }

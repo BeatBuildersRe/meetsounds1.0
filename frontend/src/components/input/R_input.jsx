@@ -23,7 +23,7 @@ const R_Input = (props ) => {
 
             color={atri}
             defaultValue={props.defaultValue}
-            sx={{
+            /* sx={{
                 '& .MuiOutlinedInput-root': {
                     color: 'white',
                     '& fieldset': {
@@ -33,7 +33,7 @@ const R_Input = (props ) => {
                 '& .MuiInputLabel-root': {
                     color: 'white',
                 },
-            }}
+            }} */
         />
     )
 }

@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class PublicacionService {
@@ -79,6 +80,12 @@ public class PublicacionService {
 
         iPublicacionRepository.deleteById(idPublicacion);
 
+    }
+
+    public Publicacion buscarPublicacionPorId(String id) {
+        return this.iPublicacionRepository.findById(id).orElseThrow(
+                () -> new NoSuchElementException("Publiacion no encontrada con ID: " + id)
+        );
     }
 
     /*

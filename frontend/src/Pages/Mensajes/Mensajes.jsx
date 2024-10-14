@@ -1,22 +1,23 @@
 import * as React from 'react';
-import { useState } from 'react';
-import Switch from "react-switch";
-
-
+import '@css/Mensajes.css'
+import MenuDerechoDiv from '../Home/Derecha';
 const Mensajes = () => {
-    const [checked, setChecked] = useState(false)
-    const handleSwicth = (nextChecked) => {
-        setChecked(nextChecked)
-        console.log(nextChecked)
-    }
-
     return (
+        <>
+            <div className="Contenedor">
+                <div className="contenedor2">
+                    <div className="izquierda-mensajes">
 
-        <div className="Contenedor">
-            
+                    {/* AREA DE TRABAJO */}
+                    {/* MANTERNER ESTE FORMATO DE DIVS PARA OTRAS PAGINAS Y SU CSS */}
 
-        </div>
 
+                    </div>
+                    <MenuDerechoDiv></MenuDerechoDiv>
+                </div>
+            </div>
+            <div />
+        </>
     )
 }
 export default Mensajes;

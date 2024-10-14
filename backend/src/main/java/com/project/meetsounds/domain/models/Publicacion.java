@@ -26,7 +26,7 @@ public class Publicacion {
     private int count_likes;
     private List<Comentario> comentarios;
     private List<MeGusta> meGustas;
-
     private Object entity;
+
 
 }

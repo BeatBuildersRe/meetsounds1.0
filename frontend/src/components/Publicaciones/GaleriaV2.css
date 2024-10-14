@@ -1,0 +1,43 @@
+.Galeria {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    border: 1px solid white;
+    max-height: 500px;
+
+    img {
+        width: auto;
+        max-width: 620px;
+        min-width: 300px;
+    }
+
+    #btn-img-atras {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        left: 0;
+        height: 100%;
+        width: 8%;
+    }
+
+    #btn-img-siguiente {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        right: 0;
+        height: 100%;
+        width: 8%;
+    }
+
+    #btn-img-atras:hover {
+        background-color: rgba(128, 128, 128, 0.541);
+    }
+
+    #btn-img-siguiente:hover {
+        background-color: rgba(128, 128, 128, 0.541);
+
+    }
+
+}

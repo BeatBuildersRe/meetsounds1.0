@@ -38,11 +38,11 @@ export default function App() {
   return (
     <>
       <div className="Contenedor-seguridad">
+        <h2 id='titulo'>Seguridad</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="card">
-            <img id="img_card" src={img} alt="" />
             <div className="form-section">
-              <TextField
+              <TextField className="textfield"
                 {...register("Contraseña", {
                   required: "La contraseña es obligatoria",
                   maxLength: {
@@ -64,7 +64,7 @@ export default function App() {
                 defaultValue={U.Usuario.contraseña}
               />
 
-              <TextField
+              <TextField className="textfield"
                 {...register("Repetir_Contraseña", {
                   required: "Debe repetir la contraseña",
                   maxLength: {
@@ -89,9 +89,8 @@ export default function App() {
           {/* Card Email */}
           <div className="card">
             <div className="image_section"></div>
-            <img id="img_card" src={img2} alt="" />
             <div className="form-section">
-              <TextField
+              <TextField className="textfield"
                 {...register("Email", {
                   required: "El email es obligatorio",
                   minLength: {
@@ -109,7 +108,7 @@ export default function App() {
                 defaultValue={U.Usuario.email}
               />
 
-              <TextField
+              <TextField className="textfield"
                 {...register("Repetir_Email", {
                   required: "Debe repetir el email",
                   validate: (value) =>

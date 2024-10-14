@@ -1,109 +1,164 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useThemeContext } from '../../context/ThemeContext';
-import imgFondo from '../../img/ract.jpg';
+import imgFondo from '../../img/react.jpg';
 import imgPerfil from '../../img/perfil_imagen.png';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import MenuListComposition from '../../components/mini-menu/minMenu';
-import UseToggle from '../../components/Boton-seguir/btnSegui';
-import ImgFondo from '../../components/imagen-de-fondo/Imagen_de_fondo';
-import ImgPerfil from '../../components/imagen-de-fondo/imagen_de_perfil';
 import CrearPublicacion from '../../components/Crear-Publicacion/CrearPublicacion';
 import SeguirDores from './components/seguir_dores';
 import './CssPefilUsuario.css';
-import { FcAudioFile } from "react-icons/fc";
-import { FcCamera } from "react-icons/fc";
-import { FcAlphabeticalSortingAz } from "react-icons/fc";
-import { FcFilmReel } from "react-icons/fc";
-import { FcGallery } from "react-icons/fc";
-import { FcMusic } from "react-icons/fc";
-import { FcPlus } from "react-icons/fc";
+import MenuDerecho from '@c/Menu/Menu';
+import { FcAudioFile, FcCamera, FcAlphabeticalSortingAz, FcFilmReel, FcGallery, FcMusic, FcPlus } from "react-icons/fc";
+import { useParams, useNavigate } from 'react-router-dom';
+
 const PerfilUsuario = () => {
-    const { contextTheme } = useThemeContext(); // Usar el contexto de tema
-    const [alignment, setAlignment] = useState('web'); // Estado para el ToggleButtonGroup
-    const [isDivVisible, setIsDivVisible] = useState(false); // Estado para la visibilidad del primer div
-    const [isDivVisible2, setIsDivVisible2] = useState(false); // Estado para la visibilidad del segundo div
-    const [isDivVisible3, setIsDivVisible3] = useState(false); // Estado para la visibilidad del segundo div
+  const { alias } = useParams();  // Extrae el alias de la URL
+  const navigate = useNavigate();  // Para redirigir
+  const [userData, setUserData] = useState({
+    nombre: '',
+    apellido: '',
+    alias: '',
+    c_seguidores: '',
+    c_seguidos: '',
+    descripcion: ''
+  });
 
-    // Maneja el cambio en el ToggleButtonGroup
-    const handleChange = (event, newAlignment) => {
-        if (newAlignment !== null) {
-            setAlignment(newAlignment);
+  useEffect(() => {
+    if (alias) {
+      const fetchUserData = async () => {
+        try {
+          const response = await fetch("http://localhost:8080/graphql", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              query: `
+                query {
+                  buscarPorAlias(alias: "${alias}") {
+                    nombre
+                    apellido
+                    alias
+                    c_seguidores
+                    c_seguidos
+                    descripcion
+                  }
+                }
+              `,
+            }),
+          });
+
+          const result = await response.json();
+
+          // Verificamos si el usuario existe
+          if (result.data && result.data.buscarPorAlias) {
+            setUserData(result.data.buscarPorAlias);
+          } else {
+            // Si el usuario no existe, redirigir a la página 404
+            navigate('/404');
+          }
+        } catch (error) {
+          console.error("Error al conectar con el servidor", error);
+          navigate('/404'); // Redirigir también en caso de error en la conexión
         }
-    };
+      };
 
-    // Renderiza el componente basado en el valor seleccionado
-    const renderComponent = () => {
-        switch (alignment) {
-            case 'web': return <h1>1</h1>;
-            case 'android': return <h1>2</h1>;
-            case 'ios': return <h1>3</h1>;
-            default: return <h1>1.2</h1>;
-        }
-    };
+      fetchUserData();
+    } else {
+      console.log("Alias no encontrado en la URL.");
+      navigate('/404'); // Redirigir si no hay alias
+    }
+  }, [alias, navigate]);
 
-    // Alterna la visibilidad del div
-    const handleImageClick = () => setIsDivVisible(!isDivVisible);
-    const handleImageClick2 = () => setIsDivVisible2(!isDivVisible2);
-    const handleImageClick3 = () => setIsDivVisible3(!isDivVisible3);
+  const { contextTheme } = useThemeContext();  
+  const [alignment, setAlignment] = useState('web');  
+  const [isDivVisible, setIsDivVisible] = useState(false);  
+  const [isDivVisible2, setIsDivVisible2] = useState(false);  
+  const [isDivVisible3, setIsDivVisible3] = useState(false);  
 
-    return (
-        <div className={`contenedor-cuenta ${contextTheme === 'Dark' ? 'dark-theme' : 'light-theme'}`}>
-            {/* Componentes de fondo y perfil */}
-            <ImgFondo condicion={isDivVisible} funcion={handleImageClick} img={imgFondo} />
-            <ImgPerfil condicion={isDivVisible2} funcion={handleImageClick2} img={imgPerfil} />
-            <CrearPublicacion condicion={isDivVisible3} funcion={handleImageClick3}/>
-            <div className='seccion-1'>
-                <img
-                    id="img-fondo"
-                    onClick={handleImageClick}
-                    src={imgFondo}
-                    alt="Imagen de fondo"
-                />
-                <img
-                    id="img-perfil"
-                    onClick={handleImageClick2}
-                    src={imgPerfil}
-                    alt="Imagen de perfil"
-                />
-                <MenuListComposition />
-                <p id="nombre">Mauro Berni</p>
-                <SeguirDores />
-            </div>
+  const handleChange = (event, newAlignment) => {
+    if (newAlignment !== null) {
+      setAlignment(newAlignment);
+    }
+  };
 
-            <div className="seccion-2">
-                <p>Descripción del usuario</p>
-            </div>
-            <div className="seccion-3">
-                <div className='btn-nueva-publicacion'>
-                    <FcAudioFile id='icon-i'></FcAudioFile>
-                    <FcFilmReel id='icon-i'></FcFilmReel>
-                    <FcCamera id='icon-i'></FcCamera>
-                    <button onClick={handleImageClick3} id="btn-crear">Nueva publicacion <FcPlus id="icon-x" /></button>
-                    <FcGallery id='icon-i'></FcGallery>
-                    <FcMusic id='icon-i'></FcMusic>
-                    <FcAlphabeticalSortingAz></FcAlphabeticalSortingAz>
-                </div>
-            </div>
-            <div className="seccion-4">
-                <ToggleButtonGroup
-                    color="success"
-                    value={alignment}
-                    exclusive
-                    onChange={handleChange}
-                    aria-label="Plataforma"
-                    fullWidth
-                >
-                    <ToggleButton id="btn-ui" value="web">Publicaciones</ToggleButton>
-                    <ToggleButton id="btn-ui" value="android">Multimedia</ToggleButton>
-                    <ToggleButton id="btn-ui" value="ios">Información</ToggleButton>
-                </ToggleButtonGroup>
-                <div id="componentes">
-                    {renderComponent()}
-                </div>
-            </div>
+  const renderComponent = () => {
+    switch (alignment) {
+      case 'web': return <h1>1</h1>;
+      case 'android': return <h1>2</h1>;
+      case 'ios': return <h1>3</h1>;
+      default: return <h1>1.2</h1>;
+    }
+  };
+
+  const handleImageClick = () => setIsDivVisible(!isDivVisible);
+  const handleImageClick2 = () => setIsDivVisible2(!isDivVisible2);
+  const handleImageClick3 = () => setIsDivVisible3(!isDivVisible3);
+
+  return (
+    <div className="Contenedor-perfil-usuario">
+      <div className="izquierda-perfil-usuario">
+        <CrearPublicacion condicion={isDivVisible3} funcion={handleImageClick3} />
+        <div className='seccion-1'>
+          <img
+            id="img-fondo"
+            onClick={handleImageClick}
+            src={imgFondo}  
+            alt="Imagen de fondo"
+          />
+          <img
+            id="img-perfil"
+            onClick={handleImageClick2}
+            src={imgPerfil}  
+            alt="Imagen de perfil"
+          />
+          <MenuListComposition />
+          <p id="nombre">{userData.nombre} {userData.apellido}</p> 
+          <SeguirDores
+            seguidores={userData.c_seguidores}
+            seguidos={userData.c_seguidos}
+            amigo={true}  
+            condicion={false}
+          />
         </div>
-    );
-}
+        <div className="seccion-2">
+          <p>{userData.descripcion}</p> 
+        </div>
+        <div className="seccion-3">
+          <div className='btn-nueva-publicacion'>
+            <FcAudioFile id='icon-i'></FcAudioFile>
+            <FcFilmReel id='icon-i'></FcFilmReel>
+            <FcCamera id='icon-i'></FcCamera>
+            <button onClick={handleImageClick3} id="btn-crear">Nueva publicacion <FcPlus id="icon-x" /></button>
+            <FcGallery id='icon-i'></FcGallery>
+            <FcMusic id='icon-i'></FcMusic>
+            <FcAlphabeticalSortingAz></FcAlphabeticalSortingAz>
+          </div>
+        </div>
+        <div className="seccion-4">
+          <ToggleButtonGroup
+            color="success"
+            value={alignment}
+            exclusive
+            onChange={handleChange}
+            aria-label="Plataforma"
+            fullWidth
+          >
+            <ToggleButton id="btn-ui" value="web">Publicaciones</ToggleButton>
+            <ToggleButton id="btn-ui" value="android">Multimedia</ToggleButton>
+            <ToggleButton id="btn-ui" value="ios">Información</ToggleButton>
+          </ToggleButtonGroup>
+          <div id="componentes">
+            {renderComponent()}
+          </div>
+        </div>
+      </div>
+      <div className="derecha-perfil-usuario">
+        <MenuDerecho />
+      </div>
+    </div>
+  );
+};
 
 export default PerfilUsuario;

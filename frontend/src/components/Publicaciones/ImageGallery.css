@@ -1,0 +1,153 @@
+.container {
+  max-width: 600px;
+}
+
+#h4-mas {
+  visibility: hidden;
+  display: none;
+}
+
+.galeria-imagenes-1 {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+  .imagen-contenedor {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    border-radius: 15px;
+    object-fit: cover;
+
+    #img {
+      border-radius: 15px;
+      border-radius: 15px;
+      object-fit: cover;
+      min-width: 300px;
+    }
+  }
+}
+
+/* 2 imagenes */
+.galeria-imagenes-2 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+
+  .imagen-contenedor {
+    flex: 1 1 calc(50% - 5px);
+    position: relative;
+    justify-content: center;
+
+    border-radius: 15px;
+    object-fit: cover;
+
+    #img {
+      width: 100%;
+      height: 100%;
+      border-radius: 15px;
+      object-fit: cover;
+
+      max-height: 300px;
+    }
+  }
+}
+
+.galeria-imagenes-3 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+
+  .imagen-contenedor {
+    flex: 1 1 calc(50% - 5px);
+    position: relative;
+    justify-content: center;
+
+    border-radius: 15px;
+    object-fit: cover;
+
+    #img {
+      width: 100%;
+      height: 100%;
+      border-radius: 15px;
+      object-fit: cover;
+
+      max-height: 200px;
+    }
+  }
+}
+
+.galeria-imagenes-4 {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  gap: 5px;
+
+  .imagen-contenedor {
+    flex: 1 1 calc(50% - 5px);
+    position: relative;
+    justify-content: center;
+
+    #img {
+      width: 100%;
+      height: 100%;
+      border-radius: 15px;
+      object-fit: fill;
+
+      max-height: 200px;
+    }
+  }
+}
+
+.galeria-imagenes-5 {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  gap: 5px;
+
+  .imagen-contenedor {
+    flex: 1 1 calc(50% - 5px);
+    position: relative;
+    justify-content: center;
+
+    #img {
+      width: 100%;
+      height: 100%;
+      border-radius: 15px;
+      object-fit: fill;
+
+      max-height: 200px;
+    }
+
+    .img-3 {
+      filter: blur(2px);
+    }
+
+
+  }
+
+  #img-3 {
+    #h4-mas {
+      all: unset;
+      position: absolute;
+      right: 50%;
+      bottom: 50%;
+      color: rgb(0, 0, 0);
+      font-weight: bold;
+      text-shadow:
+        -1px -1px 0 #ffffff,
+        /* Arriba izquierda */
+        1px -1px 0 #ffffff,
+        /* Arriba derecha */
+        -1px 1px 0 #ffffff,
+        /* Abajo izquierda */
+        1px 1px 0 #ffffff;
+      /* Abajo derecha */
+    }
+  }
+
+
+
+
+
+}

@@ -1,0 +1,140 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.Publicaciones {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.404);
+    margin-bottom: 6px;
+    margin-top: 6px;
+
+    .seccion_1 {}
+
+    .seccion_2 {
+        flex: 2;
+
+
+        #usuario {
+            display: flex;
+            flex-direction: row;
+
+            #usuario-info {
+                flex: 2;
+
+                #p-nombre {
+                    font-size: 0.9em;
+                    font-weight: bold;
+                }
+
+                #p-id {
+                    font-size: small;
+                    color: gray;
+                }
+            }
+
+            #usuario-btn {
+                z-index: 1;
+                cursor: pointer;
+
+                #btn-menu {
+                    /* en el componente minimenu : sx={{all: 'unset'}} */
+                }
+            }
+        }
+
+        #usuario-texto {
+            display: flex;
+            padding-top: 2%;
+            padding-bottom: 1%;
+            font-size: 0.9rem;
+
+            #btn-mostar-mas {
+                all: unset;
+                font-weight: bold;
+            }
+        }
+
+        #usuario-media {
+            min-width: 100%;
+            max-height: fit-content;
+        }
+
+        #btn-reacciones {
+            display: flex;
+
+            padding-left: 1%;
+            padding-right: 1%;
+
+            #btn_1 {
+                display: flex;
+                flex-direction: row;
+                font-size: 1.2rem;
+                flex: 2;
+
+                p {
+                    font-weight: 600;
+                    color: gray;
+                    font-size: 0.9rem;
+                    margin-left: 5px;
+                }
+            }
+
+            #btn_2 {
+                p {
+                    font-weight: 600;
+                    color: gray;
+                    font-size: 0.9rem;
+                    margin-left: 5px;
+                }
+            }
+        }
+
+    }
+}
+
+/* From Uiverse.io by reshades */
+#pick {
+    width: 5em;
+    height: 2em;
+    border-radius: 30em;
+    font-size: 15px;
+    font-family: inherit;
+    border: none;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    gap: 5px;
+    overflow: hidden;
+    z-index: 1;
+    border: 1px solid rgba(112, 112, 112, 0.644);
+   
+}
+
+#pick::before {
+    content: '';
+    width: 0;
+    height: 2em;
+    border-radius: 30em;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: linear-gradient(to right, #120fd8 0%, #47c6f9 100%);
+    transition: .5s ease;
+    display: block;
+    z-index: -1;
+}
+
+#pick:hover::before {
+    width: 9em;
+}
+
+.btn-atras{
+    border-bottom: 1px solid rgba(128, 128, 128, 0.63);
+    border-top: 1px solid rgba(128, 128, 128, 0.63);
+    padding-top: 7px;
+    padding-bottom: 7px;
+    width: 100%;
+}

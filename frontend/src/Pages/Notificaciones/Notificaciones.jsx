@@ -1,8 +1,21 @@
-const Notificaciones = () =>{
-    return(
-        <div className="Contenedor">
-            <h1>Notificaciones</h1>
-        </div>
+import '@css/Notificaciones.css'
+import MenuDerechoDiv from '../Home/Derecha';
+const Notificaciones = () => {
+    return (
+        <>
+            <div className="Contenedor">
+                <div className="contenedor2">
+                    <div className="izquierda-notificaciones">
+
+                        {/* AREA DE TRABAJO */}
+                        {/* MANTERNER ESTE FORMATO DE DIVS PARA OTRAS PAGINAS Y SU CSS */}
+
+                    </div>
+                    <MenuDerechoDiv></MenuDerechoDiv>
+                </div>
+            </div>
+            <div />
+        </>
     )
 }
 

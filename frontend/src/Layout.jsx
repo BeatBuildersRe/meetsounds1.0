@@ -1,8 +1,8 @@
-import React from 'react';
-import { Route, Routes, Link, Outlet } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'; // Asegúrate de incluir useEffect aquí
+import { Route, Routes, Link, Outlet, useNavigate } from 'react-router-dom';
 import './layout.css';
-
-import ButtonMenu from './components/botones/BotonesMenu'
+import { useThemeContext } from './context/ThemeContext';
+import ButtonMenu from './components/botones/BotonesMenu';
 import { CiSearch } from "react-icons/ci";
 import { TiHome } from "react-icons/ti";
 import { GoPeople } from "react-icons/go";
@@ -11,53 +11,60 @@ import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { LuCalendarHeart } from "react-icons/lu";
 import { IoSettingsSharp } from "react-icons/io5";
 import { CiCirclePlus } from "react-icons/ci";
-import MeetLogo from './components/logotipo/Logo'
-import Avatar from './components/avatar/Avatar'
-import ButtonPlus from './components/botones/BotonCrear'
-
-// Componentes de página
-const Messages = () => <div>Esta es la página de mensajes</div>;
-const Settings = () => <div>Esta es la página de configuración</div>;
+import MeetLogo from './components/logotipo/Logo';
+import Avatar from './components/avatar/Avatar';
+import Cookies from 'js-cookie';
 
 const Layout = () => {
+  const [alias, setAlias] = useState(undefined);
+  const navigate = useNavigate();
+  const { contextTheme, setContextTheme } = useThemeContext();
+
+  useEffect(() => {
+    const storedAlias = Cookies.get('alias');
+    if (storedAlias) {
+      setAlias(storedAlias);
+    }
+  }, []); // Ejecuta solo una vez al montar el componente
+
+  const handleClick = () => {
+    if (alias) {
+      navigate('/cuenta/' + alias);
+    } else {
+      console.error('Alias is undefined, cannot navigate.');
+    }
+  };
+
+  const handleSwitch = () => {
+    setContextTheme((prevTheme) => (prevTheme === "Light" ? "Dark" : "Light"));
+  };
+
+  if (!alias) {
+    return <div>Cargando...</div>; // O cualquier indicador de carga que prefieras
+  }
+
   return (
-    <div className="Layout">
+    <div className="Layout" id={contextTheme}>
       {/* Menú a la izquierda */}
       <div id="left-menu">
-        <div className="meetsound-logo">
-
-        </div>
 
         <div id="box">
-          <div >
             <nav>
               <ul>
-                {/* ---El boton de inicio lleva la ruta "/home", lo que vos tenias
-                      hacia que cuando ingresaras por primera vez a la pagina
-                      si te mostraba el "inicio" por que el inicio usaba la "/"
-                      pero cuando tocabas el boton "inicio" te llevaba a "/home"
-                      donde no esta la pagina
-
-                      basicamente tenias dos rutas "/" y "/home" y solo en una de ella estaba 
-                      la pagina "Home"
-
-                       
-                
-                "--- */}
                 <MeetLogo />
-                <li ><Link to="/"><ButtonMenu icon={TiHome} /><span>Inicio</span></Link></li>
-                <li id='Buscar'><Link to="/busqueda"><ButtonMenu icon={CiSearch} /><span>Buscar</span></Link></li>
-                <  li><Link to="/bandas"><ButtonMenu icon={GoPeople} /><span>Bandas</span></Link></li>
-                <li><Link to="/mensajes"><ButtonMenu icon={IoChatbubbleEllipsesOutline} /><span>Mensajes</span></Link></li>
-                <li><Link to="/notificaciones"><ButtonMenu icon={FaFire} /><span>Notificaciones</span></Link></li>
-                <li><Link to="/eventos"><ButtonMenu icon={LuCalendarHeart} /><span>Eventos</span></Link></li>
-                <li id='Config'><Link to="/configuracion"><ButtonMenu icon={IoSettingsSharp} /><span>Configuración</span></Link></li>
+                <li ><Link to="/"><ButtonMenu icon={TiHome} /><p>Inicio</p></Link></li>
+                <li id='Buscar'><Link to="/busqueda"><ButtonMenu icon={CiSearch} /><p>Buscar</p></Link></li>
+                <li><Link to="/bandas"><ButtonMenu icon={GoPeople} /><p>Bandas</p></Link></li>
+                <li><Link to="/mensajes"><ButtonMenu icon={IoChatbubbleEllipsesOutline} /><p>Mensajes</p></Link></li>
+                <li><Link to="/notificaciones"><ButtonMenu icon={FaFire} /><p>Notificaciones</p></Link></li>
+                <li><Link to="/eventos"><ButtonMenu icon={LuCalendarHeart} /><p>Eventos</p></Link></li>
+                <li id='Config'><Link to="/configuracion"><ButtonMenu icon={IoSettingsSharp} /><p>Configuración</p></Link></li>
               </ul>
             </nav>
-          </div>
+          {console.log(alias)}
 
 
-          
+
 
           {/* <div className='BottonCrear'>
             <ButtonPlus icon={CiCirclePlus} />
@@ -73,12 +80,13 @@ const Layout = () => {
         </Link>
       </Box> */}
 
-          
+<div className='Perfil'>
+          <button style={{all:'none'}} onClick={handleClick}>
+            <Avatar />
+          </button>
         </div>
-        <div className='Perfil'>
-        <Link to="/cuenta"><Avatar /></Link>
-            
-          </div>
+        </div>
+        
       </div>
 
       {/* App.jsx es para manejas las rutas, y Layout es el "menu" que permite 
@@ -103,7 +111,7 @@ const Layout = () => {
         <p>Sección derecha</p>
         {/* Contenido adicional o complementario 
       </div> */}
-      <Outlet/> {/* ---TE OLVIDASTE ESTO: es para el manejo de rutas "hijas"--- */}
+      <Outlet /> {/* ---TE OLVIDASTE ESTO: es para el manejo de rutas "hijas"--- */}
     </div>
   );
 };

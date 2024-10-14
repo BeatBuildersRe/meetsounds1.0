@@ -1,107 +1,127 @@
-import React, { useState } from 'react';
-import '../../css/Registro.css';
-import { FaGoogle } from 'react-icons/fa';
-import BotonGoogle from '../../components/boton-google/ButtonGoogle';
-import { FaSpotify } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../../css/Registro.css';
 
-const Registro = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    username: ''
-  });
+function Registro1() {
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null); // Nuevo estado para manejar errores
 
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+  // Limpiar el localStorage al montar el componente
+  useEffect(() => {
+    localStorage.removeItem('userData');
+  }, []);
 
-  /* Se cambia al registro 2 si todos los datos son correctos */
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const validationErrors = validateForm(formData);
-    if (Object.keys(validationErrors).length === 0) {
-      console.log('Formulario enviado', formData);
-      navigate('/Registro2');
-    } else {
-      alert(`Faltan los siguientes campos: ${Object.values(validationErrors).join(', ')}`);
+
+    // Validación local
+    if (!email || !username || !password) {
+      alert("Todos los campos son obligatorios.");
+      return;
+    }
+
+    // Crear la consulta GraphQL
+    const query = `
+      mutation {
+        comprobarCredenciales(user: {
+          alias: "${username}",
+          email: "${email}"
+        }) {
+          id
+        }
+      }
+    `;
+
+    try {
+      const response = await fetch('http://localhost:8080/graphql', { // Cambia el puerto y URL si es necesario
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error en la solicitud: ${response.status}`);
+      }
+
+      const result = await response.json();
+
+      // Verificar si hay errores devueltos por el backend
+      if (result.errors && result.errors.length > 0) {
+        const errorMessage = result.errors[0].message; // Obtener el mensaje del error
+        setError(errorMessage); // Guardar el error en el estado
+        return;
+      }
+
+      // Si no hay errores, guardar los datos en localStorage
+      const userData = { email, username, password };
+      localStorage.setItem('userData', JSON.stringify(userData));
+      console.log('Datos guardados en localStorage:', userData);
+
+      // Navegar a la siguiente página
+      navigate('/registro2');
+    } catch (err) {
+      console.error('Error al realizar la solicitud:', err);
+      setError('Ocurrió un error. Por favor, inténtalo de nuevo más tarde.');
     }
   };
 
-  const validateForm = (data) => {
-    const errors = {};
-    if (!data.email) errors.email = 'Email';
-    if (!data.password) errors.password = 'Contraseña';
-    if (!data.username) errors.username = 'Nombre de usuario';
-    return errors;
-  };
-
   return (
-    <body id="cuerpo">
-      <form className="cuerpoRegistro" onSubmit={handleSubmit}>
-        <center><h1 className="titRegistro">Regístrate</h1></center>
+    <div id="cuerpo1">
+      <div className="login-container">
+        <h1 className="titulo">Registro</h1>
+        <form onSubmit={handleSubmit} className="login-form">
+          <div className="form-group">
+            <label className="labelRegistro1" htmlFor="email">Correo Electrónico</label>
+            <input
+              className="formCampos"
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Ingresa tu correo"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label className="labelRegistro1" htmlFor="username">Nombre de Usuario</label>
+            <input
+              className="formCampos"
+              type="text"
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Ingresa tu nombre de usuario"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label className="labelRegistro1" htmlFor="password">Contraseña</label>
+            <input
+              className="formCampos"
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Ingresa tu contraseña"
+              required
+            />
+          </div>
 
-        <div className="divCampos">
-          <label className="nombreCampo">Email</label>
-          <input
-            className="formCampo"
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Ingresa tu email"
-          />
-        </div>
+          {error && <p className="error-message">{error}</p>} {/* Mostrar el error si existe */}
 
-        <div className="divCampos">
-          <label className="nombreCampo">Contraseña</label>
-          <input
-            className="formCampo"
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="Ingresa tu contraseña"
-          />
-        </div>
-
-        <div className="divCampos">
-          <label className="nombreCampo">Nombre de Usuario</label>
-          <input
-            className="formCampo"
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            placeholder="Ingresa tu nombre de usuario"
-          />
-        </div>
-
-        <div className="contenedorRegistro">
-          <button className="btnRegistro">Regístrate</button>
-        </div>
-
-        <center><p className='separador'>o</p></center>
-        <center><h3>Regístrate con:</h3></center>
-        <div className='apiRegistro'>
-          <BotonGoogle icon={FaGoogle} />
-          <BotonGoogle icon={FaSpotify} />
-        </div>
-
-        <div className="linkLogin">
-          <center><p className="textLogin">¿Ya tienes una cuenta? <a href="/login">Inicia Sesión</a></p></center>
-        </div>
-      </form>
-    </body>
+          <div className="contenedorRegistro">
+            <button className="btnRegistro" type="submit">Siguiente</button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
-};
+}
 
-export default Registro;
-
-
+export default Registro1;

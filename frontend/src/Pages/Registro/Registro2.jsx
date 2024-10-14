@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../../css/Registro2.css';
 
-function App() {
+function Registro2() {
   const [nombre, setNombre] = useState('');
   const [apellido, setApellido] = useState('');
   const [telefono, setTelefono] = useState('');
+  const [fechaNacimiento, setFechaNacimiento] = useState('');
   const [genero, setGenero] = useState('');
-  const [otroGenero, setOtroGenero] = useState('');
   const [pais, setPais] = useState('Argentina');
-  const [provincia, setProvincia] = useState(''); 
-  const [provincias, setProvincias] = useState([]); 
+  const [provincia, setProvincia] = useState('');
+  const [provincias, setProvincias] = useState([]);
+  const [userData, setUserData] = useState(null);
+
+  const navigate = useNavigate();
+
+  const graphqlEndpoint = "http://localhost:8080/graphql"; // Cambia esto según tu backend
 
   const paisesConProvincias = {
     Argentina: ['Buenos Aires', 'Catamarca', 'Chaco', 'Chubut', 'Córdoba', 'Corrientes', 'Entre Ríos', 'Formosa', 'Jujuy', 'La Pampa', 'La Rioja', 'Mendoza', 'Misiones', 'Neuquen', 'Río Negro', 'Salta', 'San Juan', 'San Luís', 'Santa Cruz', 'Santa Fe', 'Santiago del Estero', 'Tierra del Fuego', 'Tucumán'],
@@ -18,22 +24,95 @@ function App() {
     Uruguay: ['Montevideo', 'Canelones', 'Maldonado', 'Salto', 'Paysandú']
   };
 
+  // Actualizar las provincias según el país seleccionado
   useEffect(() => {
     setProvincias(paisesConProvincias[pais]);
-    setProvincia(''); 
+    setProvincia('');
   }, [pais]);
+
+  // Obtener los datos de registro1 y limpiar localStorage al montar el componente
+  useEffect(() => {
+    const storedUserData = localStorage.getItem('userData');
+    if (storedUserData) {
+      setUserData(JSON.parse(storedUserData));
+    } else {
+      console.log("No se encontró userData. Redirigiendo a Registro1.");
+      navigate('/registro'); // Redirige al formulario de Registro1 si no hay userData
+    }
+
+    // Limpiar el localStorage al desmontar el componente
+    return () => {
+      localStorage.removeItem('userData');
+    };
+  }, [navigate]);
+
+  // Función para enviar los datos del formulario a la mutación GraphQL
+  const guardarUsuarioGraphQL = async (user) => {
+    const query = `
+      mutation {
+        guardarUsuario(user: {
+          nombre: "${user.nombre}",
+          apellido: "${user.apellido}",
+          genero: "${user.genero}",
+          alias: "${user.alias}",
+          email: "${user.email}",
+          fechaNacimiento: "${user.fechaNacimiento}",
+          contrasena: "${user.contrasena}"
+        }) {
+          nombre
+        }
+      }
+    `;
+
+    try {
+      const response = await fetch(graphqlEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query }),
+      });
+
+      const result = await response.json();
+      if (result.data && result.data.guardarUsuario) {
+        console.log('Usuario guardado:', result.data.guardarUsuario);
+        // Aquí puedes redirigir o mostrar un mensaje de éxito
+        navigate('/login');
+      } else if (result.errors) {
+        console.error('Errores al guardar usuario:', result.errors);
+        alert(`Error: ${result.errors[0].message}`);
+      }
+    } catch (error) {
+      console.error('Error al enviar la mutación:', error);
+      alert('Hubo un error al enviar los datos. Inténtalo de nuevo más tarde.');
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    const generoFinal = genero === 'otro' ? otroGenero : genero;
-    const validationErrors = validateForm({ nombre, apellido, telefono, generoFinal, provincia });
+
+    const validationErrors = validateForm({ nombre, apellido, telefono, fechaNacimiento, genero, provincia });
 
     if (Object.keys(validationErrors).length === 0) {
-      console.log(`Nombre: ${nombre}, Apellido: ${apellido}, Teléfono: ${telefono}, Género: ${generoFinal}, País: ${pais}, Provincia: ${provincia}`);
+      const user = {
+        nombre,
+        apellido,
+        telefono,
+        genero,
+        fechaNacimiento,
+        alias: userData.username, // Alias del userData
+        email: userData.email,     // Email del userData
+        contrasena: userData.password
+      };
+
+      guardarUsuarioGraphQL(user); // Llamar a la mutación para guardar el usuario
     } else {
       alert(`Faltan los siguientes campos: ${Object.values(validationErrors).join(', ')}`);
     }
+  };
+
+  const handleSelectGenero = (generoSeleccionado) => {
+    setGenero(generoSeleccionado);
   };
 
   const validateForm = (data) => {
@@ -41,54 +120,67 @@ function App() {
     if (!data.nombre) errors.nombre = 'Nombre';
     if (!data.apellido) errors.apellido = 'Apellido';
     if (!data.telefono) errors.telefono = 'Teléfono';
-    if (!data.generoFinal) errors.genero = 'Género';
+    if (!data.fechaNacimiento) errors.fechaNacimiento = 'Fecha de Nacimiento';
+    if (!data.genero) errors.genero = 'Género';
     if (!data.provincia) errors.provincia = 'Provincia';
     return errors;
   };
 
-  const handleSelectGenero = (selectedGenero) => {
-    setGenero(selectedGenero);
-    if (selectedGenero !== 'otro') {
-      setOtroGenero('');
-    }
-  };
-   
+  if (!userData) {
+    return null; // O un loader si prefieres
+  }
+
   return (
-    <body id="cuerpo2">
+    <div id="cuerpo2">
       <div className="login-container">
-        <h1 class="titulo">Datos Personales</h1>
+        <h1 className="titulo">Datos Personales</h1>
+
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group">
-            <label class="labelRegistro2" htmlFor="nombre">Nombre</label>
+            <label htmlFor="nombre">Nombre</label>
             <input 
               className="formCampos"
               type="text" 
               id="nombre" 
               value={nombre} 
               onChange={(e) => setNombre(e.target.value)} 
-              placeholder="Ingresa tu nombre"
+              required
             />
           </div>
           <div className="form-group">
-            <label class="labelRegistro2" htmlFor="apellido">Apellido</label>
+            <label htmlFor="apellido">Apellido</label>
             <input 
               className="formCampos"
               type="text" 
               id="apellido" 
               value={apellido} 
               onChange={(e) => setApellido(e.target.value)} 
-              placeholder="Ingresa tu apellido"
+              required
             />
           </div>
           <div className="form-group">
-            <label class="labelRegistro2" htmlFor="telefono">Teléfono</label>
+            <label htmlFor="telefono">Teléfono</label>
             <input 
               className="formCampos"
               type="tel" 
               id="telefono" 
               value={telefono} 
-              onChange={(e) => setTelefono(e.target.value)} 
-              placeholder="Ingresa tu teléfono"
+              onChange={(e) => {
+                const soloNumeros = e.target.value.replace(/[^0-9]/g, '');
+                setTelefono(soloNumeros);
+              }}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="fechaNacimiento">Fecha de nacimiento</label>
+            <input 
+              className="formCampos"
+              type="date" 
+              id="fechaNacimiento" 
+              value={fechaNacimiento} 
+              onChange={(e) => setFechaNacimiento(e.target.value)} 
+              required
             />
           </div>
 
@@ -97,21 +189,21 @@ function App() {
             <label>Género</label>
             <div className="barra-genero">
               <div 
-                className={`third ${genero === 'masculino' ? 'active-azul' : ''}`} 
+                className={`third1 ${genero === 'masculino' ? 'active-azul' : ''}`} 
                 onClick={() => handleSelectGenero('masculino')}
               >
                 Masculino
               </div>
 
               <div 
-                className={`third ${genero === 'femenino' ? 'active-rosada' : ''}`} 
+                className={`third2 ${genero === 'femenino' ? 'active-rosada' : ''}`} 
                 onClick={() => handleSelectGenero('femenino')}
               >
                 Femenino
               </div>
 
               <div 
-                className={`third ${genero === 'otro' ? 'active-verde' : ''}`} 
+                className={`third3 ${genero === 'otro' ? 'active-verde' : ''}`} 
                 onClick={() => handleSelectGenero('otro')}
               >
                 Otro
@@ -119,24 +211,8 @@ function App() {
             </div>
           </div>
 
-          {/* Campo que se muestra al seleccionar 'otro' */}
-          {genero === 'otro' && (
-            <div className="form-group">
-              <label class="labelRegistro2" htmlFor="otroGenero">Especifica tu género</label>
-              <input 
-                className="formCampos"
-                type="text" 
-                id="otroGenero" 
-                value={otroGenero} 
-                onChange={(e) => setOtroGenero(e.target.value)} 
-                placeholder="Especifica tu género"
-              />
-            </div>
-          )}
-
-          {/* Selección de país */}
           <div className="form-group">
-            <label class="labelRegistro2" htmlFor="pais">País</label>
+            <label htmlFor="pais">País</label>
             <select 
               className="formCampos" 
               id="pais" 
@@ -150,14 +226,14 @@ function App() {
             </select>
           </div>
 
-          {/* Selección de provincia */}
           <div className="form-group">
-            <label class="labelRegistro2" htmlFor="provincia">Provincia</label>
+            <label htmlFor="provincia">Provincia</label>
             <select 
               className="formCampos" 
               id="provincia" 
               value={provincia} 
               onChange={(e) => setProvincia(e.target.value)} 
+              required
             >
               <option value="">Selecciona una provincia</option>
               {provincias.map((prov, index) => (
@@ -166,12 +242,13 @@ function App() {
             </select>
           </div>
 
-          <button class="siguiente" type="submit">Siguiente</button>
+          <div className="contenedorRegistro">
+            <button className="btnRegistro" type="submit">Siguiente</button>
+          </div>
         </form>
       </div>
-    </body>
+    </div>
   );
 }
 
-export default App;
-
+export default Registro2;

@@ -14,7 +14,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class S3 {
 
-    //Todo lo que tienen que ver con S3 esta desactivado por que no esta la dependencia en el Pom.xml
+    //Todo lo que tienen que ver con S3 esta desactivado (comentado) por que
+    //la dependencia en el pom tambien esta comentada
 
     @Value("${aws.access_key_id}")
     private String accessKeyId;

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
+
 
 export default function IconLabelButton({ icon: Icon, label }) {
   return (
@@ -55,21 +55,5 @@ export default function IconLabelButton({ icon: Icon, label }) {
     >
       {label}
     </Button>
-  );
-}
-
-export function ButtonLayout() {
-  return (
-    <Grid container spacing={2}>
-      <Grid item xs={12} sm={6}>
-        <IconLabelButton icon={Icon1} label="Botón 1" />
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <IconLabelButton icon={Icon2} label="Botón 2" />
-      </Grid>
-      <Grid item xs={12}>
-        <IconLabelButton icon={Icon3} label="Botón 3" />
-      </Grid>
-    </Grid>
   );
 }
