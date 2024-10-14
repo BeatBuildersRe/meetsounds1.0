@@ -9,7 +9,7 @@
 
 :root {
 
-    --color-fondo: #e8e8e8;
+    --color-fondo: #fff;
     --color-fondoDiv: #d8d8d8;
     --color-fondoDivHover: #dddddd;
     --color-texto: #000000;
@@ -44,9 +44,9 @@ body {
     top: 0;
     left: 0;
     height: 100%;
-    background-color: #e8e8e8;
+    background-color: #f2f2f2;
     border-right: 1px solid #222;
-    color: black;
+    
 
 }
 
@@ -55,34 +55,58 @@ body {
     border-right: 1px solid #818181;
 }
 
+.logo_cabecera{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ margin-top: 5%;
+ margin-bottom: 1%;
+}
 /* Estilos para los elementos del menú */
 #box {
-    margin: 2rem;
     display: flex;
-
-    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 80%;
+    height: 80%;
+    margin: 5%;
+    /* border: 1px solid #222; */
+    
 }
 
 #left-menu ul {
     list-style: none;
     /* Elimina la decoración de lista */
     padding: 0;
+    margin: 0;
+    width: 100%;
 }
 
 #left-menu li {
     margin: 0;
+    
 }
 
 #left-menu a {
     display: flex;
     align-items: center;
-    padding: 5px;
-    color: #222222;
-    text-decoration: none;
-    border-radius: 50px;
-    transition: 0.3s;
+    text-decoration: none; 
+   
+    margin: 1%;
 }
 
+
+.active .botones_layout{
+    color:  #ffffff;
+    box-shadow: inset 0 0 0 10em rgb(36, 41, 46);
+}
+ #Dark .active .botones_layout{
+    box-shadow: inset 0 0 0 10em #f2f2f2;
+    color:  rgb(36, 41, 46);
+ }
+
+ 
+/*   
 #Dark #left-menu a {
     color: #ffffff;
 }
@@ -96,14 +120,10 @@ body {
     background-color: #3f3c3c;
 
     transition: 0.3s;
-}
+} */
 
-#box {
-    display: flex;
-    flex-direction: column;
 
-}
-
+/* 
 .BottonCrear {
     margin-top: 30px;
 }
@@ -111,8 +131,64 @@ body {
 .Perfil {
     margin-top: 200px;
     margin-left: 1rem;
-}
-
+} */
+/* From Uiverse.io by eirikvold */ 
+.boton_crear_publicacion {
+    
+    font-size: 1.5rem;
+    background: linear-gradient(to bottom, #ff0080 0%,#ff1053 100%);
+    color: white;
+    padding: 0.5em 0.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.5s;
+    margin-top: 5%;
+  }
+  
+  .boton_crear_publicacion:hover {
+    transform: translateY(-3px);
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  .boton_crear_publicacion:active {
+    transform: scale(0.95);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .boton_crear_publicacion span {
+    display: block;
+   
+    transition: all 0.3s;
+  }
+  
+  
+  
+  .boton_crear_publicacion .svg-wrapper {
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    
+    
+    
+    transition: all 0.5s;
+    
+  }
+  
+  /* .boton_crear_publicacion:hover .svg-wrapper {
+    background-color: rgba(255, 255, 255, 0.5);
+  } */
+  
+  .boton_crear_publicacion:hover .svg-wrapper {
+    transform: rotate(180deg);
+  }
+  
+  
 
 
 
@@ -156,12 +232,9 @@ body {
 /* Responsividad: pantalla media */
 @media (max-width: 1200px) {
 
-    /* #left-menu a span {
-        display: none;
-        /* Oculta el texto en pantallas pequeñas */
-    */ #box {
-        margin: 0.5rem;
-    }
+    
+        
+     
 
 }
 
@@ -179,17 +252,50 @@ body {
 }
 
 @media (max-width:800px) {
+    
     #left-menu {
         width: 15vw;
+        display: flex;
+        flex-direction: column;
+        justify-items: center;
+        align-items: center;
+        
     }
-    nav ul li p {
+    nav ul li .botones_layout  {
+        font-size: 2.5rem;
+        padding: 10px 15px;
+        border-radius: 25px;
+        /* border: 1px solid #000; */
+        width: 100%;
+        margin: 5%;
+    }
+    .botones_layout span{
+        
         display: none;
+    }
+    #box {
+        display: flex;
+        align-items: center;
+        
+        /* border: 1px solid #000; */
+        
+    }
+    .boton_crear_publicacion span {
+        display: none;
+      }
+    .boton_crear_publicacion{
+        margin: 10%;
+        font-size: 1.7rem;
+        
+        
     }
 }
 
 /* Responsividad: pantalla pequeña */
 @media (max-width:600px) {
-
+.logo_cabecera{
+        display: none;
+        }
     #left-menu {
         width: 0;
         

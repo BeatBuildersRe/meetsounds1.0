@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'; // Asegúrate de incluir useEffect aquí
-import { Route, Routes, Link, Outlet, useNavigate } from 'react-router-dom';
+import { Route, Routes, Link, Outlet, useNavigate,NavLink } from 'react-router-dom';
 import './layout.css';
 import { useThemeContext } from './context/ThemeContext';
 import ButtonMenu from './components/botones/BotonesMenu';
@@ -47,47 +47,59 @@ const Layout = () => {
     <div className="Layout" id={contextTheme}>
       {/* Menú a la izquierda */}
       <div id="left-menu">
-
+        <div className="logo_cabecera">
+          <MeetLogo />
+        </div>
+      
         <div id="box">
-            <nav>
-              <ul>
-                <MeetLogo />
-                <li ><Link to="/"><ButtonMenu icon={TiHome} /><p>Inicio</p></Link></li>
-                <li id='Buscar'><Link to="/busqueda"><ButtonMenu icon={CiSearch} /><p>Buscar</p></Link></li>
-                <li><Link to="/bandas"><ButtonMenu icon={GoPeople} /><p>Bandas</p></Link></li>
-                <li><Link to="/mensajes"><ButtonMenu icon={IoChatbubbleEllipsesOutline} /><p>Mensajes</p></Link></li>
-                <li><Link to="/notificaciones"><ButtonMenu icon={FaFire} /><p>Notificaciones</p></Link></li>
-                <li><Link to="/eventos"><ButtonMenu icon={LuCalendarHeart} /><p>Eventos</p></Link></li>
-                <li id='Config'><Link to="/configuracion"><ButtonMenu icon={IoSettingsSharp} /><p>Configuración</p></Link></li>
-              </ul>
-            </nav>
+          <nav>
+            <ul>
+              <li><NavLink to="/" className={({ isActive }) => isActive ? 'active' : ''}><ButtonMenu icon={TiHome} text="Inicio" /></NavLink></li>
+              <li id='Buscar'><NavLink to="/busqueda"  className={({ isActive }) => isActive ? 'active' : ''}><ButtonMenu icon={CiSearch} text="Buscar"/></NavLink></li>
+              <li><NavLink to="/bandas" className={({ isActive }) => isActive ? 'active' : ''}><ButtonMenu icon={GoPeople} text="Bandas"/></NavLink></li>
+              <li><NavLink to="/mensajes" className={({ isActive }) => isActive ? 'active' : ''}><ButtonMenu icon={IoChatbubbleEllipsesOutline} text="Mensajes"/></NavLink></li>
+              <li><NavLink to="/notificaciones className={({ isActive }) => isActive ? 'active' : ''}"><ButtonMenu icon={FaFire} text="Notificaciones"/></NavLink></li>
+              <li><NavLink to="/eventos className={({ isActive }) => isActive ? 'active' : ''}"><ButtonMenu icon={LuCalendarHeart} text="Eventos"/></NavLink></li>
+              <li id='Config'><NavLink to="/configuracion" className={({ isActive }) => isActive ? 'active' : ''}><ButtonMenu icon={IoSettingsSharp} text="Configuración"/></NavLink></li>
+              
+              <li><button className='boton_crear_publicacion'>
+              
+              <div class="svg-wrapper-1">
+                <div class="svg-wrapper">
+                  <CiCirclePlus/>
+                </div>
+              </div>
+              <span>Crear</span>
+            </button></li>            
+            </ul>
+            
+          </nav>
           {console.log(alias)}
-
-
-
-
-          {/* <div className='BottonCrear'>
-            <ButtonPlus icon={CiCirclePlus} />
+          <div className='Perfil'>
+            <button style={{all:'none'}} onClick={handleClick}>
+              <Avatar />
+            </button>
           </div>
-        <Link id="Link" className="link_configuracion" to="/Configuracion">
-          <Item id="item_configuracion" sx={{ color: grey[50], position: 'relative', bottom: '-5em', pb: 1 }}>
-            <BuildIcon sx={{ fontSize: 30 }} /><p>Configuracion</p>
-          </Item>
-        </Link>
-        
-        <Link id="Link" className="Link_Eventos" to="/Registro">
-          <Item id="icon_eventos"><CelebrationIcon sx={{ color: grey[50], fontSize: 30 }} /><p>Eventos</p></Item>
-        </Link>
-      </Box> */}
-
-<div className='Perfil'>
-          <button style={{all:'none'}} onClick={handleClick}>
-            <Avatar />
-          </button>
-        </div>
-        </div>
-        
+        </div> 
       </div>
+
+
+
+                                {/* <div className='BottonCrear'>
+                                  <ButtonPlus icon={CiCirclePlus} />
+                                </div>
+                              <Link id="Link" className="link_configuracion" to="/Configuracion">
+                                <Item id="item_configuracion" sx={{ color: grey[50], position: 'relative', bottom: '-5em', pb: 1 }}>
+                                  <BuildIcon sx={{ fontSize: 30 }} /><p>Configuracion</p>
+                                </Item>
+                              </Link>
+                              
+                              <Link id="Link" className="Link_Eventos" to="/Registro">
+                                <Item id="icon_eventos"><CelebrationIcon sx={{ color: grey[50], fontSize: 30 }} /><p>Eventos</p></Item>
+                              </Link>
+                            </Box> */}
+
+
 
       {/* App.jsx es para manejas las rutas, y Layout es el "menu" que permite 
           ingresar a las rutas que PERTENECEN al menu.
