@@ -1,6 +1,6 @@
 package com.project.meetsounds.controllers;
 
-import com.project.meetsounds.domain.models.Interes;
+
 import com.project.meetsounds.domain.models.Redes;
 import com.project.meetsounds.domain.models.Usuario;
 import com.project.meetsounds.services.UsuarioService;
@@ -24,6 +24,12 @@ public class UsuarioController {
     public Usuario guardarUsuario(@Argument Usuario user){
         System.out.println("Recibido: " + user);
         return this.usuarioService.guardarUsuario(user);
+    }
+
+    @MutationMapping(name = "comprobarCredenciales")
+    public void comprobarCredenciales(@Argument Usuario user){
+        System.out.println("Recibido: " + user);
+        usuarioService.comprobarCredenciales(user);
     }
 
     @MutationMapping(name = "eliminarPorIdUsuario")

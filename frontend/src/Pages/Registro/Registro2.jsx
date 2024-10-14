@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../../css/Registro2.css';
 
 function Registro2() {
@@ -11,6 +12,10 @@ function Registro2() {
   const [provincia, setProvincia] = useState('');
   const [provincias, setProvincias] = useState([]);
   const [userData, setUserData] = useState(null);
+
+  const navigate = useNavigate();
+
+  const graphqlEndpoint = "http://localhost:8080/graphql"; // Cambia esto según tu backend
 
   const paisesConProvincias = {
     Argentina: ['Buenos Aires', 'Catamarca', 'Chaco', 'Chubut', 'Córdoba', 'Corrientes', 'Entre Ríos', 'Formosa', 'Jujuy', 'La Pampa', 'La Rioja', 'Mendoza', 'Misiones', 'Neuquen', 'Río Negro', 'Salta', 'San Juan', 'San Luís', 'Santa Cruz', 'Santa Fe', 'Santiago del Estero', 'Tierra del Fuego', 'Tucumán'],
@@ -25,13 +30,63 @@ function Registro2() {
     setProvincia('');
   }, [pais]);
 
-  // Obtener los datos de registro1
+  // Obtener los datos de registro1 y limpiar localStorage al montar el componente
   useEffect(() => {
     const storedUserData = localStorage.getItem('userData');
     if (storedUserData) {
       setUserData(JSON.parse(storedUserData));
+    } else {
+      console.log("No se encontró userData. Redirigiendo a Registro1.");
+      navigate('/registro'); // Redirige al formulario de Registro1 si no hay userData
     }
-  }, []);
+
+    // Limpiar el localStorage al desmontar el componente
+    return () => {
+      localStorage.removeItem('userData');
+    };
+  }, [navigate]);
+
+  // Función para enviar los datos del formulario a la mutación GraphQL
+  const guardarUsuarioGraphQL = async (user) => {
+    const query = `
+      mutation {
+        guardarUsuario(user: {
+          nombre: "${user.nombre}",
+          apellido: "${user.apellido}",
+          genero: "${user.genero}",
+          alias: "${user.alias}",
+          email: "${user.email}",
+          fechaNacimiento: "${user.fechaNacimiento}",
+          contrasena: "${user.contrasena}"
+        }) {
+          nombre
+        }
+      }
+    `;
+
+    try {
+      const response = await fetch(graphqlEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query }),
+      });
+
+      const result = await response.json();
+      if (result.data && result.data.guardarUsuario) {
+        console.log('Usuario guardado:', result.data.guardarUsuario);
+        // Aquí puedes redirigir o mostrar un mensaje de éxito
+        navigate('/login');
+      } else if (result.errors) {
+        console.error('Errores al guardar usuario:', result.errors);
+        alert(`Error: ${result.errors[0].message}`);
+      }
+    } catch (error) {
+      console.error('Error al enviar la mutación:', error);
+      alert('Hubo un error al enviar los datos. Inténtalo de nuevo más tarde.');
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -39,8 +94,18 @@ function Registro2() {
     const validationErrors = validateForm({ nombre, apellido, telefono, fechaNacimiento, genero, provincia });
 
     if (Object.keys(validationErrors).length === 0) {
-      console.log(`Nombre: ${nombre}, Apellido: ${apellido}, Teléfono: ${telefono}, Fecha de nacimiento: ${fechaNacimiento}, Género: ${genero}, País: ${pais}, Provincia: ${provincia}`);
-      console.log(`Email: ${userData.email}, Usuario: ${userData.username}, Contraseña: ${userData.password}`);
+      const user = {
+        nombre,
+        apellido,
+        telefono,
+        genero,
+        fechaNacimiento,
+        alias: userData.username, // Alias del userData
+        email: userData.email,     // Email del userData
+        contrasena: userData.password
+      };
+
+      guardarUsuarioGraphQL(user); // Llamar a la mutación para guardar el usuario
     } else {
       alert(`Faltan los siguientes campos: ${Object.values(validationErrors).join(', ')}`);
     }
@@ -61,6 +126,10 @@ function Registro2() {
     return errors;
   };
 
+  if (!userData) {
+    return null; // O un loader si prefieres
+  }
+
   return (
     <div id="cuerpo2">
       <div className="login-container">
@@ -68,7 +137,7 @@ function Registro2() {
 
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group">
-            Nombre
+            <label htmlFor="nombre">Nombre</label>
             <input 
               className="formCampos"
               type="text" 
@@ -79,7 +148,7 @@ function Registro2() {
             />
           </div>
           <div className="form-group">
-            Apellido
+            <label htmlFor="apellido">Apellido</label>
             <input 
               className="formCampos"
               type="text" 
@@ -89,8 +158,8 @@ function Registro2() {
               required
             />
           </div>
-          Telefono
           <div className="form-group">
+            <label htmlFor="telefono">Teléfono</label>
             <input 
               className="formCampos"
               type="tel" 
@@ -104,7 +173,7 @@ function Registro2() {
             />
           </div>
           <div className="form-group">
-            <label className="labelRegistro2" htmlFor="fechaNacimiento">Fecha de nacimiento</label>
+            <label htmlFor="fechaNacimiento">Fecha de nacimiento</label>
             <input 
               className="formCampos"
               type="date" 
@@ -143,7 +212,7 @@ function Registro2() {
           </div>
 
           <div className="form-group">
-            <label className="labelRegistro2" htmlFor="pais">País</label>
+            <label htmlFor="pais">País</label>
             <select 
               className="formCampos" 
               id="pais" 
@@ -158,7 +227,7 @@ function Registro2() {
           </div>
 
           <div className="form-group">
-            <label className="labelRegistro2" htmlFor="provincia">Provincia</label>
+            <label htmlFor="provincia">Provincia</label>
             <select 
               className="formCampos" 
               id="provincia" 

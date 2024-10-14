@@ -29,7 +29,7 @@ public class Usuario {
     private String telefono;
     private int edad;
     private String genero;
-    private LocalDate fecha_nac;
+    private LocalDate fechaNacimiento;
     private Ubicacion ubicacion;
     private int c_seguidores;
     private int c_seguidos;

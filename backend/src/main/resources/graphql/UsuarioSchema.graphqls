@@ -15,6 +15,8 @@ type Query{
     # Publiacion Query
     listarPublicaciones: [Publicacion]
 
+
+
 }
 
 type Mutation{
@@ -22,8 +24,10 @@ type Mutation{
     #Recordar que el nombre del la query o mutation deber ser igual al metodo en el controlador
     #Los parametros a recibir deben ser iguales a los del controlador
     #Para devolcer valores, graphql toma tambien los type que estan en otros files.graphqls
-    #Usuario
+
+    #Usuario Mutation
     guardarUsuario(user: userInput): Usuario
+    comprobarCredenciales(user:userInput) : Usuario
     actualizarUsuario(id: ID!, user: IactualizarUsuario): Usuario
     actualizarDescripcion(id: ID!, descripcion: String!): Boolean
     actualizarContrasena(id: ID!, contrasena : String!) : Boolean
@@ -31,7 +35,7 @@ type Mutation{
     eliminarPorIdUsuario(id: ID!): Boolean
     actualizarInstrumentosUsuario(idInstrumento: ID!, idUsuario: ID!) : Usuario
 
-    #Banda
+    #Banda Mutation
     #crearBanda(id: ID!, banda: bandaInput): Banda
     #cambiarNombre(id: ID!, nombre: String): Banda
     #cambiarDescripcion(id: ID!, descripcion: String): Banda
@@ -39,7 +43,7 @@ type Mutation{
     #nuevoIntegrante(idBanda: ID!, idIntegrante: ID!): Banda
     #eliminarIntegrante(idBanda: ID!, idIntegrante: ID!): Banda
 
-    #Instrumentos y TipoInstrumentos
+    #Instrumentos y TipoInstrumentos Mutation
     guardarInstrumento(instrumento: InstrumentoInput, tipo:String) : Instrumento
     eliminarInstrumentoPorId(id: ID!): Boolean
     guardarTipoInstrumento(tipoInstrumento: TipoInstrumentoInput): TipoInstrumento
@@ -48,9 +52,13 @@ type Mutation{
     # Publicacion Mutation
     eliminarPublicacionPorId(id: ID!): Boolean
 
+    # Seguidos Mutation
+    seguirUsuario(idUsuario: String, IdSeguir: String): Boolean
+    dejarDeSegir(idUsuario: String, idSeguido: String): Boolean
+    misSeguidos(idUsuario: String): usuariosSeguidos
 }
 
-
+scalar Date
 type Usuario{
     #aqui faltan las fechas
     id : String
@@ -73,6 +81,7 @@ type Usuario{
     descripcion : String
     redes : Redes
     contrasena : String
+    fechaNacimiento: Date
 }
 
 type Redes{
@@ -127,6 +136,7 @@ input userInput{
     alias : String
     email : String
     telefono : String
+    fechaNacimiento: Date
     edad : Int
     ubicacion : UbicacionInput
     genero : String

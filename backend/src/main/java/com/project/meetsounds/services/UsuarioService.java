@@ -1,7 +1,12 @@
 package com.project.meetsounds.services;
 
+import com.project.meetsounds.controlErrores.AliasAlreadyExistsException;
+import com.project.meetsounds.controlErrores.AliasAndEmailAlreadyExistsException;
+import com.project.meetsounds.controlErrores.EmailAlreadyExistsException;
+import com.project.meetsounds.controlErrores.MenorDeEdadException;
 import com.project.meetsounds.domain.models.*;
 import com.project.meetsounds.repositories.IUsuarioRepository;
+import graphql.GraphQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -10,6 +15,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -23,6 +29,20 @@ public class UsuarioService {
     @Autowired
     private InstrumentoService instrumentoService;
 
+    public void comprobarCredenciales(Usuario user){
+        if (usuarioRepository.findByAlias(user.getAlias()).isPresent() && usuarioRepository.findByEmail(user.getEmail()).isPresent()){ //Si no se encuentra ningun usuario con el mismo alias, el usuario se crea.
+            throw new AliasAndEmailAlreadyExistsException("El Alias y el Email ya existen!");
+        }
+
+        if(usuarioRepository.findByAlias(user.getAlias()).isPresent()){
+            throw new AliasAlreadyExistsException("El Alias ya existe!");
+        }
+
+        if(usuarioRepository.findByEmail(user.getEmail()).isPresent()){
+            throw new EmailAlreadyExistsException("El Email ya existe!");
+        }
+    }
+
     public Usuario guardarUsuario(Usuario user) {
 
         user.setC_seguidores(0);
@@ -34,12 +54,30 @@ public class UsuarioService {
         int dia = fechaActual.getDayOfMonth();
         user.setDate(LocalDate.of(year, mes, dia));
         user.setAlias(user.getAlias());
-        if (!(usuarioRepository.findByAlias(user.getAlias()).isPresent() || usuarioRepository.findByEmail(user.getEmail()).isPresent())){ //Si no se encuentra ningun usuario con el mismo alias, el usuario se crea.
-            return usuarioRepository.save(user);
-        }else {
-            throw new IllegalArgumentException("El alias " + user.getAlias() + " ya existe. O el email ya existe "+ user.getEmail());
+
+        if(!esMayorDeEdad(user.getFechaNacimiento())){
+            throw new MenorDeEdadException("Debe ser mayor de 18 años");
         }
-    }// Hay que actualizar este metodo de un modo parecido al de actualizarUsuario
+
+        if (usuarioRepository.findByAlias(user.getAlias()).isPresent() && usuarioRepository.findByEmail(user.getEmail()).isPresent()){ //Si no se encuentra ningun usuario con el mismo alias, el usuario se crea.
+            throw new AliasAndEmailAlreadyExistsException("El Alias y el Email ya existen!");
+        }
+
+        if(usuarioRepository.findByAlias(user.getAlias()).isPresent()){
+            throw new AliasAlreadyExistsException("El Alias ya existe!");
+        }
+
+        if(usuarioRepository.findByEmail(user.getEmail()).isPresent()){
+            throw new EmailAlreadyExistsException("El Email ya existe!");
+        }
+        return usuarioRepository.save(user);
+    }
+
+    private boolean esMayorDeEdad(LocalDate fechaNacimiento){
+        LocalDate hoy = LocalDate.now();
+        Period periodo = Period.between(fechaNacimiento, hoy);
+        return periodo.getYears() >= 18;
+    }
 
     public boolean loginUsuario(String username, String contrasena) {
         Optional<Usuario> usuarioOpt = usuarioRepository.findByAlias(username);
