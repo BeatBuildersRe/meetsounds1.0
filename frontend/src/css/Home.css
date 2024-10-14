@@ -2,10 +2,7 @@
   padding: 0;
   margin: 0;
 }
-body{
-  background-color: var(--color-fondo);
 
-}
 :root {
 
   --color-fondo: #e8e8e8;
@@ -58,7 +55,7 @@ body{
   align-items: center;
   height: fit-content;
   background-color: var(--color-fondo); 
-  padding-top: 20px;
+  
   padding-left: 10px;
   padding-right: 10px;
   display: flex;
@@ -74,7 +71,7 @@ body{
     right: 0;
     transition: transform 0.3s ease; /* Para una transición suave */
     transform: translateY(0); /* Por defecto, visible */
-    z-index: 1000; /* Para asegurarse de que esté por encima del contenido */
+    z-index: 10000; /* Para asegurarse de que esté por encima del contenido */
   }
   
   .barra.oculta {
@@ -96,12 +93,11 @@ body{
   position: relative;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
-  max-width: fit-content;
-  padding: 10px;
-
-
-  background-color: #dadadb;
+  align-items: center;
+  padding: 9px;
+  
+  width: 276px;
+  background-color: var(--color-fondoDiv);
   border-radius: 25px;
 }
 
@@ -109,11 +105,12 @@ body{
   content: "";
   width: 140px;
   height: 43px;
-  background: #ffffff;
+  background: var(--color-fondoDivHover);
   position: absolute;
   top: 2px;
   left: 2px;
-  z-index: 9;
+  
+  z-index: 1;
   border: 0.5px solid rgba(0, 0, 0, 0.04);
   box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.12), 0px 3px 1px rgba(0, 0, 0, 0.04);
   border-radius: 25px;
@@ -124,7 +121,7 @@ body{
   width: 130px;
   height: 28px;
   position: absolute;
-  z-index: 99;
+  z-index: 1;
   outline: none;
   opacity: 0;
 }
@@ -134,14 +131,14 @@ body{
   height: 28px;
 
   position: relative;
-  z-index: 999;
+  z-index: 2;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
   border: 0;
-  color: #222;
+  color: var(--color-texto);
   font-size: 1rem;
   opacity: 0.6;
 

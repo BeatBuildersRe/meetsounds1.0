@@ -8,7 +8,7 @@
     flex-direction: row;
     border-bottom: 1px solid rgba(128, 128, 128, 0.404);
     margin-bottom: 6px;
-    margin-top: 6px;
+    
 
     .seccion_1 {}
 
@@ -35,7 +35,7 @@
             }
 
             #usuario-btn {
-                z-index: 1;
+                z-index: 99;
                 cursor: pointer;
 
                 #btn-menu {
@@ -108,7 +108,7 @@
     display: flex;
     gap: 5px;
     overflow: hidden;
-    z-index: 1;
+    /* z-index: 1; */
     border: 1px solid rgba(112, 112, 112, 0.644);
    
 }

@@ -10,4 +10,5 @@ public class MeetsoundsApplication {
 		SpringApplication.run(MeetsoundsApplication.class, args);
 	}
 
+
 }

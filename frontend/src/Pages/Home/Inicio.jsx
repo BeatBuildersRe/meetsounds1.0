@@ -49,28 +49,31 @@ const Inicio = () => {
         <div className="contenedor2">
           <div className="izquierda">
             <div className={`barra ${showBar ? 'visible' : 'oculta'}`}>
+        
               <div className="tab-container">
-                <input type="radio" name="tab" id="tab1" className="tab tab--1" onClick={() => setActiveDiv('div1')} />
-                <label className="tab_label" htmlFor="tab1">Para Ti</label>
+                <input type="radio" name="tab" id="tab1" className="tab tab--1"  onClick={() => setActiveDiv('div1')}/>
+                <label className="tab_label" htmlFor="tab1">Profile</label>
 
-                <input type="radio" name="tab" id="tab2" className="tab tab--2" onClick={() => setActiveDiv('div2')} />
-                <label className="tab_label" htmlFor="tab2">Explorar</label>
+                <input type="radio" name="tab" id="tab2" className="tab tab--2"  onClick={() => setActiveDiv('div2')}/>
+                <label className="tab_label" htmlFor="tab2">Settings</label>
 
+            
                 <div className="indicator"></div>
               </div>
+
             </div>
 
 
 
             <div className="Div_1" style={{ display: activeDiv === 'div1' ? 'block' : 'none' }}>
-              
+
               <Publicaciones></Publicaciones>
 
 
             </div>
             <div className="Div_2" style={{ display: activeDiv === 'div2' ? 'block' : 'none' }}>
               <h1>Explorar contenido</h1>
-            
+
             </div>
           </div>
 
