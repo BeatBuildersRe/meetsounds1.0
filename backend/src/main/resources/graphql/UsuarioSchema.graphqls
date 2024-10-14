@@ -58,7 +58,7 @@ type Mutation{
     misSeguidos(idUsuario: String): usuariosSeguidos
 }
 
-
+scalar Date
 type Usuario{
     #aqui faltan las fechas
     id : String
@@ -81,6 +81,7 @@ type Usuario{
     descripcion : String
     redes : Redes
     contrasena : String
+    fechaNacimiento: Date
 }
 
 type Redes{
@@ -135,6 +136,7 @@ input userInput{
     alias : String
     email : String
     telefono : String
+    fechaNacimiento: Date
     edad : Int
     ubicacion : UbicacionInput
     genero : String

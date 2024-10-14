@@ -3,6 +3,7 @@ package com.project.meetsounds.services;
 import com.project.meetsounds.controlErrores.AliasAlreadyExistsException;
 import com.project.meetsounds.controlErrores.AliasAndEmailAlreadyExistsException;
 import com.project.meetsounds.controlErrores.EmailAlreadyExistsException;
+import com.project.meetsounds.controlErrores.MenorDeEdadException;
 import com.project.meetsounds.domain.models.*;
 import com.project.meetsounds.repositories.IUsuarioRepository;
 import graphql.GraphQLException;
@@ -14,6 +15,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -52,6 +54,11 @@ public class UsuarioService {
         int dia = fechaActual.getDayOfMonth();
         user.setDate(LocalDate.of(year, mes, dia));
         user.setAlias(user.getAlias());
+
+        if(!esMayorDeEdad(user.getFechaNacimiento())){
+            throw new MenorDeEdadException("Debe ser mayor de 18 años");
+        }
+
         if (usuarioRepository.findByAlias(user.getAlias()).isPresent() && usuarioRepository.findByEmail(user.getEmail()).isPresent()){ //Si no se encuentra ningun usuario con el mismo alias, el usuario se crea.
             throw new AliasAndEmailAlreadyExistsException("El Alias y el Email ya existen!");
         }
@@ -64,6 +71,12 @@ public class UsuarioService {
             throw new EmailAlreadyExistsException("El Email ya existe!");
         }
         return usuarioRepository.save(user);
+    }
+
+    private boolean esMayorDeEdad(LocalDate fechaNacimiento){
+        LocalDate hoy = LocalDate.now();
+        Period periodo = Period.between(fechaNacimiento, hoy);
+        return periodo.getYears() >= 18;
     }
 
     public boolean loginUsuario(String username, String contrasena) {

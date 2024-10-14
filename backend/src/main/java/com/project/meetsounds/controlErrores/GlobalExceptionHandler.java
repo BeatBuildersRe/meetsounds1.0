@@ -1,14 +1,10 @@
 package com.project.meetsounds.controlErrores;
 
 import graphql.GraphQLError;
-import graphql.GraphqlErrorBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.graphql.data.method.annotation.GraphQlExceptionHandler;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
-import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -24,6 +20,13 @@ public class GlobalExceptionHandler {
 
     @GraphQlExceptionHandler(EmailAlreadyExistsException.class)
     public GraphQLError handleEmailAlreadyExistsException(EmailAlreadyExistsException ex) {
+        return GraphQLError.newError()
+                .message(ex.getMessage())
+                .build();
+    }
+
+    @GraphQlExceptionHandler(MenorDeEdadException.class)
+    public GraphQLError handleMenorDeEdadException(MenorDeEdadException ex) {
         return GraphQLError.newError()
                 .message(ex.getMessage())
                 .build();

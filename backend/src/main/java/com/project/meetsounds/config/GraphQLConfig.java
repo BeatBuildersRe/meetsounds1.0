@@ -1,6 +1,4 @@
 package com.project.meetsounds.config;
-import graphql.schema.idl.RuntimeWiring;
-import graphql.schema.GraphQLScalarType;
 import graphql.scalars.ExtendedScalars;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

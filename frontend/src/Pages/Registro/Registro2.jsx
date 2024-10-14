@@ -15,6 +15,8 @@ function Registro2() {
 
   const navigate = useNavigate();
 
+  const graphqlEndpoint = "http://localhost:8080/graphql"; // Cambia esto según tu backend
+
   const paisesConProvincias = {
     Argentina: ['Buenos Aires', 'Catamarca', 'Chaco', 'Chubut', 'Córdoba', 'Corrientes', 'Entre Ríos', 'Formosa', 'Jujuy', 'La Pampa', 'La Rioja', 'Mendoza', 'Misiones', 'Neuquen', 'Río Negro', 'Salta', 'San Juan', 'San Luís', 'Santa Cruz', 'Santa Fe', 'Santiago del Estero', 'Tierra del Fuego', 'Tucumán'],
     Chile: ['Santiago', 'Valparaíso', 'Concepción', 'La Serena', 'Antofagasta'],
@@ -44,15 +46,66 @@ function Registro2() {
     };
   }, [navigate]);
 
+  // Función para enviar los datos del formulario a la mutación GraphQL
+  const guardarUsuarioGraphQL = async (user) => {
+    const query = `
+      mutation {
+        guardarUsuario(user: {
+          nombre: "${user.nombre}",
+          apellido: "${user.apellido}",
+          genero: "${user.genero}",
+          alias: "${user.alias}",
+          email: "${user.email}",
+          fechaNacimiento: "${user.fechaNacimiento}",
+          contrasena: "${user.contrasena}"
+        }) {
+          nombre
+        }
+      }
+    `;
+
+    try {
+      const response = await fetch(graphqlEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query }),
+      });
+
+      const result = await response.json();
+      if (result.data && result.data.guardarUsuario) {
+        console.log('Usuario guardado:', result.data.guardarUsuario);
+        // Aquí puedes redirigir o mostrar un mensaje de éxito
+        navigate('/login');
+      } else if (result.errors) {
+        console.error('Errores al guardar usuario:', result.errors);
+        alert(`Error: ${result.errors[0].message}`);
+      }
+    } catch (error) {
+      console.error('Error al enviar la mutación:', error);
+      alert('Hubo un error al enviar los datos. Inténtalo de nuevo más tarde.');
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const validationErrors = validateForm({ nombre, apellido, telefono, fechaNacimiento, genero, provincia });
 
     if (Object.keys(validationErrors).length === 0) {
-      console.log(`Nombre: ${nombre}, Apellido: ${apellido}, Teléfono: ${telefono}, Fecha de nacimiento: ${fechaNacimiento}, Género: ${genero}, País: ${pais}, Provincia: ${provincia}`);
-      console.log(`Email: ${userData.email}, Usuario: ${userData.username}, Contraseña: ${userData.password}`);
-      // Aquí puedes manejar el envío de los datos, como enviarlos a tu backend
+      const user = {
+        nombre,
+        apellido,
+        telefono,
+        genero,
+        fechaNacimiento,
+        alias: userData.username, // Alias del userData
+        email: userData.email,     // Email del userData
+        contrasena: userData.password
+      };
+
+      guardarUsuarioGraphQL(user); // Llamar a la mutación para guardar el usuario
     } else {
       alert(`Faltan los siguientes campos: ${Object.values(validationErrors).join(', ')}`);
     }
@@ -73,7 +126,6 @@ function Registro2() {
     return errors;
   };
 
-  // Si userData no existe, no renderizar el formulario
   if (!userData) {
     return null; // O un loader si prefieres
   }
