@@ -1,0 +1,55 @@
+/* From Uiverse.io by eirikvold */ 
+.boton_crear_publicacion {
+    
+    font-size: 1.5rem;
+    background: linear-gradient(to bottom, #ff0080 0%,#ff1053 100%);
+    color: white;
+    padding: 0.5em 0.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.5s;
+    margin-top: 5%;
+  }
+  
+  .boton_crear_publicacion:hover {
+    transform: translateY(-3px);
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  .boton_crear_publicacion:active {
+    transform: scale(0.95);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .boton_crear_publicacion span {
+    display: block;
+   
+    transition: all 0.3s;
+  }
+  
+  
+  
+  .boton_crear_publicacion .svg-wrapper {
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    
+    
+    
+    transition: all 0.5s;
+    
+  }
+  
+  
+  
+  .boton_crear_publicacion:hover .svg-wrapper {
+    transform: rotate(180deg);
+  }
+  
+  

@@ -128,6 +128,32 @@ public class UsuarioService {
         return this.usuarioRepository.findByAlias(alias);
     }
 
+    /*Solo actualizar nombre y apellido, solo testeo*/
+    public Usuario actualizarNombreApellidoPorAlias(String alias, String nombre, String apellido) {
+        Optional<Usuario> userOptional = usuarioRepository.findByAlias(alias);
+        Usuario usuario = new Usuario();
+        if (userOptional.isPresent()) {
+             usuario = userOptional.get();
+            usuario.setNombre(nombre);
+            usuario.setApellido(apellido);
+        } else {
+            throw new NoSuchElementException("Usuario no encontrado");
+        }
+        return usuarioRepository.save(usuario);
+    }
+    /* 
+    public Usuario actualizarNombreApellido(String id, String nombre, String apellido) {
+        Optional<Usuario> userOpt = buscarUsuarioPorId(id);
+        if (userOpt.isPresent()) {
+            Usuario usuario = userOpt.get();
+            usuario.setNombre(nombre);
+            usuario.setApellido(apellido);
+            return usuarioRepository.save(usuario);
+        } else {
+            throw new NoSuchElementException("Usuario no encontrado");
+        }
+    }*/
+
     public Usuario actualizarUsuario(String id, Usuario user) {
 
         Optional<Usuario> userOptional = buscarUsuarioPorId(id);
