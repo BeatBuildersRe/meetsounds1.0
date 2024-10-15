@@ -125,7 +125,7 @@ public class UsuarioService {
             usuarioRepository.save(usuario);
 
             // Devolver la URL de la imagen (ya sea subida o existente)
-            return ResponseEntity.ok(fileUrl);
+            return ResponseEntity.ok("Foto de perfil actualizada exitosamente");
 
         } catch (IOException | NoSuchAlgorithmException e) {
             return ResponseEntity.status(500).body("Error al subir la imagen: " + e.getMessage());
@@ -160,7 +160,7 @@ public class UsuarioService {
             usuarioRepository.save(usuario);
 
             // Devolver la URL de la imagen (ya sea subida o existente)
-            return ResponseEntity.ok(fileUrl);
+            return ResponseEntity.ok("Foto de portada actualizada exitosamente");
 
         } catch (IOException | NoSuchAlgorithmException e) {
             return ResponseEntity.status(500).body("Error al subir la imagen: " + e.getMessage());
