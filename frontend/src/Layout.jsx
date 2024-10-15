@@ -14,6 +14,7 @@ import { CiCirclePlus } from "react-icons/ci";
 import MeetLogo from './components/logotipo/Logo';
 import Avatar from './components/avatar/Avatar';
 import Cookies from 'js-cookie';
+import PostModal from './components/Modal/modal'
 
 const Layout = () => {
   const [alias, setAlias] = useState(undefined);
@@ -42,7 +43,12 @@ const Layout = () => {
   if (!alias) {
     return <div>Cargando...</div>; // O cualquier indicador de carga que prefieras
   }
-
+  const handlePost = (files, description, location) => {
+    console.log('Archivos:', files)
+    console.log('Descripción:', description)
+    console.log('Ubicación:', location)
+    // Aquí puedes manejar la lógica para publicar
+  }
   return (
     <div className="Layout" id={contextTheme}>
       {/* Menú a la izquierda */}
@@ -62,16 +68,13 @@ const Layout = () => {
               <li><NavLink to="/eventos className={({ isActive }) => isActive ? 'active' : ''}"><ButtonMenu icon={LuCalendarHeart} text="Eventos"/></NavLink></li>
               <li id='Config'><NavLink to="/configuracion" className={({ isActive }) => isActive ? 'active' : ''}><ButtonMenu icon={IoSettingsSharp} text="Configuración"/></NavLink></li>
               
-              <li><button className='boton_crear_publicacion'>
-              
-              <div class="svg-wrapper-1">
-                <div class="svg-wrapper">
-                  <CiCirclePlus/>
-                </div>
-              </div>
-              <span>Crear</span>
-            </button></li>            
+              <li><PostModal 
+          username="usuario123"
+          userAvatar="/ruta/a/tu/avatar.jpg"
+          onPost={handlePost}
+        /></li>
             </ul>
+      
             
           </nav>
           {console.log(alias)}
@@ -85,21 +88,7 @@ const Layout = () => {
 
 
 
-                                {/* <div className='BottonCrear'>
-                                  <ButtonPlus icon={CiCirclePlus} />
-                                </div>
-                              <Link id="Link" className="link_configuracion" to="/Configuracion">
-                                <Item id="item_configuracion" sx={{ color: grey[50], position: 'relative', bottom: '-5em', pb: 1 }}>
-                                  <BuildIcon sx={{ fontSize: 30 }} /><p>Configuracion</p>
-                                </Item>
-                              </Link>
-                              
-                              <Link id="Link" className="Link_Eventos" to="/Registro">
-                                <Item id="icon_eventos"><CelebrationIcon sx={{ color: grey[50], fontSize: 30 }} /><p>Eventos</p></Item>
-                              </Link>
-                            </Box> */}
-
-
+                             
 
       {/* App.jsx es para manejas las rutas, y Layout es el "menu" que permite 
           ingresar a las rutas que PERTENECEN al menu.
@@ -109,20 +98,7 @@ const Layout = () => {
 
       */}
 
-      {/* Contenido en el centro */}
-      {/* <div id="main-content">
-        <Routes>
-          <Route path="messages" element={<Messages />} />
-          <Route path="settings" element={<Settings />} />
-          <Route path="configuracion" element={<Configuracion />} />
-        </Routes>
-      </div> */}
-
-      {/* Sección derecha */}
-      {/* <div id="right-section">
-        <p>Sección derecha</p>
-        {/* Contenido adicional o complementario 
-      </div> */}
+    
       <Outlet /> {/* ---TE OLVIDASTE ESTO: es para el manejo de rutas "hijas"--- */}
     </div>
   );
