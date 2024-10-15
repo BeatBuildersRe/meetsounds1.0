@@ -1,0 +1,16 @@
+:root {
+    --color-botones: linear-gradient(145deg, #333, #111);
+    --color-fondo: #fff;
+    --color-fondoDiv: #d8d8d8;
+    --color-fondoDivHover: #dddddd;
+    --color-texto: #000000;
+
+    #Dark {
+        --color-fondo: #18191a;
+        --color-fondoDiv: #232224;
+        --color-fondoDivHover: #dddddd;
+
+        --color-texto: #ffffff;
+
+    }
+}
