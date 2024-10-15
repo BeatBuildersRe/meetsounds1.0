@@ -91,7 +91,7 @@ function Registro2() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const validationErrors = validateForm({ nombre, apellido, telefono, fechaNacimiento, genero, provincia });
+    const validationErrors = validateForm({ nombre, apellido, /* telefono, */ fechaNacimiento, genero, provincia });
 
     if (Object.keys(validationErrors).length === 0) {
       const user = {
@@ -119,10 +119,10 @@ function Registro2() {
     const errors = {};
     if (!data.nombre) errors.nombre = 'Nombre';
     if (!data.apellido) errors.apellido = 'Apellido';
-    if (!data.telefono) errors.telefono = 'Teléfono';
+    // if (!data.telefono) errors.telefono = 'Teléfono';
     if (!data.fechaNacimiento) errors.fechaNacimiento = 'Fecha de Nacimiento';
     if (!data.genero) errors.genero = 'Género';
-    if (!data.provincia) errors.provincia = 'Provincia';
+    // if (!data.provincia) errors.provincia = 'Provincia';
     return errors;
   };
 
