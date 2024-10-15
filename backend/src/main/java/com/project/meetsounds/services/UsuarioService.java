@@ -5,6 +5,8 @@ import com.project.meetsounds.controlErrores.AliasAndEmailAlreadyExistsException
 import com.project.meetsounds.controlErrores.EmailAlreadyExistsException;
 import com.project.meetsounds.controlErrores.MenorDeEdadException;
 import com.project.meetsounds.domain.models.*;
+import com.project.meetsounds.repositories.IMeGustaRepository;
+import com.project.meetsounds.repositories.IPublicacionRepository;
 import com.project.meetsounds.repositories.IUsuarioRepository;
 import graphql.GraphQLException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +31,13 @@ public class UsuarioService {
     @Autowired
     private IUsuarioRepository usuarioRepository;
     @Autowired
+    private IMeGustaRepository iMeGustaRepository;
+    @Autowired
     private MongoTemplate mongoTemplate;
     @Autowired
     private InstrumentoService instrumentoService;
+    @Autowired
+    private IPublicacionRepository iPublicacionRepository;
     @Autowired
     S3Service s3Service;
 
@@ -372,5 +378,14 @@ public class UsuarioService {
             usu2.getMisBandas().remove(banda2);
             usuarioRepository.save(usu2);
         }
+    }
+
+    public List<Publicacion> misLikesUsuario(String usuarioAlias) {
+        List<MeGusta> meGustaList = this.iMeGustaRepository.findMeGustaByIdAlias(usuarioAlias);
+        List<String> publicacionIds = new ArrayList<>();
+        for (MeGusta meGusta : meGustaList){
+            publicacionIds.add(meGusta.getPublicacionId());
+        }
+        return this.iPublicacionRepository.findAllById(publicacionIds);
     }
 }

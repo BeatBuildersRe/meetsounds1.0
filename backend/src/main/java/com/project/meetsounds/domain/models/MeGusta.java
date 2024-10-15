@@ -13,6 +13,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "MeGusta")
 public class MeGusta {
     private String id;
-    private Publicacion publicacion;
-    private Usuario usuario;
+    private String publicacionId;
+    private String usuarioAlias;
 }

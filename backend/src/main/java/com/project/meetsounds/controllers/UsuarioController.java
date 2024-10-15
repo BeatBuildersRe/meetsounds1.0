@@ -1,6 +1,7 @@
 package com.project.meetsounds.controllers;
 
 
+import com.project.meetsounds.domain.models.Publicacion;
 import com.project.meetsounds.domain.models.Redes;
 import com.project.meetsounds.domain.models.Usuario;
 import com.project.meetsounds.services.UsuarioService;
@@ -116,6 +117,11 @@ public class UsuarioController {
     @MutationMapping(name = "actualizarNombreApellidoPorAlias")
     public Usuario actualizarNombreApellidoPorAlias(@Argument String alias, @Argument String nombre, @Argument String apellido) {
         return usuarioService.actualizarNombreApellidoPorAlias(alias, nombre, apellido);
+    }
+
+    @QueryMapping(name = "misLikesUsuario")
+    public List<Publicacion> misLikesUsuario(@Argument String usuarioAlias){
+        return this.usuarioService.misLikesUsuario(usuarioAlias);
     }
 
 }

@@ -1,9 +1,12 @@
 type Query{
+
+    #Usuario Query
     buscarUsuarioPorId(id: String): Usuario
     buscarTodosLosUsuarios : [Usuario]
     buscarUsuarioPorTexto(text: String): [Usuario]
     buscarPorAlias(alias: String): Usuario
     buscarUsuariosPorInstrumentos(instrumentos: [String!]!): [Usuario]
+    misLikesUsuario(usuarioAlias: String!): [Publicacion]
     #listarPublicaciones : [Publicacion]
 
     #Instrumentos y TipoInstrumentos
@@ -14,6 +17,7 @@ type Query{
 
     # Publiacion Query
     listarPublicaciones: [Publicacion]
+    misLikesPublicacion(idPublicacion: String!): [UsuariosLikes]
 
 
 
@@ -53,6 +57,8 @@ type Mutation{
 
     # Publicacion Mutation
     eliminarPublicacionPorId(id: ID!): Boolean
+    meGusta(idPublicacion: String!, usuarioAlias: String!): Boolean
+    crearPublicacion(idUsuario: ID!,descripcion: String): Publicacion
 
     # Seguidos Mutation
     seguirUsuario(idUsuario: String, IdSeguir: String): Boolean

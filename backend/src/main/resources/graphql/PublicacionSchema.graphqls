@@ -11,3 +11,11 @@ type Publicacion{
     #meGustas: [Megusta]
     #entity: Object
 }
+
+type UsuariosLikes{
+    id: String
+    nombre: String
+    apellido: String
+    alias: String
+    fotoPerfilUrl: String
+}
