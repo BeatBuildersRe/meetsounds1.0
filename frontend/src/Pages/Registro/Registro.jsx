@@ -17,17 +17,17 @@ function Registro1() {
 
   const validatePasswordStrength = (password) => {
     let strength = 0;
-    if (password.length >= 8) strength++; // Longitud mínima
-    if (/[A-Z]/.test(password)) strength++; // Mayúsculas
-    if (/[a-z]/.test(password)) strength++; // Minúsculas
-    if (/\d/.test(password)) strength++; // Números
-    if (/[\W_]/.test(password)) strength++; // Caracteres especiales
+    if (password.length >= 8) strength++; 
+    if (/[A-Z]/.test(password)) strength++; 
+    if (/[a-z]/.test(password)) strength++;
+    if (/\d/.test(password)) strength++; 
+    if (/[\W_]/.test(password)) strength++; 
 
     switch (strength) {
       case 5:
         return 'Fuerte';
       case 4:
-        return 'Normal'; // Cambio de "Moderada" a "Normal"
+        return 'Normal'; 
       case 3:
         return 'Débil';
       default:
