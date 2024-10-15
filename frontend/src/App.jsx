@@ -22,6 +22,7 @@ import Cuenta from './Pages/PerfilUsuario/PerfilUsuario'
 import './App.css';
 
 import ActualizarNombreApellido from './Pages/Configuracion/EditarPerfil/ActualizarNombreApeliido';
+import PerfilEncontrado from './Pages/PerfilUsuario/PerfilEncontrado';
 
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
           <Route path="configuracion/perfil" element={<Perfil />} />
           <Route path="configuracion/seguridad" element={<Seguridad />} />
           <Route path="configuracion/apariencia" element={<Apariencia />} />
+          <Route path="perfil-encontrado/:alias" element={<PerfilEncontrado />} />
 
           {/* Esta ruta maneja perfiles de usuarios */}
           <Route path="cuenta/:alias" element={<Cuenta />} />
@@ -68,7 +70,10 @@ function App() {
 
         {/*Ruta para actualizar nombre y apellido (SOLO PRUEBA)*/}
         <Route path="configuracion/editarperfil/actualizar-nombre-apellido" element={<ActualizarNombreApellido />} />
+          
+        {/* Otras rutas */}
 
+        
 
       </Routes>
       {/* <ReactSwitch 

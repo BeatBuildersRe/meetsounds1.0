@@ -73,8 +73,8 @@ const Busqueda = () => {
     }, [query]); // Escucha cambios en el valor de 'query'
     
     const handleUserClick = (usuario) => {
-        // Redirige a la página del perfil del usuario
-        navigate(`/cuenta/${usuario.alias}`); // Usar navigate en lugar de history.push
+        // Redirige a la página del perfil del usuario encontrado
+        navigate(`/perfil-encontrado/${usuario.alias}`); // Usar navigate en lugar de history.push
     };
 
     return (

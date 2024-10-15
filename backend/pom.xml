@@ -90,6 +90,7 @@
 			<version>1.12.538</version>
 		 </dependency>
 
+
 		<dependency>
 			<groupId>com.graphql-java-kickstart</groupId>
 			<artifactId>graphql-java-servlet</artifactId>
