@@ -34,6 +34,8 @@ type Mutation{
     actualizarRedes(id: ID!, redes: RedesInput): Boolean
     eliminarPorIdUsuario(id: ID!): Boolean
     actualizarInstrumentosUsuario(idInstrumento: ID!, idUsuario: ID!) : Usuario
+    #actualizar solo nombre y apellido
+    actualizarNombreApellidoPorAlias(alias: String!, nombre: String!, apellido: String!): Usuario
 
     #Banda Mutation
     #crearBanda(id: ID!, banda: bandaInput): Banda

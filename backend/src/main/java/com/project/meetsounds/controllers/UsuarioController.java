@@ -92,4 +92,14 @@ public class UsuarioController {
         usuarioService.actualizarMisIntereses(id, intereses);
     }
 
+    /*Solo actualizar nombre y apellido, solo testeo*/
+    /*@MutationMapping(name = "actualizarNombreApellido")
+    public Usuario actualizarNombreApellido(@Argument String id, @Argument String nombre, @Argument String apellido) {
+        return usuarioService.actualizarNombreApellido(id, nombre, apellido);
+    }*/
+    @MutationMapping(name = "actualizarNombreApellidoPorAlias")
+    public Usuario actualizarNombreApellidoPorAlias(@Argument String alias, @Argument String nombre, @Argument String apellido) {
+        return usuarioService.actualizarNombreApellidoPorAlias(alias, nombre, apellido);
+    }
+
 }

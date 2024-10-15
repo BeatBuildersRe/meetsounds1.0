@@ -21,6 +21,9 @@ import Registro2 from './Pages/Registro/Registro2';
 import Cuenta from './Pages/PerfilUsuario/PerfilUsuario'
 import './App.css';
 
+import ActualizarNombreApellido from './Pages/Configuracion/EditarPerfil/ActualizarNombreApeliido';
+
+
 function App() {
   const { contextTheme, setContextTheme } = useThemeContext();
   const { isAuthenticated } = useContext(AuthContext); // Usar el contexto de autenticación
@@ -62,6 +65,10 @@ function App() {
         <Route path="/registro" element={<Registro />} />
         <Route path="/registro2" element={<Registro2 />} />
         <Route path="*" element={<Error_404 />} />
+
+        {/*Ruta para actualizar nombre y apellido (SOLO PRUEBA)*/}
+        <Route path="configuracion/editarperfil/actualizar-nombre-apellido" element={<ActualizarNombreApellido />} />
+
         
       </Routes>
       {/* <ReactSwitch 
