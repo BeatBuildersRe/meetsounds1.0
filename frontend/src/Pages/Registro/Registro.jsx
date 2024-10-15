@@ -6,25 +6,55 @@ function Registro1() {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null); // Nuevo estado para manejar errores
+  const [error, setError] = useState('');
+  const [passwordStrength, setPasswordStrength] = useState('');
 
   const navigate = useNavigate();
 
-  // Limpiar el localStorage al montar el componente
   useEffect(() => {
     localStorage.removeItem('userData');
   }, []);
 
+  const validatePasswordStrength = (password) => {
+    let strength = 0;
+    if (password.length >= 8) strength++; 
+    if (/[A-Z]/.test(password)) strength++; 
+    if (/[a-z]/.test(password)) strength++;
+    if (/\d/.test(password)) strength++; 
+    if (/[\W_]/.test(password)) strength++; 
+
+    switch (strength) {
+      case 5:
+        return 'Fuerte';
+      case 4:
+        return 'Normal'; 
+      case 3:
+        return 'Débil';
+      default:
+        return 'Muy débil';
+    }
+  };
+
+  const handlePasswordChange = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+    const strength = validatePasswordStrength(value);
+    setPasswordStrength(strength);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validación local
     if (!email || !username || !password) {
       alert("Todos los campos son obligatorios.");
       return;
     }
 
-    // Crear la consulta GraphQL
+    if (passwordStrength === 'Débil' || passwordStrength === 'Muy débil') {
+      alert("La contraseña es demasiado débil. Por favor, elige una contraseña más fuerte.");
+      return;
+    }
+
     const query = `
       mutation {
         comprobarCredenciales(user: {
@@ -37,7 +67,7 @@ function Registro1() {
     `;
 
     try {
-      const response = await fetch('http://localhost:8080/graphql', { // Cambia el puerto y URL si es necesario
+      const response = await fetch('http://localhost:8080/graphql', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -51,20 +81,21 @@ function Registro1() {
 
       const result = await response.json();
 
-      // Verificar si hay errores devueltos por el backend
       if (result.errors && result.errors.length > 0) {
-        const errorMessage = result.errors[0].message; // Obtener el mensaje del error
-        setError(errorMessage); // Guardar el error en el estado
+        const errorMessage = result.errors[0].message;
+        setError(errorMessage);
         return;
       }
 
-      // Si no hay errores, guardar los datos en localStorage
-      const userData = { email, username, password };
-      localStorage.setItem('userData', JSON.stringify(userData));
-      console.log('Datos guardados en localStorage:', userData);
+      if (passwordStrength === 'Normal' || passwordStrength === 'Fuerte') {
+        const userData = { email, username, password };
+        localStorage.setItem('userData', JSON.stringify(userData));
+        console.log('Datos guardados en localStorage:', userData);
 
-      // Navegar a la siguiente página
-      navigate('/registro2');
+        navigate('/registro2');
+      } else {
+        alert("La contraseña debe ser al menos de fortaleza 'Normal'.");
+      }
     } catch (err) {
       console.error('Error al realizar la solicitud:', err);
       setError('Ocurrió un error. Por favor, inténtalo de nuevo más tarde.');
@@ -107,13 +138,18 @@ function Registro1() {
               type="password"
               id="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handlePasswordChange}
               placeholder="Ingresa tu contraseña"
               required
             />
+            {password && (
+              <p className={`password-strength ${passwordStrength.toLowerCase()}`}>
+                Fortaleza de la contraseña: {passwordStrength}
+              </p>
+            )}
           </div>
 
-          {error && <p className="error-message">{error}</p>} {/* Mostrar el error si existe */}
+          {error && <p className="error">{error}</p>}
 
           <div className="contenedorRegistro">
             <button className="btnRegistro" type="submit">Siguiente</button>
