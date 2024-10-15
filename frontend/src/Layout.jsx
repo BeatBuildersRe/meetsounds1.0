@@ -49,18 +49,18 @@ const Layout = () => {
       <div id="left-menu">
 
         <div id="box">
-            <nav>
-              <ul>
-                <MeetLogo />
-                <li ><Link to="/"><ButtonMenu icon={TiHome} /><p>Inicio</p></Link></li>
-                <li id='Buscar'><Link to="/busqueda"><ButtonMenu icon={CiSearch} /><p>Buscar</p></Link></li>
-                <li><Link to="/bandas"><ButtonMenu icon={GoPeople} /><p>Bandas</p></Link></li>
-                <li><Link to="/mensajes"><ButtonMenu icon={IoChatbubbleEllipsesOutline} /><p>Mensajes</p></Link></li>
-                <li><Link to="/notificaciones"><ButtonMenu icon={FaFire} /><p>Notificaciones</p></Link></li>
-                <li><Link to="/eventos"><ButtonMenu icon={LuCalendarHeart} /><p>Eventos</p></Link></li>
-                <li id='Config'><Link to="/configuracion"><ButtonMenu icon={IoSettingsSharp} /><p>Configuración</p></Link></li>
-              </ul>
-            </nav>
+          <nav>
+            <ul>
+              <MeetLogo />
+              <li ><Link to="/"><ButtonMenu icon={TiHome} /><p>Inicio</p></Link></li>
+              <li id='Buscar'><Link to="/busqueda"><ButtonMenu icon={CiSearch} /><p>Buscar</p></Link></li>
+              <li><Link to="/bandas"><ButtonMenu icon={GoPeople} /><p>Bandas</p></Link></li>
+              <li><Link to="/mensajes"><ButtonMenu icon={IoChatbubbleEllipsesOutline} /><p>Mensajes</p></Link></li>
+              <li><Link to="/notificaciones"><ButtonMenu icon={FaFire} /><p>Notificaciones</p></Link></li>
+              <li><Link to="/eventos"><ButtonMenu icon={LuCalendarHeart} /><p>Eventos</p></Link></li>
+              <li id='Config'><Link to="/configuracion"><ButtonMenu icon={IoSettingsSharp} /><p>Configuración</p></Link></li>
+            </ul>
+          </nav>
           {console.log(alias)}
 
 
@@ -80,13 +80,13 @@ const Layout = () => {
         </Link>
       </Box> */}
 
-<div className='Perfil'>
-          <button style={{all:'none'}} onClick={handleClick}>
-            <Avatar />
-          </button>
+          <div className='Perfil'>
+            <button style={{ all: 'none' }} onClick={handleClick}>
+              <Avatar />
+            </button>
+          </div>
         </div>
-        </div>
-        
+
       </div>
 
       {/* App.jsx es para manejas las rutas, y Layout es el "menu" que permite 

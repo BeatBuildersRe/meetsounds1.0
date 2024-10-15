@@ -2,7 +2,7 @@ import { TbMusicHeart } from "react-icons/tb";
 import React,{useState} from 'react';
 import './reacciones.css'
 
-const Reacciones = ({Icon,tipe, key=0}) => {
+const Reacciones = ({Icon,tipe,funcion, key=0}) => {
     const [click, setClick] = useState(false)
     
     const color = click ? 'icon-activado-'+tipe : 'icon-desactivado-'+tipe
@@ -13,7 +13,7 @@ const Reacciones = ({Icon,tipe, key=0}) => {
 
     return ( 
         <>
-            <button id="btns" onClick={handleClick}>
+            <button id="btns" onClick={() => { handleClick(); funcion(); }}>
                 <Icon id={color} />  <p>10</p>  
             </button>
         </>

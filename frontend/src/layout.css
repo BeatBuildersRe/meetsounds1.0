@@ -109,7 +109,8 @@ body {
 }
 
 .Perfil {
-    margin-top: 200px;
+    position: absolute;
+    bottom: 15px;
     margin-left: 1rem;
 }
 
