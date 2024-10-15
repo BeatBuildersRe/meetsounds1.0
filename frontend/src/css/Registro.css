@@ -28,19 +28,16 @@
 }
 
 .formCampo {
-  margin-bottom: 1rem;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
   width: 100%;
-  height: 60px;
-  padding: 0.75rem;
-  border-radius: 20px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-  border: 2px solid black
+  margin-bottom: 10px;
+  outline: none; 
 }
 
 .formCampo:focus {
   border-color: #00f7d6;
-  outline: none; 
 }
 
 .contenedorRegistro {
@@ -87,26 +84,23 @@
   margin-top: 20px;
 }
 
-/* estilos de fortaleza contraseña */
-
-.passwordStrength {
-  font-size: 14px;
+.password-strength {
+  font-weight: bold;
   margin-top: 5px;
-  text-align: right; 
-  color: black;
 }
 
-
-.passwordStrength.weak {
-  color: red; /* Débil */
+.muy-debil {
+  color: red;
 }
 
-.passwordStrength.normal {
-  color: yellow; /* Normal */
+.debil {
+  color: orange;
 }
 
-.passwordStrength.strong {
-  color: green; /* Fuerte */
+.normal {
+  color: yellowgreen;
 }
 
-  
+.fuerte {
+  color: green;
+}

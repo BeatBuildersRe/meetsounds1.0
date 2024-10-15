@@ -158,7 +158,9 @@ function Registro2() {
               required
             />
           </div>
-          <div className="form-group">
+
+          {/* se guarda Telefono */}
+          {/* <div className="form-group">
             <label htmlFor="telefono">Teléfono</label>
             <input 
               className="formCampos"
@@ -171,7 +173,7 @@ function Registro2() {
               }}
               required
             />
-          </div>
+          </div> */}
           <div className="form-group">
             <label htmlFor="fechaNacimiento">Fecha de nacimiento</label>
             <input 
@@ -211,7 +213,9 @@ function Registro2() {
             </div>
           </div>
 
-          <div className="form-group">
+
+         {/*  se guarda pais y provincia */}
+          {/* <div className="form-group">
             <label htmlFor="pais">País</label>
             <select 
               className="formCampos" 
@@ -241,7 +245,7 @@ function Registro2() {
               ))}
             </select>
           </div>
-
+ */}
           <div className="contenedorRegistro">
             <button className="btnRegistro" type="submit">Siguiente</button>
           </div>
