@@ -12,8 +12,12 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
@@ -28,6 +32,8 @@ public class UsuarioService {
     private MongoTemplate mongoTemplate;
     @Autowired
     private InstrumentoService instrumentoService;
+    @Autowired
+    S3Service s3Service;
 
     public void comprobarCredenciales(Usuario user){
         if (usuarioRepository.findByAlias(user.getAlias()).isPresent() && usuarioRepository.findByEmail(user.getEmail()).isPresent()){ //Si no se encuentra ningun usuario con el mismo alias, el usuario se crea.
@@ -91,6 +97,77 @@ public class UsuarioService {
         return false;
     }
 
+    public ResponseEntity<String> actualizarFotoPerfilUsuario(MultipartFile file, String alias) {
+        // Validaciones previas (opcional), como el tamaño o el tipo de archivo
+        Optional<Usuario> usuarioOptional = usuarioRepository.findByAlias(alias);
+
+        if (!usuarioOptional.isPresent()) {
+            return ResponseEntity.badRequest().body("No existe usuario con el alias: " + alias);
+        }
+
+        Usuario usuario = usuarioOptional.get();
+
+        // Validar archivo (opcional)
+        if (file.isEmpty()) {
+            return ResponseEntity.badRequest().body("El archivo está vacío");
+        }
+
+        if (!file.getContentType().startsWith("image/")) {
+            return ResponseEntity.badRequest().body("El archivo debe ser una imagen");
+        }
+
+        try {
+            // Subir la imagen a S3 (con la lógica de verificación de duplicados)
+            String fileUrl = s3Service.uploadFile(file);
+
+            // Actualizar la URL de la foto de perfil del usuario
+            usuario.setFotoPerfilUrl(fileUrl);
+            usuarioRepository.save(usuario);
+
+            // Devolver la URL de la imagen (ya sea subida o existente)
+            return ResponseEntity.ok(fileUrl);
+
+        } catch (IOException | NoSuchAlgorithmException e) {
+            return ResponseEntity.status(500).body("Error al subir la imagen: " + e.getMessage());
+        }
+    }
+
+    public ResponseEntity<String> actualizarFotoPortada(MultipartFile file, String alias) {
+        // Validaciones previas (opcional), como el tamaño o el tipo de archivo
+        Optional<Usuario> usuarioOptional = usuarioRepository.findByAlias(alias);
+
+        if (!usuarioOptional.isPresent()) {
+            return ResponseEntity.badRequest().body("No existe usuario con el alias: " + alias);
+        }
+
+        Usuario usuario = usuarioOptional.get();
+
+        // Validar archivo (opcional)
+        if (file.isEmpty()) {
+            return ResponseEntity.badRequest().body("El archivo está vacío");
+        }
+
+        if (!file.getContentType().startsWith("image/")) {
+            return ResponseEntity.badRequest().body("El archivo debe ser una imagen");
+        }
+
+        try {
+            // Subir la imagen a S3 (con la lógica de verificación de duplicados)
+            String fileUrl = s3Service.uploadFile(file);
+
+            // Actualizar la URL de la foto de perfil del usuario
+            usuario.setFotoPortadaUrl(fileUrl);
+            usuarioRepository.save(usuario);
+
+            // Devolver la URL de la imagen (ya sea subida o existente)
+            return ResponseEntity.ok(fileUrl);
+
+        } catch (IOException | NoSuchAlgorithmException e) {
+            return ResponseEntity.status(500).body("Error al subir la imagen: " + e.getMessage());
+        }
+    }
+
+
     public Optional<Usuario> buscarUsuarioPorId(String id) {
         return this.usuarioRepository.findById(id);
     }
@@ -141,18 +218,7 @@ public class UsuarioService {
         }
         return usuarioRepository.save(usuario);
     }
-    /* 
-    public Usuario actualizarNombreApellido(String id, String nombre, String apellido) {
-        Optional<Usuario> userOpt = buscarUsuarioPorId(id);
-        if (userOpt.isPresent()) {
-            Usuario usuario = userOpt.get();
-            usuario.setNombre(nombre);
-            usuario.setApellido(apellido);
-            return usuarioRepository.save(usuario);
-        } else {
-            throw new NoSuchElementException("Usuario no encontrado");
-        }
-    }*/
+
 
     public Usuario actualizarUsuario(String id, Usuario user) {
 
