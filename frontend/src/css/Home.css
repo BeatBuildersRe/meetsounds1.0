@@ -22,6 +22,7 @@
 .contenedor2 {
   display: flex;
   background-color: var(--color-fondo);
+
 }
 
 .Contenedor {
@@ -29,7 +30,6 @@
   /* agregado por MB */
   display: inline-block;
   background-color: var(--color-fondo);
-  
   /* cambiado por MB */
   width: 100vw;
 }
@@ -55,7 +55,7 @@
   align-items: center;
   height: fit-content;
   background-color: var(--color-fondo); 
-  
+
   padding-left: 10px;
   padding-right: 10px;
   display: flex;
@@ -71,7 +71,7 @@
     right: 0;
     transition: transform 0.3s ease; /* Para una transición suave */
     transform: translateY(0); /* Por defecto, visible */
-    z-index: 10000; /* Para asegurarse de que esté por encima del contenido */
+    z-index: 1; /* Para asegurarse de que esté por encima del contenido */
   }
   
   .barra.oculta {

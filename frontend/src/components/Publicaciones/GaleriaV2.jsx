@@ -11,15 +11,9 @@ import imgTest5 from '@public/ract.jpg'
 import { MdArrowBackIos } from "react-icons/md";
 import { MdArrowForwardIos } from "react-icons/md";
 
-const GaleriaDeImagenes = () => {
+const GaleriaDeImagenes = ({imagenes = []}) => {
   // Lista de imágenes que vamos a mostrar en la galería
-  const imagenes = [
-    imgTest,
-    imgTest2,
-    imgTest3,
-    imgTest4,
-    imgTest5
-  ];
+ 
 
   // Estado para controlar el índice de la imagen actual
   const [indiceActual, setIndiceActual] = useState(0);
@@ -35,17 +29,17 @@ const GaleriaDeImagenes = () => {
   };
 
   return (
-    <div className="Galeria" /* style={{ textAlign: 'center' }} */>
-      {/* Mostrar la imagen actual */}
+    <div className="Galeria">
+
       <img
         src={imagenes[indiceActual]}
         alt={`Imagen ${indiceActual + 1}`}
-       /*  style={{ width: '300px', height: '200px', objectFit: 'cover' }} */
+       
       />
       
       <div /* style={{ marginTop: '10px' }} */>
         {/* Botón para retroceder */}
-        <button  id='btn-img-atras' onClick={anteriorImagen} /* style={{ marginRight: '10px' }} */>
+        <button  id='btn-img-atras' onClick={anteriorImagen} >
           <MdArrowBackIos/>
         </button>
         {/* Botón para avanzar */}

@@ -33,12 +33,13 @@ body {
 .Layout {
     display: flex;
     height: 100vh;
+
 }
 
 
 /* Menú a la izquierda */
 #left-menu {
-
+    z-index: 2;
     position: fixed;
     width: 18vw;
     top: 0;

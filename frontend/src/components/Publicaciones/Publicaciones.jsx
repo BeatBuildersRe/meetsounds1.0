@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
-/* Css */
-import '@css/Publicaciones.css'
-/* Componentes */
+import '@css/Publicaciones.css';
 import MenuListComposition from '@c/mini-menu/minMenu';
 import TextoConVerMas from './TextoVerMas';
 import Avatar from '@mui/material/Avatar';
 import ImageGallery from './Galeria';
 import Reacciones from './Reacciones';
 import GaleriaDeImagenes from './GaleriaV2';
-/* Iconos */
 import { AiOutlineMenu } from "react-icons/ai";
 import { TbMusicHeart } from "react-icons/tb";
 import { CiRead } from "react-icons/ci";
@@ -16,194 +13,156 @@ import { TiMessages } from "react-icons/ti";
 import { VscShare } from "react-icons/vsc";
 import { FaArrowLeft } from "react-icons/fa";
 
-/* Imagenes */
-import img from '@public/perfill.png'
-import img_media from '@public/ract.jpg'
-import imgTest from '@public/imgtest.png'
-import imgTest2 from '@public/imgtest2.png'
-import imgTest3 from '@public/imgtest3.png'
-import imgTest4 from '@public/imgtest4.png'
-import { Button } from '@mui/material';
-import zIndex from '@mui/material/styles/zIndex';
+import img from '@public/perfill.png';
+import imgTest from '@public/imgtest.png';
+import imgTest3 from '@public/imgtest3.png';
 
 const Publicaciones = () => {
-    const textoLargo = "Este es el texto que es muy largo y sale el cartel de 'VER MAS' se puede configura la longitud de caracterres que queres que muestre y tambien sale el bton de mostar menos, que largo aun no sale jajaj, ya me canse de escribir XD, aaah ahi esta, taraaaan! ta zarpado no? yo se que si UwU y se expande y todo me quedaron guchi las imagenes tambien ";
-
     const [renderizado, setRenderizado] = useState(true);
+    const [publicacionSeleccionada, setPublicacionSeleccionada] = useState(null); // Nuevo estado para la publicación seleccionada
 
-    // Función que alterna el estado entre true y false
-    const cambiarRenderizado = () => {
+    const cambiarRenderizado = (key = null) => {
         setRenderizado(!renderizado);
+        if (key) {
+            setPublicacionSeleccionada(publi[key]); // Actualiza la publicación seleccionada
+        }
     };
+
+    const arr = [imgTest, imgTest3];
+    const publi = {
+        1: {
+            imgPerfil: img,
+            nombre: 'Mauro Berni',
+            tiempo: '10min',
+            texto: 'djñaddfjfkfjkldjkfljfkfdjkls',
+            imgPubli: [
+                imgTest,
+                imgTest,
+                imgTest3
+            ]
+        },
+        2: {
+            imgPerfil: img,
+            nombre: 'Marcelo Agarate',
+            tiempo: '15min',
+            texto: 'bybe bybe oooooh',
+            imgPubli: [imgTest3]
+        },
+        3: {
+            imgPerfil: img,
+            nombre: 'Bruce Wane',
+            tiempo: '15min',
+            texto: 'Soy batman',
+            imgPubli: [imgTest3]
+        }
+    };
+
+    const textoLargo = "Este es el texto que es muy largo y sale el cartel de 'VER MAS' se puede configurar la longitud de caracteres que quieres que muestre y también sale el botón de mostrar menos...";
+
     return (
         <>
             {renderizado ? (
-                <div className="Publicaciones">
-                    <div className="seccion_1">
-                        <Avatar src={img} />
-
-                    </div>
-                    <div className="seccion_2">
-                        <div id='usuario'>
-
-                            <div id="usuario-info">
-                                <p id='p-nombre'>Nombre  -  10min</p>
-                                <p id='p-id'>@Nombre</p>
+                Object.keys(publi).map((key) => {
+                    const { imgPerfil, nombre, tiempo, texto, imgPubli } = publi[key];
+                    return (
+                        <div key={key} className="Publicaciones">
+                            <div className="seccion_1">
+                                <Avatar src={imgPerfil} alt={`${nombre} perfil`} />
                             </div>
-
-                            <div id='usuario-btn' >
-                                <MenuListComposition></MenuListComposition>
+                            <div className="seccion_2">
+                                <div id="usuario">
+                                    <div id="usuario-info">
+                                        <p id="p-nombre">{nombre} - {tiempo}</p>
+                                        <p id="p-id">@{nombre.split(" ")[0].toLowerCase()}</p>
+                                    </div>
+                                    <div id="usuario-btn">
+                                        <MenuListComposition />
+                                    </div>
+                                </div>
+                                <div onClick={() => cambiarRenderizado(key)} style={{ cursor: 'pointer', position: 'sticky' }}>
+                                    <div id="usuario-texto">
+                                        <TextoConVerMas texto={texto} maxLength={200} />
+                                    </div>
+                                    <div id="usuario-media">
+                                        <ImageGallery images={imgPubli} />
+                                    </div>
+                                </div>
+                                <div id="btn-reacciones">
+                                    <div id="btn_1">
+                                        <Reacciones Icon={TbMusicHeart} tipe='like' />
+                                        <Reacciones Icon={TiMessages} tipe='comentarios' funcion={() => cambiarRenderizado(key)} />
+                                        <Reacciones Icon={CiRead} tipe='vistas' />
+                                    </div>
+                                    <div id="btn_2">
+                                        <Reacciones Icon={VscShare} tipe='compartir' />
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        {/* Contenedor que funciona como botón */}
-                        <div onClick={cambiarRenderizado} style={{ cursor: 'pointer', position: 'sticky' }}>
-                            {/* Texto con opción de "Mostrar más" */}
-                            <div id="usuario-texto">
-                                <TextoConVerMas texto={textoLargo} maxLength={200} />
-                            </div>
-
-                            {/* Galería de imágenes */}
-                            <div id="usuario-media">
-                                <ImageGallery />
-                            </div>
-                        </div>
-
-                        <div id='btn-reacciones'>
-                            <div id='btn_1'>
-                                <Reacciones Icon={TbMusicHeart} tipe='like' key={0}></Reacciones>
-                                <Reacciones Icon={TiMessages} tipe='comentarios' key={0} funcion={cambiarRenderizado}></Reacciones>
-                                <Reacciones Icon={CiRead} tipe='vistas' key={0}></Reacciones>
-                            </div>
-                            <div id='btn_2'>
-                                <Reacciones Icon={VscShare} tipe='compartir' key={0}></Reacciones>
-
-                            </div>
-
-
-                        </div>
-
-                    </div>
-                </div>
+                    );
+                })
             ) : (
                 <>
                     <div className='btn-atras'>
-                        <button
-                            onClick={cambiarRenderizado}
-                            id='pick'>
-                            <FaArrowLeft />  Volver
+                        <button onClick={cambiarRenderizado} id='pick'>
+                            <FaArrowLeft /> Volver
                         </button>
                     </div>
-                    <div className='Publicaciones'>
-
-
-
-                        <div className="seccion_1">
-                            <Avatar src={img} />
-
+                    {publicacionSeleccionada && (
+                        <div className='Publicaciones'>
+                            <div className="seccion_1">
+                                <Avatar src={publicacionSeleccionada.imgPerfil} />
+                            </div>
+                            <div className="seccion_2">
+                                <div id='usuario'>
+                                    <div id="usuario-info">
+                                        <p id='p-nombre'>{publicacionSeleccionada.nombre} - {publicacionSeleccionada.tiempo}</p>
+                                        <p id='p-id'>@{publicacionSeleccionada.nombre.split(" ")[0].toLowerCase()}</p>
+                                    </div>
+                                    <div id='usuario-btn'>
+                                        <MenuListComposition />
+                                    </div>
+                                </div>
+                                <div id="usuario-texto">
+                                    <TextoConVerMas texto={publicacionSeleccionada.texto} maxLength={200} />
+                                </div>
+                                <div className="galeria-de-imagenes">
+                                    <GaleriaDeImagenes imagenes={publicacionSeleccionada.imgPubli} />
+                                </div>
+                                <div id='btn-reacciones'>
+                                    <div id='btn_1'>
+                                        <Reacciones Icon={TbMusicHeart} tipe='like' />
+                                        <Reacciones Icon={TiMessages} tipe='comentarios' />
+                                        <Reacciones Icon={CiRead} tipe='vistas' />
+                                    </div>
+                                    <div id='btn_2'>
+                                        <Reacciones Icon={VscShare} tipe='compartir' />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div className="seccion_2">
-                            <div id='usuario'>
-
-                                <div id="usuario-info">
-                                    <p id='p-nombre'>Nombre  -  10min</p>
-                                    <p id='p-id'>@Nombre</p>
-                                </div>
-
-                                <div id='usuario-btn' >
-                                    <MenuListComposition></MenuListComposition>
-                                </div>
-                            </div>
-                            {/* Contenedor que funciona como botón */}
-
-                            {/* Texto con opción de "Mostrar más" */}
-                            <div id="usuario-texto">
-                                <TextoConVerMas texto={textoLargo} maxLength={200} />
-                            </div>
-
-                            <div className="galeria-de-imagenes">
-                                <GaleriaDeImagenes></GaleriaDeImagenes>
-
-
-
-                            </div>
-
-                            <div id='btn-reacciones'>
-                                <div id='btn_1'>
-                                    <Reacciones Icon={TbMusicHeart} tipe='like' key={0}></Reacciones>
-                                    <Reacciones Icon={TiMessages} tipe='comentarios' key={0}></Reacciones>
-                                    <Reacciones Icon={CiRead} tipe='vistas' key={0}></Reacciones>
-                                </div>
-                                <div id='btn_2'>
-                                    <Reacciones Icon={VscShare} tipe='compartir' key={0}></Reacciones>
-
-                                </div>
-
-
-                            </div>
-
-                        </div>
-
-                    </div>
+                    )}
                     <div className='comentarios'>
                         <div className="mis-comentarios">
                             <Avatar src={img} />
-                          {/*   <textarea name="" id="mi-comentario"></textarea> */}
                         </div>
-                    
-                        <div class="messageBox">
-                            <div class="fileUploadWrapper">
-                                <label for="file">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 337 337">
-                                        <circle
-                                            stroke-width="20"
-                                            stroke="#6c6c6c"
-                                            fill="none"
-                                            r="158.5"
-                                            cy="168.5"
-                                            cx="168.5"
-                                        ></circle>
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-width="25"
-                                            stroke="#6c6c6c"
-                                            d="M167.759 79V259"
-                                        ></path>
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-width="25"
-                                            stroke="#6c6c6c"
-                                            d="M79 167.138H259"
-                                        ></path>
-                                    </svg>
-                                    <span class="tooltip">Add an image</span>
+                        <div className="messageBox">
+                            <div className="fileUploadWrapper">
+                                <label htmlFor="file">
+                                    {/* Icono de subida */}
                                 </label>
                                 <input type="file" id="file" name="file" />
                             </div>
-                            <input required="" placeholder="Message..." type="text" id="messageInput" />
+                            <input required placeholder="Message..." type="text" id="messageInput" />
                             <button id="sendButton">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 664 663">
-                                    <path
-                                        fill="none"
-                                        d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"
-                                    ></path>
-                                    <path
-                                        stroke-linejoin="round"
-                                        stroke-linecap="round"
-                                        stroke-width="33.67"
-                                        stroke="#6c6c6c"
-                                        d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"
-                                    ></path>
-                                </svg>
+                                {/* Icono de enviar */}
                             </button>
                         </div>
-
-
                     </div>
-
                 </>
             )}
         </>
     );
-}
+};
 
 export default Publicaciones;

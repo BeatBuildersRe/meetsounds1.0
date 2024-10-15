@@ -19,6 +19,7 @@ const PerfilUsuario = () => {
     nombre: '',
     apellido: '',
     alias: '',
+    fotoPerfilUrl: '',
     c_seguidores: '',
     c_seguidos: '',
     descripcion: ''
@@ -39,6 +40,7 @@ const PerfilUsuario = () => {
                   buscarPorAlias(alias: "${alias}") {
                     nombre
                     apellido
+                    fotoPerfilUrl
                     alias
                     c_seguidores
                     c_seguidos
