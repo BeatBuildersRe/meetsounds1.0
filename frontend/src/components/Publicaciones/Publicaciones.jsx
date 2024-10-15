@@ -135,21 +135,17 @@ const Publicaciones = () => {
                                 </div>
                                 <div id='btn_2'>
                                     <Reacciones Icon={VscShare} tipe='compartir' key={0}></Reacciones>
-
                                 </div>
-
-
                             </div>
-
                         </div>
 
                     </div>
                     <div className='comentarios'>
                         <div className="mis-comentarios">
                             <Avatar src={img} />
-                          {/*   <textarea name="" id="mi-comentario"></textarea> */}
+                            {/*   <textarea name="" id="mi-comentario"></textarea> */}
                         </div>
-                    
+
                         <div class="messageBox">
                             <div class="fileUploadWrapper">
                                 <label for="file">

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'; // Asegúrate de incluir useEffect aquí
-import { Route, Routes, Link, Outlet, useNavigate,NavLink } from 'react-router-dom';
+import { Route, Routes, Link, Outlet, useNavigate, NavLink } from 'react-router-dom';
 import './layout.css';
 import { useThemeContext } from './context/ThemeContext';
 import ButtonMenu from './components/botones/BotonesMenu';
@@ -56,39 +56,39 @@ const Layout = () => {
         <div className="logo_cabecera">
           <MeetLogo />
         </div>
-      
+
         <div id="box">
           <nav>
             <ul>
               <li><NavLink to="/" className={({ isActive }) => isActive ? 'active' : ''}><ButtonMenu icon={TiHome} text="Inicio" /></NavLink></li>
-              <li id='Buscar'><NavLink to="/busqueda"  className={({ isActive }) => isActive ? 'active' : ''}><ButtonMenu icon={CiSearch} text="Buscar"/></NavLink></li>
-              <li><NavLink to="/bandas" className={({ isActive }) => isActive ? 'active' : ''}><ButtonMenu icon={GoPeople} text="Bandas"/></NavLink></li>
-              <li><NavLink to="/mensajes" className={({ isActive }) => isActive ? 'active' : ''}><ButtonMenu icon={IoChatbubbleEllipsesOutline} text="Mensajes"/></NavLink></li>
-              <li><NavLink to="/notificaciones className={({ isActive }) => isActive ? 'active' : ''}"><ButtonMenu icon={FaFire} text="Notificaciones"/></NavLink></li>
-              <li><NavLink to="/eventos className={({ isActive }) => isActive ? 'active' : ''}"><ButtonMenu icon={LuCalendarHeart} text="Eventos"/></NavLink></li>
-              <li id='Config'><NavLink to="/configuracion" className={({ isActive }) => isActive ? 'active' : ''}><ButtonMenu icon={IoSettingsSharp} text="Configuración"/></NavLink></li>
-              
-              <li><PostModal 
-          username="usuario123"
-          userAvatar="/ruta/a/tu/avatar.jpg"
-          onPost={handlePost}
-        /></li>
+              <li id='Buscar'><NavLink to="/busqueda" className={({ isActive }) => isActive ? 'active' : ''}><ButtonMenu icon={CiSearch} text="Buscar" /></NavLink></li>
+              <li><NavLink to="/bandas" className={({ isActive }) => isActive ? 'active' : ''}><ButtonMenu icon={GoPeople} text="Bandas" /></NavLink></li>
+              <li><NavLink to="/mensajes" className={({ isActive }) => isActive ? 'active' : ''}><ButtonMenu icon={IoChatbubbleEllipsesOutline} text="Mensajes" /></NavLink></li>
+              <li><NavLink to="/notificaciones className={({ isActive }) => isActive ? 'active' : ''}"><ButtonMenu icon={FaFire} text="Notificaciones" /></NavLink></li>
+              <li><NavLink to="/eventos className={({ isActive }) => isActive ? 'active' : ''}"><ButtonMenu icon={LuCalendarHeart} text="Eventos" /></NavLink></li>
+              <li id='Config'><NavLink to="/configuracion" className={({ isActive }) => isActive ? 'active' : ''}><ButtonMenu icon={IoSettingsSharp} text="Configuración" /></NavLink></li>
+
+              <li><PostModal
+                username="usuario123"
+                userAvatar="/ruta/a/tu/avatar.jpg"
+                onPost={handlePost}
+              /></li>
             </ul>
-      
-            
+
+
           </nav>
           {console.log(alias)}
           <div className='Perfil'>
-            <button style={{all:'none'}} onClick={handleClick}>
+            <button style={{ all: 'none' }} onClick={handleClick}>
               <Avatar />
             </button>
           </div>
-        </div> 
+        </div>
       </div>
 
 
 
-                             
+
 
       {/* App.jsx es para manejas las rutas, y Layout es el "menu" que permite 
           ingresar a las rutas que PERTENECEN al menu.
@@ -98,7 +98,7 @@ const Layout = () => {
 
       */}
 
-    
+
       <Outlet /> {/* ---TE OLVIDASTE ESTO: es para el manejo de rutas "hijas"--- */}
     </div>
   );

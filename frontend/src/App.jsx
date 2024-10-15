@@ -51,17 +51,17 @@ function App() {
           <Route path="configuracion/perfil" element={<Perfil />} />
           <Route path="configuracion/seguridad" element={<Seguridad />} />
           <Route path="configuracion/apariencia" element={<Apariencia />} />
-          
+
           {/* Esta ruta maneja perfiles de usuarios */}
           <Route path="cuenta/:alias" element={<Cuenta />} />
         </Route>
 
         {/* Ruta para el login, redirigir si ya está autenticado */}
-        <Route 
-          path="/login" 
-          element={isAuthenticated ? <Navigate to="/" /> : <Login />} 
+        <Route
+          path="/login"
+          element={isAuthenticated ? <Navigate to="/" /> : <Login />}
         />
-        
+
         <Route path="/registro" element={<Registro />} />
         <Route path="/registro2" element={<Registro2 />} />
         <Route path="*" element={<Error_404 />} />
@@ -69,7 +69,7 @@ function App() {
         {/*Ruta para actualizar nombre y apellido (SOLO PRUEBA)*/}
         <Route path="configuracion/editarperfil/actualizar-nombre-apellido" element={<ActualizarNombreApellido />} />
 
-        
+
       </Routes>
       {/* <ReactSwitch 
         className='Modo-Oscuro'
