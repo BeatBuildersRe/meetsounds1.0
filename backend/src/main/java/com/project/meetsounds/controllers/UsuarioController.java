@@ -8,16 +8,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-@Controller
+@RestController
 public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
+
+
+    @PostMapping("/actualizarFotoPerfil")
+    public ResponseEntity<String> actualizarFotoPerfil(@RequestParam("file") MultipartFile file, @RequestParam("alias") String alias){
+        return usuarioService.actualizarFotoPerfilUsuario(file,alias);
+    }
+
+    @PostMapping("/actualizarFotoPortada")
+    public ResponseEntity<String> actualizarFotoPortada(@RequestParam("file") MultipartFile file, @RequestParam("alias") String alias){
+        return usuarioService.actualizarFotoPortada(file,alias);
+    }
 
 
     @MutationMapping(name = "guardarUsuario")
