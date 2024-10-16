@@ -13,6 +13,7 @@ import Perfil from './Pages/Configuracion/Perfil/Perfil';
 import Seguridad from './Pages/Configuracion/Seguridad/Seguridad';
 import Apariencia from './Pages/Configuracion/Apariencia/Apariencia';
 import Error_404 from './Pages/Error/Error-404';
+import FotosPerfil from './Pages/Configuracion/Perfil/FotosPerfil'
 
 import Login from './Pages/Login/LoginForm';
 import Registro from './Pages/Registro/Registro';
@@ -53,6 +54,7 @@ function App() {
           <Route path="configuracion/seguridad" element={<Seguridad />} />
           <Route path="configuracion/apariencia" element={<Apariencia />} />
           <Route path="perfil-encontrado/:alias" element={<PerfilEncontrado />} />
+          
 
           {/* Esta ruta maneja perfiles de usuarios */}
           <Route path="cuenta/:alias" element={<Cuenta />} />
@@ -70,6 +72,7 @@ function App() {
 
         {/*Ruta para actualizar nombre y apellido (SOLO PRUEBA)*/}
         <Route path="configuracion/editarperfil/actualizar-nombre-apellido" element={<ActualizarNombreApellido />} />
+        <Route path="cuenta/fotosperfil" element={<FotosPerfil/>} />
           
         {/* Otras rutas */}
 

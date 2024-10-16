@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useThemeContext } from '../../context/ThemeContext';
-import imgFondo from '../../img/react.jpg';
-import imgPerfil from '../../img/perfil_imagen.png';
+import imgFondo from '../../img/react.jpg';  // Imagen de fondo predeterminada
+import imgPerfil from '../../img/perfil_imagen.png';  // Imagen de perfil predeterminada
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import MenuListComposition from '../../components/mini-menu/minMenu';
 import SeguirDores from './components/seguir_dores';
 import './CssPefilUsuario.css';
 import MenuDerecho from '@c/Menu/Menu';
-import { FcAudioFile, FcCamera, FcAlphabeticalSortingAz, FcFilmReel, FcGallery, FcMusic, FcPlus } from "react-icons/fc";
 import { useParams, useNavigate } from 'react-router-dom';
 
 const PerfilEncontrado = () => {
@@ -19,6 +18,7 @@ const PerfilEncontrado = () => {
     apellido: '',
     alias: '',
     fotoPerfilUrl: '',
+    fotoPortadaUrl: '',
     c_seguidores: '',
     c_seguidos: '',
     descripcion: ''
@@ -40,6 +40,7 @@ const PerfilEncontrado = () => {
                     nombre
                     apellido
                     fotoPerfilUrl
+                    fotoPortadaUrl
                     alias
                     c_seguidores
                     c_seguidos
@@ -101,12 +102,12 @@ const PerfilEncontrado = () => {
         <div className='seccion-1'>
           <img
             id="img-fondo"
-            src={imgFondo}  
+            src={userData.fotoPortadaUrl || imgFondo}  // Usa la imagen de portada o la predeterminada
             alt="Imagen de fondo"
           />
           <img
             id="img-perfil"
-            src={imgPerfil}  
+            src={userData.fotoPerfilUrl || imgPerfil}  // Usa la imagen de perfil o la predeterminada
             alt="Imagen de perfil"
           />
           <MenuListComposition />

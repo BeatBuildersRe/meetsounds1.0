@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useThemeContext } from '../../context/ThemeContext';
-import imgFondo from '../../img/react.jpg';
-import imgPerfil from '../../img/perfil_imagen.png';
+import imgFondoDefault from '../../img/react.jpg'; // Imagen de fondo predeterminada
+import imgPerfilDefault from '../../img/perfil_imagen.png'; // Imagen de perfil predeterminada
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import MenuListComposition from '../../components/mini-menu/minMenu';
@@ -20,6 +20,7 @@ const PerfilUsuario = () => {
     apellido: '',
     alias: '',
     fotoPerfilUrl: '',
+    fotoPortadaUrl: '',
     c_seguidores: '',
     c_seguidos: '',
     descripcion: ''
@@ -41,6 +42,7 @@ const PerfilUsuario = () => {
                     nombre
                     apellido
                     fotoPerfilUrl
+                    fotoPortadaUrl
                     alias
                     c_seguidores
                     c_seguidos
@@ -106,13 +108,13 @@ const PerfilUsuario = () => {
           <img
             id="img-fondo"
             onClick={handleImageClick}
-            src={imgFondo}  
+            src={userData.fotoPortadaUrl || imgFondoDefault}  // Usa la imagen de portada o la predeterminada
             alt="Imagen de fondo"
           />
           <img
             id="img-perfil"
             onClick={handleImageClick2}
-            src={userData.fotoPerfilUrl}  
+            src={userData.fotoPerfilUrl || imgPerfilDefault}  // Usa la imagen de perfil o la predeterminada
             alt="Imagen de perfil"
           />
           <MenuListComposition />
