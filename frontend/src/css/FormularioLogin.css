@@ -1,0 +1,420 @@
+
+  
+
+
+
+
+  .contenedor_formulario {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 350px;
+    width: 100%;
+    flex-direction: column;
+    gap: 35px;
+    /* background: #e3e3e3; */
+    background: transparent;
+    
+    backdrop-filter: blur(1.5px);
+    border-radius: 15px;
+    background: #F3f3f3;
+    border-radius: 50px;
+    border: 5px solid #ff1053;
+    box-shadow: #2d2a32 0px 30px 30px -20px;
+    text-align: center;
+    height: 80vh;
+    border-radius: 25px;
+    width: 100%;
+  }
+
+  .formulario_login{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+  }
+
+  .contenedor_inputs{
+    position: relative;
+    width: 100%;
+    background: transparent;
+    margin: 2%;
+  }
+  
+  .contenedor_inputs input {
+    width: 100%;
+    height: 60px;
+    padding: 10px;
+    outline: none;
+    border: none;
+    color: #000;
+    font-size: 1em;
+    background: transparent;
+    
+    border-radius: 25px;
+    border: 2px solid #000;
+  }
+  
+  .contenedor_inputs span {
+    
+    position: absolute;
+    left: 0;
+    transform: translateY(4px);
+    margin-left: 10px;
+    padding: 10px;
+    pointer-events: none;
+    font-size: 12px;
+    color: #000;
+    text-transform: uppercase;
+    transition: 0.5s;
+    letter-spacing: 3px;
+    border-radius: 15px;
+    
+  }
+  
+  .contenedor_inputs input:focus~span,
+  .contenedor_inputs input:not(:placeholder-shown)~span { /* Aplica cuando el campo no está vacío o está enfocado */
+    transform: translateX(100%) translateY(-15px);
+    font-size: 0.8em;
+    padding: 5px 10px;
+    background: #000;
+    letter-spacing: 0.2em;
+    color: #fff;
+    border: 2px;
+  }
+  
+  .contenedor_inputs input:focus,
+  .contenedor_inputs input:not(:placeholder-shown) { /* Borde y comportamiento cuando no está vacío o enfocado */
+    border: 2px solid #000;
+    border-radius: 25px;
+  }
+  
+  .texto_inputs svg {
+    vertical-align: middle; /* Asegura que el ícono esté alineado con el texto */
+    
+  }
+  
+  
+  
+  
+
+
+
+
+  .contenedor_recordarme {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    height: 10px;
+    font-size: 12px;
+    color: #222;
+    text-decoration: none;
+  }
+  
+  .contenedor_recordarme a {
+    font-size: 12px;
+    color: #222;
+    text-decoration: none;
+  }
+  
+  .contenedor_recordarme a:hover {
+    color: #111;
+    text-decoration: underline;
+  }
+  .contenedor_switch {
+    display: flex;
+    align-items: center;
+  }
+  
+  .contenedor_switch input[type="checkbox"] {
+    margin-right: 10px; /* Espacio entre el switch y el texto */
+  }
+  
+
+  .formulario {
+    --primary: #000;
+    --secondary: #fff;
+    --time: 0.6s;
+    appearance: none;
+    position: relative;
+    cursor: pointer;
+    width: 5em; /* Tamaño reducido */
+    aspect-ratio: 2 / 1;
+    background: var(--color-gris);
+    border-radius: 10em; /* Ajuste proporcional */
+    box-shadow: 0 0 0 0.5em var(--secondary); /* Ajuste proporcional del shadow */
+    transform: translateX(0.25px); /* Ajuste proporcional del translate */
+    transition: transform var(--time) cubic-bezier(0.75, 0, 0.75, 50);
+    filter: blur(0.33em) contrast(20); /* Ajuste proporcional del blur */
+    mix-blend-mode: darken;
+    overflow: hidden;
+  }
+  
+  .formulario::before {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 100%;
+    transform: translate(-25%, -50%);
+    left: 50%;
+    top: 50%;
+    background: radial-gradient(
+        closest-side circle at 12.5% 50%,
+        var(--secondary) 50%,
+        #0000 0
+      ),
+      radial-gradient(
+        closest-side circle at 87.5% 50%,
+        var(--secondary) 50%,
+        #0000 0
+      ),
+      #f000;
+    transition: transform var(--time) cubic-bezier(0.75, 0, 0.75, 1.3);
+  }
+  
+  .formulario:checked {
+    transform: translateX(-0.25px); /* Ajuste proporcional */
+  }
+  
+  .formulario:checked::before {
+    transform: translate(-75%, -50%);
+  }
+  
+  .text_switch {
+    font-size: 16px;
+    color: #333;
+  }
+    
+
+  
+.boton_de_inicio{
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 36px;
+    border: 4px solid;
+    border-color: transparent;
+    font-size: 16px;
+    background-color: #fff;
+    border-radius: 15px;
+    font-weight: 600;
+    color: #000;
+    box-shadow: 0 0 0 2px #000;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  
+  .boton_de_inicio svg {
+    position: absolute;
+    width: 24px;
+    fill: #000;
+    z-index: 9;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  
+  .boton_de_inicio .arr-1 {
+    right: 16px;
+  }
+  
+  .boton_de_inicio .arr-2 {
+    left: -25%;
+  }
+  
+  .boton_de_inicio .circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background-color: #000;
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  
+  .boton_de_inicio .text {
+    position: relative;
+    z-index: 1;
+    transform: translateX(-12px);
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  
+  .boton_de_inicio:hover {
+    box-shadow: 0 0 0 12px transparent;
+    color: #fff;
+    border-radius: 12px;
+  }
+  
+  .boton_de_inicio:hover .arr-1 {
+    right: -25%;
+  }
+  
+  .boton_de_inicio:hover .arr-2 {
+    left: 16px;
+  }
+  
+  .boton_de_inicio:hover .text {
+    transform: translateX(12px);
+  }
+  
+  .boton_de_inicio:hover svg {
+    fill: #fff;
+  }
+  
+  .boton_de_inicio:active {
+    scale: 0.95;
+    box-shadow: 0 0 0 4px #ff2020;
+  }
+  
+  .boton_de_inicio:hover .circle {
+    width: 220px;
+    height: 220px;
+    opacity: 1;
+  }
+  
+  
+  .link_recuperar_contraseña{
+    margin-top:-25px ;
+  }
+  .link_recuperar_contraseña a{
+    text-decoration: none;
+    color: #222;
+    
+  }
+  .link_recuperar_contraseña a:hover{
+    text-decoration: underline;
+    font-weight: 450;
+  }
+  
+
+  .link_registro a{
+    text-decoration: none;
+  }
+
+  .boton_mandar_al_registro {
+  
+    --secondary-color: #fff;
+    --hover-color: #111;
+    --arrow-width: 10px;
+    --arrow-stroke: 2px;
+    box-sizing: border-box;
+    border: 0;
+    border-radius: 20px;
+    color: var(--secondary-color);
+    padding: 1em 1.8em;
+    background: #ff1053;
+    margin-top: -20px;
+    display: flex;
+    transition: 0.2s;
+    align-items: center;
+    gap: 0.6em;
+    font-weight: bold;
+  }
+  
+  .boton_mandar_al_registro  .arrow-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .boton_mandar_al_registro  .arrow {
+    margin-top: 1px;
+    width: var(--arrow-width);
+    background: #ff1053;
+    height: var(--arrow-stroke);
+    position: relative;
+    transition: 0.2s;
+  }
+  
+  .boton_mandar_al_registro  .arrow::before {
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    border: solid var(--secondary-color);
+    border-width: 0 var(--arrow-stroke) var(--arrow-stroke) 0;
+    display: inline-block;
+    top: -3px;
+    right: 3px;
+    transition: 0.2s;
+    padding: 3px;
+    transform: rotate(-45deg);
+  }
+  
+  .boton_mandar_al_registro:hover {
+    background-color: var(--hover-color);
+  }
+  
+  .boton_mandar_al_registro:hover .arrow {
+    background: var(--secondary-color);
+  }
+  
+  .boton_mandar_al_registro:hover .arrow:before {
+    right: 0;
+  }
+
+  .terminos-condiciones {
+    width: 95%;
+    font-size: 11px;
+    color: #333;
+    margin-top: -20px;
+  }
+  
+  .terminos-condiciones a {
+    text-decoration: none;
+    color: #000;
+  }
+  
+  .terminos-condiciones a:hover {
+    text-decoration: underline;
+  }
+  
+
+  @media (max-width: 650px) {
+    .contenedor_formulario{
+      width: 300px;
+    }
+    .modal{
+      width: 80%;
+    }
+    .contenedor_botones_redirecionantes{
+      flex-direction: column;
+    }
+    .contenedor-logo {
+      justify-content: center;
+      /* Centrar logo en pantallas pequeñas */
+    }
+  
+    .contenedor-formulario-imagen {
+      flex-direction: column;
+      /* Cambiar a columna */
+      align-items: center;
+    }
+  
+    .memoria {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .memoria a {
+      margin-top: 5px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .contenedor_formulario{
+      width: 250px;
+      height: 80%;
+    }
+    
+    .memoria {
+      font-size: 10px;
+    }
+  
+    .terminos-condiciones {
+      font-size: 9px;
+    }
+  }
+  
+  

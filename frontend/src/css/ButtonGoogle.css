@@ -1,0 +1,46 @@
+.boton_google {
+    width: 80%; /* Ancho del 100% */
+    border: 1px solid #222; /* Borde negro de 1px */
+    background: var(--color-gris); /* Variable de color global */
+    color: #fff; /* Color del texto inicial */
+    border-radius: 50px; /* Bordes redondeados */
+    padding: 8px 16px; /* Espaciado interno */
+    position: relative; /* Necesario para el pseudo-elemento */
+    overflow: hidden; /* Oculta el desbordamiento del borde animado */
+    transition: all 0.2s ease; /* Transición suave */
+    display: flex; /* Usa flexbox para centrar el contenido */
+    align-items: center; /* Centra verticalmente */
+    justify-content: center; /* Centra horizontalmente */
+  }
+  
+  .boton_google:before {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 200%;
+    background: #f1f1f1;
+    transition: top 0.2s ease;
+    z-index: 0;
+    border-radius: 30% 30% 0 0; /* Curvatura en el borde superior */
+    
+  }
+  
+  .boton_google:hover:before {
+    top: -50%;
+  }
+  
+  .boton_google:hover {
+    color: #222; /* Cambia el color del texto al negro */
+    transform: scale(1.06); /* Aumenta el tamaño en un 5% */
+  }
+  
+  .boton_google .MuiButton-endIcon {
+    transition: color 0.2s ease; /* Transición suave para el icono */
+    z-index: 1; /* Asegura que el icono esté sobre el fondo animado */
+  }
+  
+  .boton_google:hover .MuiButton-endIcon {
+    color: #222; /* Cambia el color del icono al negro en hover */
+  }

@@ -1,5 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Quicksand:wght@300..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
 :root {
-    --color-botones: linear-gradient(145deg, #333, #111);
+    --fuente-Montserrat: 'Montserrat', sans-serif;
+    
+    --color-gris: linear-gradient(145deg, #333, #111);
+    --color-degradado:linear-gradient(to bottom right, #000000e5 30%, #ff1054d4);
     --color-fondo: #fff;
     --color-fondoDiv: #d8d8d8;
     --color-fondoDivHover: #dddddd;

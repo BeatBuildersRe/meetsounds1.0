@@ -1,0 +1,44 @@
+
+.backgroundContainer{
+    background: var(--color-gris);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-Content: center;
+    align-Items: center;
+}
+.backgroundFilter{
+    position: absolut;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--color-degradado);
+    z-Index: 1;
+}
+.backgroundColumns {
+    display: flex;
+    flex-Direction: row;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+}
+.backgroundScroll {
+    display: flex;
+    flex-Direction: column;
+    position: relative;
+    animation: scrollUp 50s linear infinite;
+    margin: 0.5%;
+    
+}
+.backgroundImage {
+    width: 20vw;
+    height: 50vh;
+    object-Fit: cover;
+    border-Radius: 10px;
+    margin: 3%;
+}
