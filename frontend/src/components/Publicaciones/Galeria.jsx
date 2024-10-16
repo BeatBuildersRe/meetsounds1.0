@@ -2,10 +2,6 @@ import React from 'react';
 import './ImageGallery.css';
 import { GiDeathSkull } from "react-icons/gi";
 
-import img1 from '@public/imgtest.png'
-import img2 from '@public/imgtest2.png'
-import img3 from '@public/imgtest3.png'
-import img4 from '@public/imgtest4.png'
 const ImageGallery = ({ images = [] }) => {
     const cantidadImagenes = images.length;
     return (
