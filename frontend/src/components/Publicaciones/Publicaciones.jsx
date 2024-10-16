@@ -1,18 +1,22 @@
-import React, { useState } from 'react';
+/* Css */
 import '@css/Publicaciones.css';
+/* React */
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+/* Componentes */
 import MenuListComposition from '@c/mini-menu/minMenu';
 import TextoConVerMas from './TextoVerMas';
 import Avatar from '@mui/material/Avatar';
 import ImageGallery from './Galeria';
 import Reacciones from './Reacciones';
 import GaleriaDeImagenes from './GaleriaV2';
-import { AiOutlineMenu } from "react-icons/ai";
+/* Iconos */
 import { TbMusicHeart } from "react-icons/tb";
 import { CiRead } from "react-icons/ci";
 import { TiMessages } from "react-icons/ti";
 import { VscShare } from "react-icons/vsc";
 import { FaArrowLeft } from "react-icons/fa";
-
+/* Imagenes */
 import img from '@public/perfill.png';
 import imgTest from '@public/imgtest.png';
 import imgTest3 from '@public/imgtest3.png';
@@ -57,7 +61,14 @@ const Publicaciones = () => {
         }
     };
 
-    const textoLargo = "Este es el texto que es muy largo y sale el cartel de 'VER MAS' se puede configurar la longitud de caracteres que quieres que muestre y también sale el botón de mostrar menos...";
+    const navigate = useNavigate();
+    const handleClick = () => {
+        if (alias) {
+            navigate('/cuenta/' + alias);
+        } else {
+            console.error('Usuario no encontrado');
+        }
+    };
 
     return (
         <>

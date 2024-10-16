@@ -112,7 +112,7 @@ const PerfilUsuario = () => {
           <img
             id="img-perfil"
             onClick={handleImageClick2}
-            src={imgPerfil}  
+            src={userData.fotoPerfilUrl}  
             alt="Imagen de perfil"
           />
           <MenuListComposition />
