@@ -1,44 +1,57 @@
+ .contenedor_de_todo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 80vh;
+  min-height: 80vh; 
+  background: #F3f3f3;
+  border: 5px solid #ff1053;
+  border-radius: 25px;
+  box-shadow: #2d2a32 0px 30px 30px -20px;
+  text-align: center;
+}
+
+.contenedor_formulario {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  height: 100%;
+  max-width: 400px;
+  min-height: 350px;
+
+  gap: 2rem;
+  
+}
+
+
+
+.formulario_login {
+  width: 100%;
+ 
+}
+
+.contenedor_inputs {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+
 
   
 
+ 
 
 
 
-  .contenedor_formulario {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 350px;
-    width: 100%;
-    flex-direction: column;
-    gap: 35px;
-    /* background: #e3e3e3; */
-    background: transparent;
-    
-    backdrop-filter: blur(1.5px);
-    border-radius: 15px;
-    background: #F3f3f3;
-    border-radius: 50px;
-    border: 5px solid #ff1053;
-    box-shadow: #2d2a32 0px 30px 30px -20px;
-    text-align: center;
-    height: 80vh;
-    border-radius: 25px;
-    width: 100%;
-  }
 
-  .formulario_login{
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-  }
 
-  .contenedor_inputs{
-    position: relative;
-    width: 100%;
-    background: transparent;
-    margin: 2%;
-  }
+
+
+
+
   
   .contenedor_inputs input {
     width: 100%;
@@ -370,51 +383,24 @@
     text-decoration: underline;
   }
   
-
+  @media (max-width: 1440px) {
+    
+    
+    .contenedor_de_todo{
+      height: 100vh;
+    }
+  
+  }
+  
   @media (max-width: 650px) {
-    .contenedor_formulario{
-      width: 300px;
-    }
-    .modal{
-      width: 80%;
-    }
-    .contenedor_botones_redirecionantes{
-      flex-direction: column;
-    }
-    .contenedor-logo {
-      justify-content: center;
-      /* Centrar logo en pantallas pequeñas */
-    }
+    
+    
+    
   
-    .contenedor-formulario-imagen {
-      flex-direction: column;
-      /* Cambiar a columna */
-      align-items: center;
-    }
-  
-    .memoria {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    .memoria a {
-      margin-top: 5px;
-    }
   }
   
   @media (max-width: 480px) {
-    .contenedor_formulario{
-      width: 250px;
-      height: 80%;
-    }
     
-    .memoria {
-      font-size: 10px;
-    }
-  
-    .terminos-condiciones {
-      font-size: 9px;
-    }
   }
   
   
