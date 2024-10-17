@@ -1,13 +1,22 @@
+/* React */
 import React from 'react';
+/* Css */
+import './menu.css'
+/* Iconoes */
 import { CiSearch } from "react-icons/ci";
 import { IoPerson } from "react-icons/io5";
 import { IoMdMusicalNote } from "react-icons/io";
 import { PiVideoFill } from "react-icons/pi";
 import { IoMdImage } from "react-icons/io";
 import Avatar from '@mui/material/Avatar';
+/* Componentes */
+import Amigos from './Amigos';
 import Carrusel from '../Anuncios/Ads';
+/* imagenes */
 import avatari from '@assets/perfil_imagen.png'
-import './menu.css'
+import useObtenerUsuarios from '../../services/GetUsuarios';
+
+
 const MenuDerecho = () => {
     const formatNumber = (number) => {
         if (number < 1000) return number;
@@ -56,7 +65,7 @@ const MenuDerecho = () => {
 
 
     return (
-        <div className="Contenedor-menu" id='Contenedor-menuu'> 
+        <div className="Contenedor-menu" id='Contenedor-menuu'>
             <label id='label'>
                 <CiSearch id='icon'></CiSearch>
                 <input type="search" placeholder='Buscar' />
@@ -72,30 +81,8 @@ const MenuDerecho = () => {
             <Carrusel></Carrusel>
             <div className='seguir'>
                 <h4>Quizas te interese...</h4>
-                <div id='avatar'>
-                    <Avatar className='avatari' alt="Remy Sharp" src={avatari} />
-                    <div id='info'>
-                        <h5>Nombre</h5>
-                        <p>12M <IoPerson /></p>
-                    </div>
-                    <button id='btn'>Seguir</button>
-                </div>
-                <div id='avatar'>
-                    <Avatar className='avatari' alt="Remy Sharp" src={avatari} />
-                    <div id='info'>
-                        <h5>Nombre</h5>
-                        <p>12M <IoPerson /></p>
-                    </div>
-                    <button id='btn'>Seguir</button>
-                </div>
-                <div id='avatar'>
-                    <Avatar className='avatari' alt="Remy Sharp" src={avatari} />
-                    <div id='info'>
-                        <h5>Nombre</h5>
-                        <p>12M <IoPerson /></p>
-                    </div>
-                    <button id='btn'>Seguir</button>
-                </div>
+                <Amigos />
+
             </div>
 
 
