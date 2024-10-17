@@ -45,7 +45,7 @@ public class PublicacionService {
     public Publicacion crearPublicacion(String id, String descripcion, MultipartFile file) {
         Publicacion publi = new Publicacion();
 
-        publi.setDescription(descripcion);
+        publi.setDescripcion(descripcion);
 
         LocalDate fechaActual = LocalDate.now();
         int año = fechaActual.getYear();
