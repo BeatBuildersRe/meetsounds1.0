@@ -10,6 +10,9 @@ import Avatar from '@mui/material/Avatar';
 import ImageGallery from './Galeria';
 import Reacciones from './Reacciones';
 import GaleriaDeImagenes from './GaleriaV2';
+/* servivios */
+import { useUserData } from '@services/UserContext';
+
 /* Iconos */
 import { TbMusicHeart } from "react-icons/tb";
 import { CiRead } from "react-icons/ci";
@@ -22,8 +25,13 @@ import imgTest from '@public/imgtest.png';
 import imgTest3 from '@public/imgtest3.png';
 
 const Publicaciones = () => {
+    const { userData, loading } = useUserData(); // Asumiendo que usas un hook de contexto para obtener los datos
+
     const [renderizado, setRenderizado] = useState(true);
-    const [publicacionSeleccionada, setPublicacionSeleccionada] = useState(null); // Nuevo estado para la publicación seleccionada
+    const [publicacionSeleccionada, setPublicacionSeleccionada] = useState(null); // Estado para la publicación seleccionada
+    const navigate = useNavigate();
+
+    const texto = 'daodksadopdo'
 
     const cambiarRenderizado = (key = null) => {
         setRenderizado(!renderizado);
@@ -33,58 +41,33 @@ const Publicaciones = () => {
     };
 
     const arr = [imgTest, imgTest3];
-    const publi = {
-        1: {
-            imgPerfil: img,
-            nombre: 'Mauro Berni',
-            tiempo: '10min',
-            texto: 'djñaddfjfkfjkldjkfljfkfdjkls',
-            imgPubli: [
-                imgTest,
-                imgTest,
-                imgTest3
-            ]
-        },
-        2: {
-            imgPerfil: img,
-            nombre: 'Marcelo Agarate',
-            tiempo: '15min',
-            texto: 'bybe bybe oooooh',
-            imgPubli: [imgTest3]
-        },
-        3: {
-            imgPerfil: img,
-            nombre: 'Bruce Wane',
-            tiempo: '15min',
-            texto: 'Soy batman',
-            imgPubli: [imgTest3]
-        }
-    };
 
-    const navigate = useNavigate();
-    const handleClick = () => {
+    /* const VerPerfil = (alias) => {
         if (alias) {
-            navigate('/cuenta/' + alias);
+            navigate('perfil-encontrado/' + alias);
         } else {
             console.error('Usuario no encontrado');
         }
     };
+ */
 
     return (
         <>
             {renderizado ? (
-                Object.keys(publi).map((key) => {
-                    const { imgPerfil, nombre, tiempo, texto, imgPubli } = publi[key];
+                userData.map((user, key) => { // userData es un array, entonces solo usamos map
+                    const { id, nombre, alias, fotoPerfilUrl } = user; // Desestructuramos el usuario directamente
+
                     return (
                         <div key={key} className="Publicaciones">
-                            <div className="seccion_1">
-                                <Avatar src={imgPerfil} alt={`${nombre} perfil`} />
+                            <div className="seccion_1"/*  onClick={() => VerPerfil(alias)} */>
+                                <Avatar src={fotoPerfilUrl || img} alt={`perfil`} />
                             </div>
+
                             <div className="seccion_2">
                                 <div id="usuario">
                                     <div id="usuario-info">
-                                        <p id="p-nombre">{nombre} - {tiempo}</p>
-                                        <p id="p-id">@{nombre.split(" ")[0].toLowerCase()}</p>
+                                        <p id="p-nombre">{nombre} - 10m</p>
+                                        <p id="p-id">@{alias.split(" ")[0].toLowerCase()}</p>
                                     </div>
                                     <div id="usuario-btn">
                                         <MenuListComposition />
@@ -92,10 +75,11 @@ const Publicaciones = () => {
                                 </div>
                                 <div onClick={() => cambiarRenderizado(key)} style={{ cursor: 'pointer', position: 'sticky' }}>
                                     <div id="usuario-texto">
+                                        {/* Asumiendo que 'texto' es algún contenido dinámico */}
                                         <TextoConVerMas texto={texto} maxLength={200} />
                                     </div>
                                     <div id="usuario-media">
-                                        <ImageGallery images={imgPubli} />
+                                        <ImageGallery />
                                     </div>
                                 </div>
                                 <div id="btn-reacciones">

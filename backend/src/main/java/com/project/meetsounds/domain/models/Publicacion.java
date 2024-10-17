@@ -17,7 +17,7 @@ import java.util.List;
 public class Publicacion {
     @Id
     private String id;
-    private String Description;
+    private String description;
     private String mediaUrl;
     private LocalDate fecha;
     private LocalTime hora;

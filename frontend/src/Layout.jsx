@@ -64,7 +64,8 @@ const Layout = () => {
               <li id='Buscar'><NavLink to="/busqueda" className={({ isActive }) => isActive ? 'active' : ''}><ButtonMenu icon={CiSearch} text="Buscar" /></NavLink></li>
               <li><NavLink to="/bandas" className={({ isActive }) => isActive ? 'active' : ''}><ButtonMenu icon={GoPeople} text="Bandas" /></NavLink></li>
               <li><NavLink to="/mensajes" className={({ isActive }) => isActive ? 'active' : ''}><ButtonMenu icon={IoChatbubbleEllipsesOutline} text="Mensajes" /></NavLink></li>
-              <li><NavLink to="/notificaciones className={({ isActive }) => isActive ? 'active' : ''}"><ButtonMenu icon={FaFire} text="Notificaciones" /></NavLink></li>
+              <li><NavLink to="/notificaciones"><ButtonMenu icon={FaFire} text="Notificaciones" /></NavLink></li>
+             {/*  <li><NavLink to="/notificaciones className={({ isActive }) => isActive ? 'active' : ''}"><ButtonMenu icon={FaFire} text="Notificaciones" /></NavLink></li> */}
               <li><NavLink to="/eventos className={({ isActive }) => isActive ? 'active' : ''}"><ButtonMenu icon={LuCalendarHeart} text="Eventos" /></NavLink></li>
               <li id='Config'><NavLink to="/configuracion" className={({ isActive }) => isActive ? 'active' : ''}><ButtonMenu icon={IoSettingsSharp} text="Configuración" /></NavLink></li>
 
