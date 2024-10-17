@@ -79,3 +79,12 @@
   color: #2a2d32;
   border: 1px solid #2d2a32;
 }
+@media (max-width: 1440px) {
+    
+    
+  .Contenedor_Menu_Redireccionable{
+    flex-direction: column;
+  }
+  
+
+}
