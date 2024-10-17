@@ -6,7 +6,7 @@ import { CiLogin, CiCirclePlus } from "react-icons/ci";
 
 export default function MenuRedireccionable({ handleToggleWelcome, handleShowSecondModal }) {
   return (
-    <div>
+    
       <div className='Contenedor_Menu_Redireccionable'>
         <Meetsounds />
         <h1>Bienvenido a MeetSounds</h1>
@@ -23,7 +23,7 @@ export default function MenuRedireccionable({ handleToggleWelcome, handleShowSec
           </a>
         </div>
       </div>
-    </div>
+    
   );
 }
 

@@ -10,6 +10,7 @@
   width: 100%;
   padding: 1%;
   color: #2a2d32;
+  
 }
 .Contenedor_Menu_Redireccionable h1{
   font-Family: var(--fuente-Montserrat);
@@ -84,7 +85,16 @@
     
   .Contenedor_Menu_Redireccionable{
     flex-direction: column;
+    width: 40vh;
+    text-align: center;
+    
   }
-  
+  .Contenedor_Menu_Redireccionable h1{
+    margin: 1rem;
+    font-size: 20px;
+  }
+  .contenedor_botones_redirecionantes{
+    margin-top: 0;
+  }
 
 }
