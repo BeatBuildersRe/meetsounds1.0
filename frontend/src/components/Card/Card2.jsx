@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { FcBusinessman } from "react-icons/fc";
 import { FcSafe } from "react-icons/fc";
 import '../Card/card.css'
@@ -27,8 +26,8 @@ const R_Card2 = (props) => {
 
     return (
         <>
-            <Link to={props.to} style={{ all: 'unset' }}>
-                <div className="R_Contenedor-Card2" style={R_Contenedor_Card2}>
+           
+                <div className="R_Contenedor-Card2" style={R_Contenedor_Card2} onClick={props.click}>
                     <div style={icon}>
                         {props.icon}
                     </div>
@@ -36,7 +35,7 @@ const R_Card2 = (props) => {
 
                     <h5 style={textp}>{props.text}</h5>
                 </div>
-            </Link>
+           
         </>
     )
 

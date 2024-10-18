@@ -9,7 +9,9 @@ import Notificaciones from './Pages/Notificaciones/Notificaciones';
 import Mensajes from './Pages/Mensajes/Mensajes';
 import Bandas from './Pages/Bandas/Bandas';
 import Configuracion from './Pages/Configuracion/Configuracion';
-import Perfil from './Pages/Configuracion/Perfil/Perfil';
+/* import Perfil from './Pages/Configuracion/Perfil/Perfil'; */
+import Perfil2 from './Pages/Configuracion/Perfil/Perfil2';
+import DatosPersonales from './Pages/Configuracion/Perfil/Datos_Personales/DatosPersonales';
 import Seguridad from './Pages/Configuracion/Seguridad/Seguridad';
 import Apariencia from './Pages/Configuracion/Apariencia/Apariencia';
 import Error_404 from './Pages/Error/Error-404';
@@ -50,7 +52,11 @@ function App() {
           <Route path="Mensajes" element={<Mensajes />} />
           <Route path="Bandas" element={<Bandas />} />
           <Route path="Configuracion" element={<Configuracion />} />
-          <Route path="configuracion/perfil" element={<Perfil />} />
+          <Route path="configuracion/perfil" element={<Perfil2 />} />
+          <Route path="configuracion/perfil/Datos-Personales" element={<DatosPersonales />} />
+          
+          {/* <Route path="configuracion/perfil/:alias" element={<Perfil2 />} />
+          <Route path="perfil/:alias" element={<Perfil />} /> */}
           <Route path="configuracion/seguridad" element={<Seguridad />} />
           <Route path="configuracion/apariencia" element={<Apariencia />} />
           <Route path="perfil-encontrado/:alias" element={<PerfilEncontrado />} />
