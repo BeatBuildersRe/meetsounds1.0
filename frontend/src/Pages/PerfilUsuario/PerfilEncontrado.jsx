@@ -9,6 +9,7 @@ import SeguirDores from './components/seguir_dores';
 import './CssPefilUsuario.css';
 import MenuDerecho from '@c/Menu/Menu';
 import { useParams, useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../../config'
 
 const PerfilEncontrado = () => {
   const { alias } = useParams();  // Extrae el alias de la URL
@@ -28,7 +29,7 @@ const PerfilEncontrado = () => {
     if (alias) {
       const fetchUserData = async () => {
         try {
-          const response = await fetch("http://localhost:8080/graphql", {
+          const response = await fetch(`${BASE_URL}/graphql`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

@@ -41,6 +41,7 @@ public class UsuarioService {
     @Autowired
     S3Service s3Service;
 
+    /*--------------------------------REGISTRO----------------------------------------*/
     public void comprobarCredenciales(Usuario user){
         if (usuarioRepository.findByAlias(user.getAlias()).isPresent() && usuarioRepository.findByEmail(user.getEmail()).isPresent()){ //Si no se encuentra ningun usuario con el mismo alias, el usuario se crea.
             throw new AliasAndEmailAlreadyExistsException("El Alias y el Email ya existen!");
@@ -90,7 +91,7 @@ public class UsuarioService {
         Period periodo = Period.between(fechaNacimiento, hoy);
         return periodo.getYears() >= 18;
     }
-
+    /*--------------------------------LOGIN----------------------------------------*/
     public boolean loginUsuario(String username, String contrasena) {
         Optional<Usuario> usuarioOpt = usuarioRepository.findByAlias(username);
 
@@ -102,6 +103,7 @@ public class UsuarioService {
 
         return false;
     }
+    /*--------------------------------FOTO DE PERFIL Y DE PORTADA----------------------------------------*/
 
     public ResponseEntity<String> actualizarFotoPerfilUsuario(MultipartFile file, String alias) {
         // Validaciones previas (opcional), como el tamaño o el tipo de archivo
@@ -174,6 +176,8 @@ public class UsuarioService {
     }
 
 
+    /*--------------------------------BUSQUEDA DE USUARIO---------------------------------------*/
+
     public Optional<Usuario> buscarUsuarioPorId(String id) {
         return this.usuarioRepository.findById(id);
     }
@@ -202,6 +206,80 @@ public class UsuarioService {
         return usuarios.stream().limit(5).collect(Collectors.toSet());
     }
 
+    /*--------------------------------SEGUIR Y DEJAR DE SEGUIR----------------------------------------*/
+
+    public void SeguirUsuario(String aliasSeguidor, String aliasSeguido){
+        // Obtener el seguidor
+        Optional<Usuario> optionalSeguidor = usuarioRepository.findByAlias(aliasSeguidor);
+        Optional<Usuario> optionalSeguido = usuarioRepository.findByAlias(aliasSeguido);
+
+        if (optionalSeguidor.isPresent() && optionalSeguido.isPresent()) {
+            Usuario usuarioSeguidor = optionalSeguidor.get();
+            Usuario usuarioSeguido = optionalSeguido.get();
+
+            // Evitar agregar duplicados
+            if (!usuarioSeguidor.getSeguidos().contains(aliasSeguido)) {
+                usuarioSeguidor.getSeguidos().add(aliasSeguido);
+                int seguidos = usuarioSeguidor.getC_seguidos();
+                usuarioSeguidor.setC_seguidos(seguidos++);
+            }
+
+            if (!usuarioSeguido.getSeguidores().contains(aliasSeguidor)) {
+                usuarioSeguido.getSeguidores().add(aliasSeguidor);
+                int seguidores = usuarioSeguidor.getC_seguidos();
+                usuarioSeguidor.setC_seguidores(seguidores++);
+            }
+
+            // Guardar cambios en la base de datos
+            usuarioRepository.save(usuarioSeguidor);
+            usuarioRepository.save(usuarioSeguido);
+        }
+
+    }
+    public void DejarDeSeguirUsuario(String aliasSeguidor, String aliasSeguido){
+        // Obtener el seguidor
+        Optional<Usuario> optionalSeguidor = usuarioRepository.findByAlias(aliasSeguidor);
+        Optional<Usuario> optionalSeguido = usuarioRepository.findByAlias(aliasSeguido);
+
+        if (optionalSeguidor.isPresent() && optionalSeguido.isPresent()) {
+            Usuario usuarioSeguidor = optionalSeguidor.get();
+            Usuario usuarioSeguido = optionalSeguido.get();
+
+            // Eliminar de la lista de seguidos del seguidor si está presente
+            usuarioSeguidor.getSeguidos().remove(aliasSeguido);
+            int seguidos = usuarioSeguidor.getC_seguidos();
+            usuarioSeguidor.setC_seguidos(seguidos--);
+
+            // Eliminar de la lista de seguidores del seguido si está presente
+            usuarioSeguido.getSeguidores().remove(aliasSeguidor);
+            int seguidores = usuarioSeguidor.getC_seguidos();
+            usuarioSeguidor.setC_seguidores(seguidores--);
+            // Guardar cambios en la base de datos
+            usuarioRepository.save(usuarioSeguidor);
+            usuarioRepository.save(usuarioSeguido);
+        }
+    }
+
+    public boolean verificaSiSigue(String aliasVisitante, String aliasPerfil) {
+        // Buscar el usuario que está visitando el perfil
+        Optional<Usuario> optionalVisitante = usuarioRepository.findByAlias(aliasVisitante);
+
+        // Buscar el usuario dueño del perfil
+        Optional<Usuario> optionalPerfil = usuarioRepository.findByAlias(aliasPerfil);
+
+        if (optionalVisitante.isPresent() && optionalPerfil.isPresent()) {
+            Usuario usuarioVisitante = optionalVisitante.get();
+
+            // Verificar si el alias del perfil está en la lista de "seguidos" del visitante
+            return usuarioVisitante.getSeguidos().contains(aliasPerfil);
+        } else {
+            // Si uno de los usuarios no existe, puedes lanzar una excepción o devolver false
+            throw new IllegalArgumentException("Alias de usuario no encontrado");
+        }
+    }
+
+
+    /*-----------------------------------------CRUD----------------------------------------*/
 
     public void eliminarPorIdUsuario(String id) {
         usuarioRepository.deleteById(id);

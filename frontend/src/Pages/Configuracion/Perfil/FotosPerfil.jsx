@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BASE_URL } from '../../../config'
 
 const FotosPerfil = () => {
   const [profileImage, setProfileImage] = useState(null);
