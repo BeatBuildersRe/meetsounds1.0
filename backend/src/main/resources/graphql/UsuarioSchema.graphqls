@@ -7,7 +7,7 @@ type Query{
     buscarPorAlias(alias: String): Usuario
     buscarUsuariosPorInstrumentos(instrumentos: [String!]!): [Usuario]
     misLikesUsuario(usuarioAlias: String!): [Publicacion]
-    #listarPublicaciones : [Publicacion]
+    existByAlias(alias: String): Boolean
 
     #Instrumentos y TipoInstrumentos
     buscarTodosLosInstrumentos : [Instrumento]
@@ -56,7 +56,7 @@ type Mutation{
     eliminarTipoInstrumentoPorId(id: ID!): Boolean
 
     # Publicacion Mutation
-    eliminarPublicacionPorId(id: ID!): Boolean
+    eliminarPublicacionPorId(idUsuario: ID!, idPublicacion: ID!): Boolean
     meGusta(idPublicacion: String!, usuarioAlias: String!): Boolean
     crearPublicacion(idUsuario: ID!,descripcion: String): Publicacion
 

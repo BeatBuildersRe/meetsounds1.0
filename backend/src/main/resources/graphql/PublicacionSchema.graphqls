@@ -3,13 +3,17 @@ type Publicacion{
     id: String
     descripcion: String
     mediaUrl: String
-    #fecha: LocalDate
-    #hora : LocalTime
     count_coment: Int
     count_likes: Int
-    #comentarios: [Comentario]
-    #meGustas: [Megusta]
-    #entity: Object
+    usuario: UsuarioPublicacion
+}
+
+type UsuarioPublicacion{
+    id : String
+    nombre : String
+    apellido : String
+    alias : String
+    fotoPerfilUrl : String
 }
 
 type UsuariosLikes{
@@ -18,4 +22,9 @@ type UsuariosLikes{
     apellido: String
     alias: String
     fotoPerfilUrl: String
+}
+
+type Pagina{
+    id: String
+    nombre: String
 }

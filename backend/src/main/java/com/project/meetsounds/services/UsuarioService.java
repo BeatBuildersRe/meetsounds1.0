@@ -344,12 +344,18 @@ public class UsuarioService {
     }
 
     public void crearPublicacion(String id, Publicacion publi) {
-        Optional<Usuario> usu = usuarioRepository.findById(id);
+        Optional<Usuario> usu = usuarioRepository.findByAlias(id);
         if(usu != null){
             Usuario usu2 = usu.get();
-            usu2.getMisPublicaciones().add(publi);
-            usuarioRepository.save(usu2);
-
+            if(usu2.getMisPublicaciones().isEmpty()){
+                usu2.getMisPublicaciones().add(publi);
+                this.usuarioRepository.save(usu2);
+            }else{
+                List<Publicacion> misPublicaciones = new ArrayList<>();
+                misPublicaciones.add(publi);
+                usu2.setMisPublicaciones(misPublicaciones);
+                this.usuarioRepository.save(usu2);
+            }
         }
     }
 
@@ -388,4 +394,9 @@ public class UsuarioService {
         }
         return this.iPublicacionRepository.findAllById(publicacionIds);
     }
+
+    public Boolean existByAlias(String alias) {
+        return this.usuarioRepository.existsByAlias(alias);
+    }
+
 }

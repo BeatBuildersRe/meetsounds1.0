@@ -20,8 +20,9 @@ public interface IUsuarioRepository extends MongoRepository<Usuario, String> {
     @Query("{ 'alias': { $regex: ?0, $options: 'i' } }") // Cambia 'nombre' a 'alias'
     List<Usuario> findByAliasBrrBusqueda(String alias);
 
-
+    @Query("{ 'alias' : ?0 }")
     Optional<Usuario> findByAlias(String alias);
+
 
 
 
@@ -30,4 +31,6 @@ public interface IUsuarioRepository extends MongoRepository<Usuario, String> {
 
     @Query("{alias: { $in:?0 } }")
     List<Usuario> findAllByAlias(List<String> usuarioAliasList);
+
+    boolean existsByAlias(String alias);
 }

@@ -42,9 +42,21 @@ public class PublicacionService {
 
 
 
-    public Publicacion crearPublicacion(String id, String descripcion, MultipartFile file) {
+    public Publicacion crearPublicacion(String idAlias, String descripcion, MultipartFile file) {
         Publicacion publi = new Publicacion();
 
+        Optional<Usuario> usuarioOptional = this.iUsuarioRepository.findByAlias(idAlias);
+        Usuario usuario = new Usuario();
+
+        if(usuarioOptional.isPresent()){
+            Usuario usu = usuarioOptional.get();
+            usuario.setId(usu.getId());
+            usuario.setNombre(usu.getNombre());
+            usuario.setApellido(usu.getApellido());
+            usuario.setAlias(usu.getAlias());
+            usuario.setFotoPerfilUrl(usu.getFotoPerfilUrl());
+        }
+        publi.setUsuario(usuario);
         publi.setDescripcion(descripcion);
 
         LocalDate fechaActual = LocalDate.now();
@@ -61,10 +73,10 @@ public class PublicacionService {
 
         //publi.setMediaUrl(this.s3Service.uploadFile(file));
 
+        this.iPublicacionRepository.save(publi);
         //Guardamos la publicacion en la lista de "misPublicaciones" del usuario
-        usuarioService.crearPublicacion(id, publi);
-
-        return this.iPublicacionRepository.save(publi);
+        usuarioService.crearPublicacion(idAlias, publi);
+        return publi;
     }
 
 
@@ -74,17 +86,30 @@ public class PublicacionService {
     }
 
     public void eliminarPublicacion(String idUsuario, String idPublicacion) {
-
+        /*
         Query query = new Query(Criteria.where("_id").is(idUsuario));
         query.fields().include("misPublicaciones");
         Usuario usu = mongoTemplate.findOne(query, Usuario.class);
 
         List<Publicacion> publis = usu.getMisPublicaciones();
+        System.out.println(publis.get(0).getDescripcion());
         publis.removeIf( p -> p.getId().equals(idPublicacion));
         usu.setMisPublicaciones(publis);
 
+         */
+        System.out.println(idPublicacion);
+        Usuario usuario = new Usuario();
+        Optional<Usuario> usuarioOptional = this.iUsuarioRepository.findById(idUsuario);
+        if(usuarioOptional.isPresent()){
+            usuario = usuarioOptional.get();
+        }
+
+        List<Publicacion> misPublicaciones = usuario.getMisPublicaciones();
+        misPublicaciones.removeIf( p -> p.getId().equals(idPublicacion));
+        usuario.setMisPublicaciones(misPublicaciones);
+
         Query queryUp = new Query(Criteria.where("_id").is(idUsuario));
-        Update update = new Update().set("misPublicaciones", usu.getMisPublicaciones());
+        Update update = new Update().set("misPublicaciones", usuario.getMisPublicaciones());
         mongoTemplate.updateFirst(queryUp, update, Usuario.class);
 
         iPublicacionRepository.deleteById(idPublicacion);

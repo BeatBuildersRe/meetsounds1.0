@@ -124,4 +124,8 @@ public class UsuarioController {
         return this.usuarioService.misLikesUsuario(usuarioAlias);
     }
 
+    @QueryMapping(name = "existByAlias")
+    public Boolean existByAlias(@Argument String alias){
+        return this.usuarioService.existByAlias(alias);
+    }
 }
