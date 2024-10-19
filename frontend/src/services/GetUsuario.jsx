@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BASE_URL } from '../config';
+import { BASE_URL } from '../../src/config';
 const useObtenerUsuario = (Alias) => {
     const [usuario, setUsuario] = useState([]);
     const [cargando, setCargando] = useState(true); // Estado de carga

@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 import useObtenerUsuario from '@services/GetUsuario';
 /* Componentes */
 import UploadAvatar from '@c/UploadAvatar';
-import R_Input from '../../../components/input/R_input';
+import R_Input from '@c/input/R_input';
 import MenuDerechoDiv from '@c/Menu/Derecha';
 import { useThemeContext } from '@contex/ThemeContext';
 import Button from '@mui/material/Button';

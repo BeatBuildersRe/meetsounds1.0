@@ -1,0 +1,53 @@
+.izquierda-Perfil-Y-Portada {
+    height: auto;
+    flex: 2;
+    height: fit-content;
+    background-color: var(--color-fondo);
+    padding-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    /* Habilita el desplazamiento vertical */
+    width: 100%;
+    position: relative;
+
+    .media {
+        width: 100%;
+        height: auto;
+
+        .Portada {
+            position: relative;
+            width: auto;
+            max-width: 700px;
+            
+            height: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            #Portada {
+                width: 100%;
+                max-height: 300px;
+                object-fit: cover;
+            }
+            .Perfil{
+                position: absolute;
+                
+                left: 2%;
+                bottom:  1%;
+              
+            }
+        }
+    }
+    #editar-perfil{
+        position: absolute;
+        bottom: 3%;
+        left: 15%;
+    }
+    #editar-portada{
+        position: absolute;
+        right: 1%;
+        bottom: 3%;
+    }
+}

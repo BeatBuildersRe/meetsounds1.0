@@ -1,7 +1,5 @@
 import { useForm } from "react-hook-form";
 import '@css/seguridad.css'
-import img from '@img/seguridad.jpg'
-import img2 from '@/img/seguridad2.jpg'
 import Stack from '@mui/material/Stack';
 import Formulario_telefono from "@c/Formulario_telefono/CodigoTelefono";
 import React, { useState, useEffect } from 'react';
