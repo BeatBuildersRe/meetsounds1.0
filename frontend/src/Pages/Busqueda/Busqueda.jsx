@@ -3,6 +3,7 @@ import { CiSearch } from "react-icons/ci";
 import { useNavigate } from 'react-router-dom'; // Cambiar a useNavigate
 import MenuDerechoDiv from "../Home/Derecha";
 import '@css/Busqueda.css';
+import { BASE_URL } from '../../config'
 
 const Busqueda = () => {
     const [query, setQuery] = useState(""); // Estado para la búsqueda
@@ -21,7 +22,7 @@ const Busqueda = () => {
             const fetchUsers = async () => {
                 setLoading(true);
                 try {
-                    const response = await fetch(`http://localhost:8080/graphql`, {
+                    const response = await fetch(`${BASE_URL}/graphql`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

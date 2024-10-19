@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Cookies from 'js-cookie';
-
+import { BASE_URL } from '../../../config'
 const ActualizarNombreApellido = () => {
   const [nombre, setNombre] = useState('');
   const [apellido, setApellido] = useState('');
@@ -27,7 +27,7 @@ const ActualizarNombreApellido = () => {
     `;
 
     try {
-      const response = await fetch('http://localhost:8080/graphql', {
+      const response = await fetch(`${BASE_URL}/graphql`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
