@@ -9,7 +9,7 @@ import { MuiTelInput } from 'mui-tel-input';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import { TextField, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
-import MenuDerechoDiv from "../../Home/Derecha";
+import MenuDerechoDiv from "@c/Menu/Derecha";
 
 export default function App() {
   const {

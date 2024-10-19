@@ -36,6 +36,7 @@
 .contenedor_inputs {
   position: relative;
   margin-bottom: 1.5rem;
+  
 }
 
 
@@ -62,9 +63,9 @@
     color: #000;
     font-size: 1em;
     background: transparent;
-    
     border-radius: 25px;
     border: 2px solid #000;
+    
   }
   
   .contenedor_inputs span {
@@ -101,7 +102,7 @@
     border-radius: 25px;
   }
   
-  .texto_inputs svg {
+  .text_inputs svg {
     vertical-align: middle; /* Asegura que el ícono esté alineado con el texto */
     
   }

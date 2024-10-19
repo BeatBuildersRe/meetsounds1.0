@@ -1,6 +1,6 @@
 import * as React from 'react';
 import '@css/Mensajes.css'
-import MenuDerechoDiv from '../Home/Derecha';
+import MenuDerechoDiv from '@c/Menu/Derecha';
 const Mensajes = () => {
     return (
         <>

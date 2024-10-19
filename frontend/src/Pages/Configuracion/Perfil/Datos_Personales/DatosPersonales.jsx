@@ -1,7 +1,7 @@
 import '@css/DatosPersonales.css';
 import { useForm } from "react-hook-form";
 import React from 'react';
-import MenuDerechoDiv from "../../../Home/Derecha";
+import MenuDerechoDiv from "@c/Menu/Derecha";
 import GetAlias from '@services/GetAlias';
 import useObtenerUsuario from '@services/GetUsuario';
 import useUpdateUsuario from '@services/UpdateUsuario'; // Hook para actualizar el usuario

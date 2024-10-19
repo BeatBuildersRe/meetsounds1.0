@@ -24,7 +24,7 @@ const FormularioLogin = ({ username, setUsername, password, setPassword, manejar
                     placeholder=""
                     className='input'
                     />
-                    <span>
+                    <span className='text_inputs'>
                         <CiUser size={20} style={{ marginRight: '10px' }} />
                         Usuario
                     </span>
@@ -37,7 +37,7 @@ const FormularioLogin = ({ username, setUsername, password, setPassword, manejar
                     placeholder=""
                     className='input'
                     />
-                    <span>
+                    <span className='text_inputs'>
                         <CiLock size={20} style={{ marginRight: '10px' }} />
                         Contraseña
                     </span>
