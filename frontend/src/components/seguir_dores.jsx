@@ -1,6 +1,6 @@
 import React from 'react';
 import { IoHeartCircle, IoHeartCircleOutline } from 'react-icons/io5';
-import UseToggle from "../../../components/Boton-seguir/btnSegui";
+import UseToggle from "@c/Boton-seguir/btnSegui";
 
 // Función para formatear números grandes en 'k' o 'M'
 const formatNumber = (number) => {

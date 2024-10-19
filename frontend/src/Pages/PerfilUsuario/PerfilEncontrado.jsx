@@ -4,7 +4,7 @@ import imgFondo from '@img/react.jpg';  // Imagen de fondo predeterminada
 import imgPerfil from '@img/perfil_imagen.png';  // Imagen de perfil predeterminada
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import MenuListComposition from 'c/components/mini-menu/minMenu';
+import MenuListComposition from '@c/mini-menu/minMenu';
 import SeguirDores from '@c/seguir_dores';
 import '@css/CssPefilUsuario.css';
 import MenuDerecho from '@c/Menu/Menu';

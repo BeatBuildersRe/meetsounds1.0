@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import '../../css/Home.css'
-import Foto from '../../assets/ads.png';
-import Publicaciones from '../../components/Publicaciones/Publicaciones';
-import MenuDerechoDiv from './Derecha';
+import '@css/Home.css'
+import Foto from '@assets/ads.png';
+import Publicaciones from '@c/Publicaciones/Publicaciones';
+import MenuDerechoDiv from '@c/Menu/Derecha';
 const Inicio = () => {
   const [activeDiv, setActiveDiv] = useState('div1');
   const [isVisible, setIsVisible] = useState(true);

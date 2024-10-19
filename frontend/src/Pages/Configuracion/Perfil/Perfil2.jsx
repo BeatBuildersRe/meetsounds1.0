@@ -18,6 +18,7 @@ const Perfil2 = () => {
                 navigate('Datos-Personales');
                 break;
             case 2:
+                navigate('PerfilYPortada');
                 break
 
             default:
@@ -35,7 +36,7 @@ const Perfil2 = () => {
                     <div className="boton"  onClick={() => Redirigir(1)}>
                         <FcReading id="icon"/> <p>Datos Personales</p>
                     </div>
-                    <div className="boton" onClick={Redirigir}>
+                    <div className="boton" onClick={() => Redirigir(2)}>
                         <FcPicture id="icon"/> <p>Perfil y Portada</p>
                     </div>
                     <div className="boton" onClick={Redirigir}>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { CiSearch } from "react-icons/ci";
 import { useNavigate } from 'react-router-dom'; // Cambiar a useNavigate
-import MenuDerechoDiv from "../Home/Derecha";
+import MenuDerechoDiv from "@c/Menu/Derecha";
 import '@css/Busqueda.css';
 
 const Busqueda = () => {

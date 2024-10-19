@@ -12,7 +12,7 @@ import { LuCalendarHeart } from "react-icons/lu";
 import { IoSettingsSharp } from "react-icons/io5";
 import { CiCirclePlus } from "react-icons/ci";
 import MeetLogo from '@c/logotipo/Logo';
-import Avatar from '@/avatar/Avatar';
+import Avatar from '@c/avatar/Avatar';
 import Cookies from 'js-cookie';
 import PostModal from '@c/Modal/modal'
 
