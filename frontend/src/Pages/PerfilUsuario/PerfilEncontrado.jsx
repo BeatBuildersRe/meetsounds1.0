@@ -9,7 +9,8 @@ import SeguirDores from '@c/seguir_dores';
 import '@css/CssPefilUsuario.css';
 import MenuDerecho from '@c/Menu/Menu';
 import { useParams, useNavigate } from 'react-router-dom';
-import { BASE_URL } from '../../config'
+import { BASE_URL } from '../../config';
+import Cookies from 'js-cookie';  // Importa la librería para manejar cookies
 
 const PerfilEncontrado = () => {
   const { alias } = useParams();  // Extrae el alias de la URL
@@ -24,9 +25,12 @@ const PerfilEncontrado = () => {
     c_seguidos: '',
     descripcion: ''
   });
+  const [isFollowing, setIsFollowing] = useState(false);  // Nuevo estado para verificar si ya sigue
 
   useEffect(() => {
-    if (alias) {
+    const aliasVisitante = Cookies.get('alias');  // Obtiene el alias del usuario visitante de la cookie
+
+    if (alias && aliasVisitante) {
       const fetchUserData = async () => {
         try {
           const response = await fetch(`${BASE_URL}/graphql`, {
@@ -35,7 +39,7 @@ const PerfilEncontrado = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              query: `
+              query: ` 
                 query {
                   buscarPorAlias(alias: "${alias}") {
                     nombre
@@ -57,6 +61,26 @@ const PerfilEncontrado = () => {
           // Verificamos si el usuario existe
           if (result.data && result.data.buscarPorAlias) {
             setUserData(result.data.buscarPorAlias);
+
+            // Llamada para verificar si sigue al usuario
+            const verificaSeguimiento = await fetch(`${BASE_URL}/graphql`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                query: ` 
+                  query {
+                    verificaSiSigue(aliasVisitante: "${aliasVisitante}", aliasPerfil: "${alias}")
+                  }
+                `,
+              }),
+            });
+
+            const followResult = await verificaSeguimiento.json();
+            if (followResult.data && followResult.data.verificaSiSigue) {
+              setIsFollowing(true);  // Si ya sigue, actualizamos el estado
+            }
           } else {
             // Si el usuario no existe, redirigir a la página 404
             navigate('/404');
@@ -69,7 +93,7 @@ const PerfilEncontrado = () => {
 
       fetchUserData();
     } else {
-      console.log("Alias no encontrado en la URL.");
+      console.log("Alias no encontrado en la URL o no hay usuario visitante.");
       navigate('/404'); // Redirigir si no hay alias
     }
   }, [alias, navigate]);
@@ -92,9 +116,44 @@ const PerfilEncontrado = () => {
     }
   };
 
-  const handleSendFriendRequest = () => {
-    // Lógica para enviar solicitud de amistad
-    console.log("Solicitud de amistad enviada");
+  const handleSendFriendRequest = async () => {
+    const aliasVisitante = Cookies.get('alias');  // Obtiene el alias del usuario visitante de la cookie
+    const aliasSeguido = userData.alias;  // El alias del usuario que está siendo seguido
+
+    try {
+      // Define el query dependiendo del estado de isFollowing
+      const mutationQuery = isFollowing 
+        ? `
+            mutation {
+              dejarDeSeguirUsuario(aliasSeguidor: "${aliasVisitante}", aliasSeguido: "${aliasSeguido}")
+            }
+          `
+        : `
+            mutation {
+              seguirUsuario(aliasSeguidor: "${aliasVisitante}", aliasSeguido: "${aliasSeguido}")
+            }
+          `;
+
+      // Realiza la llamada a la API
+      const response = await fetch(`${BASE_URL}/graphql`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ query: mutationQuery }),
+      });
+
+      // Lógica para actualizar los contadores de seguidores en tiempo real
+      setUserData((prevData) => ({
+        ...prevData,
+        c_seguidores: isFollowing ? prevData.c_seguidores - 1 : prevData.c_seguidores + 1,  // Aumenta o disminuye
+      }));
+
+      // Actualiza el estado de isFollowing
+      setIsFollowing(!isFollowing);  // Cambia el estado de seguimiento
+    } catch (error) {
+      console.error("Error al enviar la solicitud de amistad", error);
+    }
   };
 
   return (
@@ -140,7 +199,9 @@ const PerfilEncontrado = () => {
             {renderComponent()}
           </div>
         </div>
-        <button onClick={handleSendFriendRequest}>Enviar solicitud de amistad</button>
+        <button onClick={handleSendFriendRequest}>
+          {isFollowing ? "Siguiendo" : "Seguir"}
+        </button>
       </div>
       <div className="derecha-perfil-usuario">
         <MenuDerecho />

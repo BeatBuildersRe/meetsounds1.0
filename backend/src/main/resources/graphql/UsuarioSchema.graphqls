@@ -8,6 +8,7 @@ type Query{
     buscarUsuariosPorInstrumentos(instrumentos: [String!]!): [Usuario]
     misLikesUsuario(usuarioAlias: String!): [Publicacion]
     existByAlias(alias: String): Boolean
+    verificaSiSigue(aliasVisitante:String!, aliasPerfil:String!): Boolean
 
     #Instrumentos y TipoInstrumentos
     buscarTodosLosInstrumentos : [Instrumento]
@@ -41,6 +42,10 @@ type Mutation{
     #actualizar solo nombre y apellido
     actualizarNombreApellidoPorAlias(alias: String!, nombre: String!, apellido: String!): Usuario
 
+    seguirUsuario(aliasSeguidor:String!, aliasSeguido:String!): Boolean
+    dejarDeSeguirUsuario(aliasSeguidor:String!, aliasSeguido:String!): Boolean
+
+
     #Banda Mutation
     #crearBanda(id: ID!, banda: bandaInput): Banda
     #cambiarNombre(id: ID!, nombre: String): Banda
@@ -61,9 +66,7 @@ type Mutation{
     crearPublicacion(idUsuario: ID!,descripcion: String): Publicacion
 
     # Seguidos Mutation
-    seguirUsuario(idUsuario: String, IdSeguir: String): Boolean
-    dejarDeSegir(idUsuario: String, idSeguido: String): Boolean
-    misSeguidos(idUsuario: String): usuariosSeguidos
+
 }
 
 scalar Date
@@ -90,6 +93,8 @@ type Usuario{
     redes : Redes
     contrasena : String
     fechaNacimiento: Date
+    seguidos: [String]
+    seguidores: [String]
 }
 
 type Redes{

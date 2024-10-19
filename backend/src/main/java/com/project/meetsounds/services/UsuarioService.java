@@ -208,8 +208,13 @@ public class UsuarioService {
 
     /*--------------------------------SEGUIR Y DEJAR DE SEGUIR----------------------------------------*/
 
-    public void SeguirUsuario(String aliasSeguidor, String aliasSeguido){
-        // Obtener el seguidor
+    public void seguirUsuario(String aliasSeguidor, String aliasSeguido) {
+        // Asegurarse de que el usuario no se siga a sí mismo
+        if (aliasSeguidor.equals(aliasSeguido)) {
+            throw new IllegalArgumentException("Un usuario no puede seguirse a sí mismo");
+        }
+
+        // Obtener el seguidor y el seguido
         Optional<Usuario> optionalSeguidor = usuarioRepository.findByAlias(aliasSeguidor);
         Optional<Usuario> optionalSeguido = usuarioRepository.findByAlias(aliasSeguido);
 
@@ -217,26 +222,24 @@ public class UsuarioService {
             Usuario usuarioSeguidor = optionalSeguidor.get();
             Usuario usuarioSeguido = optionalSeguido.get();
 
-            // Evitar agregar duplicados
+            // Evitar duplicados y seguir a sí mismo
             if (!usuarioSeguidor.getSeguidos().contains(aliasSeguido)) {
                 usuarioSeguidor.getSeguidos().add(aliasSeguido);
-                int seguidos = usuarioSeguidor.getC_seguidos();
-                usuarioSeguidor.setC_seguidos(seguidos++);
+                usuarioSeguidor.setC_seguidos(usuarioSeguidor.getC_seguidos() + 1);  // Incrementar c_seguidos
             }
 
             if (!usuarioSeguido.getSeguidores().contains(aliasSeguidor)) {
                 usuarioSeguido.getSeguidores().add(aliasSeguidor);
-                int seguidores = usuarioSeguidor.getC_seguidos();
-                usuarioSeguidor.setC_seguidores(seguidores++);
+                usuarioSeguido.setC_seguidores(usuarioSeguido.getC_seguidores() + 1);  // Incrementar c_seguidores
             }
 
-            // Guardar cambios en la base de datos
+            // Guardar los cambios
             usuarioRepository.save(usuarioSeguidor);
             usuarioRepository.save(usuarioSeguido);
         }
-
     }
-    public void DejarDeSeguirUsuario(String aliasSeguidor, String aliasSeguido){
+
+    public void dejarDeSeguirUsuario(String aliasSeguidor, String aliasSeguido){
         // Obtener el seguidor
         Optional<Usuario> optionalSeguidor = usuarioRepository.findByAlias(aliasSeguidor);
         Optional<Usuario> optionalSeguido = usuarioRepository.findByAlias(aliasSeguido);
@@ -246,14 +249,17 @@ public class UsuarioService {
             Usuario usuarioSeguido = optionalSeguido.get();
 
             // Eliminar de la lista de seguidos del seguidor si está presente
-            usuarioSeguidor.getSeguidos().remove(aliasSeguido);
-            int seguidos = usuarioSeguidor.getC_seguidos();
-            usuarioSeguidor.setC_seguidos(seguidos--);
 
-            // Eliminar de la lista de seguidores del seguido si está presente
-            usuarioSeguido.getSeguidores().remove(aliasSeguidor);
-            int seguidores = usuarioSeguidor.getC_seguidos();
-            usuarioSeguidor.setC_seguidores(seguidores--);
+            if (usuarioSeguidor.getSeguidos().contains(aliasSeguido)) {
+                usuarioSeguidor.getSeguidos().remove(aliasSeguido);
+                usuarioSeguidor.setC_seguidos(usuarioSeguidor.getC_seguidos() - 1);  // Incrementar c_seguidos
+            }
+
+            if (usuarioSeguido.getSeguidores().contains(aliasSeguidor)) {
+                usuarioSeguido.getSeguidores().remove(aliasSeguidor);
+                usuarioSeguido.setC_seguidores(usuarioSeguido.getC_seguidores() - 1);  // Incrementar c_seguidores
+            }
+
             // Guardar cambios en la base de datos
             usuarioRepository.save(usuarioSeguidor);
             usuarioRepository.save(usuarioSeguido);
