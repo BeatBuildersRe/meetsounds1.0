@@ -16,7 +16,7 @@ import Seguridad from './Pages/Configuracion/Seguridad/Seguridad';
 import Apariencia from './Pages/Configuracion/Apariencia/Apariencia';
 import Error_404 from './Pages/Error/Error-404';
 import FotosPerfil from './Pages/Configuracion/Perfil/FotosPerfil'
-
+import Perfil_Y_Portada from './Pages/Configuracion/Perfil/Perfil_Y_Portada/Perfil_Y_Portada';
 import Login from './Pages/Login/LoginForm';
 import Registro from './Pages/Registro/Registro';
 import Registro2 from './Pages/Registro/Registro2';
@@ -54,6 +54,7 @@ function App() {
           <Route path="Configuracion" element={<Configuracion />} />
           <Route path="configuracion/perfil" element={<Perfil2 />} />
           <Route path="configuracion/perfil/Datos-Personales" element={<DatosPersonales />} />
+          <Route path="configuracion/perfil/PerfilYPortada" element={<Perfil_Y_Portada />} />
           
           {/* <Route path="configuracion/perfil/:alias" element={<Perfil2 />} />
           <Route path="perfil/:alias" element={<Perfil />} /> */}
