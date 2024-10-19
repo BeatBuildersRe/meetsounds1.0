@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactSwitch from 'react-switch';
-import './Apariencia.css'
+import '@c/Apariencia.css'
 import { useThemeContext } from '../../../context/ThemeContext';
 
 

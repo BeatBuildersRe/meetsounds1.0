@@ -1,10 +1,10 @@
 /* Css */
-import './Perfil2.css'
+import '@css/Perfil2.css'
 /* React */
 import { useNavigate } from 'react-router-dom'; 
 
 /* Componentes */
-import MenuDerechoDiv from "../../Home/Derecha";
+import MenuDerechoDiv from "@c/Menu/Derecha";
 
 /* Iconos */
 import { FcReading,FcDocument, FcPicture  } from "react-icons/fc";

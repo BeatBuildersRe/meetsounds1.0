@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useThemeContext } from '../../context/ThemeContext';
-import imgFondo from '../../img/react.jpg';  // Imagen de fondo predeterminada
-import imgPerfil from '../../img/perfil_imagen.png';  // Imagen de perfil predeterminada
+import imgFondo from '@img/react.jpg';  // Imagen de fondo predeterminada
+import imgPerfil from '@img/perfil_imagen.png';  // Imagen de perfil predeterminada
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import MenuListComposition from '../../components/mini-menu/minMenu';
-import SeguirDores from './components/seguir_dores';
-import './CssPefilUsuario.css';
+import MenuListComposition from 'c/components/mini-menu/minMenu';
+import SeguirDores from '@c/seguir_dores';
+import '@css/CssPefilUsuario.css';
 import MenuDerecho from '@c/Menu/Menu';
 import { useParams, useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../../config'
