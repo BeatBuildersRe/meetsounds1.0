@@ -3,7 +3,8 @@ import { CiSearch } from "react-icons/ci";
 import { useNavigate } from 'react-router-dom'; // Cambiar a useNavigate
 import MenuDerechoDiv from "@c/Menu/Derecha";
 import '@css/Busqueda.css';
-import { BASE_URL } from '../../config'
+import { BASE_URL } from '../../config';
+import Cookies from 'js-cookie'; // Importar para manejar cookies
 
 const Busqueda = () => {
     const [query, setQuery] = useState(""); // Estado para la búsqueda
@@ -53,7 +54,11 @@ const Busqueda = () => {
                         console.error('Errores de GraphQL:', data.errors);
                         setResults([]);
                     } else {
-                        setResults(data.data.buscarUsuarioPorTexto);
+                        // Obtener el alias del usuario visitante de la cookie
+                        const aliasVisitante = Cookies.get('alias');
+                        // Filtrar resultados para eliminar el propio perfil
+                        const filteredResults = data.data.buscarUsuarioPorTexto.filter(user => user.alias !== aliasVisitante);
+                        setResults(filteredResults);
                     }
                 } catch (error) {
                     console.error('Error fetching users:', error);
@@ -72,7 +77,7 @@ const Busqueda = () => {
             setResults([]); // Limpia los resultados si el query es muy corto
         }
     }, [query]); // Escucha cambios en el valor de 'query'
-    
+
     const handleUserClick = (usuario) => {
         // Redirige a la página del perfil del usuario encontrado
         navigate(`/perfil-encontrado/${usuario.alias}`); // Usar navigate en lugar de history.push
