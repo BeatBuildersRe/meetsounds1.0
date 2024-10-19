@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import { BASE_URL } from '../config';
 const useUpdateUsuario = () => {
     const [usuario, setUsuario] = useState(null);
     const [cargando, setCargando] = useState(false); // Estado de carga
@@ -11,7 +11,7 @@ const useUpdateUsuario = () => {
         setError(null);
 
         try {
-            const response = await fetch("http://localhost:8080/graphql", {
+            const response = await fetch(`${BASE_URL}/graphql`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

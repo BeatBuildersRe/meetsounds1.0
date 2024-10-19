@@ -6,6 +6,7 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import './Avatar.css';
 import Cookies from 'js-cookie';
+import { BASE_URL } from '../../config'
 export default function SizeAvatars() {
 	const theme = useTheme();
 	const isSmallScreen = useMediaQuery(theme.breakpoints.down('lg')); // lg = 1200px
@@ -22,7 +23,7 @@ export default function SizeAvatars() {
 		// Realizamos la consulta a la API de GraphQL para obtener los datos del usuario
 		const fetchUserData = async () => {
 		  try {
-			const response = await fetch("http://localhost:8080/graphql", {
+			const response = await fetch(`${BASE_URL}/graphql`, {
 			  method: "POST",
 			  headers: {
 				"Content-Type": "application/json",

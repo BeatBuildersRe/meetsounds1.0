@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-
+import { BASE_URL } from '../../config'
 const ObtenerPublicaciones = () => {
     const [publicaciones, setPublicaciones] = useState([]);
 
     useEffect(() => {
         const fetchPublicaciones = async () => {
             try {
-                const response = await fetch("http://localhost:8080/graphql", {
+                const response = await fetch(`${BASE_URL}/graphql`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

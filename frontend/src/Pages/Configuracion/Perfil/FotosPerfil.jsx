@@ -23,7 +23,7 @@ const FotosPerfil = () => {
     formData.append('file', profileImage);
     formData.append('alias', getAlias());
 
-    fetch('http://localhost:8080/actualizarFotoPerfil', {
+    fetch(`${BASE_URL}/actualizarFotoPerfil`, {
       method: 'POST',
       body: formData,
     })
@@ -47,7 +47,7 @@ const FotosPerfil = () => {
     formData.append('file', coverImage);
     formData.append('alias', getAlias());
 
-    fetch('http://localhost:8080/actualizarFotoPortada', {
+    fetch(`${BASE_URL}/actualizarFotoPortada`, {
       method: 'POST',
       body: formData,
     })
