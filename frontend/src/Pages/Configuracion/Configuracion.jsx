@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import "./Configuracion.css"
+import "@css/Configuracion.css"
 
 import { useThemeContext } from '../../context/ThemeContext';
 import R_Card2 from '@c/Card/Card2';
-import MenuDerechoDiv from '../Home/Derecha';
+import MenuDerechoDiv from '@c/Menu/Derecha';
 import GetAlias from '@services/GetAlias';
 import { AuthContext } from '../../js/otro/AuthContext'; // Asegúrate de que la ruta sea correcta
 import { useNavigate } from 'react-router-dom'; // Para redirigir después de cerrar sesión

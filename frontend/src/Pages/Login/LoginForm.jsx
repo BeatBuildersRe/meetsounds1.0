@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { AuthContext } from '../../js/otro/AuthContext';
-import Fondo from '../../components/FondoLoginRegister/FondoLoginRegister';
+import Fondo from '@c/components/FondoLoginRegister/FondoLoginRegister';
 import MenuRedireccionable from '@c/MenuRedireccionable/MenuRedireccionable';
 import FormularioLogin from '@c/FormularioLogin/FormularioLogin';
 

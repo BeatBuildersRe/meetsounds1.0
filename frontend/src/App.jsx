@@ -22,7 +22,7 @@ import Registro from './Pages/Registro/Registro';
 import Registro2 from './Pages/Registro/Registro2';
 
 import Cuenta from './Pages/PerfilUsuario/PerfilUsuario'
-import './App.css';
+import '@css/App.css';
 
 import ActualizarNombreApellido from './Pages/Configuracion/EditarPerfil/ActualizarNombreApeliido';
 import PerfilEncontrado from './Pages/PerfilUsuario/PerfilEncontrado';

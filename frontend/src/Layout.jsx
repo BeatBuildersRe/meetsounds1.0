@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'; // Asegúrate de incluir useEffect aquí
 import { Route, Routes, Link, Outlet, useNavigate, NavLink } from 'react-router-dom';
-import './layout.css';
+import '@css/layout.css';
 import { useThemeContext } from './context/ThemeContext';
 import ButtonMenu from './components/botones/BotonesMenu';
 import { CiSearch } from "react-icons/ci";
@@ -11,10 +11,10 @@ import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { LuCalendarHeart } from "react-icons/lu";
 import { IoSettingsSharp } from "react-icons/io5";
 import { CiCirclePlus } from "react-icons/ci";
-import MeetLogo from './components/logotipo/Logo';
-import Avatar from './components/avatar/Avatar';
+import MeetLogo from '@c/logotipo/Logo';
+import Avatar from '@/avatar/Avatar';
 import Cookies from 'js-cookie';
-import PostModal from './components/Modal/modal'
+import PostModal from '@c/Modal/modal'
 
 const Layout = () => {
   const [alias, setAlias] = useState(undefined);

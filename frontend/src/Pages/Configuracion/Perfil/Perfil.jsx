@@ -1,5 +1,5 @@
 /* css */
-import './Perfil.css';
+import '@ccs/Perfil.css';
 /* React */
 import React, { useState,useEffect } from 'react';
 import { useForm, Controller } from "react-hook-form";
@@ -9,7 +9,7 @@ import useObtenerUsuario from '@services/GetUsuario';
 /* Componentes */
 import UploadAvatar from '@c/UploadAvatar';
 import R_Input from '../../../components/input/R_input';
-import MenuDerechoDiv from '../../Home/Derecha';
+import MenuDerechoDiv from '@c/Menu/Derecha';
 import { useThemeContext } from '@contex/ThemeContext';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -23,8 +23,8 @@ import { MdEmail } from "react-icons/md";
 import { FaMusic } from "react-icons/fa6";
 import { TbEdit } from "react-icons/tb";
 /* imagenes */
-import imagen_de_perfil from '../../../../public/perfil_imagen.png';
-import imagen_de_fondo from '../../../../public/ract.jpg';
+import imagen_de_perfil from '@public/perfil_imagen.png';
+import imagen_de_fondo from '@public/ract.jpg';
 import perfilimg from '@public/perfill.png'
 import PerfilDefault from '@public/perfill.png'
 
