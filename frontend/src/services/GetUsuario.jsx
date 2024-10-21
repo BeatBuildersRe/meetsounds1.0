@@ -37,6 +37,7 @@ const useObtenerUsuario = (Alias) => {
                   genero
                   fechaNacimiento
                   email
+                  telefono
                 }
               }
             `,

@@ -31,7 +31,7 @@
 }
 
 /* Estilo del botón de editar contraseña */
-#btn-editar-contraseña, #btn-editar-contraseña2  {
+#btn-editar-contraseña, #btn-editar-contraseña2,#btn-editar-contraseña3  {
     position: absolute;
     right: 3%;
     top: 0;
@@ -49,7 +49,16 @@
         display: none;
     }
 }
-
+.errors{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    p{
+        color: red;
+        font-weight: bold;
+        padding: 1%;
+    }
+}
 /* Contenedor de la contraseña */
 .input-container {
     margin-bottom: 2%;
@@ -94,11 +103,11 @@
 
 
 /* ------------------------------------------------- */
-.toggle2 {
+.toggle2, .toggle3 {
     display: none;
 }
 
-.miDiv-email {
+.miDiv-email,.miDiv-telefono {
     overflow: hidden;
     width: fit-content;
     height: 0;
@@ -110,4 +119,13 @@
 .toggle2:checked+.boton-expandir2+.miDiv-email {
     height: 150px;
     /* Ajusta la altura cuando se expande */
+}
+.toggle3:checked+.boton-expandir3+.miDiv-telefono {
+    height: 150px;
+    /* Ajusta la altura cuando se expande */
+}
+
+.guardar-seguridad{
+    display: flex;
+    justify-content: center;
 }

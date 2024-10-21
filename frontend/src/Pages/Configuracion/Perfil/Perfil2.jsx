@@ -8,6 +8,8 @@ import MenuDerechoDiv from "@c/Menu/Derecha";
 
 /* Iconos */
 import { FcReading,FcDocument, FcPicture  } from "react-icons/fc";
+import { FcLock } from "react-icons/fc";
+
 
 
 const Perfil2 = () => {
@@ -40,11 +42,9 @@ const Perfil2 = () => {
                     <div className="boton" onClick={() => Redirigir(2)}>
                         <FcReading id="icon"/> <p>Perfil y Portada</p>
                     </div>
-                    <div className="boton" onClick={() => Redirigir(1)}>
-                       <FcDocument id="icon"/> <p>Informacion</p>
-                    </div>
+              
                     <div className="boton" onClick={() => Redirigir(3)}>
-                       <FcDocument id="icon"/> <p>Seguridad</p>
+                       <FcLock id="icon"/> <p>Seguridad</p>
                     </div>
                     </div>
                     <MenuDerechoDiv></MenuDerechoDiv>
