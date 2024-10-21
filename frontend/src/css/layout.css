@@ -102,7 +102,7 @@ body {
     box-shadow: inset 0 0 0 10em rgb(36, 41, 46);
 }
  #Dark .active .botones_layout{
-    box-shadow: inset 0 0 0 10em #f2f2f2;
+    box-shadow: inset 0 0 0 10em var(--color-fondoDiv2);
     color:  rgb(36, 41, 46);
  }
 
@@ -178,7 +178,6 @@ body {
 @media (max-width: 1200px) {
 
     
-        
      
 
 }
@@ -238,6 +237,9 @@ body {
 
 /* Responsividad: pantalla pequeña */
 @media (max-width:600px) {
+    .PostModal{
+        display: none;
+    }
 .logo_cabecera{
         display: none;
         }

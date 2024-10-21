@@ -16,11 +16,12 @@
     .boton{
         display: flex;
         font-weight: bold;
+        cursor: pointer;
         align-items: center;
         margin-bottom: 2%;
         padding: 1%;
         border-radius: 15px;
-        background-color: rgb(53, 52, 52);
+        background-color: var(--color-fondoDiv);
         gap: 1%;
         #icon{
             font-size: 2rem;

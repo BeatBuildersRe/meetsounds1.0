@@ -1,8 +1,17 @@
+/* Css */
+import '@css/layout.css';
+/* React */
 import React, { useEffect, useState } from 'react'; // Asegúrate de incluir useEffect aquí
 import { Route, Routes, Link, Outlet, useNavigate, NavLink } from 'react-router-dom';
-import '@css/layout.css';
+import Cookies from 'js-cookie';
+/* Componentes */
 import { useThemeContext } from './context/ThemeContext';
+import Avatar from '@c/avatar/Avatar';
+import MeetLogo from '@c/logotipo/Logo';
+import PostModal from '@c/Modal/modal'
 import ButtonMenu from './components/botones/BotonesMenu';
+import AvatarV3 from '@c/avatar/AvatarV3';
+/* Iconos */
 import { CiSearch } from "react-icons/ci";
 import { TiHome } from "react-icons/ti";
 import { GoPeople } from "react-icons/go";
@@ -11,10 +20,7 @@ import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { LuCalendarHeart } from "react-icons/lu";
 import { IoSettingsSharp } from "react-icons/io5";
 import { CiCirclePlus } from "react-icons/ci";
-import MeetLogo from '@c/logotipo/Logo';
-import Avatar from '@c/avatar/Avatar';
-import Cookies from 'js-cookie';
-import PostModal from '@c/Modal/modal'
+
 
 const Layout = () => {
   const [alias, setAlias] = useState(undefined);
@@ -66,10 +72,10 @@ const Layout = () => {
               <li><NavLink to="/mensajes" className={({ isActive }) => isActive ? 'active' : ''}><ButtonMenu icon={IoChatbubbleEllipsesOutline} text="Mensajes" /></NavLink></li>
               <li><NavLink to="/notificaciones"><ButtonMenu icon={FaFire} text="Notificaciones" /></NavLink></li>
              {/*  <li><NavLink to="/notificaciones className={({ isActive }) => isActive ? 'active' : ''}"><ButtonMenu icon={FaFire} text="Notificaciones" /></NavLink></li> */}
-              <li><NavLink to="/eventos className={({ isActive }) => isActive ? 'active' : ''}"><ButtonMenu icon={LuCalendarHeart} text="Eventos" /></NavLink></li>
-              <li id='Config'><NavLink to="/configuracion" className={({ isActive }) => isActive ? 'active' : ''}><ButtonMenu icon={IoSettingsSharp} text="Configuración" /></NavLink></li>
+{/*               <li><NavLink to="/eventos className={({ isActive }) => isActive ? 'active' : ''}"><ButtonMenu icon={LuCalendarHeart} text="Eventos" /></NavLink></li>
+ */}              <li id='Config'><NavLink to="/configuracion" className={({ isActive }) => isActive ? 'active' : ''}><ButtonMenu icon={IoSettingsSharp} text="Configuración" /></NavLink></li>
 
-              <li><PostModal
+              <li className='PostModal'><PostModal
                 username="usuario123"
                 userAvatar="/ruta/a/tu/avatar.jpg"
                 onPost={handlePost}

@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import PhoneNumberValidation from '@c/Formulario_telefono/CodigoTelefono';
 import { FcHighPriority } from "react-icons/fc";
 import useUpdateContraseña from '../../../services/UpdateContraseña';
+import { IoEyeSharp } from "react-icons/io5";
 
 const Seguridad = () => {
   const Alias = GetAlias()
@@ -57,26 +58,18 @@ const Seguridad = () => {
     const contraseñaActual = data.Contraseña
     const contrasenaNueva = data.NuevaContraseña
     const contrasenaRepetida = data.RepetirContraseña
-
     const emailActual = data.Email
     const emailNueva = data.NuevoEmail
     const emailRepetida = data.RepetirEmail
-
     const TelefonoActual = data.Telefono
     const TelefonoNueva = data.NuevoTelefono
     const TelefonoRepetida = data.RepetirTelefono
 
-
-
     if (watchedContraseña) {
       if (contraseñaActual == usuario.contrasena) {
         if (contrasenaNueva == contrasenaRepetida) {
-          /* Envio a la bd */
           setErrorContraseña(<p style={{ color: 'green' }}> Cargando...</p>)
-          /* Cambiar la contraseña a la bd aqui*/
-          actualizarContraseña({ id: usuario.id, contrasena: contrasenaNueva }); // Asegúrate de que `usuario.id` esté disponible
-
-
+          actualizarContraseña({ id: usuario.id, contrasena: contrasenaNueva }); 
         } else {
           setErrorContraseña('La nueva contraseña no coinciden')
         }
@@ -87,7 +80,6 @@ const Seguridad = () => {
     if (watchedEmail) {
       if (emailActual == usuario.email) {
         if (emailNueva == emailRepetida) {
-          /* Envio a la bd */
           setErrorEmail(<p style={{ color: 'green' }}> Cargando...</p>)
 
         } else {
@@ -102,7 +94,6 @@ const Seguridad = () => {
         if (TelefonoNueva == TelefonoRepetida) {
           /* Envio a la bd */
           setErrorTelefono(<p style={{ color: 'green' }}> Cargando...</p>)
-
         } else {
           setErrorTelefono('El nuevo Telefono no coinciden')
         }
@@ -110,8 +101,6 @@ const Seguridad = () => {
         setErrorTelefono("ingresa el Telefono actual")
       }
     }
-
-
   };
 
   /* Visibilidad de la COntraseña */

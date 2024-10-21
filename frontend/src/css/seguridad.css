@@ -129,3 +129,7 @@
     display: flex;
     justify-content: center;
 }
+
+.Formulario-Seguridad{
+    color:var(--color-texto);
+}
