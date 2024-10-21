@@ -55,13 +55,13 @@ function App() {
           <Route path="configuracion/perfil" element={<Perfil2 />} />
           <Route path="configuracion/perfil/Datos-Personales" element={<DatosPersonales />} />
           <Route path="configuracion/perfil/PerfilYPortada" element={<Perfil_Y_Portada />} />
-          
+          <Route path="configuracion/perfil/Seguridad" element={<Seguridad />} />
+
           {/* <Route path="configuracion/perfil/:alias" element={<Perfil2 />} />
           <Route path="perfil/:alias" element={<Perfil />} /> */}
-          <Route path="configuracion/seguridad" element={<Seguridad />} />
           <Route path="configuracion/apariencia" element={<Apariencia />} />
           <Route path="perfil-encontrado/:alias" element={<PerfilEncontrado />} />
-          
+
 
           {/* Esta ruta maneja perfiles de usuarios */}
           <Route path="cuenta/:alias" element={<Cuenta />} />
@@ -79,11 +79,11 @@ function App() {
 
         {/*Ruta para actualizar nombre y apellido (SOLO PRUEBA)*/}
         <Route path="configuracion/editarperfil/actualizar-nombre-apellido" element={<ActualizarNombreApellido />} />
-        <Route path="cuenta/fotosperfil" element={<FotosPerfil/>} />
-          
+        <Route path="cuenta/fotosperfil" element={<FotosPerfil />} />
+
         {/* Otras rutas */}
 
-        
+
 
       </Routes>
       {/* <ReactSwitch 

@@ -1,17 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import Avatars from '@c/avatar/AvatarV2';
-
-import Avatar from 'react-avatar-edit';
-import foto from '@public/perfill.png';
+/* Services */
+import useUpdateImgPerfil from '@services/UpdatePerfil';
+/* Css */
+import '@css/Colores.css'
 import '@css/UploadAvatar.css';
+/* REact */
+import React, { useEffect, useState } from 'react';
+import Avatar from 'react-avatar-edit';
+/* Componentes */
+import Avatars from '@c/avatar/AvatarV2';
 import BotonPlus from '@c/botones/BotonPlus';
-const UploadAvatar = ({ btn_cancelar, onImageSave, Imagen, Portada }) => {
+
+const UploadAvatar = ({ btn_cancelar, onImageSave, Imagen, Portada, alias }) => {
     const [src, setSrc] = useState(null);
     const [preview, setPreview] = useState(Imagen);
     const [savedImage, setSavedImage] = useState(null); // Imagen guardada
 
     const onClose = () => {
-        setPreview(foto); // Restaurar la imagen por defecto si se cierra el editor
+        setPreview(Imagen); // Restaurar la imagen por defecto si se cierra el editor
     };
 
     const onCrop = (view) => {
@@ -24,7 +29,9 @@ const UploadAvatar = ({ btn_cancelar, onImageSave, Imagen, Portada }) => {
     const handleSave = () => {
         setSavedImage(preview); // Guarda la imagen recortada localmente
         onImageSave(preview); // Enviar la imagen recortada al componente padre
+        useUpdateImgPerfil(preview,alias,1) // envia a la bd
     };
+
 
     return (
         <div className='UploadAvatar'>
@@ -55,10 +62,14 @@ const UploadAvatar = ({ btn_cancelar, onImageSave, Imagen, Portada }) => {
             </div>
 
             <div className='botones'>
-                <BotonPlus text='Guardar' color='green'/>
-                <BotonPlus text='Salir' color='red'/>
-                
-                
+                <div id='Guardar' onClick={handleSave}>
+                    <BotonPlus text='Guardar' color='green' />
+                </div>
+                <div id='Cancelar' onClick={btn_cancelar}>
+                    <BotonPlus text='Salir' color='red' />
+                </div>
+
+
                 {/* <button id="btn-guardar" onClick={() => { handleSave(); btn_cancelar(); }}>Guardar Imagen</button> */}
                 {/* <button id="btn-cerrar" onClick={btn_cancelar}>cerrar</button> */}
             </div>

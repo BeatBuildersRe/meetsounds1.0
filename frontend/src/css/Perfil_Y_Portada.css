@@ -3,15 +3,20 @@
     flex: 2;
     height: fit-content;
     background-color: var(--color-fondo);
-    padding-top: 20px;
-    padding-left: 10px;
+    padding-left: 0px;
     padding-right: 10px;
     display: flex;
     flex-direction: column;
     /* Habilita el desplazamiento vertical */
     width: 100%;
     position: relative;
-
+ 
+    .titulo-portada{
+        width: 100%;
+        padding: 0.5%;
+        text-align: center;
+        background-color: var(--color-fondoDiv);
+    }
     .media {
         width: 100%;
         height: auto;
@@ -19,7 +24,7 @@
         .Portada {
             position: relative;
             width: auto;
-            max-width: 700px;
+            max-width: 720px;
             
             height: auto;
             display: flex;
@@ -49,5 +54,48 @@
         position: absolute;
         right: 1%;
         bottom: 3%;
+    }
+
+    .titulo-datos-personales{
+        background-color: var(--color-fondoDiv);
+        text-align: center;
+    }
+    .Formulario-Datos-Personales{
+        gap: 10px;
+        padding: 1%;
+        display: flex;
+        flex-direction: column;
+        
+        .NombreYApellido{
+            display: flex;
+            gap: 30px;
+
+            .input{
+                
+                all: unset;
+                padding: 1%;
+                padding-left: 5%;
+                background-color: var(--color-fondoDiv);
+                border-radius: 15px;
+            }
+        }
+        .input-div{
+            all: none;
+            p{
+                font-weight: 900;
+            }
+           
+        }
+        .input{
+            
+            all: unset;
+            padding: 1%;
+            padding-left: 2%;
+            background-color: var(--color-fondoDiv);
+            border-radius: 15px;
+        }
+        .iuverse{
+            left: 40%;
+        }
     }
 }

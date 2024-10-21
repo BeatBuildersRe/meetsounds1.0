@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import Avatars from '@c/avatar/AvatarV2';
+import useUpdateImgPerfil from '@services/UpdatePerfil';
 
 import Avatar from 'react-avatar-edit';
 import foto from '@public/perfill.png';
-const UploadPortada = ({ btn_cancelar, onImageSave }) => {
+import '@css/UploadAvatar.css';
+import BotonPlus from '@c/botones/BotonPlus';
+const UploadPortada = ({ btn_cancelar, onImageSave, Imagen, Portada, alias }) => {
     const [src, setSrc] = useState(null);
-    const [preview, setPreview] = useState(foto);
+    const [preview, setPreview] = useState(Portada);
     const [savedImage, setSavedImage] = useState(null); // Imagen guardada
 
     const onClose = () => {
-        setPreview(foto); // Restaurar la imagen por defecto si se cierra el editor
+        setPreview(Portada); // Restaurar la imagen por defecto si se cierra el editor
     };
 
     const onCrop = (view) => {
@@ -21,39 +25,53 @@ const UploadPortada = ({ btn_cancelar, onImageSave }) => {
     const handleSave = () => {
         setSavedImage(preview); // Guarda la imagen recortada localmente
         onImageSave(preview); // Enviar la imagen recortada al componente padre
+        useUpdateImgPerfil(preview,alias,2) // envia a la bd
     };
 
+
     return (
-        <div className='UploadAvatar2'>
-            <div className='Up2'>
-                <div className="preview2">
-                    <div className='avatar-preview2'>
-                        {preview && <img src={preview} alt="Preview" />}
+        <div className='UploadAvatar'>
+            
+            <div className='Up'>
+                <div className='media'>
+                    <div className="Portada">
+                        {preview &&  <img id="Portada" src={preview} alt="" />}
+                        <Avatars class='Perfil' imagen={Imagen} width={100} height={100} />
                     </div>
-                    
                 </div>
 
-                <div className='avatar2'>
-                    <Avatar
-                        height={300}
-                        width={340}
-                        onCrop={onCrop}
-                        onClose={onClose}
-                        labelStyle={{ color: 'red' }}
-                        src={src}
-                        closeIconColor='red'
-                        mimeTypes='.jpeg,.jpg,.png'
-                        label='Subir imagen'
-                        exportAsSquare={true}
-                    />
+            </div>
+
+            <div className='avatar'>
+                <Avatar
+                    height={300}
+                    width={440}
+                    onCrop={onCrop}
+                    onClose={onClose}
+                    labelStyle={{ color: 'red' }}
+                    src={src}
+                    closeIconColor='red'
+                    mimeTypes='.jpeg,.jpg,.png'
+                    label='Toca para subir una imagen'
+                    exportAsSquare={true}
+
+                />
+            </div>
+
+            <div className='botones'>
+                <div id='Guardar' onClick={handleSave}>
+                    <BotonPlus text='Guardar' color='green' />
+                </div>
+                <div id='Cancelar' onClick={btn_cancelar}>
+                    <BotonPlus text='Salir' color='red' />
                 </div>
 
-                <div className='botones2'>
-                    <button id="btn-guardar2" onClick={() => { handleSave(); btn_cancelar(); }}>Guardar Imagen</button>
-                    <button id="btn-cerrar2" onClick={btn_cancelar}>cerrar</button>
-                </div>
+
+                {/* <button id="btn-guardar" onClick={() => { handleSave(); btn_cancelar(); }}>Guardar Imagen</button> */}
+                {/* <button id="btn-cerrar" onClick={btn_cancelar}>cerrar</button> */}
             </div>
         </div>
+
     );
 };
 

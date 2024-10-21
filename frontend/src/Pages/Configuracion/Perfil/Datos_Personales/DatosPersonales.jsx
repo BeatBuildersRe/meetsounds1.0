@@ -1,4 +1,4 @@
-import '@css/DatosPersonales.css';
+import '@css/DatosPersonale.css';
 import { useForm } from "react-hook-form";
 import React from 'react';
 import MenuDerechoDiv from "@c/Menu/Derecha";
