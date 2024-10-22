@@ -32,14 +32,7 @@ const imgFondoDefault = 'https://imagedelivery.net/WS9ABFRS6TfdqDudkFOT3w/grrrap
 const imgPerfilDefault = 'https://imagedelivery.net/WS9ABFRS6TfdqDudkFOT3w/grrraphic/previews/j6RAX7eRw0pyywtdOXK38whWXLrEmjDWb7Z6l54u.jpeg/thumb?height=400&width=400' // Imagen de perfil predeterminada
 
 const styles = {
-  container: {
-    minHeight: '100vh',
-    backgroundColor: '#1a202c',
-    color: 'white',
-    marginLeft:'18vw',
-    width:'100%'
-  },
-  header: {
+    header: {
     padding: '1rem',
     display: 'flex',
     alignItems: 'center',
@@ -142,22 +135,7 @@ const styles = {
     width: '100%',
     maxWidth: '28rem',
     maxHeight: '80vh', // Establece una altura máxima
-    overflowY: 'auto', // Habilita el desplazamiento vertical
-    overflowX: 'hidden', // Deshabilita el desplazamiento horizontal
-    '&::-webkit-scrollbar': {
-      width: '8px', // Ancho de la barra de desplazamiento
-    },
-    '&::-webkit-scrollbar-track': {
-      background: 'transparent', // Fondo de la pista de la barra
-      borderRadius: '10px', // Radio de borde de la pista
-    },
-    '&::-webkit-scrollbar-thumb': {
-      backgroundColor: '#d1d5db', // Color del pulgar (parte que se desplaza)
-      borderRadius: '10px', // Radio de borde del pulgar
-    },
-    '&::-webkit-scrollbar-thumb:hover': {
-      backgroundColor: '#a1a1a1', // Color del pulgar al pasar el ratón
-    },
+  
   },
   modalTitle: {
     fontSize: '1.25rem',
@@ -244,6 +222,7 @@ const styles = {
   },
   acomodar:{
     display: 'flex',
+    justifyContent:'space-Between',
     gap:'1%',
     marginLeft:'1%',
   },
@@ -252,7 +231,7 @@ const styles = {
     height: '200px',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    borderRadius: '25px',
+    borderRadius: '10px',
     marginBottom:'15%',
   },
   profileImageContainer: {
@@ -457,7 +436,7 @@ useEffect(() => {
   };
   
   return (
-    <div style={styles.container}>
+    <div className="container">
       {/* Header */}
       <header style={styles.header}>
         <a href="/">
