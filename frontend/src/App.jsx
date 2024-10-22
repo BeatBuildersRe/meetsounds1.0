@@ -22,6 +22,7 @@ import Registro from './Pages/Registro/Registro';
 import Registro2 from './Pages/Registro/Registro2';
 
 import Cuenta from './Pages/PerfilUsuario/PerfilUsuario'
+import Cuenta2 from './Pages/PerfilUsuario/PerfilUsuario2'
 import '@css/App.css';
 
 import ActualizarNombreApellido from './Pages/Configuracion/EditarPerfil/ActualizarNombreApeliido';
@@ -65,7 +66,10 @@ function App() {
 
           {/* Esta ruta maneja perfiles de usuarios */}
           <Route path="cuenta/:alias" element={<Cuenta />} />
+          <Route path="cuenta2/:alias" element={<Cuenta2 />} />
+        
         </Route>
+        
 
         {/* Ruta para el login, redirigir si ya está autenticado */}
         <Route
