@@ -1,12 +1,20 @@
-import React from 'react';
-import { Avatar } from '@mui/material'; // Asegúrate de importar Avatar
-import { IoPerson } from 'react-icons/io5'; // Importa los íconos que uses
-import useObtenerUsuarios from '@services/GetUsuarios'; // Asegúrate de tener la ruta correcta
-import { useNavigate} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Avatar } from '@mui/material';
+import { IoPerson } from 'react-icons/io5';
+import useObtenerUsuarios from '@services/GetUsuarios';
+import { useNavigate } from 'react-router-dom';
 
-const Amigos = () => {
+const Amigos = React.memo(() => {
     const { usuarios, cargando, error } = useObtenerUsuarios(); // Obtener los usuarios usando el hook
     const navigate = useNavigate();
+    const [usuariosMostrados, setUsuariosMostrados] = useState([]);
+
+    // Para que el componente solo obtenga usuarios una vez
+    useEffect(() => {
+        if (usuarios.length > 0) {
+            setUsuariosMostrados(usuarios.slice(0, 4));
+        }
+    }, [usuarios]); // Solo se actualizará si `usuarios` cambia.
 
     const VerPerfil = (alias) => {
         if (alias) {
@@ -15,6 +23,7 @@ const Amigos = () => {
             console.error('Alias is undefined, cannot navigate.');
         }
     };
+
     if (cargando) {
         return <p>Cargando usuarios...</p>;
     }
@@ -23,14 +32,13 @@ const Amigos = () => {
         return <p>Error al cargar usuarios. Por favor intenta nuevamente.</p>;
     }
 
-    if (usuarios.length === 0) {
+    if (usuariosMostrados.length === 0) {
         return <p>No hay usuarios para mostrar.</p>;
     }
 
-
     return (
         <>
-            {usuarios.slice(0,4).map((usuario) => {
+            {usuariosMostrados.map((usuario) => {
                 const { nombre, apellido, alias, fotoPerfilUrl, c_seguidores } = usuario;
 
                 return (
@@ -46,6 +54,6 @@ const Amigos = () => {
             })}
         </>
     );
-}
+});
 
 export default Amigos;
