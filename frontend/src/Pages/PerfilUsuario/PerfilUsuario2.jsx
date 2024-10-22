@@ -141,6 +141,23 @@ const styles = {
     borderRadius: '0.5rem',
     width: '100%',
     maxWidth: '28rem',
+    maxHeight: '80vh', // Establece una altura máxima
+    overflowY: 'auto', // Habilita el desplazamiento vertical
+    overflowX: 'hidden', // Deshabilita el desplazamiento horizontal
+    '&::-webkit-scrollbar': {
+      width: '8px', // Ancho de la barra de desplazamiento
+    },
+    '&::-webkit-scrollbar-track': {
+      background: 'transparent', // Fondo de la pista de la barra
+      borderRadius: '10px', // Radio de borde de la pista
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: '#d1d5db', // Color del pulgar (parte que se desplaza)
+      borderRadius: '10px', // Radio de borde del pulgar
+    },
+    '&::-webkit-scrollbar-thumb:hover': {
+      backgroundColor: '#a1a1a1', // Color del pulgar al pasar el ratón
+    },
   },
   modalTitle: {
     fontSize: '1.25rem',
@@ -265,8 +282,8 @@ const styles = {
     right: '10px',
   },
   profileCameraIcon: {
-    bottom: '0',
-    right: '0',
+    bottom: '10px',
+    right: '10px',
   },
   
 }
@@ -522,7 +539,7 @@ useEffect(() => {
       {/* Edit Profile Modal */}
       <Dialog open={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <div style={styles.modal}>
-          <Dialog.Panel style={styles.modalContent}>
+          <Dialog.Panel className="modal-content">
             <Dialog.Title as="h3" style={styles.modalTitle}>
               Editar Perfil
             </Dialog.Title>
