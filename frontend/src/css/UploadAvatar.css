@@ -6,8 +6,8 @@
 .UploadAvatar{
     background-color: var(--color-fondo);
     position: absolute;
-    width: 98.5%;
-    height: 100vh;
+    width: 45%;
+    height: 85vh;
     z-index: 1;
     .media {
         width: 100%;
