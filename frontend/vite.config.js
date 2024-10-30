@@ -18,13 +18,13 @@ export default defineConfig({
       '@services': path.resolve(__dirname, './src/services'),
     },
   },
+  define: {
+    global: {}, // Agrega esta línea para definir `global`
+  },
   server: {
-    /* host para ver react desde el celular */
     host: '0.0.0.0',
     port: 5173,
-    hot: true, // Asegúrate de que HMR esté habilitado
-
-    // Redirige todas las rutas al index.html para que React Router se encargue
+    hot: true,
     historyApiFallback: true,
   },
 });
