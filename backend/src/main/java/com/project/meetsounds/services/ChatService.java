@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ChatService {
@@ -51,4 +53,16 @@ public class ChatService {
     public List<Chat> traerTodosLosChats(){
         return iChatRepository.findAll();
     }
+
+    public List<Chat> traerChatsPorUsuarioId(String usuarioId) {
+        List<Chat> todosLosChats = iChatRepository.findAll();
+
+        // Filtrar chats donde el usuario es idUsuario1 o idUsuario2
+        return todosLosChats.stream()
+                .filter(chat -> chat.getIdUsuario1().equals(usuarioId) || chat.getIdUsuario2().equals(usuarioId))
+                .collect(Collectors.toList());
+    }
+
+
+
 }
