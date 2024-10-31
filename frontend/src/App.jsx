@@ -51,7 +51,7 @@ function App() {
           <Route path="configuracion/perfil/PerfilYPortada" element={<Perfil_Y_Portada />} />
           <Route path="configuracion/perfil/Seguridad" element={<Seguridad />} />
           <Route path="configuracion/apariencia" element={<Apariencia />} />
-
+          
           {/* Usa AliasGuard aquí */}
           <Route path="perfil-encontrado/:alias" element={<><AliasGuard /><PerfilEncontrado /></>} />
           <Route path="cuenta/:alias" element={<><AliasGuard /><Cuenta /></>} />

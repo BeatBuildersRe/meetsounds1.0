@@ -13,13 +13,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 public class ChatController {
 
     @Autowired
@@ -62,6 +63,10 @@ public class ChatController {
         }
 
         return ResponseEntity.ok(chats);
+    }
+    @GetMapping("/buscarChatPorId")
+    public Chat buscarChatPorId(@RequestParam String idChat){
+        return chatService.buscarChatPorId(idChat);
     }
 
 }
