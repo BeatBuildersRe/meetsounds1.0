@@ -18,7 +18,7 @@ const Amigos = React.memo(() => {
 
     const VerPerfil = (alias) => {
         if (alias) {
-            navigate('/cuenta/' + alias);
+            navigate('/perfil-encontrado/' + alias);
         } else {
             console.error('Alias is undefined, cannot navigate.');
         }

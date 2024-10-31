@@ -9,6 +9,7 @@ import MenuListComposition from '../../components/mini-menu/minMenu'
 import CrearPublicacion from '@c/Crear-Publicacion/CrearPublicacion'
 import SeguirDores from '@c/seguir_dores'
 import MenuDerecho from '@c/Menu/Menu'
+
 import { BASE_URL } from '../../config'
  /* Services */
  import GetAlias from '@services/GetAlias';
@@ -26,6 +27,9 @@ import { BASE_URL } from '../../config'
  import UiverseEdit from '@c/botones/BotonEdit';
  import Avatars from '@c/avatar/AvatarV2';
  import { toast, ToastContainer } from 'react-toastify';
+ import Posts from '@c/Perfil/Publicaciones';
+import Replies from '@c/Perfil/Publicaciones';
+import Highlights from '@c/Perfil/Publicaciones';
 import 'react-toastify/dist/ReactToastify.css';
 
 const imgFondoDefault = 'https://imagedelivery.net/WS9ABFRS6TfdqDudkFOT3w/grrraphic/previews/j6RAX7eRw0pyywtdOXK38whWXLrEmjDWb7Z6l54u.jpeg/thumb?height=200&width=600' // Imagen de fondo predeterminada
@@ -207,18 +211,35 @@ const styles = {
   icon: {
     marginRight: '0.5rem',
   },
-  toggleButtonGroup: {
+  // toggleButtonGroup: {
+  //   display: 'flex',
+  //   justifyContent: 'space-between',
+  //   marginTop: '1rem',
+  // },
+  // toggleButton: {
+  //   flex: 1,
+  //   padding: '0.5rem',
+  //   border: '1px solid #4a5568',
+  //   backgroundColor: '#2d3748',
+  //   color: 'white',
+  //   cursor: 'pointer',
+  // },
+  tabs: {
     display: 'flex',
-    justifyContent: 'space-between',
+    borderBottom: '1px solid #2d3748',
     marginTop: '1rem',
   },
-  toggleButton: {
+  tab: {
     flex: 1,
-    padding: '0.5rem',
-    border: '1px solid #4a5568',
-    backgroundColor: '#2d3748',
+    textAlign: 'center',
+    padding: '1rem 0',
+    background: 'none',
+    border: 'none',
     color: 'white',
     cursor: 'pointer',
+  },
+  activeTab: {
+    borderBottom: '2px solid #4299e1',
   },
   acomodar:{
     display: 'flex',
@@ -434,7 +455,24 @@ useEffect(() => {
       toast.error("Error al guardar los cambios");
     }
   };
+
   
+  const [activeTab, setActiveTab] = useState('Posts');
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'Posts':
+        return <Posts />;
+      case 'Replies':
+        return <Replies />;
+      case 'Highlights':
+        return <Highlights />;
+      default:
+        return null;
+    }
+  };
+  
+ 
+
   return (
     <div className="container">
       {/* Header */}
@@ -493,8 +531,22 @@ useEffect(() => {
           
 
           <p style={{marginTop: '1rem'}}>{userData.descripcion}</p>
+          <nav style={styles.tabs}>
+        {['Posts', 'Replies', 'Highlights'].map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            style={{ ...styles.tab, ...(tab === activeTab ? styles.activeTab : {}) }}
+          >
+            {tab}
+          </button>
+        ))}
+      </nav>
+      <div style={styles.content}>
+        {renderContent()}
+      </div>
 
-          <ToggleButtonGroup
+          {/* <ToggleButtonGroup
             color="primary"
             value={alignment}
             exclusive
@@ -505,11 +557,8 @@ useEffect(() => {
             <ToggleButton value="web" style={styles.toggleButton}>Publicaciones</ToggleButton>
             <ToggleButton value="android" style={styles.toggleButton}>Multimedia</ToggleButton>
             <ToggleButton value="ios" style={styles.toggleButton}>Información</ToggleButton>
-          </ToggleButtonGroup>
+          </ToggleButtonGroup> */}
 
-          <div style={{marginTop: '1rem'}}>
-            {renderComponent()}
-          </div>
         </div>
       </div>
 
