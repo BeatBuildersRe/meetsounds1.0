@@ -234,7 +234,7 @@ const styles = {
     textAlign: 'center',
     padding: '1rem 0',
     background: 'none',
-    border: 'none',
+    
     color: 'white',
     cursor: 'pointer',
   },
