@@ -29,7 +29,7 @@ const Mensajes = () => {
                   <div
                     className="UsuarioKey"
                     key={index}
-                   
+                    /* borra esto */
                   >
                     <div className="imagen">
                       <AvatarActive imagen={user.fotoPerfilUrl} />

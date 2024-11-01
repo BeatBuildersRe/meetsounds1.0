@@ -33,7 +33,7 @@ const Chat = () => {
                 {/* <p>{usuario.nombre} {usuario.apellido}</p> */}
             </div>
             <div className="Chat">
-
+              {/* borraa estp */}
             </div>
               
           </div>
