@@ -1,13 +1,13 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-
+import { BASE_URL, BASE_URL_SOCKET } from '../config'
 const WebSocketContext = createContext(null);
-const BASE_URL = 'ws://localhost:8080/ws-chat'; // WebSocket utiliza ws:// o wss://
+const WSURL = `${BASE_URL_SOCKET}/ws-chat`; // WebSocket utiliza ws:// o wss://
 
 export const WebSocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    const ws = new WebSocket(BASE_URL);
+    const ws = new WebSocket(WSURL);
 
     ws.onopen = () => {
       console.log('Conectado al WebSocket');

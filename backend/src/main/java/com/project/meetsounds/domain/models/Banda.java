@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -14,9 +16,10 @@ import java.util.List;
 @AllArgsConstructor
 @Document(collection = "Bandas")
 public class Banda {
+    @Id
     private String id;
     private String nombreBanda;
     private String descripcion;
     private String idCreador;
-    private List<String> miembros;
+    private List<String> miembros = new ArrayList<>();
 }

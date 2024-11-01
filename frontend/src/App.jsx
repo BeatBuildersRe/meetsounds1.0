@@ -65,10 +65,13 @@ function App() {
         <Route path="/registro2" element={<Registro2 />} />
         <Route path="*" element={<Error_404 />} />
 
+
         {/* Ruta para el onboarding */}
         <Route path="/onboarding" element={<OnboardingForm />} />
 
         {/*Ruta para actualizar nombre y apellido (SOLO PRUEBA)*/}
+
+
         <Route path="configuracion/editarperfil/actualizar-nombre-apellido" element={<ActualizarNombreApellido />} />
         <Route path="cuenta/fotosperfil" element={<FotosPerfil />} />
         <Route path="/chat/:chatId" element={<ChatComponent />} />

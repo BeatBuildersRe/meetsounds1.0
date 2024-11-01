@@ -1,7 +1,7 @@
 // src/components/IniciarChatButton.jsx
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { BASE_URL } from '../../config'
 const IniciarChatButton = ({ aliasOtroUsuario }) => {
   const [idUsuarioLocal, setIdUsuarioLocal] = useState(null);
   const [idOtroUsuario, setIdOtroUsuario] = useState(null);
@@ -22,7 +22,7 @@ const IniciarChatButton = ({ aliasOtroUsuario }) => {
 
   const buscarUsuarioPorAlias = async (alias, setIdUsuario) => {
     try {
-      const response = await fetch('http://localhost:8080/graphql', {
+      const response = await fetch(`${BASE_URL}/graphql`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -45,7 +45,7 @@ const IniciarChatButton = ({ aliasOtroUsuario }) => {
   
     try {
       const response = await fetch(
-        `http://localhost:8080/iniciarChat?usuario1=${idUsuarioLocal}&usuario2=${idOtroUsuario}`, 
+        `${BASE_URL}/iniciarChat?usuario1=${idUsuarioLocal}&usuario2=${idOtroUsuario}`, 
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

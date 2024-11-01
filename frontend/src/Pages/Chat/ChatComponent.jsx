@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Cookies from 'js-cookie';
-
+import { BASE_URL, BASE_URL_SOCKET } from '../../config'
 const ChatComponent = () => {
   const { chatId } = useParams();
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [socket, setSocket] = useState(null);
   const [userCache, setUserCache] = useState({}); // Estado para caché de nombres de usuario
-  const socketUrl = `ws://localhost:8080/ws-chat`;
+  const socketUrl = `${BASE_URL_SOCKET}/ws-chat`;
 
   useEffect(() => {
     const fetchChat = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/buscarChatPorId?idChat=${chatId}`, {
+        const response = await fetch(`${BASE_URL}/buscarChatPorId?idChat=${chatId}`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         });
@@ -72,7 +72,7 @@ const ChatComponent = () => {
             nombre
           }
         }`;
-        const userResponse = await fetch('http://localhost:8080/graphql', {
+        const userResponse = await fetch(`${BASE_URL}/graphql`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ query: userQuery }),
@@ -100,7 +100,7 @@ const ChatComponent = () => {
           nombre
         }
       }`;
-      const response = await fetch('http://localhost:8080/graphql', {
+      const response = await fetch(`${BASE_URL}/graphql`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query }),

@@ -38,4 +38,11 @@ public class GlobalExceptionHandler {
                 .message(ex.getMessage())
                 .build();
     }
+
+    @GraphQlExceptionHandler(BandaYaExisteException.class)
+    public GraphQLError handleBandaYaExisteException(BandaYaExisteException ex) {
+        return GraphQLError.newError()
+                .message(ex.getMessage())
+                .build();
+    }
 }
