@@ -1,3 +1,7 @@
+import * as React from "react";
+import "@css/Colores.css";
+import "@css/Mensajes.css";
+import BadgeAvatars from "@c/avatar/AvatarActives";
 import MenuDerechoDiv from "@c/Menu/Derecha";
 import useObtenerUsuarios from "@services/GetUsuarios";
 import AvatarActive from "@c/avatar/AvatarActive";
@@ -30,12 +34,52 @@ const Mensajes = () => {
                     <div className="imagen">
                       <AvatarActive imagen={user.fotoPerfilUrl} />
                     </div>
-                    <MenuDerechoDiv></MenuDerechoDiv>
-                </div>
+                    <div>
+                      <p>
+                        {user.nombre} {user.apellido}
+                      </p>
+                      <p>
+                        tu: Saben que es rojo y malo ma los dientes?....Un
+                        ladrillo
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div />
-        </>
+            <MenuDerechoDiv />
+          </div>
+        </div>
+  );
+};
 
-    )
-}
-export default Bandas;
+export default Mensajes;
+
+/*  <div className="Contenedor">
+        <div className="contenedor2">
+          <div className="izquierda-mensajes">
+            <div className="usuarios">
+              <BadgeAvatars opcion={1} />
+            </div>
+            <div className="mensajes-usuario">
+              {usuarios?.map((user, index) => (
+                <div key={index} className="imagen" // Usar función flecha para pasar el índice
+                >
+                  <div className="imagen">
+                    <AvatarActive imagen={user.fotoPerfilUrl}/> 
+                  </div>
+                  <div>
+                    <p>{user.nombre} {user.apellido}</p>
+                    <p>tu: Saben que es rojo y malo ma los dientes?....Un ladrillo</p>
+                  </div>
+                </div>
+                
+               
+                
+              ))}
+            </div>
+          </div>
+          <MenuDerechoDiv />
+        </div>
+      </div>
+      <div /> */
