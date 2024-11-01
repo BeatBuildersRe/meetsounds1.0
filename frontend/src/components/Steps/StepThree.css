@@ -1,0 +1,55 @@
+/* StepThree.css */
+
+.onboarding-step {
+    text-align: center;
+    max-height: 70vh; /* Limita la altura máxima del formulario */
+    overflow-y: auto; /* Agrega desplazamiento vertical si el contenido es muy grande */
+    padding-right: 10px; /* Espacio para evitar el solapamiento con la barra de desplazamiento */
+  }
+  
+  .option-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px; /* Espacio entre las tarjetas */
+    margin-top: 20px;
+  }
+  
+  .option-square {
+    width: 90px; /* Ancho de la tarjeta */
+    height: 110px; /* Altura de la tarjeta */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ff0000; /* Bordes en rojo */
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem; /* Tamaño de la fuente */
+    font-weight: bold;
+    color: #ff0000;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+  
+  .option-square:hover {
+    background-color: rgba(255, 0, 0, 0.1);
+  }
+  
+  .option-square.selected {
+    background-color: #ff0000;
+    color: white;
+    border-color: #cc0000;
+  }
+  
+  .option-icon {
+    width: 30px; /* Tamaño del icono */
+    height: 30px;
+    margin-bottom: 5px;
+    transition: filter 0.3s ease;
+    filter: brightness(0) saturate(100%) invert(23%) sepia(86%) saturate(7330%) hue-rotate(357deg) brightness(106%) contrast(101%);
+  }
+  
+  .option-square.selected .option-icon {
+    filter: brightness(0) invert(1); /* Convierte el ícono a blanco cuando está seleccionado */
+  }
+  

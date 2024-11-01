@@ -1,0 +1,54 @@
+/* StepOne.css */
+
+.onboarding-step {
+    text-align: center;
+  }
+  
+  .option-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+  }
+  
+  .option-square {
+    width: 120px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ff0000; /* Bordes del cuadro en rojo */
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ff0000;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+  
+  .option-square:hover {
+    background-color: rgba(255, 0, 0, 0.1);
+  }
+  
+  .option-square.selected {
+    background-color: #ff0000;
+    color: white;
+    border-color: #cc0000;
+  }
+  
+  /* Estilo inicial del ícono (borde rojo) */
+  .option-icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 5px;
+    transition: filter 0.3s ease;
+    filter: brightness(0) saturate(100%) invert(23%) sepia(86%) saturate(7330%) hue-rotate(357deg) brightness(106%) contrast(101%);
+  }
+  
+  /* Cambia el ícono a blanco cuando está seleccionado */
+  .option-square.selected .option-icon {
+    filter: brightness(0) invert(1); /* Convierte el ícono a blanco */
+  }
+  

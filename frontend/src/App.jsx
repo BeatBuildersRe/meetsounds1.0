@@ -26,6 +26,7 @@ import Cuenta2 from './Pages/PerfilUsuario/PerfilUsuario2'
 import '@css/App.css';
 import ActualizarNombreApellido from './Pages/Configuracion/EditarPerfil/ActualizarNombreApeliido';
 import PerfilEncontrado from './Pages/PerfilUsuario/PerfilEncontrado';
+import OnboardingForm from './Pages/OnBoarding/OnboardingForm';
 
 
 
@@ -82,6 +83,9 @@ function App() {
         <Route path="/registro" element={<Registro />} />
         <Route path="/registro2" element={<Registro2 />} />
         <Route path="*" element={<Error_404 />} />
+
+        {/* Ruta para el onboarding */}
+        <Route path="/onboarding" element={<OnboardingForm />} />
 
         {/*Ruta para actualizar nombre y apellido (SOLO PRUEBA)*/}
         <Route path="configuracion/editarperfil/actualizar-nombre-apellido" element={<ActualizarNombreApellido />} />
