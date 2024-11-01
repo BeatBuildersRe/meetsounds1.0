@@ -20,7 +20,10 @@ type Query{
     listarPublicaciones: [Publicacion]
     misLikesPublicacion(idPublicacion: String!): [UsuariosLikes]
 
-
+    # Banda
+    buscarBandaPorNombre(nombreBanda: String): Banda
+    buscarBandaPorId(idBanda: String): Banda
+    listarBandas: [Banda]
 
 }
 
@@ -47,12 +50,12 @@ type Mutation{
 
 
     #Banda Mutation
-    #crearBanda(id: ID!, banda: bandaInput): Banda
-    #cambiarNombre(id: ID!, nombre: String): Banda
-    #cambiarDescripcion(id: ID!, descripcion: String): Banda
-    #eliminarBanda(id: ID!): Boolean
-    #nuevoIntegrante(idBanda: ID!, idIntegrante: ID!): Banda
-    #eliminarIntegrante(idBanda: ID!, idIntegrante: ID!): Banda
+    crearBanda(idUsuario: ID!, banda: BandaInput): Banda
+    cambiarNombre(id: ID!, nombre: String): Banda
+    cambiarDescripcion(id: ID!, descripcion: String): Banda
+    eliminarBanda(id: ID!): Boolean
+    anadirMiembros(nombreBanda: String, idUsuarios: [String]): Banda
+    eliminarIntegrante(idBanda: ID!, idIntegrante: ID!): Banda
 
     #Instrumentos y TipoInstrumentos Mutation
     guardarInstrumento(instrumento: InstrumentoInput, tipo:String) : Instrumento
@@ -109,8 +112,8 @@ type Banda{
     id : String
     nombreBanda : String
     descripcion: String
-    creador : Usuario
-    miembros : [Usuario]
+    idCreador : String
+    miembros : [String]
 }
 
 type Ubicacion{
@@ -175,7 +178,9 @@ input IactualizarUsuario{
 }
 
 input BandaInput{
-    id : String
+    nombreBanda: String
+    descripcion: String
+    miembros: [String]
 }
 
 input UbicacionInput{

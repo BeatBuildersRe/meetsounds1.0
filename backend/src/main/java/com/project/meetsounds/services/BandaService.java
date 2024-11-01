@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BandaService {
@@ -27,29 +28,36 @@ public class BandaService {
     private MongoTemplate mongoTemplate;
 
 
-
     public List<Banda> listarBandas() {
         return iBandaRepository.findAll();
     }
 
-    public List<Banda> listarPorNombre(String nombre) {
-        return iBandaRepository.listarPorNombre(nombre);
+    public List<Banda> listarPorNombre(String nombreBanda) {
+        return iBandaRepository.listarPorNombre(nombreBanda);
     }
 
     public Optional<Banda> buscarBandaPorId(String idBanda) {
         return iBandaRepository.findById(idBanda);
     }
 
-    public Banda crearBanda(String nombreBanda, String idUsuario) {
+    public Optional<Banda> buscarBandaPorNombre(String nombre){
+        return iBandaRepository.findByNombreBanda(nombre);
+    }
+    public Banda crearBanda(String idUsuario, Banda bandaInput) {
+
+        // Aquí `banda` ya tiene los IDs de los miembros en la lista `miembros`
         Banda banda = new Banda();
-        banda.setNombreBanda(nombreBanda);
+        banda.setNombreBanda(bandaInput.getNombreBanda());
+        banda.setDescripcion(bandaInput.getDescripcion());
         banda.setIdCreador(idUsuario);
-        List<String> miembros = new ArrayList<>();
-        miembros.add(idUsuario);
-        banda.setMiembros(miembros);
-        Banda b = iBandaRepository.save(banda);
-        usuarioService.crearBanda(idUsuario, b);
-        return b;
+        if (banda.getMiembros() == null || banda.getMiembros().isEmpty()) {
+            banda.setMiembros(List.of(idUsuario));
+        }
+        return iBandaRepository.save(banda);
+    }
+
+    public void eliminarBanda(String id){
+        iBandaRepository.deleteById(id);
     }
 
     public void actualizarDescripcion(String idBanda, String descripcion) {
@@ -58,8 +66,8 @@ public class BandaService {
         mongoTemplate.updateFirst(query, update, Banda.class);
     }
 
-    public void añadirMiembros(String idBanda, List<String> idUsuarios) {
-        Optional<Banda> banda = iBandaRepository.findById(idBanda);
+    public void anadirMiembros(String nombreBanda, List<String> idUsuarios) {
+        Optional<Banda> banda = this.buscarBandaPorNombre(nombreBanda);
         if(banda != null){
             Banda banda2 = banda.get();
             for(String idMiembro : idUsuarios){
