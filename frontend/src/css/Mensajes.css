@@ -8,7 +8,6 @@
     flex: 2;
     height: fit-content;
     background-color: var(--color-fondo);
-    padding-top: 20px;
     padding-left: 10px;
     padding-right: 10px;
     display: flex;
@@ -16,5 +15,33 @@
     /* Habilita el desplazamiento vertical */
     width: 100%;
     position: relative;
+    z-index: 1;
 }
+.usuarios{
+    padding-bottom: 1%;
+    border-bottom: 1px solid rgba(104, 104, 104, 0.623) ;
+    border-top: 1px solid rgba(104, 104, 104, 0.623) ;
+    overflow-x: auto;
+    overflow-y: hidden;
+    
+}
+::-webkit-scrollbar {
+    width:5px; /* Ancho de la barra de desplazamiento vertical */
+    height: 7px; /* Altura de la barra de desplazamiento horizontal */
+}
+::-webkit-scrollbar-track {
+    background-color: #1b1919; /* Color del fondo */
+ 
+}
+::-webkit-scrollbar-thumb {
+    background-color:var( --color-fondoDiv); /* Color del indicador */
+    border-radius: 10px; /* Bordes redondeados del indicador */
 
+}
+.usuarios,.usuarios-activos{
+    display: flex;
+    flex-direction: row;
+    margin: 1%;
+    cursor: pointer;
+   
+}

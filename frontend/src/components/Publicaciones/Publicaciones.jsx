@@ -11,8 +11,7 @@ import ImageGallery from './Galeria';
 import Reacciones from './Reacciones';
 import GaleriaDeImagenes from './GaleriaV2';
 /* servivios */
-import ObtenerUsuarios from '@services/GetUsuarios';
-
+import ObtenerPublicaciones from '@services/GetPublicaciones';
 /* Iconos */
 import { TbMusicHeart } from "react-icons/tb";
 import { CiRead } from "react-icons/ci";
@@ -25,55 +24,36 @@ import imgTest from '@public/imgtest.png';
 import imgTest3 from '@public/imgtest3.png';
 
 const Publicaciones = () => {
+    const { publicaciones, loading, error } = ObtenerPublicaciones();
 
-    const [renderizado, setRenderizado] = useState(true);
-    const [publicacionSeleccionada, setPublicacionSeleccionada] = useState(null); // Estado para la publicación seleccionada
-    const navigate = useNavigate();
-
-    const texto = 'daodksadopdo'
-
-    const cambiarRenderizado = (key = null) => {
-        setRenderizado(!renderizado);
-        if (key) {
-            setPublicacionSeleccionada(publi[key]); // Actualiza la publicación seleccionada
-        }
-    };
+    if (loading) return <p>Cargando publicaciones...</p>;
+    if (error) return <p>Error al cargar las publicaciones.</p>;
 
     const arr = [imgTest, imgTest3];
 
-    /* const VerPerfil = (alias) => {
-        if (alias) {
-            navigate('perfil-encontrado/' + alias);
-        } else {
-            console.error('Usuario no encontrado');
-        }
-    };
- */
+
 
     return (
-        <>
-           <h1>fsdsd</h1>
-           <h1>fsdsd</h1>
-           <h1>fsdsd</h1>
-           <h1>fsdsd</h1>
-           <h1>fsdsd</h1>
-           <h1>fsdsd</h1>
-           <h1>fsdsd</h1>
-           <h1>fsdsd</h1>
-           <h1>fsdsd</h1>
-           <h1>fsdsd</h1>
-           <h1>fsdsd</h1>
-           <h1>fsdsd</h1>
-           <h1>fsdsd</h1>
-           <h1>fsdsd</h1>
-           <h1>fsdsd</h1>
-           <h1>fsdsd</h1>
-           <h1>fsdsd</h1>
-           <h1>fsdsd</h1>
-           <h1>fsdsd</h1>
-           <h1>fsdsd</h1>
-        </>
-           
+        <div>
+            {publicaciones.map((publicacion, index) => (
+                <div key={index} className="publicacion">
+                    <p>{publicacion.descripcion ? publicacion.descripcion : 'Descripción no disponible'}</p>
+
+                    {publicacion.usuario ? (
+                        <div>
+                            <h2>{publicacion.usuario.nombre} {publicacion.usuario.apellido} (@{publicacion.usuario.alias})</h2>
+                            <img src={publicacion.usuario.fotoPerfilUrl} alt="Foto de perfil" />
+                        </div>
+                    ) : (
+                        <p>Usuario no disponible</p>
+                    )}
+
+                    <p>Likes: {publicacion.count_likes}</p>
+                    <p>Comentarios: {publicacion.count_coment}</p>
+                </div>
+            ))}
+        </div>
+
     );
 };
 

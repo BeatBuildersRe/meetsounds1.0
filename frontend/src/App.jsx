@@ -28,7 +28,7 @@ import PerfilEncontrado from './Pages/PerfilUsuario/PerfilEncontrado';
 import OnboardingForm from './Pages/OnBoarding/OnboardingForm';
 import AliasGuard from './services/AliasGuard'; // Importa el nuevo componente de protección
 import '@css/App.css';
-
+import Chat from './Pages/Mensajes/Chat';
 function App() {
   const { contextTheme, setContextTheme } = useThemeContext();
   const { isAuthenticated } = useContext(AuthContext);
@@ -45,6 +45,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="notificaciones" element={<Notificaciones />} />
           <Route path="Mensajes" element={<Mensajes />} />
+          <Route path="Mensajes/:alias" element={<Chat/>} />
           <Route path="Bandas" element={<Bandas />} />
           <Route path="Configuracion" element={<Configuracion />} />
           <Route path="configuracion/perfil" element={<Perfil2 />} />
@@ -63,14 +64,11 @@ function App() {
         <Route path="/registro" element={<Registro />} />
         <Route path="/registro2" element={<Registro2 />} />
         <Route path="*" element={<Error_404 />} />
-<<<<<<< HEAD
 
         {/* Ruta para el onboarding */}
         <Route path="/onboarding" element={<OnboardingForm />} />
 
         {/*Ruta para actualizar nombre y apellido (SOLO PRUEBA)*/}
-=======
->>>>>>> 62ec33c6940a2d94e8ee0872f46c38168a762d56
         <Route path="configuracion/editarperfil/actualizar-nombre-apellido" element={<ActualizarNombreApellido />} />
         <Route path="cuenta/fotosperfil" element={<FotosPerfil />} />
         <Route path="/chat/:chatId" element={<ChatComponent />} />
