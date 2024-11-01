@@ -1,0 +1,326 @@
+/* Reset */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+
+    --color-fondo: #fff;
+    --color-fondoDiv: #d8d8d8;
+    --color-fondoDivHover: #dddddd;
+    --color-texto: #000000;
+
+    #Dark {
+        --color-fondo: #18191a;
+        --color-fondoDiv: #232224;
+        --color-fondoDivHover: #dddddd;
+
+        --color-texto: #ffffff;
+
+    }
+}
+
+body {
+    font-family: "Quicksand", sans-serif;
+    background-color: var(--color-fondo);
+}
+
+/* Contenedor principal del Layout */
+.Layout {
+    display: flex;
+    height: 100vh;
+
+}
+
+
+/* Menú a la izquierda */
+#left-menu {
+    z-index: 2;
+    position: fixed;
+    width: 18vw;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #f2f2f2;
+    border-right: 1px solid #222;
+    
+
+}
+
+#Dark #left-menu {
+    background-color: #2b2c2e;
+    border-right: 1px solid #818181;
+}
+
+.logo_cabecera{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ margin-top: 5%;
+ margin-bottom: 1%;
+}
+/* Estilos para los elementos del menú */
+#box {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 80%;
+    height: 80%;
+    margin: 5%;
+    /* border: 1px solid #222; */
+    
+}
+
+#left-menu ul {
+    list-style: none;
+    /* Elimina la decoración de lista */
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+#left-menu li {
+    margin: 0;
+    
+}
+
+#left-menu a {
+    display: flex;
+    align-items: center;
+    text-decoration: none; 
+   
+    margin: 1%;
+}
+
+
+.active .botones_layout{
+    color:  #ffffff;
+    box-shadow: inset 0 0 0 10em rgb(36, 41, 46);
+}
+ #Dark .active .botones_layout{
+    box-shadow: inset 0 0 0 10em var(--color-fondoDiv2);
+    color:  rgb(36, 41, 46);
+ }
+
+ 
+/*   
+#Dark #left-menu a {
+    color: #ffffff;
+}
+
+#left-menu a:hover {
+    background-color: var(--color-fondoDivHover);
+
+    transition: 0.3s;
+}
+#Dark #left-menu a:hover {
+    background-color: #3f3c3c;
+
+    transition: 0.3s;
+} */
+
+
+/* 
+.BottonCrear {
+    margin-top: 30px;
+}
+
+.Perfil {
+    position: absolute;
+    bottom: 15px;
+    margin-left: 1rem;
+} */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Contenido en el centro */
+#main-content {
+    flex: auto;
+
+    background: #00aaff;
+    /* Color de fondo azul */
+
+
+}
+
+/* Sección derecha */
+#right-section {
+    background: #00ff00;
+    /* Color de fondo verde */
+    min-width: 300px;
+
+
+
+}
+
+/* Responsividad: pantalla media */
+@media (max-width: 1200px) {
+
+    
+     
+
+}
+
+@media (max-width: 1000px) {
+    #left-menu {
+        width: 30vw;
+    }
+
+    #right-section {
+        display: none;
+        /* Mantener oculta la sección derecha */
+    }
+
+
+}
+
+@media (max-width:800px) {
+    
+    #left-menu {
+        width: 15vw;
+        display: flex;
+        flex-direction: column;
+        justify-items: center;
+        align-items: center;
+        
+    }
+    #box nav ul li .botones_layout  {
+        font-size: 2.5rem;
+        padding: 10px 15px;
+        border-radius: 25px;
+        /* border: 1px solid #000; */
+        width: 100%;
+        margin: 5%;
+    }
+    .botones_layout span{
+        
+        display: none;
+    }
+    #box {
+        display: flex;
+        align-items: center;
+        
+        /* border: 1px solid #000; */
+        
+    }
+    .boton_crear_publicacion span {
+        display: none;
+      }
+    .boton_crear_publicacion{
+        margin: 10%;
+        font-size: 1.7rem;
+        
+        
+    }
+}
+
+/* Responsividad: pantalla pequeña */
+@media (max-width:600px) {
+    .PostModal{
+        display: none;
+    }
+.logo_cabecera{
+        display: none;
+        }
+    #left-menu {
+        width: 0;
+        
+      
+    }
+   
+    #box nav {
+        position: fixed;
+        bottom: 0;
+        /* Posiciona el menú en la parte inferior */
+        left: 0;
+        width: 100%;
+        /* Hace que el menú ocupe todo el ancho */
+        background-color: var(--color-fondo);
+        /* Color de fondo (puedes ajustarlo) */
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        /* Sombra opcional */
+        z-index: 1000;
+        /* Asegura que el menú esté sobre otros elementos */
+    }
+
+    #box nav ul {
+        list-style: none;
+        /* Elimina los puntos de la lista */
+        display: flex;
+        /* Usa Flexbox para alinear los ítems en línea */
+        justify-content: space-around;
+        /* Distribuye uniformemente el espacio entre los ítems */
+        margin: 0;
+        padding: 10px 0;
+        /* Espaciado vertical para el menú */
+    }
+
+    #box nav ul li {
+        flex: 1;
+        /* Cada elemento del menú ocupa el mismo espacio */
+        text-align: center;
+        /* Alinea los ítems en el centro */
+    }
+
+    #box nav ul li p {
+        display: none;
+    }
+
+
+    #box nav ul li  svg {
+        /* Aplica estilos a los iconos SVG */
+        width: 24px;
+        /* Tamaño uniforme para todos los iconos */
+        height: 24px;
+        /* Color del icono */
+    }
+
+    #meetsound-logo{
+        display: none;
+    }
+
+
+    .BottonCrear {
+        margin-top: 0;
+    }
+
+    .Pefil {
+        margin-top: 0;
+    }
+
+    #box {
+        flex-direction: row;
+        /* Cambia a horizontal */
+        .logotipo{
+            display: none;
+        }
+
+    }
+
+    .Perfil {
+        display: none;
+    }
+
+
+}

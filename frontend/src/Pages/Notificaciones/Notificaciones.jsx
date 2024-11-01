@@ -1,5 +1,5 @@
 import '@css/Notificaciones.css'
-import MenuDerechoDiv from '../Home/Derecha';
+import MenuDerechoDiv from '@c/Menu/Derecha';
 const Notificaciones = () => {
     return (
         <>

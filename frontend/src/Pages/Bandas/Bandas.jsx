@@ -1,4 +1,4 @@
-import MenuDerechoDiv from "../Home/Derecha";
+import MenuDerechoDiv from "@c/Menu/Derecha";
 import '@css/Bandas.css'
 const Bandas = () => {
     return (

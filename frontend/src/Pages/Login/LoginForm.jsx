@@ -2,10 +2,10 @@ import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { AuthContext } from '../../js/otro/AuthContext';
-import Fondo from '../../components/FondoLoginRegister/FondoLoginRegister';
+import Fondo from '@c/FondoLoginRegister/FondoLoginRegister';
 import MenuRedireccionable from '@c/MenuRedireccionable/MenuRedireccionable';
 import FormularioLogin from '@c/FormularioLogin/FormularioLogin';
-
+import { BASE_URL } from '../../config'
 const InfiniteBackground = () => {
   const [showWelcome, setShowWelcome] = useState(true);
   const [showSecondModal, setShowSecondModal] = useState(false);
@@ -20,7 +20,7 @@ const InfiniteBackground = () => {
 
   const manejarLogin = async () => {
     try {
-      const response = await fetch("http://localhost:8080/autenticacion/login", {
+      const response = await fetch(`${BASE_URL}/autenticacion/login`, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({ username, password }),

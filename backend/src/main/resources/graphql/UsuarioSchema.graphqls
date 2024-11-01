@@ -7,7 +7,8 @@ type Query{
     buscarPorAlias(alias: String): Usuario
     buscarUsuariosPorInstrumentos(instrumentos: [String!]!): [Usuario]
     misLikesUsuario(usuarioAlias: String!): [Publicacion]
-    #listarPublicaciones : [Publicacion]
+    existByAlias(alias: String): Boolean
+    verificaSiSigue(aliasVisitante:String!, aliasPerfil:String!): Boolean
 
     #Instrumentos y TipoInstrumentos
     buscarTodosLosInstrumentos : [Instrumento]
@@ -19,7 +20,10 @@ type Query{
     listarPublicaciones: [Publicacion]
     misLikesPublicacion(idPublicacion: String!): [UsuariosLikes]
 
-
+    # Banda
+    buscarBandaPorNombre(nombreBanda: String): Banda
+    buscarBandaPorId(idBanda: String): Banda
+    listarBandas: [Banda]
 
 }
 
@@ -41,13 +45,17 @@ type Mutation{
     #actualizar solo nombre y apellido
     actualizarNombreApellidoPorAlias(alias: String!, nombre: String!, apellido: String!): Usuario
 
+    seguirUsuario(aliasSeguidor:String!, aliasSeguido:String!): Boolean
+    dejarDeSeguirUsuario(aliasSeguidor:String!, aliasSeguido:String!): Boolean
+
+
     #Banda Mutation
-    #crearBanda(id: ID!, banda: bandaInput): Banda
-    #cambiarNombre(id: ID!, nombre: String): Banda
-    #cambiarDescripcion(id: ID!, descripcion: String): Banda
-    #eliminarBanda(id: ID!): Boolean
-    #nuevoIntegrante(idBanda: ID!, idIntegrante: ID!): Banda
-    #eliminarIntegrante(idBanda: ID!, idIntegrante: ID!): Banda
+    crearBanda(idUsuario: ID!, banda: BandaInput): Banda
+    cambiarNombre(id: ID!, nombre: String): Banda
+    cambiarDescripcion(id: ID!, descripcion: String): Banda
+    eliminarBanda(id: ID!): Boolean
+    anadirMiembros(nombreBanda: String, idUsuarios: [String]): Banda
+    eliminarIntegrante(idBanda: ID!, idIntegrante: ID!): Banda
 
     #Instrumentos y TipoInstrumentos Mutation
     guardarInstrumento(instrumento: InstrumentoInput, tipo:String) : Instrumento
@@ -56,14 +64,12 @@ type Mutation{
     eliminarTipoInstrumentoPorId(id: ID!): Boolean
 
     # Publicacion Mutation
-    eliminarPublicacionPorId(id: ID!): Boolean
+    eliminarPublicacionPorId(idUsuario: ID!, idPublicacion: ID!): Boolean
     meGusta(idPublicacion: String!, usuarioAlias: String!): Boolean
     crearPublicacion(idUsuario: ID!,descripcion: String): Publicacion
 
     # Seguidos Mutation
-    seguirUsuario(idUsuario: String, IdSeguir: String): Boolean
-    dejarDeSegir(idUsuario: String, idSeguido: String): Boolean
-    misSeguidos(idUsuario: String): usuariosSeguidos
+
 }
 
 scalar Date
@@ -90,6 +96,8 @@ type Usuario{
     redes : Redes
     contrasena : String
     fechaNacimiento: Date
+    seguidos: [String]
+    seguidores: [String]
 }
 
 type Redes{
@@ -104,8 +112,8 @@ type Banda{
     id : String
     nombreBanda : String
     descripcion: String
-    creador : Usuario
-    miembros : [Usuario]
+    idCreador : String
+    miembros : [String]
 }
 
 type Ubicacion{
@@ -170,7 +178,9 @@ input IactualizarUsuario{
 }
 
 input BandaInput{
-    id : String
+    nombreBanda: String
+    descripcion: String
+    miembros: [String]
 }
 
 input UbicacionInput{

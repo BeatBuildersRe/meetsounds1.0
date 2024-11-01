@@ -17,7 +17,7 @@ import java.util.List;
 public class Publicacion {
     @Id
     private String id;
-    private String Description;
+    private String descripcion;
     private String mediaUrl;
     private LocalDate fecha;
     private LocalTime hora;
@@ -26,7 +26,7 @@ public class Publicacion {
     private int count_likes;
     private List<Comentario> comentarios;
     private List<MeGusta> meGustas;
-    private Object entity;
+    private Usuario usuario;
 
 
 }

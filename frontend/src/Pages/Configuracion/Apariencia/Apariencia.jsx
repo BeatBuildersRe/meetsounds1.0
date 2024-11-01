@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactSwitch from 'react-switch';
-import './Apariencia.css'
+import '@css/Apariencia.css'
 import { useThemeContext } from '../../../context/ThemeContext';
-
+import MenuDerechoDiv from '@c/Menu/Derecha';
 
 
 
@@ -15,30 +15,38 @@ export default function App() {
   };
   return (
     <>
+      <div className="Contenedor">
+        <div className="contenedor2">
+          <div className="izquierda-apariencia">
 
-      <div  id={contextTheme} className="Contenedor-seguridad" style={{zIndex:999}}>
-        <h1>Apariencia</h1>
-        {/* <ReactSwitch className='Modo-Oscuro'
-        onChange={handleSwitch} 
-        checked={contextTheme === "Dark"} 
-        /> */}
-        
+            {/* AREA DE TRABAJO */}
+            {/* MANTERNER ESTE FORMATO DE DIVS PARA OTRAS PAGINAS Y SU CSS */}
 
-        <div className="toggle-switch">
-          <label className="switch-label">
-            <input 
-              type="checkbox" 
-              className="checkbox" 
-              onChange={handleSwitch} 
-              checked={contextTheme === "Light"} /* Activado en Light, desactivado en Dark */
-            />
-            <span className="slider"></span>
-          </label>
+            <div className="toggle-switch">
+              <label className="switch-label">
+                <input
+                  type="checkbox"
+                  className="checkbox"
+                  onChange={handleSwitch}
+                  checked={contextTheme === "Light"} /* Activado en Light, desactivado en Dark */
+                />
+                <span className="slider"></span>
+              </label>
+            </div>
+          </div>
+          <MenuDerechoDiv></MenuDerechoDiv>
         </div>
-
       </div>
-      
+      <div />
     </>
-    
+
+
+
+
+
+
+
+
+
   );
 }

@@ -24,7 +24,7 @@ const FormularioLogin = ({ username, setUsername, password, setPassword, manejar
                     placeholder=""
                     className='input'
                     />
-                    <span>
+                    <span className='text_inputs'>
                         <CiUser size={20} style={{ marginRight: '10px' }} />
                         Usuario
                     </span>
@@ -37,7 +37,7 @@ const FormularioLogin = ({ username, setUsername, password, setPassword, manejar
                     placeholder=""
                     className='input'
                     />
-                    <span>
+                    <span className='text_inputs'>
                         <CiLock size={20} style={{ marginRight: '10px' }} />
                         Contraseña
                     </span>
@@ -46,20 +46,20 @@ const FormularioLogin = ({ username, setUsername, password, setPassword, manejar
             
                 <div className="contenedor_recordarme">
                     <div className="contenedor_switch">
-                        <input type="checkbox" role="switch" class="formulario" />
+                        <input type="checkbox" role="switch" className="formulario" />
                         <span className="text_switch">Recordarme</span>
                     </div>
                 </div>
             
             <button className="boton_de_inicio" onClick={manejarLogin}>
-                <svg viewBox="0 0 24 24" class="arr-2" xmlns="http://www.w3.org/2000/svg">
+                <svg viewBox="0 0 24 24" className="arr-2" xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
                     ></path>
                 </svg>
                 <span className="text">Iniciar Sesión</span>
                 <span className="circle"></span>
-                <svg viewBox="0 0 24 24" class="arr-1" xmlns="http://www.w3.org/2000/svg">
+                <svg viewBox="0 0 24 24" className="arr-1" xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
                 ></path>

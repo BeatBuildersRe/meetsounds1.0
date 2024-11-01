@@ -1,0 +1,30 @@
+
+.izquierda-perfil {
+    height: auto;
+    flex: 2;
+    height: fit-content;
+    background-color: var(--color-fondo);
+    padding-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    /* Habilita el desplazamiento vertical */
+    width: 100%;
+    position: relative;
+
+    .boton{
+        display: flex;
+        font-weight: bold;
+        cursor: pointer;
+        align-items: center;
+        margin-bottom: 2%;
+        padding: 1%;
+        border-radius: 15px;
+        background-color: var(--color-fondoDiv);
+        gap: 1%;
+        #icon{
+            font-size: 2rem;
+        }
+    }
+}

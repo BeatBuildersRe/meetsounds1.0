@@ -1,25 +1,34 @@
-// Perfil.js
-import React, { useState } from 'react';
-import { FiUpload, FiAlertCircle } from "react-icons/fi"; // Iconos
-import TextField from '@mui/material/TextField'; // Material UI
-import Button from '@mui/material/Button'; // Botón de Material UI
-import { useForm, Controller } from "react-hook-form"; // Formulario
-import imagen_de_perfil from '../../../../public/perfil_imagen.png'; // Imagen de perfil por defecto
-import imagen_de_fondo from '../../../../public/ract.jpg'; // Imagen de fondo por defecto
-import './Perfil.css'; // Estilos personalizados
-import perfilimg from '@public/perfill.png'
+/* css */
+import '@ccs/Perfil.css';
+/* React */
+import React, { useState,useEffect } from 'react';
+import { useForm, Controller } from "react-hook-form";
+import { useParams } from 'react-router-dom';
+/* Services */
+import useObtenerUsuario from '@services/GetUsuario';
+/* Componentes */
+import UploadAvatar from '@c/UploadAvatar';
+import R_Input from '@c/input/R_input';
+import MenuDerechoDiv from '@c/Menu/Derecha';
+import { useThemeContext } from '@contex/ThemeContext';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+/* iconos */
+import { FiUpload, FiAlertCircle } from "react-icons/fi";
 import { TiSocialFacebookCircular } from "react-icons/ti";
 import { TiSocialTwitter } from "react-icons/ti";
 import { TiSocialInstagram } from "react-icons/ti";
 import { TiSocialYoutube } from "react-icons/ti";
 import { MdEmail } from "react-icons/md";
-import { useThemeContext } from '@contex/ThemeContext';
-import MenuDerechoDiv from '../../Home/Derecha';
 import { FaMusic } from "react-icons/fa6";
-import R_Input from '../../../components/input/R_input';
 import { TbEdit } from "react-icons/tb";
+/* imagenes */
+import imagen_de_perfil from '@public/perfil_imagen.png';
+import imagen_de_fondo from '@public/ract.jpg';
+import perfilimg from '@public/perfill.png'
 import PerfilDefault from '@public/perfill.png'
-import UploadAvatar from '@c/UploadAvatar';
+
+
 // Componente para subir imagen
 function SubirImagen({ id, setImagen }) {
     const handleImageChange = (e) => {
@@ -45,12 +54,14 @@ function SubirImagen({ id, setImagen }) {
         </>
     );
 }
+
 function Perfil() {
-    const { contextTheme, setContextTheme } = useThemeContext();
-    // Función para alternar entre Light y Dark
-    const toggleTheme = () => {
-        setContextTheme(contextTheme === "Light" ? "Dark" : "Light");
-    };
+    const { alias } = useParams();  // Extrae el alias de la URL
+    const {usuario, cargando, error} = useObtenerUsuario(alias)
+    
+    
+    const {id, nombre, apellido, fotoPerfilUrl, fotoPortadaUrl, edad, descripcion } = usuario ;
+    
     // Estado para almacenar imágenes
     const [imagenPerfil, setImagenPerfil] = useState(null);
     const [imagenFondo, setImagenFondo] = useState(null);
@@ -72,7 +83,8 @@ function Perfil() {
     const { control, register, formState: { errors }, handleSubmit } = useForm();
 
     const [EditarImagen, setEditarImagen] = useState(false); // Estado para mostrar/ocultar el componente
-    const [imagenRecortada, setImagenRecortada] = useState(PerfilDefault); // Estado para la imagen recortada
+    
+    const [imagenRecortada, setImagenRecortada] = useState(); // Estado para la imagen recortada
 
     // Función para alternar la visibilidad del componente UploadAvatar
     const MostrarEditarImg = () => {
@@ -117,8 +129,10 @@ function Perfil() {
         return new Blob([u8arr], { type: mime });
     };
 
+
     return (
         <>
+            {console.log(nombre)}
             <div className="Contenedor">
                 <div className="contenedor2">
                     <div className="izquierda-perfil">
@@ -141,7 +155,7 @@ function Perfil() {
                             <div className='imagenperfil'>
                                 <img
                                     id="img_perfil"
-                                    src={imagenRecortada}
+                                    src={imagenRecortada? imagenRecortada:fotoPerfilUrl  }
                                     /* src={imagenPerfil ? imagenPerfil : imagen_de_perfil} */
                                     alt="Imagen de perfil"
                                 />
@@ -162,7 +176,7 @@ function Perfil() {
                             <div className='descripcion'>
                                 <h4>Descripcion</h4>
                                 <textarea
-                                    defaultValue={texto}
+                                    defaultValue={descripcion}
                                     name="Descripcion"
                                     maxLength="350"
                                     id="interes_musical"
@@ -218,9 +232,9 @@ function Perfil() {
                                 <div className="formulario_inputs">
                                     <div className='NombreyApellido'>
                                         {/* Campo de Nombre */}
-                                        <R_Input form={register} nombre='Nombre' type='text' defaultValue={UsuarioXDefecto.Usuario.nombre} errores={errors.Nombre} />
+                                        <R_Input form={register} nombre='Nombre' type='text' defaultValue={(nombre)} errores={errors.Nombre} />
                                         {/* Campo de Apellido */}
-                                        <R_Input form={register} nombre='Apellido' type='text' defaultValue={UsuarioXDefecto.Usuario.apellido} errores={errors.Apellido} />
+                                        <R_Input form={register} nombre='Apellido' type='text' defaultValue={apellido} errores={errors.Apellido} />
                                     </div>
                                     {/* Campo de Edad */}
                                     <TextField

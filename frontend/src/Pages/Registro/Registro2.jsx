@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../../css/Registro2.css';
+import '@css/Registro2.css';
 
 function Registro2() {
   const [nombre, setNombre] = useState('');

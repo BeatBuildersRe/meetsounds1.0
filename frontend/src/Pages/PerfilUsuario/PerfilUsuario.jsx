@@ -5,12 +5,13 @@ import imgPerfilDefault from '../../img/perfil_imagen.png'; // Imagen de perfil 
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import MenuListComposition from '../../components/mini-menu/minMenu';
-import CrearPublicacion from '../../components/Crear-Publicacion/CrearPublicacion';
-import SeguirDores from './components/seguir_dores';
-import './CssPefilUsuario.css';
+import CrearPublicacion from '@c/Crear-Publicacion/CrearPublicacion';
+import SeguirDores from '@c/seguir_dores';
+import '@css/CssPefilUsuario.css';
 import MenuDerecho from '@c/Menu/Menu';
 import { FcAudioFile, FcCamera, FcAlphabeticalSortingAz, FcFilmReel, FcGallery, FcMusic, FcPlus } from "react-icons/fc";
 import { useParams, useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../../config'
 
 const PerfilUsuario = () => {
   const { alias } = useParams();  // Extrae el alias de la URL
@@ -30,7 +31,7 @@ const PerfilUsuario = () => {
     if (alias) {
       const fetchUserData = async () => {
         try {
-          const response = await fetch("http://localhost:8080/graphql", {
+          const response = await fetch(`${BASE_URL}/graphql`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

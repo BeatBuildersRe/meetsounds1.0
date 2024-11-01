@@ -26,6 +26,19 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
 
+    @MutationMapping(name = "seguirUsuario")
+    public void seguirUsuario(@Argument String aliasSeguidor,@Argument String aliasSeguido){
+        usuarioService.seguirUsuario(aliasSeguidor,aliasSeguido);
+    }
+    @MutationMapping(name = "dejarDeSeguirUsuario")
+    public void dejarDeSeguirUsuario(@Argument String aliasSeguidor,@Argument String aliasSeguido){
+        usuarioService.dejarDeSeguirUsuario(aliasSeguidor,aliasSeguido);
+    }
+    @QueryMapping(name = "verificaSiSigue")
+    public Boolean verificaSiSigue(@Argument String aliasVisitante,@Argument String aliasPerfil){
+        return usuarioService.verificaSiSigue(aliasVisitante,aliasPerfil);
+    }
+
     @PostMapping("/actualizarFotoPerfil")
     public ResponseEntity<String> actualizarFotoPerfil(@RequestParam("file") MultipartFile file, @RequestParam("alias") String alias){
         return usuarioService.actualizarFotoPerfilUsuario(file,alias);
@@ -71,7 +84,7 @@ public class UsuarioController {
 
     @QueryMapping(name = "buscarPorAlias")
     public Optional<Usuario> buscarPorAlias(@Argument String alias){
-        return this.usuarioService.buscarPorAlias(alias);
+        return usuarioService.buscarPorAlias(alias);
     }
 
     @QueryMapping(name = "buscarUsuarioPorTexto") // Busqueda por nombre o apellido
@@ -124,4 +137,8 @@ public class UsuarioController {
         return this.usuarioService.misLikesUsuario(usuarioAlias);
     }
 
+    @QueryMapping(name = "existByAlias")
+    public Boolean existByAlias(@Argument String alias){
+        return this.usuarioService.existByAlias(alias);
+    }
 }

@@ -33,10 +33,12 @@ public class Usuario {
     private Ubicacion ubicacion;
     private int c_seguidores;
     private int c_seguidos;
+    private List<String> seguidos = new ArrayList<>();
+    private List<String> seguidores = new ArrayList<>();
 
     private List<Instrumento> misInstru = new ArrayList<>();
-    private List<Interes> misIntereses;
-    private List<Banda> misBandas;
+    private List<Interes> misIntereses = new ArrayList<>();
+    private List<Banda> misBandas = new ArrayList<>();
     private List<Publicacion> misPublicaciones = new ArrayList<>();
 
     private String descripcion;

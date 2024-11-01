@@ -1,6 +1,7 @@
 package com.project.meetsounds.controllers;
 
 
+import com.project.meetsounds.controlErrores.BandaYaExisteException;
 import com.project.meetsounds.domain.models.Banda;
 import com.project.meetsounds.services.BandaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,32 +9,47 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 public class BandaController {
 
     @Autowired
     private BandaService bandaService;
 
-    @QueryMapping
+    @QueryMapping(name = "listarBandas")
     public List<Banda> listarBandas(){
         return bandaService.listarBandas();
     }
 
     @QueryMapping(name = "buscarBandaPorId")
-    public Optional<Banda> buscarBandaPorId(String idBanda){return bandaService.buscarBandaPorId(idBanda);}
-
-    @QueryMapping(name = "listarBandasPorNombre")
-    public List<Banda> listarBandasPorNombre(@Argument String nombre){
-        return bandaService.listarPorNombre(nombre);
+    public Optional<Banda> buscarBandaPorId(@Argument String idBanda){
+        return bandaService.buscarBandaPorId(idBanda);
     }
 
+    @QueryMapping(name = "listarBandasPorNombre")
+    public List<Banda> listarBandasPorNombre(@Argument String nombreBanda){
+        return bandaService.listarPorNombre(nombreBanda);
+    }
+
+    @QueryMapping(name = "buscarBandaPorNombre")
+    public Optional<Banda> buscarBandaPorNombre(@Argument String nombreBanda){
+        return bandaService.buscarBandaPorNombre(nombreBanda);
+    }
     @MutationMapping(name = "crearBanda")
-    public Banda crearBanda(@Argument String nombreBanda, @Argument String idUsuario){
-        return bandaService.crearBanda(nombreBanda, idUsuario);
+    public Banda crearBanda(@Argument String idUsuario, @Argument Banda banda){
+        if(!this.buscarBandaPorNombre(banda.getNombreBanda()).isEmpty()){
+            throw new BandaYaExisteException("Ya existe una banda con ese nombre");
+        }
+        return bandaService.crearBanda(idUsuario, banda);
+    }
+
+    @MutationMapping(name = "eliminarBanda")
+    public void eliminarBanda(@Argument String id){
+        bandaService.eliminarBanda(id);
     }
 
     @MutationMapping(name = "actualizarDescripcionBanda")
@@ -41,9 +57,9 @@ public class BandaController {
         bandaService.actualizarDescripcion(idBanda, descripcion);
     }
 
-    @MutationMapping(name = "añadirMiembros")
-    public void añadirMiembros(@Argument String idBanda, @Argument List<String> idUsuarios){
-        bandaService.añadirMiembros(idBanda, idUsuarios);
+    @MutationMapping(name = "anadirMiembros")
+    public void anadirMiembros(@Argument String nombreBanda, @Argument List<String> idUsuarios){
+        bandaService.anadirMiembros(nombreBanda, idUsuarios);
     }
 
     @MutationMapping(name = "eliminarMiembro")

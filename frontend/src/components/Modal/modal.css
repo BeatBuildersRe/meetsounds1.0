@@ -53,3 +53,9 @@
   }
   
   
+  @media (max-width: 800px) {
+
+    .boton_crear_publicacion span{
+      display: none;
+    }
+  }

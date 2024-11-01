@@ -1,0 +1,36 @@
+.izquierda-chat {
+    height: auto;
+    flex: 2;
+    height: fit-content;
+    background-color: var(--color-fondo);
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    /* Habilita el desplazamiento vertical */
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+.Chat-user{
+    position: fixed;
+    display: flex;
+    left: 25%;
+    width: 100%;
+    top: 0;
+}
+.Chat{
+    position: relative;
+    border: 1px solid red;
+    .mensajes{
+        padding-top:10% ;
+    }
+}
+
+.Nav-chat{
+    
+    position: fixed;
+    bottom: 0;
+    
+    
+}

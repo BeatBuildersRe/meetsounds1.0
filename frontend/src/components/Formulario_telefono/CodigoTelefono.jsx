@@ -1,58 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { MuiTelInput } from 'mui-tel-input';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
-const Formulario_telefono = ({ register, name, placeholder, errors, defaultValue }) => {
-  const [value, setValue] = useState(defaultValue || '');
-  const [isValid, setIsValid] = useState(true);
 
-  const handleChange = (newValue) => {
-    setValue(newValue);
+function PhoneNumberValidation(phone) {
+  const [valid, setValid] = useState(null);
+  const [phoneNumber, setPhoneNumber] = useState(null);
 
-    const phoneNumber = parsePhoneNumberFromString(newValue);
-    if (phoneNumber) {
-      setIsValid(phoneNumber.isValid());
-    } else {
-      setIsValid(false);
-    }
-  };
-
+  // Efecto para validar el número solo cuando cambia el número de teléfono
   useEffect(() => {
-    if (isValid) {
-      console.log('Número de teléfono ingresado:', value);
-    } else {
-      console.log('Número de teléfono inválido');
-    }
-  }, [value, isValid]);
+    const parsedPhoneNumber = parsePhoneNumberFromString('+' + phone);
 
-  return (
-    <>
-      <MuiTelInput 
-        {...register(name, {
-          required: 'El número de teléfono es obligatorio',
-          validate: () => isValid || 'El número de teléfono es inválido',
-        })}
-        sx={{
-          
-          '& .MuiOutlinedInput-root': {
-            color: 'gray',
-            '& fieldset': {
-              borderColor: 'gray',
-            },
-          },
-          '& .MuiInputLabel-root': {
-            color: 'white',
-          },
-        }}
-        
-        color={!isValid && 'error'}
-        placeholder={placeholder}
-        label="Teléfono"
-        value={value}
-        onChange={handleChange}
-        error={!!errors[name]}
-        helperText={errors[name] ? errors[name].message : ''}
-      />
-    </>
-  );
-};
-export default Formulario_telefono;
+    if (parsedPhoneNumber && parsedPhoneNumber.isValid()) {
+      setValid(true);
+      setPhoneNumber(parsedPhoneNumber);  // Guarda el número formateado
+      console.log('Número válido:', parsedPhoneNumber.number);
+    } else {
+      setValid(false);
+      setPhoneNumber(null);  // Resetea el valor si el número no es válido
+      console.log('Número no válido');
+    }
+  }, [phone]);  // El efecto se ejecuta solo cuando 'phone' cambia
+
+  return { validacion: valid, numero: phoneNumber };
+}
+
+export default PhoneNumberValidation;

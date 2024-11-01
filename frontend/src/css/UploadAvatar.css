@@ -1,175 +1,66 @@
-* {
-    padding: 0;
+*{
     margin: 0;
+    padding: 0;
 }
 
-.UploadAvatar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    background-color: rgba(255, 255, 255, 0.295);
-    /* Fondo con transparencia */
-    backdrop-filter: blur(2px);
-    /* Aplica el desenfoque al fondo */
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-   
-    color: wheat;
-    width: 100vw;
+.UploadAvatar{
+    background-color: var(--color-fondo);
+    position: absolute;
+    width: 45%;
     height: 100vh;
     z-index: 1;
-}
+    .media {
+        width: 100%;
+        height: auto;
 
-.Up {
-    display: flex;
-    box-shadow: -1px 0px 15px 5px rgb(49, 49, 49);
+        .Portada {
+            position: relative;
+            width: auto;
+            max-width: 720px;
+            
+            height: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
-    align-items: center;
-    flex-direction: column;
-    width: 50%;
-    position: relative;
-    height: 100vh;
-    padding: 20px;
-    border-radius: 25px;
-    /* Fondo con transparencia */
-    
-}
-
-.avatar {
-    position: absolute;
-    bottom: -25%;
-    border-radius: 25px;
-    display: flex;
-    max-width: 500px;
-    max-height: 500px;
-    justify-content: center;
-    width: 95%;
-}
-
-.preview {
-    position: relative;
-
-    height: 40%;
-    width: 90%;
-    display: flex;
-    flex-direction: row;
-}
-
-.avatar-preview {
-    box-shadow: 5px 0px 15px 5px black;
-    border-radius: 50%;
-    position: absolute;
-    bottom: 0;
-    left: 22%;
-
-    img {
-
-        width: 50px;
-        height: 50px;
-    }
-}
-
-.avatar-preview1 {
-    box-shadow: 5px 0px 15px 5px black;
-    border-radius: 50%;
-    position: absolute;
-    bottom: 0;
-    left: 30%;
-
-    img {
-
-        width: 200px;
-        height: 200px;
-    }
-}
-
-.avatar-preview2 {
-    box-shadow: 5px 0px 15px 5px black;
-    border-radius: 50%;
-    position: absolute;
-    bottom: 0;
-    left: 65%;
-
-    img {
-
-        width: 100px;
-        height: 100px;
-    }
-}
-
-.botones {
-    #btn-cerrar {
-        position: absolute;
-        left: 2%;
-        top: 2%;
-    }
-
-    #btn-guardar {
-        position: absolute;
-        right: 2%;
-        top: 2%;
-    }
-}
-
-@media (max-width: 1000px) {
-
-    .Up {
-       width: 80%;
-    }
-
-    .avatar {
-       
-    }
-
-    .preview {
-        height: 30%;
-    }
-
-    .avatar-preview {
-        left: 12%;
-
-        img {
-
-          
+            #Portada {
+                width: 100%;
+                max-height: 300px;
+                object-fit: cover;
+            }
+            .Perfil{
+                position: absolute;
+                
+                left: 2%;
+                bottom:  1%;
+              
+            }
         }
     }
-
-    .avatar-preview1 {
-        left: 30%;
-        img {
-            width: 150px;
-            height: 150px;
-        }
-
+    .avatar{
+        display: flex;
+        justify-content: center;
+        margin-top: 2rem;
+        border-radius: 0%;
+        z-index: 1;
+        width: 100%;
+        height: fit-content;
         
     }
-
-    .avatar-preview2 {
-        
-        left: 70%;
-        img {
-
-           
+    .botones{
+        display:flex;
+        flex-direction: row;
+        bottom: 0;
+        margin-top: 3%;
+        #Guardar{
+            position: absolute;
+            left: 2%;
         }
-    }
 
+        #Cancelar{
+            position: absolute;
+            right: 2%;
+        }
 
-}
-@media (max-width: 500px) {
-    .Up {
-        width: 90%;
-    }
-    #btn-cerrar {
-        position: absolute;
-        left: 5%;
-        top: 2%;
-    }
-
-    #btn-guardar {
-        position: absolute;
-        right: 5%;
-        top: 2%;
     }
 }
