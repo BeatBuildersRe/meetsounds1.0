@@ -1,66 +1,66 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../../css/Registro.css';
+import React, { useState, useEffect } from 'react'; 
+import { useNavigate } from 'react-router-dom'; 
+import '../../css/Registro.css'; 
+ 
+function Registro1() { 
+  const [email, setEmail] = useState(''); 
+  const [username, setUsername] = useState(''); 
+  const [password, setPassword] = useState(''); 
+  const [error, setError] = useState(''); 
+  const [passwordStrength, setPasswordStrength] = useState(''); 
+ 
+  const navigate = useNavigate(); 
+ 
+  useEffect(() => { 
+    localStorage.removeItem('userData'); 
+  }, []); 
 
-function Registro1() {
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [passwordStrength, setPasswordStrength] = useState('');
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    localStorage.removeItem('userData');
-  }, []);
-
-  const validatePasswordStrength = (password) => {
-    let strength = 0;
+  const validatePasswordStrength = (password) => { 
+    let strength = 0; 
     if (password.length >= 8) strength++; 
     if (/[A-Z]/.test(password)) strength++; 
-    if (/[a-z]/.test(password)) strength++;
+    if (/[a-z]/.test(password)) strength++; 
     if (/\d/.test(password)) strength++; 
     if (/[\W_]/.test(password)) strength++; 
-
-    switch (strength) {
-      case 5:
-        return 'Fuerte';
-      case 4:
+ 
+    switch (strength) { 
+      case 5: 
+        return 'Fuerte'; 
+      case 4: 
         return 'Normal'; 
-      case 3:
-        return 'Débil';
-      default:
-        return 'Muy débil';
-    }
-  };
-
-  const handlePasswordChange = (e) => {
-    const value = e.target.value;
-    setPassword(value);
-    const strength = validatePasswordStrength(value);
-    setPasswordStrength(strength);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!email || !username || !password) {
-      alert("Todos los campos son obligatorios.");
-      return;
-    }
-
-    if (passwordStrength === 'Débil' || passwordStrength === 'Muy débil') {
-      alert("La contraseña es demasiado débil. Por favor, elige una contraseña más fuerte.");
-      return;
-    }
-
-    const query = `
-      mutation {
-        comprobarCredenciales(user: {
-          alias: "${username}",
-          email: "${email}"
-        }) {
+      case 3: 
+        return 'Débil'; 
+      default: 
+        return 'Muy débil'; 
+    } 
+  }; 
+ 
+  const handlePasswordChange = (e) => { 
+    const value = e.target.value; 
+    setPassword(value); 
+    const strength = validatePasswordStrength(value); 
+    setPasswordStrength(strength); 
+  }; 
+ 
+  const handleSubmit = async (e) => { 
+    e.preventDefault(); 
+ 
+    if (!email || !username || !password) { 
+      alert("Todos los campos son obligatorios."); 
+      return; 
+    } 
+ 
+    if (passwordStrength === 'Débil' || passwordStrength === 'Muy débil') { 
+      alert("La contraseña es demasiado débil. Por favor, elige una contraseña más fuerte."); 
+      return; 
+    } 
+ 
+    const query = ` 
+      mutation { 
+        comprobarCredenciales(user: { 
+          alias: "${username}", 
+          email: "${email}" 
+        }) { 
           id
         }
       }
@@ -86,7 +86,7 @@ function Registro1() {
         setError(errorMessage);
         return;
       }
-
+ 
       if (passwordStrength === 'Normal' || passwordStrength === 'Fuerte') {
         const userData = { email, username, password };
         localStorage.setItem('userData', JSON.stringify(userData));

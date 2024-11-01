@@ -6,13 +6,7 @@ const Mensajes = () => {
         <>
             <div className="Contenedor">
                 <div className="contenedor2">
-                    <div className="izquierda-mensajes">
 
-                    {/* AREA DE TRABAJO */}
-                    {/* MANTERNER ESTE FORMATO DE DIVS PARA OTRAS PAGINAS Y SU CSS */}
-
-
-                    </div>
                     <MenuDerechoDiv></MenuDerechoDiv>
                 </div>
             </div>
