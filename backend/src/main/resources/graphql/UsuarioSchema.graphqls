@@ -70,6 +70,10 @@ type Mutation{
 
     # Seguidos Mutation
 
+    # Seguidores
+    misSeguidores(idAlias: String): Seguidores
+    eliminarSeguidor(idAliasUsuario: String, idAliasSeguidor: String): Boolean
+
 }
 
 scalar Date

@@ -35,10 +35,9 @@ public class PublicacionController {
         return this.publicacionService.meGusta(idPublicacion, usuarioAlias);
     }
 
-
     @MutationMapping(name = "crearPublicacion")
-    public Publicacion crearPublicacion(@Argument String idUsuario, @Argument String descripcion, @Argument MultipartFile file){
-        return publicacionService.crearPublicacion(idUsuario, descripcion, file);
+    public Publicacion crearPublicacion(@Argument String idAlias, @Argument String descripcion, @Argument MultipartFile file){
+        return publicacionService.crearPublicacion(idAlias, descripcion, file);
     }
 
     @MutationMapping(name = "eliminarPublicacionPorId")

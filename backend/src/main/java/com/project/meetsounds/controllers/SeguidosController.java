@@ -17,17 +17,17 @@ public class SeguidosController {
     @Autowired
     private SeguidosService seguidosService;
 
-
+    @QueryMapping(name = "misSeguidos")
     public List<Usuario> misSeguidos(String idUsuario){
         return this.seguidosService.misSeguidos(idUsuario);
     }
 
-
+    @MutationMapping(name = "Seguir")
     public void seguirUsuario(@Argument String idUsuario, @Argument String idSeguir){ //idSeguir es del usuario al cual vamos a seguir
         this.seguidosService.seguirUsuario(idUsuario, idSeguir);
     }
 
-
+    @MutationMapping(name = "DejarDeSeguir")
     public void dejarDeSeguir(@Argument String idUsuario, @Argument String idSeguido){ //idSeguido es la id del que vamos a dejar de seguir
         this.seguidosService.dejarDeSegir(idUsuario, idSeguido);
     }
