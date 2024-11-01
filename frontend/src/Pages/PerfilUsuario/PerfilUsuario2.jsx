@@ -14,7 +14,7 @@ import { BASE_URL } from '../../config'
  /* Services */
  import GetAlias from '@services/GetAlias';
  import useObtenerUsuario from '@services/GetUsuario';
- import useUpdateUsuario from '@services/UpdateUsuario'; // Hook para actualizar el usuario
+ import useUpdateUsuario from '@services/UpdateUsuario'; 
  /* Css */
  import '@css/Colores.css'
  import '@css/Perfil_Y_Portada.css';
