@@ -9,6 +9,7 @@ import MenuListComposition from '../../components/mini-menu/minMenu'
 import CrearPublicacion from '@c/Crear-Publicacion/CrearPublicacion'
 import SeguirDores from '@c/seguir_dores'
 import MenuDerecho from '@c/Menu/Menu'
+
 import { BASE_URL } from '../../config'
  /* Services */
  import GetAlias from '@services/GetAlias';
@@ -26,6 +27,9 @@ import { BASE_URL } from '../../config'
  import UiverseEdit from '@c/botones/BotonEdit';
  import Avatars from '@c/avatar/AvatarV2';
  import { toast, ToastContainer } from 'react-toastify';
+ import Posts from '@c/Perfil/Publicaciones';
+import Replies from '@c/Perfil/Publicaciones';
+import Highlights from '@c/Perfil/Publicaciones';
 import 'react-toastify/dist/ReactToastify.css';
 
 const imgFondoDefault = 'https://imagedelivery.net/WS9ABFRS6TfdqDudkFOT3w/grrraphic/previews/j6RAX7eRw0pyywtdOXK38whWXLrEmjDWb7Z6l54u.jpeg/thumb?height=200&width=600' // Imagen de fondo predeterminada
@@ -207,18 +211,35 @@ const styles = {
   icon: {
     marginRight: '0.5rem',
   },
-  toggleButtonGroup: {
+  // toggleButtonGroup: {
+  //   display: 'flex',
+  //   justifyContent: 'space-between',
+  //   marginTop: '1rem',
+  // },
+  // toggleButton: {
+  //   flex: 1,
+  //   padding: '0.5rem',
+  //   border: '1px solid #4a5568',
+  //   backgroundColor: '#2d3748',
+  //   color: 'white',
+  //   cursor: 'pointer',
+  // },
+  tabs: {
     display: 'flex',
-    justifyContent: 'space-between',
+    borderBottom: '1px solid #2d3748',
     marginTop: '1rem',
   },
-  toggleButton: {
+  tab: {
     flex: 1,
-    padding: '0.5rem',
-    border: '1px solid #4a5568',
-    backgroundColor: '#2d3748',
+    textAlign: 'center',
+    padding: '1rem 0',
+    background: 'none',
+    
     color: 'white',
     cursor: 'pointer',
+  },
+  activeTab: {
+    borderBottom: '2px solid #4299e1',
   },
   acomodar:{
     display: 'flex',
@@ -287,55 +308,98 @@ export default function ProfilePage() {
   const [isDivVisible2, setIsDivVisible2] = useState(false)
   const [isDivVisible3, setIsDivVisible3] = useState(false)
 
+
+
+
+
+
+  const [estadoEdicion, setEstadoEdicion] = useState({ perfil: false, portada: false });
+  const [imagenes, setImagenes] = useState({
+    perfil: '',
+    portada: ''
+  });
+  const [tempImages, setTempImages] = useState({
+    perfil: '',
+    portada: ''
+  });
+
+  const { register, handleSubmit, formState: { errors }, setValue } = useForm();
+  const user = GetAlias();
+  const { usuario, cargando, error } = useObtenerUsuario(user);
+  const { actualizarUsuario, cargando: actualizando, error: errorActualizando } = useUpdateUsuario();
+
   // Definir fetchUserData fuera del useEffect para reutilizarlo
-const fetchUserData = async () => {
-  try {
-    const response = await fetch(`${BASE_URL}/graphql`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        query: `
-          query {
-            buscarPorAlias(alias: "${alias}") {
-              nombre
-              apellido
-              fotoPerfilUrl
-              fotoPortadaUrl
-              alias
-              c_seguidores
-              c_seguidos
-              descripcion
+  const fetchUserData = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/graphql`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          query: `
+            query {
+              buscarPorAlias(alias: "${alias}") {
+                nombre
+                apellido
+                fotoPerfilUrl
+                fotoPortadaUrl
+                alias
+                c_seguidores
+                c_seguidos
+                descripcion
+              }
             }
-          }
-        `,
-      }),
-    })
+          `,
+        }),
+      });
+      const result = await response.json();
 
-    const result = await response.json()
-
-    if (result.data && result.data.buscarPorAlias) {
-      setUserData(result.data.buscarPorAlias) // Actualizar el estado
-    } else {
-      navigate('/404')
+      if (result.data && result.data.buscarPorAlias) {
+        setUserData(result.data.buscarPorAlias);
+        setImagenes({
+          perfil: result.data.buscarPorAlias.fotoPerfilUrl,
+          portada: result.data.buscarPorAlias.fotoPortadaUrl
+        });
+      } else {
+        navigate('/404');
+      }
+    } catch (error) {
+      console.error("Error al conectar con el servidor", error);
+      navigate('/404');
     }
-  } catch (error) {
-    console.error("Error al conectar con el servidor", error)
-    navigate('/404')
-  }
-}
-
+  };
 // Llamar a fetchUserData cuando el alias cambie
 useEffect(() => {
   if (alias) {
-    fetchUserData()
+    fetchUserData();
   } else {
-    console.log("Alias no encontrado en la URL.")
-    navigate('/404')
+    console.log("Alias no encontrado en la URL.");
+    navigate('/404');
   }
 }, [alias, navigate]);
-  
+
+useEffect(() => {
+  if (usuario && !cargando) {
+    setImagenes({
+      perfil: usuario.fotoPerfilUrl || '',
+      portada: usuario.fotoPortadaUrl || ''
+    });
+
+    setValue("Nombre", usuario.nombre);
+    setValue("Apellido", usuario.apellido);
+    setValue("Edad", usuario.edad);
+    setValue("Fecha", usuario.fechaNacimiento);
+    setValue("Genero", usuario.genero);
+  }
+}, [usuario, cargando, setValue]);
+const toggleEdicion = (tipo) => {
+  setEstadoEdicion(prev => ({ ...prev, [tipo]: !prev[tipo] }));
+};
+
+const guardarImagenTemp = (tipo, imagen) => {
+  setTempImages(prev => ({ ...prev, [tipo]: imagen }));
+};
   const handleEditProfile = (e) => {
     e.preventDefault()
     // Aquí iría la lógica para actualizar el perfil
@@ -365,52 +429,24 @@ useEffect(() => {
 
   
 
-  const user = GetAlias();
-  const { usuario, cargando, error } = useObtenerUsuario(user); // Manejo de carga y errores
-  const { actualizarUsuario, cargando: actualizando, error: errorActualizando } = useUpdateUsuario(); // Hook de actualización
+  
+  
+  
 
-  const [estadoEdicion, setEstadoEdicion] = useState({ perfil: false, portada: false });
-  const [imagenes, setImagenes] = useState({
-      perfil: '',
-      portada: ''
-  });
-
-  const { register, handleSubmit, formState: { errors }, setValue } = useForm();
-
-  useEffect(() => {
-      if (usuario && !cargando) {
-          setImagenes({
-              perfil: usuario.fotoPerfilUrl || '',
-              portada: usuario.fotoPortadaUrl || ''
-          });
-
-          // Establecer valores en el formulario
-          setValue("Nombre", usuario.nombre);
-          setValue("Apellido", usuario.apellido);
-          setValue("Edad", usuario.edad);
-          setValue("Fecha", usuario.fechaNacimiento);
-          setValue("Genero", usuario.genero);
-      }
-  }, [usuario, cargando, setValue]);
-
-  const toggleEdicion = (tipo) => {
-      setEstadoEdicion(prev => ({ ...prev, [tipo]: !prev[tipo] }));
-  };
-
-  const guardarImagen = (tipo, imagen) => {
-      setImagenes(prev => ({ ...prev, [tipo]: imagen }));
-  };
+  
 
   const onSubmit = async (data) => {
     try {
-      const alias = user; // Alias del usuario actual
-      const nombre = data.Nombre; // Nuevo nombre
-      const apellido = data.Apellido; // Nuevo apellido
-  
-      // Lógica para actualizar el usuario
-      await actualizarUsuario({ alias, nombre, apellido });
-  
-      // Mostrar notificación de éxito
+      const updatedData = {
+        alias: user,
+        nombre: data.Nombre,
+        apellido: data.Apellido,
+        fotoPerfilUrl: tempImages.perfil || imagenes.perfil,
+        fotoPortadaUrl: tempImages.portada || imagenes.portada
+      };
+
+      await actualizarUsuario(updatedData);
+
       toast.success("Los cambios se guardaron correctamente", {
         position: "top-right",
         autoClose: 2000,
@@ -420,21 +456,50 @@ useEffect(() => {
         draggable: false,
         progress: undefined,
       });
-  
-      // Llamar a fetchUserData para obtener los datos actualizados y cerrar el modal
-      setTimeout(async () => {
-        await fetchUserData(); // Volvemos a traer los datos actualizados
-        setIsModalOpen(false); // Cerrar el modal después de actualizar
+
+      // Update the main imagenes state
+      setImagenes({
+        perfil: updatedData.fotoPerfilUrl,
+        portada: updatedData.fotoPortadaUrl
+      });
+
+      // Update userData state
+      setUserData(prevData => ({
+        ...prevData,
+        nombre: updatedData.nombre,
+        apellido: updatedData.apellido,
+        fotoPerfilUrl: updatedData.fotoPerfilUrl,
+        fotoPortadaUrl: updatedData.fotoPortadaUrl
+      }));
+
+      setTimeout(() => {
+        setIsModalOpen(false);
+        setTempImages({ perfil: '', portada: '' });
       }, 2000);
       
     } catch (error) {
       console.error("Error al actualizar el usuario", error);
-  
-      // Mostrar notificación de error si algo falla
       toast.error("Error al guardar los cambios");
     }
   };
+  const [activeTab, setActiveTab] = useState('Posts');
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'Posts':
+        return <Posts />;
+      case 'Replies':
+        return <Replies />;
+      case 'Highlights':
+        return <Highlights />;
+      default:
+        return null;
+    }
+
+    
+  };
   
+ 
+
   return (
     <div className="container">
       {/* Header */}
@@ -455,27 +520,24 @@ useEffect(() => {
       <div style={{ flex: 1 }}>
         
         <div style={styles.profileInfo}>
-          <img
-            src={userData.fotoPortadaUrl || imgFondoDefault} // Usa la imagen de portada o la predeterminada
+        <img
+            src={imagenes.portada || imgFondoDefault}
             alt="Cover"
             style={styles.coverImage}
-            onClick={handleImageClick}
           />
           <img
-            src={userData.fotoPerfilUrl || imgPerfilDefault}// Usa la imagen de perfil o la predeterminada
+            src={imagenes.perfil || imgPerfilDefault}
             alt="Profile"
             style={styles.profileImage}
-            onClick={handleImageClick2}
           />
         </div>
          
         <div style={styles.profileContent}>
-        
-         <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-           <button onClick={() => setIsModalOpen(true)} style={styles.editButton}>
-             Edit profile
-           </button>
-         </div>
+          <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+            <button onClick={() => setIsModalOpen(true)} style={styles.editButton}>
+              Edit profile
+            </button>
+          </div>
           
           <div style={styles.acomodar}>
             <h2 style={styles.profileName}>{userData.nombre} {userData.apellido}</h2>
@@ -492,9 +554,23 @@ useEffect(() => {
          
           
 
-          <p style={{marginTop: '1rem'}}>{userData.descripcion}</p>
+          
+          <nav style={styles.tabs}>
+        {['Posts', 'Replies', 'Highlights'].map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            style={{ ...styles.tab, ...(tab === activeTab ? styles.activeTab : {}) }}
+          >
+            {tab}
+          </button>
+        ))}
+      </nav>
+      <div style={styles.content}>
+        {renderContent()}
+      </div>
 
-          <ToggleButtonGroup
+          {/* <ToggleButtonGroup
             color="primary"
             value={alignment}
             exclusive
@@ -505,11 +581,8 @@ useEffect(() => {
             <ToggleButton value="web" style={styles.toggleButton}>Publicaciones</ToggleButton>
             <ToggleButton value="android" style={styles.toggleButton}>Multimedia</ToggleButton>
             <ToggleButton value="ios" style={styles.toggleButton}>Información</ToggleButton>
-          </ToggleButtonGroup>
+          </ToggleButtonGroup> */}
 
-          <div style={{marginTop: '1rem'}}>
-            {renderComponent()}
-          </div>
         </div>
       </div>
 
@@ -522,13 +595,13 @@ useEffect(() => {
             <Dialog.Title as="h3" style={styles.modalTitle}>
               Editar Perfil
             </Dialog.Title>
-            <form onSubmit={handleEditProfile} style={styles.form}>
+            <form onSubmit={handleSubmit(onSubmit)} style={styles.form}>
 
 
             <div 
               style={{
                 ...styles.coverImageContainer,
-                backgroundImage: `url(${imagenes.portada})`,
+                backgroundImage: `url(${tempImages.portada || imagenes.portada})`,
               }}
             >
               {!estadoEdicion.perfil && !estadoEdicion.portada && (
@@ -539,7 +612,7 @@ useEffect(() => {
                       </>
                     )}
               
-              <input
+              {/* <input
                 id="cover-upload"
                 type="file"
                 accept="image/*"
@@ -552,9 +625,13 @@ useEffect(() => {
                   }
                 }}
                 style={{ display: 'none' }}
-              />
+              /> */}
               <div style={styles.profileImageContainer}>
-                <img src={imagenes.perfil} alt="Profile" style={styles.profileImageEdit} />
+              <img 
+                  src={tempImages.perfil || imagenes.perfil} 
+                  alt="Profile" 
+                  style={styles.profileImageEdit} 
+                />
                 {!estadoEdicion.perfil && !estadoEdicion.portada && (
                         <>
                           <label htmlFor="profile-upload" style={{...styles.cameraIcon, ...styles.profileCameraIcon}} onClick={() => toggleEdicion('perfil')}>
@@ -564,7 +641,7 @@ useEffect(() => {
                       )}
                       
                 
-                <input
+                {/* <input
                   id="profile-upload"
                   type="file"
                   accept="image/*"
@@ -577,31 +654,31 @@ useEffect(() => {
                     }
                   }}
                   style={{ display: 'none' }}
-                />
+                /> */}
               </div>
             </div>
                   
 {/* Editar portada */}
 {estadoEdicion.portada && (
-                  <UploadPortada
-                      btn_cancelar={() => toggleEdicion('portada')}
-                      onImageSave={(imagen) => guardarImagen('portada', imagen)}
-                      Imagen={imagenes.perfil}
-                      Portada={imagenes.portada}
-                      alias={user}
-                  />
-                )}
-                  {/* Editar perfil */}
-                {estadoEdicion.perfil && (
-                  <UploadAvatar
-                      btn_cancelar={() => toggleEdicion('perfil')}
-                      onImageSave={(imagen) => guardarImagen('perfil', imagen)}
-                      Imagen={imagenes.perfil}
-                      Portada={imagenes.portada}
-                      alias={user}
-                  />
-                )}
-                
+                <UploadPortada
+                  btn_cancelar={() => toggleEdicion('portada')}
+                  onImageSave={(imagen) => guardarImagenTemp('portada', imagen)}
+                  Imagen={tempImages.perfil || imagenes.perfil}
+                  Portada={tempImages.portada || imagenes.portada}
+                  alias={user}
+                />
+              )}
+
+              {estadoEdicion.perfil && (
+                <UploadAvatar
+                  btn_cancelar={() => toggleEdicion('perfil')}
+                  onImageSave={(imagen) => guardarImagenTemp('perfil', imagen)}
+                  Imagen={tempImages.perfil || imagenes.perfil}
+                  Portada={tempImages.portada || imagenes.portada}
+                  alias={user}
+                />
+              )}
+
             
               
 
@@ -679,9 +756,16 @@ useEffect(() => {
                           </select>
                         </div>
                         <div style={styles.buttonGroup}>
-                          <button type="button" onClick={() => setIsModalOpen(false)} style={{...styles.button, ...styles.cancelButton}}>
-                            Cancel
-                          </button>
+                        <button 
+                  type="button" 
+                  onClick={() => {
+                    setIsModalOpen(false);
+                    setTempImages({ perfil: '', portada: '' });
+                  }} 
+                  style={{...styles.button, ...styles.cancelButton}}
+                >
+                  Cancel
+                </button>
                           <button type="submit" style={{...styles.button, ...styles.saveButton}} >
                             Guardar
                           </button>

@@ -5,6 +5,7 @@ import com.project.meetsounds.domain.models.Mensaje;
 import com.project.meetsounds.services.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -12,12 +13,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 public class ChatController {
 
     @Autowired
@@ -46,7 +49,24 @@ public class ChatController {
     }
 
     @GetMapping("/traerTodosLosChats")
-    public List<Chat> traerTodosLosChats (){
-        return chatService.traerTodosLosChats();
+    public ResponseEntity<List<Chat>> traerTodosLosChats() {
+        List<Chat> chats = chatService.traerTodosLosChats();
+        return ResponseEntity.ok(chats);
     }
+
+    @GetMapping("/traerTodosLosChatsxIdUsuario")
+    public ResponseEntity<List<Chat>> traerTodosLosChatsxIdUsuario(@RequestParam String idUsuario) {
+        List<Chat> chats = chatService.traerChatsPorUsuarioId(idUsuario);
+
+        if (chats.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.emptyList());
+        }
+
+        return ResponseEntity.ok(chats);
+    }
+    @GetMapping("/buscarChatPorId")
+    public Chat buscarChatPorId(@RequestParam String idChat){
+        return chatService.buscarChatPorId(idChat);
+    }
+
 }

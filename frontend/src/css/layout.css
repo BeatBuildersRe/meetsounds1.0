@@ -205,7 +205,7 @@ body {
         align-items: center;
         
     }
-    nav ul li .botones_layout  {
+    #box nav ul li .botones_layout  {
         font-size: 2.5rem;
         padding: 10px 15px;
         border-radius: 25px;
@@ -249,7 +249,7 @@ body {
       
     }
    
-    nav {
+    #box nav {
         position: fixed;
         bottom: 0;
         /* Posiciona el menú en la parte inferior */
@@ -264,7 +264,7 @@ body {
         /* Asegura que el menú esté sobre otros elementos */
     }
 
-    nav ul {
+    #box nav ul {
         list-style: none;
         /* Elimina los puntos de la lista */
         display: flex;
@@ -276,19 +276,19 @@ body {
         /* Espaciado vertical para el menú */
     }
 
-    nav ul li {
+    #box nav ul li {
         flex: 1;
         /* Cada elemento del menú ocupa el mismo espacio */
         text-align: center;
         /* Alinea los ítems en el centro */
     }
 
-    nav ul li p {
+    #box nav ul li p {
         display: none;
     }
 
 
-    nav ul li  svg {
+    #box nav ul li  svg {
         /* Aplica estilos a los iconos SVG */
         width: 24px;
         /* Tamaño uniforme para todos los iconos */

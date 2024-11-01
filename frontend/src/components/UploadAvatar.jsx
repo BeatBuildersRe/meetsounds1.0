@@ -4,16 +4,14 @@ import useUpdateImgPerfil from '@services/UpdatePerfil';
 import '@css/Colores.css'
 import '@css/UploadAvatar.css';
 /* REact */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Avatar from 'react-avatar-edit';
 /* Componentes */
 import Avatars from '@c/avatar/AvatarV2';
 import BotonPlus from '@c/botones/BotonPlus';
 
 const UploadAvatar = ({ btn_cancelar, onImageSave, Imagen, Portada, alias }) => {
-    const [src, setSrc] = useState(null);
     const [preview, setPreview] = useState(Imagen);
-    const [savedImage, setSavedImage] = useState(null); // Imagen guardada
 
     const onClose = () => {
         setPreview(Imagen); // Restaurar la imagen por defecto si se cierra el editor
@@ -23,15 +21,10 @@ const UploadAvatar = ({ btn_cancelar, onImageSave, Imagen, Portada, alias }) => 
         setPreview(view); // Actualizar la vista previa con la imagen recortada
     };
 
-    useEffect(() => {
-    }, [preview]);
-
     const handleSave = () => {
-        setSavedImage(preview); // Guarda la imagen recortada localmente
         onImageSave(preview); // Enviar la imagen recortada al componente padre
-        useUpdateImgPerfil(preview,alias,1) // envia a la bd
+        btn_cancelar(); // Cerrar el componente de carga
     };
-
 
     return (
         <div className='UploadAvatar'>
@@ -42,7 +35,6 @@ const UploadAvatar = ({ btn_cancelar, onImageSave, Imagen, Portada, alias }) => 
                         {preview && <Avatars class='Perfil' imagen={preview} width={100} height={100} />}
                     </div>
                 </div>
-
             </div>
 
             <div className='avatar'>
@@ -52,12 +44,9 @@ const UploadAvatar = ({ btn_cancelar, onImageSave, Imagen, Portada, alias }) => 
                     onCrop={onCrop}
                     onClose={onClose}
                     labelStyle={{ color: 'red' }}
-                    src={src}
                     closeIconColor='red'
                     mimeTypes='.jpeg,.jpg,.png'
                     label='Toca para subir una imagen'
-
-
                 />
             </div>
 
@@ -68,13 +57,8 @@ const UploadAvatar = ({ btn_cancelar, onImageSave, Imagen, Portada, alias }) => 
                 <div id='Cancelar' onClick={btn_cancelar}>
                     <BotonPlus text='Salir' color='red' />
                 </div>
-
-
-                {/* <button id="btn-guardar" onClick={() => { handleSave(); btn_cancelar(); }}>Guardar Imagen</button> */}
-                {/* <button id="btn-cerrar" onClick={btn_cancelar}>cerrar</button> */}
             </div>
         </div>
-
     );
 };
 

@@ -1,7 +1,8 @@
+// App.js
 import React, { useContext } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useThemeContext } from './context/ThemeContext';
-import { AuthContext } from './js/otro/AuthContext'; // Asegúrate de importar el contexto de autenticación
+import { AuthContext } from './js/otro/AuthContext';
 import Layout from './Layout';
 import Home from './Pages/Home/Home';
 import Busqueda from './Pages/Busqueda/Busqueda';
@@ -9,46 +10,36 @@ import Notificaciones from './Pages/Notificaciones/Notificaciones';
 import Mensajes from './Pages/Mensajes/Mensajes';
 import Bandas from './Pages/Bandas/Bandas';
 import Configuracion from './Pages/Configuracion/Configuracion';
-/* import Perfil from './Pages/Configuracion/Perfil/Perfil'; */
 import Perfil2 from './Pages/Configuracion/Perfil/Perfil2';
 import DatosPersonales from './Pages/Configuracion/Perfil/Datos_Personales/DatosPersonales';
 import Seguridad from './Pages/Configuracion/Seguridad/Seguridad';
 import Apariencia from './Pages/Configuracion/Apariencia/Apariencia';
 import Error_404 from './Pages/Error/Error-404';
-import FotosPerfil from './Pages/Configuracion/Perfil/FotosPerfil'
+import FotosPerfil from './Pages/Configuracion/Perfil/FotosPerfil';
 import Perfil_Y_Portada from './Pages/Configuracion/Perfil/Perfil_Y_Portada/Perfil_Y_Portada';
 import Login from './Pages/Login/LoginForm';
 import Registro from './Pages/Registro/Registro';
 import Registro2 from './Pages/Registro/Registro2';
 import ChatComponent from './Pages/Chat/ChatComponent';
-import Cuenta from './Pages/PerfilUsuario/PerfilUsuario'
-import Cuenta2 from './Pages/PerfilUsuario/PerfilUsuario2'
-import '@css/App.css';
+import Cuenta from './Pages/PerfilUsuario/PerfilUsuario';
+import Cuenta2 from './Pages/PerfilUsuario/PerfilUsuario2';
 import ActualizarNombreApellido from './Pages/Configuracion/EditarPerfil/ActualizarNombreApeliido';
 import PerfilEncontrado from './Pages/PerfilUsuario/PerfilEncontrado';
 import OnboardingForm from './Pages/OnBoarding/OnboardingForm';
-
-
+import AliasGuard from './services/AliasGuard'; // Importa el nuevo componente de protección
+import '@css/App.css';
 
 function App() {
   const { contextTheme, setContextTheme } = useThemeContext();
-  const { isAuthenticated } = useContext(AuthContext); // Usar el contexto de autenticación
-
-  // Función para manejar el cambio de tema
-  const handleSwitch = () => {
-    setContextTheme((prevTheme) => (prevTheme === "Light" ? "Dark" : "Light"));
-  };
+  const { isAuthenticated } = useContext(AuthContext);
 
   if (isAuthenticated === null) {
-    // Mostrar pantalla de carga si la autenticación aún no se ha determinado
     return <div>Cargando...</div>;
   }
 
   return (
     <div id={contextTheme}>
       <Routes>
-
-
         <Route path="/" element={isAuthenticated ? <Layout /> : <Navigate to="/login" />}>
           <Route path="busqueda" element={<Busqueda />} />
           <Route path="/" element={<Home />} />
@@ -60,48 +51,30 @@ function App() {
           <Route path="configuracion/perfil/Datos-Personales" element={<DatosPersonales />} />
           <Route path="configuracion/perfil/PerfilYPortada" element={<Perfil_Y_Portada />} />
           <Route path="configuracion/perfil/Seguridad" element={<Seguridad />} />
-
-          {/* <Route path="configuracion/perfil/:alias" element={<Perfil2 />} />
-          <Route path="perfil/:alias" element={<Perfil />} /> */}
           <Route path="configuracion/apariencia" element={<Apariencia />} />
-          <Route path="perfil-encontrado/:alias" element={<PerfilEncontrado />} />
-
-
-          {/* Esta ruta maneja perfiles de usuarios */}
-          <Route path="cuenta/:alias" element={<Cuenta />} />
-          <Route path="cuenta2/:alias" element={<Cuenta2 />} />
-
+          
+          {/* Usa AliasGuard aquí */}
+          <Route path="perfil-encontrado/:alias" element={<><AliasGuard /><PerfilEncontrado /></>} />
+          <Route path="cuenta/:alias" element={<><AliasGuard /><Cuenta /></>} />
+          <Route path="cuenta2/:alias" element={<><AliasGuard /><Cuenta2 /></>} />
         </Route>
 
-
-        {/* Ruta para el login, redirigir si ya está autenticado */}
-        <Route
-          path="/login"
-          element={isAuthenticated ? <Navigate to="/" /> : <Login />}
-        />
-
+        <Route path="/login" element={isAuthenticated ? <Navigate to="/" /> : <Login />} />
         <Route path="/registro" element={<Registro />} />
         <Route path="/registro2" element={<Registro2 />} />
         <Route path="*" element={<Error_404 />} />
+<<<<<<< HEAD
 
         {/* Ruta para el onboarding */}
         <Route path="/onboarding" element={<OnboardingForm />} />
 
         {/*Ruta para actualizar nombre y apellido (SOLO PRUEBA)*/}
+=======
+>>>>>>> 62ec33c6940a2d94e8ee0872f46c38168a762d56
         <Route path="configuracion/editarperfil/actualizar-nombre-apellido" element={<ActualizarNombreApellido />} />
         <Route path="cuenta/fotosperfil" element={<FotosPerfil />} />
         <Route path="/chat/:chatId" element={<ChatComponent />} />
-
-        {/* Otras rutas */}
-
-
-
       </Routes>
-      {/* <ReactSwitch 
-        className='Modo-Oscuro'
-        onChange={handleSwitch} 
-        checked={contextTheme === "Dark"} 
-      /> */}
     </div>
   );
 }
