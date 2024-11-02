@@ -23,6 +23,9 @@ public class PublicacionService {
     private IPublicacionRepository iPublicacionRepository;
 
     @Autowired
+    private ComentarioService comentarioService;
+
+    @Autowired
     private UsuarioService usuarioService;
 
     @Autowired
@@ -119,10 +122,19 @@ public class PublicacionService {
 
     }
 
-    public Publicacion buscarPublicacionPorId(String id) {
-        return this.iPublicacionRepository.findById(id).orElseThrow(
-                () -> new NoSuchElementException("Publiacion no encontrada con ID: " + id)
-        );
+    public PublicacionOut buscarPublicacionPorIdOut(String id) {
+
+        Optional<Publicacion> publicacionOptional = this.iPublicacionRepository.findById(id);
+        Publicacion publicacion = publicacionOptional.get();
+        List<ComentarioOut> comentarioOuts = this.comentarioService.listarComentariosPorId(id);
+
+        PublicacionOut publicacionOut = new PublicacionOut();
+        publicacionOut.setId(publicacion.getId());
+        publicacionOut.setMediaUrl(publicacion.getMediaUrl());
+        publicacionOut.setDescripcion(publicacion.getDescripcion());
+        publicacionOut.setComentariosOut(comentarioOuts);
+        publicacionOut.setUsuario(publicacion.getUsuario());
+        return publicacionOut;
     }
 
     public Boolean meGusta(String idPublicacion, String usuarioAlias) {
@@ -152,6 +164,17 @@ public class PublicacionService {
             usuarioAliasList.add(meGusta.getUsuarioAlias());
         }
         return this.iUsuarioRepository.findAllByAlias(usuarioAliasList);
+    }
+
+    public Publicacion buscarPublicacionPorId(String id) {
+        Publicacion publicacion = new Publicacion();
+        try {
+            Optional<Publicacion> publicacionOptional = this.iPublicacionRepository.findById(id);
+            publicacion = publicacionOptional.get();
+        }catch (NullPointerException n){
+            System.out.println("NullPointer - PublicacionService - buscarPublicacionPorId");
+        }
+        return publicacion;
     }
 
 

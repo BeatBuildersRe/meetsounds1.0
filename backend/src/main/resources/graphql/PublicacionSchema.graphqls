@@ -8,6 +8,15 @@ type Publicacion{
     comentarios: [Comentario]
     usuario: UsuarioPublicacion
 }
+
+type PublicacionOut{
+    id: String
+    descripcion: String
+    mediaUrl: String
+    comentariosOut: [ComentarioOut]
+    usuario: UsuarioPublicacion
+}
+
 type ComentarioOut{
     id: String
     comentario: String

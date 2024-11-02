@@ -3,6 +3,7 @@ package com.project.meetsounds.controllers;
 import com.project.meetsounds.domain.models.ComentarioOut;
 import com.project.meetsounds.domain.models.Publicacion;
 
+import com.project.meetsounds.domain.models.PublicacionOut;
 import com.project.meetsounds.domain.models.Usuario;
 import com.project.meetsounds.services.PublicacionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,11 @@ public class PublicacionController {
     @QueryMapping(name = "buscarPublicacionPorId")
     public Publicacion buscarPublicacionPorId(@Argument String id){
         return this.publicacionService.buscarPublicacionPorId(id);
+    }
+
+    @QueryMapping(name = "buscarPublicacionPorIdOut")
+    public PublicacionOut buscarPublicacionPorIdOut(@Argument String id){
+        return this.publicacionService.buscarPublicacionPorIdOut(id);
     }
 
     @MutationMapping(name = "meGusta")
