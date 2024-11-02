@@ -20,6 +20,7 @@ type Query{
     listarPublicaciones: [Publicacion]
     listarComentariosPorId(publicacionId: String): [ComentarioOut]
     misLikesPublicacion(idPublicacion: String!): [UsuariosLikes]
+    buscarPublicacionPorId(id: String): Publicacion
 
     # Banda
     buscarBandaPorNombre(nombreBanda: String): Banda

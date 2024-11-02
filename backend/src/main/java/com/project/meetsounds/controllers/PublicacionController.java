@@ -29,7 +29,7 @@ public class PublicacionController {
 
 
     @QueryMapping(name = "buscarPublicacionPorId")
-    public Publicacion buscarPublicacionPorId(String id){
+    public Publicacion buscarPublicacionPorId(@Argument String id){
         return this.publicacionService.buscarPublicacionPorId(id);
     }
 
