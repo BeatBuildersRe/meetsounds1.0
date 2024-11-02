@@ -4,6 +4,8 @@ import BackgroundSlider from '@c/BackgroundSlider/BackgroundSlider';
 import StepOne from '@c/Steps/StepOne';
 import StepTwo from '@c/Steps/StepTwo';
 import StepThree from '@c/Steps/StepThree';
+import StepFour from '@c/Steps/StepFour';
+
 import './OnboardingForm.css';
 
 const OnboardingForm = () => {
@@ -20,6 +22,8 @@ const OnboardingForm = () => {
         return <StepTwo />;
       case 3:
         return <StepThree />;
+      case 4:
+        return <StepFour />;
       default:
         return <StepOne />;
     }
@@ -32,7 +36,7 @@ const OnboardingForm = () => {
         {renderStep()}
         <div className="onboarding-buttons">
           {step > 1 && <button onClick={prevStep}>Anterior</button>}
-          {step < 3 && <button onClick={nextStep}>Siguiente</button>}
+          {step < 4 && <button onClick={nextStep}>Siguiente</button>}
         </div>
       </div>
     </BackgroundSlider>
