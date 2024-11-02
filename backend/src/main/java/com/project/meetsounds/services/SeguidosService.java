@@ -24,24 +24,38 @@ public class SeguidosService {
     private IUsuarioRepository iUsuarioRepository;
 
     public void seguirUsuario(String idUsuario, String idSeguir) {
-        Seguido seguido = iSeguirRepository.findByidUsuario(idUsuario);
-        List<String> misSeguidos = new ArrayList<>();
-        misSeguidos = seguido.getMisSeguidos();
-        misSeguidos.add(idSeguir);
-        seguido.setMisSeguidos(misSeguidos);
-        iSeguirRepository.save(seguido);
+        try {
+            Seguido seguido = iSeguirRepository.findByidUsuario(idUsuario);
+            List<String> misSeguidos = new ArrayList<>();
+            misSeguidos = seguido.getMisSeguidos();
+            misSeguidos.add(idSeguir);
+            seguido.setMisSeguidos(misSeguidos);
+            iSeguirRepository.save(seguido);
 
-        //Incrementamos el contador de seguidos en el usuario
-        Optional<Usuario> usu = this.iUsuarioRepository.findById(idUsuario);
+            //Incrementamos el contador de seguidos en el usuario
+            Optional<Usuario> usu = this.iUsuarioRepository.findById(idUsuario);
 
-        if (usu.isPresent()){
-            Usuario usuario = usu.get();
-            int countSeguidos = usuario.getC_seguidos();
-            countSeguidos += 1;
-            usuario.setC_seguidos(countSeguidos);
-            this.iUsuarioRepository.save(usuario);
+            if (usu.isPresent()){
+                Usuario usuario = usu.get();
+                int countSeguidos = usuario.getC_seguidos();
+                countSeguidos += 1;
+                usuario.setC_seguidos(countSeguidos);
+                this.iUsuarioRepository.save(usuario);
+
+            }
+        }catch (NullPointerException n){
+            Optional<Usuario> usuarioOptional = this.iUsuarioRepository.findById(idUsuario);
+            if (usuarioOptional.isPresent()){
+                Usuario usuario = usuarioOptional.get();
+                Seguido seguido = new Seguido();
+                seguido.setUser(usuario);
+                seguido.getMisSeguidos().add(idSeguir);
+                this.iSeguirRepository.save(seguido);
+            }
 
         }
+
+
 
     }
 

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -65,5 +64,10 @@ public class BandaController {
     @MutationMapping(name = "eliminarMiembro")
     public void eliminarMiembro(@Argument String idBanda, @Argument String idUsuario){
         bandaService.eliminarMiembro(idBanda, idUsuario);
+    }
+
+    @MutationMapping(name = "abandonarBanda")
+    public void abandonarBanda(@Argument String idBanda, @Argument String idAlias){
+        this.bandaService.abandonarBanda(idBanda, idAlias);
     }
 }

@@ -29,8 +29,9 @@ public interface IUsuarioRepository extends MongoRepository<Usuario, String> {
 
     Optional<Usuario> findByEmail(String email);
 
-    @Query("{alias: { $in:?0 } }")
+    @Query("{ 'alias': { $in: ?0 } }")
     List<Usuario> findAllByAlias(List<String> usuarioAliasList);
+
 
     boolean existsByAlias(String alias);
 }

@@ -20,29 +20,34 @@ public class SeguidoresService {
     public List<Usuario> misSeguidores(String idAlias) {
         Optional<Usuario> usuarioOptional = this.iUsuarioRepository.findByAlias(idAlias);
         Usuario usuario = new Usuario();
+
         if (usuarioOptional.isPresent()){
             usuario = usuarioOptional.get();
         }
+
         return this.iUsuarioRepository.findAllByAlias(usuario.getSeguidores());
     }
 
     public void eliminarSeguidor(String idAliasUsuario, String idAliasSeguidor) {
+
+        // Nesecito eliminar el seguidor de la lista de seguidores del Usuario
         Optional<Usuario> usuarioOptional = this.iUsuarioRepository.findByAlias(idAliasUsuario);
         Usuario usuario = new Usuario();
         if (usuarioOptional.isPresent()){
             usuario = usuarioOptional.get();
         }
 
+        // Nesecito eliminar el usuario de la lista de seguidos del Seguidor
         Optional<Usuario> seguidorOptional = this.iUsuarioRepository.findByAlias(idAliasSeguidor);
         Usuario seguidor = new Usuario();
         if (usuarioOptional.isPresent()){
             seguidor = usuarioOptional.get();
         }
 
-        usuario.getSeguidores().remove(seguidor.getAlias());
-        seguidor.getSeguidos().remove(usuario.getAlias());
-
+        usuario.getSeguidores().removeIf(s-> s.equals(idAliasSeguidor));
+        seguidor.getSeguidos().removeIf(s -> s.equals(idAliasUsuario));
         this.iUsuarioRepository.save(usuario);
         this.iUsuarioRepository.save(seguidor);
+
     }
 }

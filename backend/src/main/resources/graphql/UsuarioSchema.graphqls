@@ -25,6 +25,10 @@ type Query{
     buscarBandaPorId(idBanda: String): Banda
     listarBandas: [Banda]
 
+    # Seguidores
+    misSeguidores(idAlias: String): [Seguidores]
+
+
 }
 
 type Mutation{
@@ -71,7 +75,6 @@ type Mutation{
     # Seguidos Mutation
 
     # Seguidores
-    misSeguidores(idAlias: String): Seguidores
     eliminarSeguidor(idAliasUsuario: String, idAliasSeguidor: String): Boolean
 
 }
