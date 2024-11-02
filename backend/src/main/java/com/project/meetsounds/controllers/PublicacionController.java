@@ -1,5 +1,6 @@
 package com.project.meetsounds.controllers;
 
+import com.project.meetsounds.domain.models.ComentarioOut;
 import com.project.meetsounds.domain.models.Publicacion;
 
 import com.project.meetsounds.domain.models.Usuario;
@@ -24,6 +25,8 @@ public class PublicacionController {
     public List<Publicacion> listarPublicaciones(){
         return this.publicacionService.listarPublicaciones();
     }
+
+
 
     @QueryMapping(name = "buscarPublicacionPorId")
     public Publicacion buscarPublicacionPorId(String id){
@@ -50,4 +53,7 @@ public class PublicacionController {
         return this.publicacionService.misLikesPublicacion(idPublicacion);
 
     }
+
+
+
 }

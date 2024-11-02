@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -24,7 +25,7 @@ public class Publicacion {
 
     private int count_coment;
     private int count_likes;
-    private List<Comentario> comentarios;
+    private List<Comentario> comentarios = new ArrayList<>();
     private List<MeGusta> meGustas;
     private Usuario usuario;
 

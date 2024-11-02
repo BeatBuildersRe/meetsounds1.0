@@ -1,8 +1,6 @@
 package com.project.meetsounds.services;
 
-import com.project.meetsounds.domain.models.MeGusta;
-import com.project.meetsounds.domain.models.Publicacion;
-import com.project.meetsounds.domain.models.Usuario;
+import com.project.meetsounds.domain.models.*;
 import com.project.meetsounds.repositories.IMeGustaRepository;
 import com.project.meetsounds.repositories.IPublicacionRepository;
 import com.project.meetsounds.repositories.IUsuarioRepository;
@@ -71,11 +69,16 @@ public class PublicacionService {
         int seg = horaActual.getSecond();
         publi.setHora(LocalTime.of(hs, min, seg));
 
+
+
         //publi.setMediaUrl(this.s3Service.uploadFile(file));
 
         this.iPublicacionRepository.save(publi);
         //Guardamos la publicacion en la lista de "misPublicaciones" del usuario
         usuarioService.crearPublicacion(idAlias, publi);
+
+
+
         return publi;
     }
 
@@ -150,6 +153,9 @@ public class PublicacionService {
         }
         return this.iUsuarioRepository.findAllByAlias(usuarioAliasList);
     }
+
+
+
 
     /*
     public void savePublicacion(Publicacion publi) {

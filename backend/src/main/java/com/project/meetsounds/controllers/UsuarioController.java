@@ -34,6 +34,7 @@ public class UsuarioController {
     public void dejarDeSeguirUsuario(@Argument String aliasSeguidor,@Argument String aliasSeguido){
         usuarioService.dejarDeSeguirUsuario(aliasSeguidor,aliasSeguido);
     }
+
     @QueryMapping(name = "verificaSiSigue")
     public Boolean verificaSiSigue(@Argument String aliasVisitante,@Argument String aliasPerfil){
         return usuarioService.verificaSiSigue(aliasVisitante,aliasPerfil);

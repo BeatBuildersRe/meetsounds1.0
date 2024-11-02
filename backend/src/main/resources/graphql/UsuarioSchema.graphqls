@@ -18,6 +18,7 @@ type Query{
 
     # Publiacion Query
     listarPublicaciones: [Publicacion]
+    listarComentariosPorId(publicacionId: String): [ComentarioOut]
     misLikesPublicacion(idPublicacion: String!): [UsuariosLikes]
 
     # Banda
@@ -71,6 +72,7 @@ type Mutation{
     eliminarPublicacionPorId(idUsuario: ID!, idPublicacion: ID!): Boolean
     meGusta(idPublicacion: String!, usuarioAlias: String!): Boolean
     crearPublicacion(idUsuario: ID!,descripcion: String): Publicacion
+    comentar(publicacionId: String, idAliasUsuario: String, text: String): Boolean
 
     # Seguidos Mutation
 

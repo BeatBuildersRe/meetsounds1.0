@@ -54,9 +54,6 @@ public class SeguidosService {
             }
 
         }
-
-
-
     }
 
     public void dejarDeSegir(String idUsuario, String idSeguido) {
