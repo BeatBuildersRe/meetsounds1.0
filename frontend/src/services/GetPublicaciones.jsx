@@ -20,6 +20,7 @@ const ObtenerPublicaciones = () => {
                         query: `
                             query {
                                 listarPublicaciones {
+                                    id
                                     descripcion
                                     mediaUrl
                                     count_likes

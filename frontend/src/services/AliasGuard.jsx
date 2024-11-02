@@ -12,7 +12,7 @@ const AliasGuard = () => {
     if (localAlias) {
       // Si el alias de la URL es el mismo que el de la cookie
       if (alias === localAlias) {
-        navigate(`/cuenta/${alias}`); // Redirigir a la cuenta del usuario
+        navigate(`/cuenta2/${alias}`); // Redirigir a la cuenta del usuario
       } else {
         // Si intentan acceder a su propia cuenta desde el perfil encontrado
         navigate(`/perfil-encontrado/${alias}`);

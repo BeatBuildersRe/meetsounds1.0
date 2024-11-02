@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import '@css/Home.css'
 import Foto from '@assets/ads.png';
+import Comentarios from '@c/Publicaciones/Comentarios';
 import Publicaciones from '@c/Publicaciones/Publicaciones';
 import MenuDerechoDiv from '@c/Menu/Derecha';
 const Inicio = () => {
+  const [valorDevuelto, setValorDevuelto] = useState(null);
+
+  // Función que recibirá el valor del componente hijo
+  const manejarValorDevuelto = (nuevoValor) => {
+    setValorDevuelto(nuevoValor);
+  };
   const [activeDiv, setActiveDiv] = useState('div1');
   const [isVisible, setIsVisible] = useState(true);
   const [showBar, setShowBar] = useState(true);
@@ -67,7 +74,7 @@ const Inicio = () => {
 
             <div className="Div_1" style={{ display: activeDiv === 'div1' ? 'block' : 'none' }}>
 
-              <Publicaciones></Publicaciones>
+              {!valorDevuelto ? (<Publicaciones  onValorDevuelto={manejarValorDevuelto} />): (<Comentarios onValorDevuelto={manejarValorDevuelto}/>)}
 
 
             </div>

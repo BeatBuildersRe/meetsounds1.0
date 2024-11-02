@@ -31,6 +31,7 @@ import { BASE_URL } from '../../config'
 import Replies from '@c/Perfil/Publicaciones';
 import Highlights from '@c/Perfil/Publicaciones';
 import 'react-toastify/dist/ReactToastify.css';
+import useUpdateImgPerfil from '../../services/UpdatePerfil'
 
 const imgFondoDefault = 'https://imagedelivery.net/WS9ABFRS6TfdqDudkFOT3w/grrraphic/previews/j6RAX7eRw0pyywtdOXK38whWXLrEmjDWb7Z6l54u.jpeg/thumb?height=200&width=600' // Imagen de fondo predeterminada
 const imgPerfilDefault = 'https://imagedelivery.net/WS9ABFRS6TfdqDudkFOT3w/grrraphic/previews/j6RAX7eRw0pyywtdOXK38whWXLrEmjDWb7Z6l54u.jpeg/thumb?height=400&width=400' // Imagen de perfil predeterminada
@@ -441,10 +442,10 @@ const guardarImagenTemp = (tipo, imagen) => {
         alias: user,
         nombre: data.Nombre,
         apellido: data.Apellido,
-        fotoPerfilUrl: tempImages.perfil || imagenes.perfil,
-        fotoPortadaUrl: tempImages.portada || imagenes.portada
-      };
 
+      };
+      useUpdateImgPerfil(tempImages.portada,user,2)
+      useUpdateImgPerfil(tempImages.perfil,user,1)
       await actualizarUsuario(updatedData);
 
       toast.success("Los cambios se guardaron correctamente", {

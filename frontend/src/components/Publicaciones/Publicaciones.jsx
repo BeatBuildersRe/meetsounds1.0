@@ -1,17 +1,18 @@
 /* Css */
 import '@css/Publicaciones.css';
 /* React */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 /* Componentes */
 import MenuListComposition from '@c/mini-menu/minMenu';
 import TextoConVerMas from './TextoVerMas';
 import Avatar from '@mui/material/Avatar';
 import ImageGallery from './Galeria';
-import Reacciones from './Reacciones';
 import GaleriaDeImagenes from './GaleriaV2';
 /* servivios */
 import ObtenerPublicaciones from '@services/GetPublicaciones';
+import Reacciones from '@services/Reacciones';
 /* Iconos */
 import { TbMusicHeart } from "react-icons/tb";
 import { CiRead } from "react-icons/ci";
@@ -23,39 +24,77 @@ import img from '@public/perfill.png';
 import imgTest from '@public/imgtest.png';
 import imgTest3 from '@public/imgtest3.png';
 
-const Publicaciones = () => {
-    const { publicaciones, loading, error } = ObtenerPublicaciones();
+const Publicaciones = ({ onValorDevuelto }) => {
+    const { publicaciones: publicacionesIniciales, loading, error } = ObtenerPublicaciones();
+  
+    // Estado para controlar las publicaciones
+    const [publicaciones, setPublicaciones] = useState([]);
+  
+    useEffect(() => {
+      if (publicacionesIniciales) {
+        // Inicializamos el estado con las publicaciones iniciales
+        setPublicaciones(publicacionesIniciales);
+      }
+    }, [publicacionesIniciales]);
+  
+    const toggleLike = (id) => {
+      setPublicaciones((prevPublicaciones) =>
+        prevPublicaciones.map((pub) =>
+          pub.id === id
+            ? {
+                ...pub,
+                count_likes: pub.liked ? pub.count_likes - 1 : pub.count_likes + 1,
+                liked: !pub.liked, // Alternar estado de "liked"
+              }
+            : pub
+        )
+      );
 
+        
+    };
+    const comentar = (id) =>{
+        onValorDevuelto(1);
+        return 1;
+    };
+  
     if (loading) return <p>Cargando publicaciones...</p>;
     if (error) return <p>Error al cargar las publicaciones.</p>;
-
-    const arr = [imgTest, imgTest3];
-
+    
+   
 
 
     return (
         <div>
-            {publicaciones.map((publicacion, index) => (
-                <div key={index} className="publicacion">
-                    <p>{publicacion.descripcion ? publicacion.descripcion : 'Descripción no disponible'}</p>
+            {publicaciones.map((publi, index) => (
+                <div key={publi.id} className='publicacion'>
+                    <div className='imagen-perfil'>
+                        <img src={publi.usuario.fotoPerfilUrl} style={{maxWidth:'100px', maxHeight:'100px', borderRadius:'50%'}} />
+                    </div>
+                    <div className='usuario'>
+                        <p>{publi.usuario.nombre} {publi.usuario.apellido}</p>
+                        <p>@{publi.usuario.alias}</p>
+                    </div>
+                    <div className='descripcion'>
+                        <p>{publi.descripcion? publi.descripcion : ''}</p>
+                    </div>
+                    <div className='media'>
+                        <img src={publi.mediaUrl? publi.mediaUrl : ''} alt="" />
+                    </div>
 
-                    {publicacion.usuario ? (
-                        <div>
-                            <h2>{publicacion.usuario.nombre} {publicacion.usuario.apellido} (@{publicacion.usuario.alias})</h2>
-                            <img src={publicacion.usuario.fotoPerfilUrl} alt="Foto de perfil" />
-                        </div>
-                    ) : (
-                        <p>Usuario no disponible</p>
-                    )}
+                    <div className='botones'>
+                        <button  onClick={() => toggleLike(publi.id)}>like</button>
 
-                    <p>Likes: {publicacion.count_likes}</p>
-                    <p>Comentarios: {publicacion.count_coment}</p>
+                        <p>{publi.count_likes}</p>
+                        <button onClick={() => comentar(publi.id)}>comentar</button>
+                        <p>{publi.count_coment}</p>
+                    </div>
                 </div>
+
             ))}
         </div>
 
     );
 };
 
-export default Publicaciones;
+export default React.memo(Publicaciones);
 
