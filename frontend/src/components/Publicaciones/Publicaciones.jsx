@@ -2,8 +2,8 @@
 import '@css/Publicaciones.css';
 /* React */
 import React, { useState, useEffect } from 'react';
-
 import { useNavigate } from 'react-router-dom';
+
 /* Componentes */
 import MenuListComposition from '@c/mini-menu/minMenu';
 import TextoConVerMas from './TextoVerMas';
@@ -24,9 +24,10 @@ import img from '@public/perfill.png';
 import imgTest from '@public/imgtest.png';
 import imgTest3 from '@public/imgtest3.png';
 
-const Publicaciones = ({ onValorDevuelto }) => {
+const Publicaciones = () => {
     const { publicaciones: publicacionesIniciales, loading, error } = ObtenerPublicaciones();
-  
+    const navigate = useNavigate();
+
     // Estado para controlar las publicaciones
     const [publicaciones, setPublicaciones] = useState([]);
   
@@ -53,8 +54,7 @@ const Publicaciones = ({ onValorDevuelto }) => {
         
     };
     const comentar = (id) =>{
-        onValorDevuelto(1);
-        return 1;
+      navigate(`/publicacion/${id}`);
     };
   
     if (loading) return <p>Cargando publicaciones...</p>;
