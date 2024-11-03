@@ -50,7 +50,7 @@ const ChatsUsuario = () => {
       const chatsOrdenados = chatsData.sort((a, b) => {
         const fechaUltimoMensajeA = a.mensajes.length > 0 ? new Date(Math.max(...a.mensajes.map(m => new Date(m.fechaEnvio)))) : 0;
         const fechaUltimoMensajeB = b.mensajes.length > 0 ? new Date(Math.max(...b.mensajes.map(m => new Date(m.fechaEnvio)))) : 0;
-        return fechaUltimoMensajeB - fechaUltimoMensajeA; // Ordenar de más reciente a más antiguo
+        return fechaUltimoMensajeB - fechaUltimoMensajeA; 
       });
 
       setChats(chatsOrdenados);
