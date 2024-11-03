@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import { BASE_URL, BASE_URL_SOCKET } from '../../config'
+import { BASE_URL, BASE_URL_SOCKET } from '../../config';
+
 const ChatComponent = () => {
   const { chatId } = useParams();
   const [messages, setMessages] = useState([]);
@@ -128,7 +129,6 @@ const ChatComponent = () => {
     }
   };
   
-
   return (
     <div>
       <div>
