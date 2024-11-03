@@ -116,8 +116,8 @@ const Mensajes = () => {
   };
 
   const abrirChat = (chatId) => {
-    setChatSeleccionado(chatId); // Establecer el chat seleccionado
-    navigate(`/chat/${chatId}`); // Navegar a la página del chat
+    setChatSeleccionado(chatId); 
+    navigate(`/chat/${chatId}`); 
   };
 
   const enviarMensaje = async (chatId) => {
