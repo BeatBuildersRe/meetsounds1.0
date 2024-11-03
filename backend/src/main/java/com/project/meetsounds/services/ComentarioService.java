@@ -47,19 +47,20 @@ public class ComentarioService {
     public List<ComentarioOut> listarComentariosPorId(String publicacionId) {
 
         Optional<Publicacion> publicacionOptional = this.iPublicacionRepository.findById(publicacionId);
-        Publicacion publicacion = publicacionOptional.get();
-
+        Publicacion publicacion = publicacionOptional.orElseThrow(()-> new IllegalArgumentException("No se ha encontrado la publicacion con id: " + publicacionId));
+        System.out.println("descripcion: " + publicacion.getDescripcion());
         List<Comentario> comentarios = publicacion.getComentarios();
 
         List<ComentarioOut> comentariosOut = new ArrayList<>();
 
         for (Comentario comentario : comentarios){
             ComentarioOut comentarioOut = new ComentarioOut();
+
             comentarioOut.setId(comentario.getId());
             comentarioOut.setComentario(comentario.getComentario());
-
+            System.out.println("Alias: " + comentario.getIdAliasUsuario());
             Optional<Usuario> usuarioOptional = this.iUsuarioRepository.findByAlias(comentario.getIdAliasUsuario());
-            Usuario usuario = usuarioOptional.get();
+            Usuario usuario = usuarioOptional.orElseThrow(()-> new IllegalArgumentException("No se a encontrado el usuario con el alias: " + comentario.getIdAliasUsuario()));
             comentarioOut.setUsuario(usuario);
 
             comentariosOut.add(comentarioOut);

@@ -74,7 +74,7 @@ type Mutation{
     # Publicacion Mutation
     eliminarPublicacionPorId(idUsuario: ID!, idPublicacion: ID!): Boolean
     meGusta(idPublicacion: String!, usuarioAlias: String!): Boolean
-    crearPublicacion(idUsuario: ID!,descripcion: String): Publicacion
+    #crearPublicacion(idUsuario: ID!,descripcion: String): Publicacion
     comentar(publicacionId: String, idAliasUsuario: String, text: String): Boolean
 
     # Seguidos Mutation
