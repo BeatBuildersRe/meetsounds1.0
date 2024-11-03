@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,4 +17,5 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Estado {
     private String id;
     private String nombre;
+    private List<String> departamentos;
 }

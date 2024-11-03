@@ -52,6 +52,7 @@ type Mutation{
     #actualizar solo nombre y apellido
     actualizarNombreApellidoPorAlias(alias: String!, nombre: String!, apellido: String!): Usuario
 
+    #Seguidos
     seguirUsuario(aliasSeguidor:String!, aliasSeguido:String!): Boolean
     dejarDeSeguirUsuario(aliasSeguidor:String!, aliasSeguido:String!): Boolean
 

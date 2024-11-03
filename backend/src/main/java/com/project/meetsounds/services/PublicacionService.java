@@ -49,14 +49,13 @@ public class PublicacionService {
         Optional<Usuario> usuarioOptional = this.iUsuarioRepository.findByAlias(idAlias);
         Usuario usuario = new Usuario();
 
-        if(usuarioOptional.isPresent()){
-            Usuario usu = usuarioOptional.get();
-            usuario.setId(usu.getId());
-            usuario.setNombre(usu.getNombre());
-            usuario.setApellido(usu.getApellido());
-            usuario.setAlias(usu.getAlias());
-            usuario.setFotoPerfilUrl(usu.getFotoPerfilUrl());
-        }
+        Usuario usu = usuarioOptional.orElseThrow(()-> new IllegalArgumentException("No se ha econtrado el usuario con el alias: " + idAlias));
+        usuario.setId(usu.getId());
+        usuario.setNombre(usu.getNombre());
+        usuario.setApellido(usu.getApellido());
+        usuario.setAlias(usu.getAlias());
+        usuario.setFotoPerfilUrl(usu.getFotoPerfilUrl());
+
         publi.setUsuario(usuario);
         publi.setDescripcion(descripcion);
 
@@ -79,9 +78,6 @@ public class PublicacionService {
         this.iPublicacionRepository.save(publi);
         //Guardamos la publicacion en la lista de "misPublicaciones" del usuario
         usuarioService.crearPublicacion(idAlias, publi);
-
-
-
         return publi;
     }
 
@@ -91,30 +87,17 @@ public class PublicacionService {
         return this.iPublicacionRepository.findAll();
     }
 
-    public void eliminarPublicacion(String idUsuario, String idPublicacion) {
-        /*
-        Query query = new Query(Criteria.where("_id").is(idUsuario));
-        query.fields().include("misPublicaciones");
-        Usuario usu = mongoTemplate.findOne(query, Usuario.class);
-
-        List<Publicacion> publis = usu.getMisPublicaciones();
-        System.out.println(publis.get(0).getDescripcion());
-        publis.removeIf( p -> p.getId().equals(idPublicacion));
-        usu.setMisPublicaciones(publis);
-
-         */
+    public void eliminarPublicacion(String idAlias, String idPublicacion) {
         System.out.println(idPublicacion);
         Usuario usuario = new Usuario();
-        Optional<Usuario> usuarioOptional = this.iUsuarioRepository.findById(idUsuario);
-        if(usuarioOptional.isPresent()){
-            usuario = usuarioOptional.get();
-        }
+        Optional<Usuario> usuarioOptional = this.iUsuarioRepository.findByAlias(idAlias);
+        usuario = usuarioOptional.orElseThrow(()-> new IllegalArgumentException("No se ha encontrado el usuario con alias: " + idAlias));
 
         List<Publicacion> misPublicaciones = usuario.getMisPublicaciones();
         misPublicaciones.removeIf( p -> p.getId().equals(idPublicacion));
         usuario.setMisPublicaciones(misPublicaciones);
 
-        Query queryUp = new Query(Criteria.where("_id").is(idUsuario));
+        Query queryUp = new Query(Criteria.where("alias").is(idAlias));
         Update update = new Update().set("misPublicaciones", usuario.getMisPublicaciones());
         mongoTemplate.updateFirst(queryUp, update, Usuario.class);
 
@@ -125,7 +108,7 @@ public class PublicacionService {
     public PublicacionOut buscarPublicacionPorIdOut(String id) {
 
         Optional<Publicacion> publicacionOptional = this.iPublicacionRepository.findById(id);
-        Publicacion publicacion = publicacionOptional.get();
+        Publicacion publicacion = publicacionOptional.orElseThrow(()-> new IllegalArgumentException("No se ha encontrado la publicacion con id: " + id ));
         List<ComentarioOut> comentarioOuts = this.comentarioService.listarComentariosPorId(id);
 
         PublicacionOut publicacionOut = new PublicacionOut();
@@ -140,20 +123,15 @@ public class PublicacionService {
     public Boolean meGusta(String idPublicacion, String usuarioAlias) {
         //Traer la publicacion
         Optional<Publicacion> publiOptional = iPublicacionRepository.findById(idPublicacion);
-        try{
-            Publicacion publicacion = publiOptional.get();
-            publicacion.setCount_likes(publicacion.getCount_likes() + 1);
+        Publicacion publicacion = publiOptional.orElseThrow(()-> new IllegalArgumentException("No se ha encontrado la publicacion con id: " + idPublicacion));
 
-            MeGusta meGusta = new MeGusta();
-            meGusta.setPublicacionId(idPublicacion);
-            meGusta.setUsuarioAlias(usuarioAlias);
+        publicacion.setCount_likes(publicacion.getCount_likes() + 1);
+        MeGusta meGusta = new MeGusta();
+        meGusta.setPublicacionId(idPublicacion);
+        meGusta.setUsuarioAlias(usuarioAlias);
 
-            this.iPublicacionRepository.save(publicacion);
-            this.iMeGustaRepository.save(meGusta);
-
-        }catch (NullPointerException e){
-            System.out.println("No se pudo dar me gusta: " + e.getMessage());
-        }
+        this.iPublicacionRepository.save(publicacion);
+        this.iMeGustaRepository.save(meGusta);
         return true;
     }
 
@@ -168,22 +146,10 @@ public class PublicacionService {
 
     public Publicacion buscarPublicacionPorId(String id) {
         Publicacion publicacion = new Publicacion();
-        try {
-            Optional<Publicacion> publicacionOptional = this.iPublicacionRepository.findById(id);
-            publicacion = publicacionOptional.get();
-        }catch (NullPointerException n){
-            System.out.println("NullPointer - PublicacionService - buscarPublicacionPorId");
-        }
+        Optional<Publicacion> publicacionOptional = this.iPublicacionRepository.findById(id);
+        publicacion = publicacionOptional.orElseThrow(()-> new IllegalArgumentException("No se ha encontrado la publicacion con id: " + id));
         return publicacion;
     }
 
-
-
-
-    /*
-    public void savePublicacion(Publicacion publi) {
-        this.publi_reposotory.save(publi);
-    }
-     */
 
 }

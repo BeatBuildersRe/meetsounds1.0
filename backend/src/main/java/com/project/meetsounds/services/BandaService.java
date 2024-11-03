@@ -72,54 +72,38 @@ public class BandaService {
 
     public void anadirMiembros(String nombreBanda, List<String> idUsuarios) {
         Optional<Banda> banda = this.buscarBandaPorNombre(nombreBanda);
-        if(banda != null){
-            Banda banda2 = banda.get();
-            for(String idMiembro : idUsuarios){
-                banda2.getMiembros().add(idMiembro);
-                usuarioService.añadirMiembro(idMiembro, banda2);
-                iBandaRepository.save(banda2);
-            }
+        Banda banda2 = banda.orElseThrow(()-> new IllegalArgumentException("Banda no encontrada"));
+        for(String idMiembro : idUsuarios){
+            banda2.getMiembros().add(idMiembro);
+            usuarioService.añadirMiembro(idMiembro, banda2);
+            iBandaRepository.save(banda2);
         }
     }
 
     public void eliminarMiembro(String idBanda, String idUsuario) {
         Optional<Banda> banda = iBandaRepository.findById(idBanda);
-        if(banda != null){
-            Banda banda2 = banda.get();
-            banda2.getMiembros().remove(idUsuario);
-            usuarioService.eliminarMiembro(idUsuario, banda2);
-            iBandaRepository.save(banda2);
-        }
+        Banda banda2 = banda.orElseThrow(()-> new IllegalArgumentException("Banda no encontrada"));
+        banda2.getMiembros().remove(idUsuario);
+        usuarioService.eliminarMiembro(idUsuario, banda2);
+        iBandaRepository.save(banda2);
     }
 
     public void abandonarBanda(String idBanda, String idAlias) {
-        try {
-            Optional<Banda> bandaOptional = this.iBandaRepository.findById(idBanda);
-            Banda banda = bandaOptional.get();
+        Optional<Banda> bandaOptional = this.iBandaRepository.findById(idBanda);
+        Banda banda = bandaOptional.orElseThrow(()-> new IllegalArgumentException("Banda no encontrada"));
 
+        //Cada usuario tiene la lista de Bandas a la que pertenece, por eso hay que traer las
+        // listas de todos los usuarios que pertenecen a la banda para actualizar todas sus listas.
+        for (String idAliasUsuario : banda.getMiembros()){
+            Optional<Usuario> usuarioOptional = this.usuarioService.buscarPorAlias(idAliasUsuario);
+            Usuario usuario = usuarioOptional.orElseThrow(()-> new IllegalArgumentException("Usuario no encontrado"));
 
-            //Cada usuario tiene la lista de Bandas a la que pertenece, por eso hay que traer las
-            // listas de todos los usuarios que pertenecen a la banda para actualizar todas sus listas.
-            for (String idAliasUsuario : banda.getMiembros()){
-                try {
-                    Optional<Usuario> usuarioOptional = this.usuarioService.buscarPorAlias(idAliasUsuario);
-                    Usuario usuario = usuarioOptional.get();
-
-                    // Trae la lista de bandas de cada usuario y elimina el usuario que salio de la banda.
-                    usuario.getMisBandas().removeIf(b -> b.getMiembros().stream().anyMatch(u -> u.equals(idAlias)));
-                    this.iUsuarioRepository.save(usuario);
-
-                }catch (NullPointerException n){
-                    System.out.println("NullPointer BandaService: Metodo abandonarBanda");
-                }
-            }
-
-            banda.getMiembros().remove(idAlias);
-            this.iBandaRepository.save(banda);
-
-        }catch (NullPointerException nullPointerException){
-            System.out.println("NullPointerExeption - BandaService - BandaOptional");
+            // Trae la lista de bandas de cada usuario y elimina el usuario que salio de la banda.
+            usuario.getMisBandas().removeIf(b -> b.getMiembros().stream().anyMatch(u -> u.equals(idAlias)));
+            this.iUsuarioRepository.save(usuario);
         }
 
+        banda.getMiembros().remove(idAlias);
+        this.iBandaRepository.save(banda);
     }
 }
