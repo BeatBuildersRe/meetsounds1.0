@@ -183,15 +183,7 @@ public class UsuarioService {
     }
 
     public List<Usuario> buscarTodosLosUsuarios() {
-        List<Usuario> users = this.usuarioRepository.findAll();
-        for(Usuario usuario : users){
-
-            for(Instrumento instrumento : usuario.getMisInstru() ){
-                System.out.println(instrumento.getNombre());
-                System.out.println(instrumento.getTipoInstrumento());
-            }
-        }
-        return users;
+        return usuarioRepository.findAll();
     }
 
     public Set<Usuario> buscarUsuarioPorTexto(String text) {

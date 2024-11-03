@@ -27,6 +27,7 @@ import ActualizarNombreApellido from './Pages/Configuracion/EditarPerfil/Actuali
 import PerfilEncontrado from './Pages/PerfilUsuario/PerfilEncontrado';
 import OnboardingForm from './Pages/OnBoarding/OnboardingForm';
 import AliasGuard from './services/AliasGuard'; // Importa el nuevo componente de protección
+import ChatsUsuario from './Pages/Mensajes/ChatsUsuarios';
 import '@css/App.css';
 
 function App() {
@@ -74,6 +75,7 @@ function App() {
         <Route path="configuracion/editarperfil/actualizar-nombre-apellido" element={<ActualizarNombreApellido />} />
         <Route path="cuenta/fotosperfil" element={<FotosPerfil />} />
         <Route path="/chat/:chatId" element={<ChatComponent />} />
+        <Route path="/chats-usuario" element={<ChatsUsuario />} />
       </Routes>
     </div>
   );
