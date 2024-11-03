@@ -93,7 +93,7 @@ const ChatComponent = () => {
 
   const sendMessage = async () => {
     const alias = Cookies.get('alias');
-  
+    
     try {
       const query = `query {
         buscarPorAlias(alias: "${alias}") {
@@ -129,6 +129,13 @@ const ChatComponent = () => {
     }
   };
   
+  // Función para manejar el envío con la tecla Enter
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter' && inputMessage.trim().length > 0) {
+      sendMessage();
+    }
+  };
+  
   return (
     <div>
       <div>
@@ -142,10 +149,17 @@ const ChatComponent = () => {
         type="text"
         value={inputMessage}
         onChange={(e) => setInputMessage(e.target.value)}
+        onKeyPress={handleKeyPress} // Llama a handleKeyPress al presionar una tecla
       />
-      <button onClick={sendMessage}>Enviar</button>
+      <button 
+        onClick={sendMessage} 
+        disabled={inputMessage.trim().length === 0} // Deshabilita el botón si el mensaje está vacío
+      >
+        Enviar
+      </button>
     </div>
   );
+  
 };
 
 export default ChatComponent;

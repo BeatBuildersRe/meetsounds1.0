@@ -1,13 +1,11 @@
 import * as React from "react";
-import { io } from "socket.io-client"; // Importar Socket.io
 import "@css/Colores.css";
 import "@css/Mensajes.css";
 import BadgeAvatars from "@c/avatar/AvatarActives";
 import MenuDerechoDiv from "@c/Menu/Derecha";
 import { useNavigate } from 'react-router-dom'; 
-import { BASE_URL } from '../../config';
-
-const socket = io(BASE_URL); // Conéctate a tu servidor de WebSocket
+import { BASE_URL, BASE_URL_SOCKET } from '../../config';
+import { useWebSocket } from "../../services/WebSocketProvider"; // Importa tu contexto de WebSocket
 
 const Mensajes = () => {
   const [chats, setChats] = React.useState([]);
@@ -19,21 +17,38 @@ const Mensajes = () => {
   const [chatSeleccionado, setChatSeleccionado] = React.useState(null);
   const navigate = useNavigate();
 
+  const socket = useWebSocket(); // Obtén el WebSocket desde el contexto
+
   React.useEffect(() => {
     const aliasLocal = getCookie("alias");
     if (aliasLocal) {
       buscarUsuarioPorAlias(aliasLocal);
     }
-
-    socket.on('nuevoMensaje', (mensaje) => {
-      // Agrega el nuevo mensaje al estado
-      setMensajesChat((prevMensajes) => [...prevMensajes, mensaje]);
-    });
-
-    return () => {
-      socket.off('nuevoMensaje'); // Limpia el evento al desmontar el componente
-    };
   }, []);
+
+  // Efecto para manejar la conexión WebSocket al seleccionar un chat
+  React.useEffect(() => {
+    if (chatSeleccionado && socket) {
+      // Conectar al WebSocket con el chatId
+      const ws = new WebSocket(`${BASE_URL_SOCKET}/ws-chat?chatId=${chatSeleccionado}`);
+
+      ws.onopen = () => {
+        console.log(`Conectado al WebSocket para el chat ${chatSeleccionado}`);
+      };
+
+      ws.onmessage = (event) => {
+        const nuevoMensaje = JSON.parse(event.data);
+        setMensajesChat((prevMensajes) => [...prevMensajes, nuevoMensaje]);
+      };
+
+      ws.onclose = () => {
+        console.log(`Conexión WebSocket cerrada para el chat ${chatSeleccionado}`);
+      };
+
+      // Limpiar la conexión al cambiar de chat o desmontar el componente
+      return () => ws.close();
+    }
+  }, [chatSeleccionado, socket]);
 
   const getCookie = (name) => {
     const value = `; ${document.cookie}`;
@@ -139,7 +154,6 @@ const Mensajes = () => {
         body: JSON.stringify(mensaje),
       });
 
-      socket.emit('enviarMensaje', mensaje); // Envía el mensaje a través de WebSocket
       setMensajeTexto(""); // Limpiar el campo de texto después de enviar
     } catch (error) {
       console.error('Error al enviar mensaje:', error);
@@ -158,7 +172,6 @@ const Mensajes = () => {
           <div className="mensajes-usuario">
             {chats && chats.length > 0 ? (
               chats.map(chat => {
-                // Verifica si el chat tiene mensajes
                 if (!chat.mensajes || chat.mensajes.length === 0) {
                   return null; 
                 }
@@ -205,7 +218,6 @@ const Mensajes = () => {
         <MenuDerechoDiv />
       </div>
 
-      {/* Componente para enviar mensajes */}
       {chatSeleccionado && (
         <div className="enviar-mensaje">
           <input 
