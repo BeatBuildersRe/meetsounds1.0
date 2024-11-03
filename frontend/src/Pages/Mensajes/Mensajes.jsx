@@ -5,19 +5,18 @@ import BadgeAvatars from "@c/avatar/AvatarActives";
 import MenuDerechoDiv from "@c/Menu/Derecha";
 import useObtenerUsuarios from "@services/GetUsuarios";
 import AvatarActive from "@c/avatar/AvatarActive";
-import ChatComponent from "../Chat/ChatComponent"; // Importa el componente ChatComponent
+import ChatComponent from "../Chat/ChatComponent"; 
 
 const Mensajes = () => {
   const { usuarios, cargando, error } = useObtenerUsuarios();
-  const [selectedUserId, setSelectedUserId] = React.useState(null); // Estado para el usuario seleccionado
+  const [selectedUserId, setSelectedUserId] = React.useState(null);
 
   if (cargando) return <p>Cargando...</p>;
   if (error) return <p>Error al cargar los usuarios</p>;
 
-  // Maneja el clic en el usuario
   const handleUserClick = (userId) => {
     console.log("Usuario seleccionado:", userId);
-    setSelectedUserId(userId); // Establece el ID del usuario seleccionado
+    setSelectedUserId(userId); 
   };
 
   return (
