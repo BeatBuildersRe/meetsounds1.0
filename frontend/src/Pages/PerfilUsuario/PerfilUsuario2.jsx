@@ -296,9 +296,15 @@ export default function ProfilePage() {
   const toggleEdicion = (tipo) => {
     setEstadoEdicion((prev) => ({ ...prev, [tipo]: !prev[tipo] }));
   };
+
+  
   const guardarImagenTemp = (tipo, imagen) => {
-    setTempImages(prev => ({ ...prev, [tipo]: imagen }));
-  };
+    setTempImages((prev) => ({
+        ...prev,
+        [tipo]: imagen // Actualiza la imagen correspondiente
+    }));
+    setIsChanged(true); // Marca que ha habido un cambio
+};
   const [alignment, setAlignment] = useState('web');
   const [estadoEdicion, setEstadoEdicion] = useState({ perfil: false, portada: false });
   const [imagenes, setImagenes] = useState({
@@ -433,7 +439,7 @@ export default function ProfilePage() {
             setIsModalOpen(false);
             setTempImages({ perfil: '', portada: '' });
         }, 2000);
-
+        await fetchUserData(); // Asegúrate de que esta función esté disponible aquí
     } catch (error) {
         console.error("Error al actualizar el usuario", error);
         toast.error("Error al guardar los cambios");
