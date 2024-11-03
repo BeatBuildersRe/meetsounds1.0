@@ -1,37 +1,30 @@
 
 import React, { useState, useEffect } from 'react'
 import { Dialog } from '@headlessui/react'
-import { CalendarIcon, CameraIcon } from 'lucide-react'
+import { CameraIcon } from 'lucide-react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { ToggleButton, ToggleButtonGroup } from '@mui/material'
-import { FcAudioFile, FcCamera, FcAlphabeticalSortingAz, FcFilmReel, FcGallery, FcMusic, FcPlus } from "react-icons/fc"
-import MenuListComposition from '../../components/mini-menu/minMenu'
-import CrearPublicacion from '@c/Crear-Publicacion/CrearPublicacion'
-import SeguirDores from '@c/seguir_dores'
-import MenuDerecho from '@c/Menu/Menu'
+
 
 import { BASE_URL } from '../../config'
  /* Services */
  import GetAlias from '@services/GetAlias';
  import useObtenerUsuario from '@services/GetUsuario';
- import useUpdateUsuario from '@services/UpdateUsuario'; 
+ import useUpdateUsuarioConImagen from '@services/Update-Datos-Imagenes-Perfil'; 
  /* Css */
  import '@css/Colores.css'
  import '@css/Perfil_Y_Portada.css';
  /* React */
  import { useForm } from 'react-hook-form';
  /* Componentes */
- import MenuDerechoDiv from "@c/Menu/Derecha";
+
  import UploadAvatar from '@c/UploadAvatar';
  import UploadPortada from '@c/UploadPortada';
- import UiverseEdit from '@c/botones/BotonEdit';
- import Avatars from '@c/avatar/AvatarV2';
+ 
  import { toast, ToastContainer } from 'react-toastify';
  import Posts from '@c/Perfil/Publicaciones';
 import Replies from '@c/Perfil/Publicaciones';
 import Highlights from '@c/Perfil/Publicaciones';
 import 'react-toastify/dist/ReactToastify.css';
-import useUpdateImgPerfil from '../../services/UpdatePerfil'
 
 const imgFondoDefault = 'https://imagedelivery.net/WS9ABFRS6TfdqDudkFOT3w/grrraphic/previews/j6RAX7eRw0pyywtdOXK38whWXLrEmjDWb7Z6l54u.jpeg/thumb?height=200&width=600' // Imagen de fondo predeterminada
 const imgPerfilDefault = 'https://imagedelivery.net/WS9ABFRS6TfdqDudkFOT3w/grrraphic/previews/j6RAX7eRw0pyywtdOXK38whWXLrEmjDWb7Z6l54u.jpeg/thumb?height=400&width=400' // Imagen de perfil predeterminada
@@ -168,6 +161,10 @@ const styles = {
     borderRadius: '0.25rem',
     color: 'white',
   },
+  inputDisabled: {
+    cursor: 'not-allowed',
+    opacity: 0.5, // Opacidad para un efecto deshabilitado
+},
   fileUpload: {
     display: 'flex',
     flexDirection: 'column',
@@ -198,6 +195,12 @@ const styles = {
     color: 'white',
     border: 'none',
   },
+  buttonDisabled: {
+    backgroundColor: '#a5d6a7', // Color cuando está deshabilitado
+    color: '#b0bec5', // Color de texto más claro
+    cursor: 'not-allowed',
+    opacity: 0.7, // Opacidad para un efecto deshabilitado
+},
   newPostButton: {
     display: 'flex',
     alignItems: 'center',
@@ -212,19 +215,7 @@ const styles = {
   icon: {
     marginRight: '0.5rem',
   },
-  // toggleButtonGroup: {
-  //   display: 'flex',
-  //   justifyContent: 'space-between',
-  //   marginTop: '1rem',
-  // },
-  // toggleButton: {
-  //   flex: 1,
-  //   padding: '0.5rem',
-  //   border: '1px solid #4a5568',
-  //   backgroundColor: '#2d3748',
-  //   color: 'white',
-  //   cursor: 'pointer',
-  // },
+  
   tabs: {
     display: 'flex',
     borderBottom: '1px solid #2d3748',
@@ -288,201 +279,177 @@ const styles = {
   },
   
 }
-
 export default function ProfilePage() {
-  
-  const { alias } = useParams()
-  const navigate = useNavigate()
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const { alias } = useParams();
+  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [userData, setUserData] = useState({
-    nombre: '',
-    apellido: '',
-    alias: '',
-    fotoPerfilUrl: '',
-    fotoPortadaUrl: '',
-    c_seguidores: '',
-    c_seguidos: '',
-    descripcion: ''
-  })
-  const [alignment, setAlignment] = useState('web')
-  const [isDivVisible, setIsDivVisible] = useState(false)
-  const [isDivVisible2, setIsDivVisible2] = useState(false)
-  const [isDivVisible3, setIsDivVisible3] = useState(false)
-
-
-
-
-
-
+      nombre: '',
+      apellido: '',
+      alias: '',
+      fotoPerfilUrl: '',
+      fotoPortadaUrl: '',
+      c_seguidores: '',
+      c_seguidos: '',
+      descripcion: ''
+  });
+  const toggleEdicion = (tipo) => {
+    setEstadoEdicion((prev) => ({ ...prev, [tipo]: !prev[tipo] }));
+  };
+  const guardarImagenTemp = (tipo, imagen) => {
+    setTempImages(prev => ({ ...prev, [tipo]: imagen }));
+  };
+  const [alignment, setAlignment] = useState('web');
   const [estadoEdicion, setEstadoEdicion] = useState({ perfil: false, portada: false });
   const [imagenes, setImagenes] = useState({
-    perfil: '',
-    portada: ''
+      perfil: '',
+      portada: ''
   });
   const [tempImages, setTempImages] = useState({
-    perfil: '',
-    portada: ''
+      perfil: '',
+      portada: ''
   });
 
   const { register, handleSubmit, formState: { errors }, setValue } = useForm();
   const user = GetAlias();
   const { usuario, cargando, error } = useObtenerUsuario(user);
-  const { actualizarUsuario, cargando: actualizando, error: errorActualizando } = useUpdateUsuario();
+  const { actualizarUsuarioConImagen, cargando: actualizando, error: errorActualizando } = useUpdateUsuarioConImagen(); // Usa el nuevo hook
 
-  // Definir fetchUserData fuera del useEffect para reutilizarlo
   const fetchUserData = async () => {
-    try {
-      const response = await fetch(`${BASE_URL}/graphql`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          query: `
-            query {
-              buscarPorAlias(alias: "${alias}") {
-                nombre
-                apellido
-                fotoPerfilUrl
-                fotoPortadaUrl
-                alias
-                c_seguidores
-                c_seguidos
-                descripcion
-              }
-            }
-          `,
-        }),
-      });
-      const result = await response.json();
+      try {
+          const response = await fetch(`${BASE_URL}/graphql`, {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                  query: `
+                  query {
+                      buscarPorAlias(alias: "${alias}") {
+                          nombre
+                          apellido
+                          fotoPerfilUrl
+                          fotoPortadaUrl
+                          alias
+                          c_seguidores
+                          c_seguidos
+                          descripcion
+                      }
+                  }
+                  `,
+              }),
+          });
+          const result = await response.json();
 
-      if (result.data && result.data.buscarPorAlias) {
-        setUserData(result.data.buscarPorAlias);
-        setImagenes({
-          perfil: result.data.buscarPorAlias.fotoPerfilUrl,
-          portada: result.data.buscarPorAlias.fotoPortadaUrl
-        });
-      } else {
-        navigate('/404');
+          if (result.data && result.data.buscarPorAlias) {
+              setUserData(result.data.buscarPorAlias);
+              setImagenes({
+                  perfil: result.data.buscarPorAlias.fotoPerfilUrl,
+                  portada: result.data.buscarPorAlias.fotoPortadaUrl
+              });
+          } else {
+              navigate('/404');
+          }
+      } catch (error) {
+          console.error("Error al conectar con el servidor", error);
+          navigate('/404');
       }
-    } catch (error) {
-      console.error("Error al conectar con el servidor", error);
-      navigate('/404');
-    }
   };
-// Llamar a fetchUserData cuando el alias cambie
-useEffect(() => {
-  if (alias) {
-    fetchUserData();
-  } else {
-    console.log("Alias no encontrado en la URL.");
-    navigate('/404');
-  }
-}, [alias, navigate]);
+  const calcularEdad = (fechaNacimiento) => {
+    const hoy = new Date();
+    const nacimiento = new Date(fechaNacimiento);
+    let edad = hoy.getFullYear() - nacimiento.getFullYear();
+    const mesDiff = hoy.getMonth() - nacimiento.getMonth();
 
-useEffect(() => {
-  if (usuario && !cargando) {
-    setImagenes({
-      perfil: usuario.fotoPerfilUrl || '',
-      portada: usuario.fotoPortadaUrl || ''
-    });
+    // Ajusta la edad si el cumpleaños aún no ha ocurrido este año
+    if (mesDiff < 0 || (mesDiff === 0 && hoy.getDate() < nacimiento.getDate())) {
+        edad--;
+    }
 
-    setValue("Nombre", usuario.nombre);
-    setValue("Apellido", usuario.apellido);
-    setValue("Edad", usuario.edad);
-    setValue("Fecha", usuario.fechaNacimiento);
-    setValue("Genero", usuario.genero);
-  }
+    return edad;
+};
+  useEffect(() => {
+      if (alias) {
+          fetchUserData();
+      } else {
+          console.log("Alias no encontrado en la URL.");
+          navigate('/404');
+      }
+  }, [alias, navigate]);
+
+  useEffect(() => {
+    if (usuario && !cargando) {
+        setImagenes({
+            perfil: usuario.fotoPerfilUrl || '',
+            portada: usuario.fotoPortadaUrl || ''
+        });
+
+        setValue("Nombre", usuario.nombre || '');
+        setValue("Apellido", usuario.apellido || '');
+        setValue("Descripcion", usuario.descripcion || '');
+        const edadCalculada = calcularEdad(usuario.fechaNacimiento);
+        setValue("Edad", edadCalculada || '');
+        setValue("Fecha", usuario.fechaNacimiento || '');
+        setValue("Genero", usuario.genero || '');
+    }
 }, [usuario, cargando, setValue]);
-const toggleEdicion = (tipo) => {
-  setEstadoEdicion(prev => ({ ...prev, [tipo]: !prev[tipo] }));
-};
-
-const guardarImagenTemp = (tipo, imagen) => {
-  setTempImages(prev => ({ ...prev, [tipo]: imagen }));
-};
-  const handleEditProfile = (e) => {
-    e.preventDefault()
-    // Aquí iría la lógica para actualizar el perfil
-    setIsModalOpen(false)
-  }
-
-  const handleChange = (event, newAlignment) => {
-    if (newAlignment !== null) {
-      setAlignment(newAlignment)
-    }
-  }
-
-  const renderComponent = () => {
-    switch (alignment) {
-      case 'web': return <h1>Publicaciones</h1>
-      case 'android': return <h1>Multimedia</h1>
-      case 'ios': return <h1>Información</h1>
-      default: return <h1>Publicaciones</h1>
-    }
-  }
-
-  const handleImageClick = () => setIsDivVisible(!isDivVisible)
-  const handleImageClick2 = () => setIsDivVisible2(!isDivVisible2)
-  const handleImageClick3 = () => setIsDivVisible3(!isDivVisible3)
-
-
-
-  
-
-  
-  
-  
-
-  
 
   const onSubmit = async (data) => {
     try {
-      const updatedData = {
-        alias: user,
-        nombre: data.Nombre,
-        apellido: data.Apellido,
+        // Asegúrate de que las imágenes sean válidas
+        const imagenPerfil = tempImages.perfil || '';
+        const imagenPortada = tempImages.portada || '';
 
-      };
-      useUpdateImgPerfil(tempImages.portada,user,2)
-      useUpdateImgPerfil(tempImages.perfil,user,1)
-      await actualizarUsuario(updatedData);
+        // Llama al método que actualiza el usuario y sube las imágenes
+        await actualizarUsuarioConImagen({
+            alias: user,
+            nombre: data.Nombre,
+            apellido: data.Apellido,
+            imagenPerfil, // Envío de la imagen de perfil
+            imagenPortada // Envío de la imagen de portada
+        });
 
-      toast.success("Los cambios se guardaron correctamente", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-      });
+        toast.success("Los cambios se guardaron correctamente", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+        });
 
-      // Update the main imagenes state
-      setImagenes({
-        perfil: updatedData.fotoPerfilUrl,
-        portada: updatedData.fotoPortadaUrl
-      });
+        // Update userData state
+        setUserData(prevData => ({
+            ...prevData,
+            nombre: data.Nombre,
+            apellido: data.Apellido,
+            fotoPerfilUrl: imagenPerfil || imagenes.perfil,
+            fotoPortadaUrl: imagenPortada || imagenes.portada
+        }));
 
-      // Update userData state
-      setUserData(prevData => ({
-        ...prevData,
-        nombre: updatedData.nombre,
-        apellido: updatedData.apellido,
-        fotoPerfilUrl: updatedData.fotoPerfilUrl,
-        fotoPortadaUrl: updatedData.fotoPortadaUrl
-      }));
+        // Cerrar el modal y resetear imágenes
+        setTimeout(() => {
+            setIsModalOpen(false);
+            setTempImages({ perfil: '', portada: '' });
+        }, 2000);
 
-      setTimeout(() => {
-        setIsModalOpen(false);
-        setTempImages({ perfil: '', portada: '' });
-      }, 2000);
-      
     } catch (error) {
-      console.error("Error al actualizar el usuario", error);
-      toast.error("Error al guardar los cambios");
+        console.error("Error al actualizar el usuario", error);
+        toast.error("Error al guardar los cambios");
     }
-  };
+};
+
+
+  
+
+  const [isChanged, setIsChanged] = useState(false);
+  const handleInputChange = (event) => {
+    setValue(event.target.name, event.target.value); // Actualiza el valor en el formulario
+    setIsChanged(true); // Marca que ha habido un cambio
+};
+
+  
   const [activeTab, setActiveTab] = useState('Posts');
   const renderContent = () => {
     switch (activeTab) {
@@ -571,18 +538,7 @@ const guardarImagenTemp = (tipo, imagen) => {
         {renderContent()}
       </div>
 
-          {/* <ToggleButtonGroup
-            color="primary"
-            value={alignment}
-            exclusive
-            onChange={handleChange}
-            aria-label="Platform"
-            style={styles.toggleButtonGroup}
-          >
-            <ToggleButton value="web" style={styles.toggleButton}>Publicaciones</ToggleButton>
-            <ToggleButton value="android" style={styles.toggleButton}>Multimedia</ToggleButton>
-            <ToggleButton value="ios" style={styles.toggleButton}>Información</ToggleButton>
-          </ToggleButtonGroup> */}
+          
 
         </div>
       </div>
@@ -591,192 +547,168 @@ const guardarImagenTemp = (tipo, imagen) => {
 
       {/* Edit Profile Modal */}
       <Dialog open={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <div style={styles.modal}>
-          <Dialog.Panel className="modal-content">
-            <Dialog.Title as="h3" style={styles.modalTitle}>
-              Editar Perfil
-            </Dialog.Title>
-            <form onSubmit={handleSubmit(onSubmit)} style={styles.form}>
+  <div style={styles.modal}>
+    <Dialog.Panel className="modal-content">
+      <Dialog.Title as="h3" style={styles.modalTitle}>
+        Editar Perfil
+      </Dialog.Title>
+      <form onSubmit={handleSubmit(onSubmit)} style={styles.form}>
+        <div 
+          style={{
+            ...styles.coverImageContainer,
+            backgroundImage: `url(${tempImages.portada || imagenes.portada})`,
+          }}
+        >
+          {!estadoEdicion.portada && (
+            <label htmlFor="cover-upload" style={{...styles.cameraIcon, ...styles.coverCameraIcon}} onClick={() => toggleEdicion('portada')}>
+              <CameraIcon color="white" size={24} />
+            </label>
+          )}
 
-
-            <div 
-              style={{
-                ...styles.coverImageContainer,
-                backgroundImage: `url(${tempImages.portada || imagenes.portada})`,
-              }}
-            >
-              {!estadoEdicion.perfil && !estadoEdicion.portada && (
-                      <>
-                       <label htmlFor="cover-upload" style={{...styles.cameraIcon, ...styles.coverCameraIcon}} onClick={() => toggleEdicion('portada')}>
+          <div style={styles.profileImageContainer}>
+            <img 
+              src={tempImages.perfil || imagenes.perfil} 
+              alt="Profile" 
+              style={styles.profileImageEdit} 
+            />
+            {!estadoEdicion.perfil && (
+              <label htmlFor="profile-upload" style={{...styles.cameraIcon, ...styles.profileCameraIcon}} onClick={() => toggleEdicion('perfil')}>
                 <CameraIcon color="white" size={24} />
               </label>
-                      </>
-                    )}
-              
-              {/* <input
-                id="cover-upload"
-                type="file"
-                accept="image/*"
-                onChange={(e) => {
-                  const file = e.target.files[0]
-                  if (file) {
-                    const reader = new FileReader()
-                    reader.onload = (e) => guardarImagen('portada', e.target.result)
-                    reader.readAsDataURL(file)
-                  }
-                }}
-                style={{ display: 'none' }}
-              /> */}
-              <div style={styles.profileImageContainer}>
-              <img 
-                  src={tempImages.perfil || imagenes.perfil} 
-                  alt="Profile" 
-                  style={styles.profileImageEdit} 
-                />
-                {!estadoEdicion.perfil && !estadoEdicion.portada && (
-                        <>
-                          <label htmlFor="profile-upload" style={{...styles.cameraIcon, ...styles.profileCameraIcon}} onClick={() => toggleEdicion('perfil')}>
-                  <CameraIcon color="white" size={24} />
-                </label>
-                        </>
-                      )}
-                      
-                
-                {/* <input
-                  id="profile-upload"
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => {
-                    const file = e.target.files[0]
-                    if (file) {
-                      const reader = new FileReader()
-                      reader.onload = (e) => guardarImagen('perfil', e.target.result)
-                      reader.readAsDataURL(file)
-                    }
-                  }}
-                  style={{ display: 'none' }}
-                /> */}
-              </div>
-            </div>
-                  
-{/* Editar portada */}
-{estadoEdicion.portada && (
-                <UploadPortada
-                  btn_cancelar={() => toggleEdicion('portada')}
-                  onImageSave={(imagen) => guardarImagenTemp('portada', imagen)}
-                  Imagen={tempImages.perfil || imagenes.perfil}
-                  Portada={tempImages.portada || imagenes.portada}
-                  alias={user}
-                />
-              )}
-
-              {estadoEdicion.perfil && (
-                <UploadAvatar
-                  btn_cancelar={() => toggleEdicion('perfil')}
-                  onImageSave={(imagen) => guardarImagenTemp('perfil', imagen)}
-                  Imagen={tempImages.perfil || imagenes.perfil}
-                  Portada={tempImages.portada || imagenes.portada}
-                  alias={user}
-                />
-              )}
-
-            
-              
-
-              
-
-                   
-            </form>
-            <form  onSubmit={handleSubmit(onSubmit)}>
-                        <div style={styles.acomodar}>
-                            <div style={styles.formGroup}>
-                            <label htmlFor="name" style={styles.label}>Nombre</label>
-                            <input {...register("Nombre", { required: true })}
-                                    placeholder="Nombre" style={styles.input}
-                             />
-                             {errors.Nombre && <span>El nombre es obligatorio</span>}
-                            </div>
-
-                            <div style={styles.formGroup}>
-                            <label htmlFor="name" style={styles.label}>Apellido</label>
-                            <input {...register("Apellido", { required: true })}
-                                    placeholder="Apellido" style={styles.input}
-                            />  
-                            {errors.Apellido && <span>El apellido es obligatorio</span>}
-                            </div>
-                        </div>
-                        <div style={styles.acomodar}>
-                          <div style={styles.formGroup}>
-                            <label htmlFor="username" style={styles.label}>Usuario</label>
-                            <input
-                              type="text"
-                              id="username"
-                              name="username"
-                              defaultValue={userData.alias}
-                              style={styles.input}
-                              disabled
-                            />
-                          </div>
-                        </div>
-                        <div style={styles.formGroup}>
-                          <label htmlFor="description" style={styles.label}>Description</label>
-                          <textarea 
-                            id="description" 
-                            name="description" 
-                            rows="4" 
-                            style={styles.input} 
-                            placeholder="Enter description here..."
-                          />
-                        </div>
-                        <div style={styles.acomodar}>
-                        <div style={styles.formGroup}>
-                          <label htmlFor="edad" style={styles.label}>Edad</label>
-                            <input style={styles.input}
-                                {...register("Edad", { required: true, maxLength: 2 })}
-                                placeholder="Edad"
-                            />
-                            {errors.Edad && <span>La edad es obligatoria y debe tener un máximo de 2 dígitos</span>}
-                        </div>
-
-                        <div style={styles.formGroup}>
-                        <label htmlFor="birthdate" style={styles.label}>Fecha de Nacimiento</label>
-                            <input className='input'
-                                type="date" style={styles.input}
-                                {...register("Fecha", { required: true })}
-                                placeholder="Fecha de Nacimiento"
-                            />
-                            {errors.Fecha && <span>La fecha de nacimiento es obligatoria</span>}
-                        </div>
-                        </div>
-                        <div style={styles.formGroup}>
-                          <label htmlFor="gender" style={styles.label}>Género</label>
-                          <select id="gender" name="gender" style={styles.input}>
-                            <option>Hombre</option>
-                            <option>Mujer</option>
-                            
-                          </select>
-                        </div>
-                        <div style={styles.buttonGroup}>
-                        <button 
-                  type="button" 
-                  onClick={() => {
-                    setIsModalOpen(false);
-                    setTempImages({ perfil: '', portada: '' });
-                  }} 
-                  style={{...styles.button, ...styles.cancelButton}}
-                >
-                  Cancel
-                </button>
-                          <button type="submit" style={{...styles.button, ...styles.saveButton}} >
-                            Guardar
-                          </button>
-                        </div>
-                        
-                    </form>
-          </Dialog.Panel>
+            )}
+          </div>
         </div>
-      </Dialog>
-      <ToastContainer />
+
+        {/* Editar portada */}
+        {estadoEdicion.portada && (
+          <UploadPortada
+            btn_cancelar={() => toggleEdicion('portada')}
+            onImageSave={(imagen) => guardarImagenTemp('portada', imagen)}
+            Imagen={tempImages.perfil || imagenes.perfil}
+            Portada={tempImages.portada || imagenes.portada}
+            alias={user}
+          />
+        )}
+
+        {estadoEdicion.perfil && (
+          <UploadAvatar
+            btn_cancelar={() => toggleEdicion('perfil')}
+            onImageSave={(imagen) => guardarImagenTemp('perfil', imagen)}
+            Imagen={tempImages.perfil || imagenes.perfil}
+            Portada={tempImages.portada || imagenes.portada}
+            alias={user}
+          />
+        )}
+
+        <div style={styles.acomodar}>
+          <div style={styles.formGroup}>
+            <label htmlFor="name" style={styles.label}>Nombre</label>
+            <input 
+              {...register("Nombre", { required: true })} 
+              placeholder="Nombre" 
+              style={styles.input} 
+              onChange={handleInputChange}
+            />
+            {errors.Nombre && <span>El nombre es obligatorio</span>}
+          </div>
+
+          <div style={styles.formGroup}>
+            <label htmlFor="surname" style={styles.label}>Apellido</label>
+            <input 
+              {...register("Apellido", { required: true })} 
+              placeholder="Apellido" 
+              style={styles.input}
+              onChange={handleInputChange} 
+            />
+            {errors.Apellido && <span>El apellido es obligatorio</span>}
+          </div>
+        </div>
+
+        <div style={styles.acomodar}>
+          <div style={styles.formGroup}>
+            <label htmlFor="username" style={styles.label}>Usuario</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              defaultValue={userData.alias}
+              style={{...styles.input, ...styles.inputDisabled}}
+              disabled
+            />
+          </div>
+        </div>
+
+        <div style={styles.formGroup}>
+          <label htmlFor="description" style={styles.label}>Descripción</label>
+          <textarea 
+            id="description" 
+            name="description" 
+            rows="4" 
+            {...register("Descripcion")} 
+            style={styles.input} 
+            placeholder="Introduce aquí tu descripción..."
+            onChange={handleInputChange}
+          />
+        </div>
+
+        <div style={styles.acomodar}>
+        <div style={styles.formGroup}>
+            <label htmlFor="birthdate" style={styles.label}>Fecha de Nacimiento</label>
+            <input 
+              type="date" 
+              {...register("Fecha", { required: true })}
+              style={styles.input}
+              onChange={handleInputChange}
+            />
+            {errors.Fecha && <span>La fecha de nacimiento es obligatoria</span>}
+          </div>
+          <div style={styles.formGroup}>
+            <label htmlFor="edad" style={styles.label}>Edad</label>
+            <input 
+              type="number"
+              {...register("Edad", { required: true, maxLength: 2 })}
+              placeholder="Edad"
+              style={{...styles.input, ...styles.inputDisabled}}
+              disabled
+            />
+            {errors.Edad && <span>La edad es obligatoria y debe tener un máximo de 2 dígitos</span>}
+          </div>
+
+          
+        </div>
+
+        <div style={styles.formGroup}>
+          <label htmlFor="gender" style={styles.label}>Género</label>
+          <select id="gender" {...register("Genero")} style={styles.input}>
+            <option value="">Seleccione...</option>
+            <option value="Hombre">Hombre</option>
+            <option value="Mujer">Mujer</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
+
+        <div style={styles.buttonGroup}>
+          <button 
+            type="button" 
+            onClick={() => {
+              setIsModalOpen(false);
+              setTempImages({ perfil: '', portada: '' });
+            }} 
+            style={{...styles.button, ...styles.cancelButton}}
+          >
+            Cancelar
+          </button>
+          <button type="submit" style={isChanged ? {...styles.button, ...styles.saveButton}: {...styles.button, ...styles.buttonDisabled}}  disabled={!isChanged}// Deshabilita el botón si no ha habido cambios
+          >
+            Guardar
+          </button>
+        </div>
+      </form>
+    </Dialog.Panel>
+  </div>
+</Dialog>
+<ToastContainer />
+
     </div>
   )
 }
