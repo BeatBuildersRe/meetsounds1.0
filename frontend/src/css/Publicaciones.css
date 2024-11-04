@@ -1,4 +1,101 @@
-* {
+.publicacion {
+  max-width: 600px;
+  margin: 16px auto;
+  padding: 16px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cabecera-publicacion {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.imagen-perfil img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.usuario {
+  display: flex;
+  flex-direction: column;
+}
+
+.usuario p {
+  margin: 0;
+}
+
+.usuario p:first-child {
+  font-weight: 600;
+  color: #0f1419;
+}
+
+.usuario p:last-child {
+  color: #536471;
+  font-size: 0.9em;
+}
+
+.descripcion {
+  margin: 12px 0;
+  color: #0f1419;
+  line-height: 1.5;
+}
+
+.media {
+  margin: 12px 0;
+}
+
+.media img {
+  width: 100%;
+  border-radius: 16px;
+  max-height: 500px;
+  object-fit: cover;
+}
+
+.botones {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #eff3f4;
+}
+
+.botones button {
+  background: none;
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
+  color: #536471;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.botones button:hover {
+  background-color: rgba(29, 155, 240, 0.1);
+  color: #1d9bf0;
+}
+
+.botones .count {
+  margin-left: 4px;
+  font-size: 0.9em;
+}
+
+.botones p {
+  margin: 0;
+  color: #536471;
+  font-size: 0.9em;
+}
+
+/* * {
     padding: 0;
     margin: 0;
 }
@@ -37,9 +134,7 @@
                 z-index: 99;
                 cursor: pointer;
 
-                #btn-menu {
-                    /* en el componente minimenu : sx={{all: 'unset'}} */
-                }
+               
             }
         }
 
@@ -94,7 +189,7 @@
     }
 }
 
-/* From Uiverse.io by reshades */
+
 #pick {
     width: 5em;
     height: 2em;
@@ -108,7 +203,7 @@
     display: flex;
     gap: 5px;
     overflow: hidden;
-    /* z-index: 1; */
+    
     border: 1px solid rgba(112, 112, 112, 0.644);
    
 }
@@ -168,7 +263,7 @@
     
     }
 }
-/* From Uiverse.io by vinodjangid07 */ 
+
 .messageBox {
     width: fit-content;
     height: 40px;
@@ -277,4 +372,4 @@
     fill: #3c3c3c;
     stroke: white;
   }
-  
+   */

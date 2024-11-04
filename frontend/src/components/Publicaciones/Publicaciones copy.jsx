@@ -67,18 +67,13 @@ const Publicaciones = () => {
         <div>
             {publicaciones.map((publi, index) => (
                 <div key={publi.id} className='publicacion'>
-                    <div className="cabecera-publicacion">
-            <div className="imagen-perfil">
-              <img 
-                src={publi.usuario.fotoPerfilUrl} 
-                alt={`Perfil de ${publi.usuario.nombre}`}
-              />
-            </div>
-            <div className="usuario">
-              <p>{publi.usuario.nombre} {publi.usuario.apellido}</p>
-              <p>@{publi.usuario.alias}</p>
-            </div>
-          </div>
+                    <div className='imagen-perfil'>
+                        <img src={publi.usuario.fotoPerfilUrl} style={{maxWidth:'100px', maxHeight:'100px', borderRadius:'50%'}} />
+                    </div>
+                    <div className='usuario'>
+                        <p>{publi.usuario.nombre} {publi.usuario.apellido}</p>
+                        <p>@{publi.usuario.alias}</p>
+                    </div>
                     <div className='descripcion'>
                         <p>{publi.descripcion? publi.descripcion : ''}</p>
                     </div>

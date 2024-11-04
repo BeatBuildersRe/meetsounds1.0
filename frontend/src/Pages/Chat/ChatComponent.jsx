@@ -102,7 +102,6 @@ const ChatComponent = () => {
     }
 
     const alias = Cookies.get('alias');
-
     try {
       const query = `query {
         buscarPorAlias(alias: "${alias}") {
@@ -139,10 +138,16 @@ const ChatComponent = () => {
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      sendMessage(); // Llama a la función sendMessage si se presiona "Enter"
+      sendMessage(); 
     }
   };
 
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter' && inputMessage.trim().length > 0) {
+      sendMessage();
+    }
+  };
+  
   return (
     <div className='fondo-chat'>
       <div className='mensajes scrollbar-enlarged'>
@@ -166,6 +171,7 @@ const ChatComponent = () => {
       </div>
     </div>
   );
+  
 };
 
 export default ChatComponent;

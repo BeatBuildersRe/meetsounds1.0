@@ -40,6 +40,7 @@ public class UsuarioController {
         return usuarioService.verificaSiSigue(aliasVisitante,aliasPerfil);
     }
 
+
     @PostMapping("/actualizarFotoPerfil")
     public ResponseEntity<String> actualizarFotoPerfil(@RequestParam("file") MultipartFile file, @RequestParam("alias") String alias){
         return usuarioService.actualizarFotoPerfilUsuario(file,alias);

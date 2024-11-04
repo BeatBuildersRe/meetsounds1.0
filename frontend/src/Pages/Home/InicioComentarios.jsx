@@ -2,9 +2,13 @@ import React, { useState, useEffect } from "react";
 import "@css/Home.css";
 import Foto from "@assets/ads.png";
 import Comentarios from "@c/Publicaciones/Comentarios";
+import { useParams, useNavigate } from "react-router-dom";
+
 import Publicaciones from "@c/Publicaciones/Publicaciones";
 import MenuDerechoDiv from "@c/Menu/Derecha";
-const Inicio = () => {
+const Publicaciones2 = () => {
+  const { id } = useParams(); // Obtener el ID de la publicación de la ruta
+  console.log(id)
   const [activeDiv, setActiveDiv] = useState("div1");
   const [isVisible, setIsVisible] = useState(true);
   const [showBar, setShowBar] = useState(true);
@@ -84,7 +88,7 @@ const Inicio = () => {
               className="Div_1"
               style={{ display: activeDiv === "div1" ? "block" : "none" }}
             >
-              <Publicaciones />:
+              <Comentarios id_publicacion={id} />
             </div>
             <div
               className="Div_2"
@@ -101,4 +105,4 @@ const Inicio = () => {
   );
 };
 
-export default Inicio;
+export default Publicaciones2;

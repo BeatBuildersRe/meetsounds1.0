@@ -15,7 +15,7 @@ const AliasGuard = () => {
         navigate(`/cuenta2/${alias}`); // Redirigir a la cuenta del usuario
       } else {
         // Si intentan acceder a su propia cuenta desde el perfil encontrado
-        navigate(`/perfil-encontrado/${alias}`);
+        navigate(`/perfil-encontrado2/${alias}`);
       }
     }
   }, [alias, localAlias, navigate]);

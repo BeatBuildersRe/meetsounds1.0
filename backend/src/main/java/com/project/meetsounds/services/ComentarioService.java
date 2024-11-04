@@ -33,13 +33,10 @@ public class ComentarioService {
 
         Comentario com = this.iComentarioRepository.save(comentario);
         Publicacion publicacion = new Publicacion();
-        try {
-            Optional<Publicacion> publiOptional = this.iPublicacionRepository.findById(publicacionId);
-            publicacion = publiOptional.get();
-            publicacion.getComentarios().add(com);
-        }catch (NullPointerException n){
-            System.out.println("NullPointer - ComentarioService - Comentar");
-        }
+        Optional<Publicacion> publiOptional = this.iPublicacionRepository.findById(publicacionId);
+        publicacion = publiOptional.orElseThrow(()-> new IllegalArgumentException("No se ha encontrado la publicacion con la id: " + publicacionId));
+        publicacion.getComentarios().add(com);
+        publicacion.setCount_coment(publicacion.getCount_coment() + 1);
         this.iPublicacionRepository.save(publicacion);
         return this.iComentarioRepository.existsById(com.getId());
     }

@@ -14,7 +14,10 @@ export const WebSocketProvider = ({ children }) => {
     };
 
     ws.onmessage = (event) => {
-      console.log('Mensaje recibido:', event.data);
+      const message = JSON.parse(event.data);
+      if (message.idChat === chatSeleccionado) { // chatSeleccionado debe ser el ID del chat actual
+        setMensajesChat((prevMensajes) => [...prevMensajes, message]);
+      }
     };
 
     ws.onclose = () => {

@@ -9,9 +9,12 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
@@ -43,21 +46,15 @@ public class PublicacionService {
 
 
 
-    public Publicacion crearPublicacion(String idAlias, String descripcion, MultipartFile file) {
+    public void crearPublicacion(String idAlias, String descripcion, MultipartFile file) {
         Publicacion publi = new Publicacion();
 
-        Optional<Usuario> usuarioOptional = this.iUsuarioRepository.findByAlias(idAlias);
-        Usuario usuario = new Usuario();
+        Optional<Usuario> usuarioOptional = iUsuarioRepository.findByAlias(idAlias);
 
         Usuario usu = usuarioOptional.orElseThrow(()-> new IllegalArgumentException("No se ha econtrado el usuario con el alias: " + idAlias));
-        usuario.setId(usu.getId());
-        usuario.setNombre(usu.getNombre());
-        usuario.setApellido(usu.getApellido());
-        usuario.setAlias(usu.getAlias());
-        usuario.setFotoPerfilUrl(usu.getFotoPerfilUrl());
 
-        publi.setUsuario(usuario);
         publi.setDescripcion(descripcion);
+        publi.setIdUsuario(usu.getId());
 
         LocalDate fechaActual = LocalDate.now();
         int año = fechaActual.getYear();
@@ -70,18 +67,36 @@ public class PublicacionService {
         int min = horaActual.getMinute();
         int seg = horaActual.getSecond();
         publi.setHora(LocalTime.of(hs, min, seg));
+        if(!file.isEmpty()){
+            if (!file.getContentType().startsWith("image/")) {
+                System.out.println("El archivo debe ser una imagen");
+            }
+            try {
+                // Subir la imagen a S3 (con la lógica de verificación de duplicados)
+                String fileUrl = s3Service.uploadFile(file);
+                publi.setMediaUrl(fileUrl);
+            } catch (IOException | NoSuchAlgorithmException e) {
+                System.out.println("Error al subir la imagen");
+            }
+        }
+        Publicacion publicacion = iPublicacionRepository.save(publi);
+
+            List<Publicacion> publicacionsUsuario = usu.getMisPublicaciones();
+            publicacionsUsuario.add(publicacion);
+            usu.setMisPublicaciones(publicacionsUsuario);
+            iUsuarioRepository.save(usu);
 
 
-
-        //publi.setMediaUrl(this.s3Service.uploadFile(file));
-
-        this.iPublicacionRepository.save(publi);
-        //Guardamos la publicacion en la lista de "misPublicaciones" del usuario
-        usuarioService.crearPublicacion(idAlias, publi);
-        return publi;
     }
 
-
+    public List<Publicacion> listarPublicacionesUsuario(String alias){
+        Optional<Usuario> usuarioOptional=iUsuarioRepository.findByAlias(alias);
+        Usuario user = new Usuario();
+        if(usuarioOptional.isPresent()){
+            user = usuarioOptional.get();
+        }
+        return user.getMisPublicaciones();
+    }
 
     public List<Publicacion> listarPublicaciones() {
         return this.iPublicacionRepository.findAll();
@@ -116,7 +131,6 @@ public class PublicacionService {
         publicacionOut.setMediaUrl(publicacion.getMediaUrl());
         publicacionOut.setDescripcion(publicacion.getDescripcion());
         publicacionOut.setComentariosOut(comentarioOuts);
-        publicacionOut.setUsuario(publicacion.getUsuario());
         return publicacionOut;
     }
 

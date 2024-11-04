@@ -129,13 +129,13 @@
   .modal-content::-webkit-scrollbar-thumb:hover {
     background-color: #a0aec0;
   }
-  .container {
+  /* .container {
     min-height: 100vh;
     background-Color: #1a202c;
     color: white;
     margin-left:18vw;
     width:100%;
-  }
+  } */
   @media (max-width: 1000px) {
     .container{
         margin-left:  30vw;

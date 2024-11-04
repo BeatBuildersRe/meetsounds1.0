@@ -29,7 +29,10 @@ public class PublicacionController {
         return this.publicacionService.listarPublicaciones();
     }
 
-
+    @QueryMapping(name ="listarPublicacionesUsuario")
+    public List<Publicacion> listarPublicacionesUsuario(@Argument String alias){
+        return publicacionService.listarPublicacionesUsuario(alias);
+    }
 
     @QueryMapping(name = "buscarPublicacionPorId")
     public Publicacion buscarPublicacionPorId(@Argument String id){
@@ -53,9 +56,9 @@ public class PublicacionController {
 
      */
 
-    @PostMapping
-    public Publicacion crearPublicacion(@RequestParam String idAlias, @RequestParam String descripcion, @RequestParam MultipartFile file){
-        return publicacionService.crearPublicacion(idAlias, descripcion, file);
+    @PostMapping("/crearPublicacion")
+    public void crearPublicacion(@RequestParam String idAlias, @RequestParam(required=false) String descripcion, @RequestParam(required=false) MultipartFile file){
+        publicacionService.crearPublicacion(idAlias, descripcion, file);
     }
 
     @MutationMapping(name = "eliminarPublicacionPorId")
