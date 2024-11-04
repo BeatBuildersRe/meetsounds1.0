@@ -25,6 +25,7 @@ import Cuenta from './Pages/PerfilUsuario/PerfilUsuario';
 import Cuenta2 from './Pages/PerfilUsuario/PerfilUsuario2';
 import ActualizarNombreApellido from './Pages/Configuracion/EditarPerfil/ActualizarNombreApeliido';
 import PerfilEncontrado from './Pages/PerfilUsuario/PerfilEncontrado';
+import PerfilEncontrado2 from './Pages/PerfilUsuario/PerfilEncontrado2';
 import OnboardingForm from './Pages/OnBoarding/OnboardingForm';
 import AliasGuard from './services/AliasGuard'; // Importa el nuevo componente de protección
 import ChatsUsuario from './Pages/Mensajes/ChatsUsuarios';
@@ -58,6 +59,7 @@ function App() {
           
           {/* Usa AliasGuard aquí */}
           <Route path="perfil-encontrado/:alias" element={<><AliasGuard /><PerfilEncontrado /></>} />
+          <Route path="perfil-encontrado2/:alias" element={<><AliasGuard /><PerfilEncontrado2 /></>} />
           <Route path="cuenta/:alias" element={<><AliasGuard /><Cuenta /></>} />
           <Route path="cuenta2/:alias" element={<><AliasGuard /><Cuenta2 /></>} />
         </Route>

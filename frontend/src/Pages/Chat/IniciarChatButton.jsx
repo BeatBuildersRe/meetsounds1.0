@@ -2,6 +2,18 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../../config'
+
+const styles={
+  editButton: {
+    padding: '0.5rem 1rem',
+    border: '1px solid #4a5568',
+    borderRadius: '100px',
+    fontWeight: 'bold',
+    backgroundColor: 'transparent',
+    color: 'var(--color-texto-normal)',
+    cursor: 'pointer',
+  },
+}
 const IniciarChatButton = ({ aliasOtroUsuario }) => {
   const [idUsuarioLocal, setIdUsuarioLocal] = useState(null);
   const [idOtroUsuario, setIdOtroUsuario] = useState(null);
@@ -61,7 +73,7 @@ const IniciarChatButton = ({ aliasOtroUsuario }) => {
     }
   };
 
-  return <button onClick={iniciarChat}>Iniciar Chat</button>;
+  return <button onClick={iniciarChat} style={styles.editButton}>Escribe un Mensaje</button>;
 };
 
 export default IniciarChatButton;

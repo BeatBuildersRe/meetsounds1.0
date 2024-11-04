@@ -1,10 +1,10 @@
-
+// Import
+/* React */
 import React, { useState, useEffect } from 'react'
+
+import { useForm } from 'react-hook-form';
 import { Dialog } from '@headlessui/react'
-import { CameraIcon } from 'lucide-react'
 import { useParams, useNavigate } from 'react-router-dom'
-
-
 import { BASE_URL } from '../../config'
  /* Services */
  import GetAlias from '@services/GetAlias';
@@ -13,23 +13,31 @@ import { BASE_URL } from '../../config'
  /* Css */
  import '@css/Colores.css'
  import '@css/Perfil_Y_Portada.css';
- /* React */
- import { useForm } from 'react-hook-form';
- /* Componentes */
-
- import UploadAvatar from '@c/UploadAvatar';
- import UploadPortada from '@c/UploadPortada';
+ import 'react-toastify/dist/ReactToastify.css';
  
- import { toast, ToastContainer } from 'react-toastify';
- import Posts from '@c/Perfil/Publicaciones';
+ /* Componentes */
+import UploadAvatar from '@c/UploadAvatar';
+import UploadPortada from '@c/UploadPortada';
+import { toast, ToastContainer } from 'react-toastify';
+import Posts from '@c/Perfil/Publicaciones';
 import Replies from '@c/Perfil/Publicaciones';
 import Highlights from '@c/Perfil/Publicaciones';
-import 'react-toastify/dist/ReactToastify.css';
 
+// Iconos
+import { CameraIcon } from 'lucide-react'
+// Imágenes
 const imgFondoDefault = 'https://imagedelivery.net/WS9ABFRS6TfdqDudkFOT3w/grrraphic/previews/j6RAX7eRw0pyywtdOXK38whWXLrEmjDWb7Z6l54u.jpeg/thumb?height=200&width=600' // Imagen de fondo predeterminada
 const imgPerfilDefault = 'https://imagedelivery.net/WS9ABFRS6TfdqDudkFOT3w/grrraphic/previews/j6RAX7eRw0pyywtdOXK38whWXLrEmjDWb7Z6l54u.jpeg/thumb?height=400&width=400' // Imagen de perfil predeterminada
 
+// Estilos
 const styles = {
+  containerPerfil: {
+    minHeight: '100vh',
+    backgroundColor: 'var(--color-fondo)',
+    color: 'white',
+    marginLeft:'18vw',
+    width:'100%',
+  },
     header: {
     padding: '1rem',
     display: 'flex',
@@ -40,7 +48,7 @@ const styles = {
     marginRight: '1rem',
     background: 'none',
     border: 'none',
-    color: 'white',
+    color: 'var(--color-texto-normal)',
     cursor: 'pointer',
   },
   headerTitle: {
@@ -49,10 +57,11 @@ const styles = {
   },
   profileInfo: {
     position: 'relative',
+    
   },
   coverImage: {
     width: '100%',
-    height: '20rem',
+    height: '25rem',
     objectFit: 'cover',
     imageRendering: 'auto', /* Otras opciones: 'crisp-edges', 'pixelated' */
   },
@@ -72,30 +81,27 @@ const styles = {
   editButton: {
     padding: '0.5rem 1rem',
     border: '1px solid #4a5568',
-    borderRadius: '9999px',
+    borderRadius: '100px',
     fontWeight: 'bold',
     backgroundColor: 'transparent',
-    color: 'white',
+    color: 'var(--color-texto-normal)',
     cursor: 'pointer',
   },
   profileName: {
     fontSize: '1.25rem',
     fontWeight: 'bold',
     marginTop: '1rem',
+    color:'var(--color-texto-normal)',
   },
   profileUsername: {
-    color: '#a0aec0',
+    color: 'var(--color-texto-secundario)',
   },
-  joinDate: {
-    display: 'flex',
-    alignItems: 'center',
-    marginTop: '0.5rem',
-    color: '#a0aec0',
-  },
+  
   followInfo: {
     display: 'flex',
     marginTop: '1rem',
     gap: '1rem',
+    color:'var(--color-texto-normal)',
   },
   tabs: {
     display: 'flex',
@@ -108,11 +114,11 @@ const styles = {
     padding: '1rem 0',
     background: 'none',
     border: 'none',
-    color: 'white',
+    color: 'var(--color-texto-normal)',
     cursor: 'pointer',
   },
   activeTab: {
-    borderBottom: '2px solid #4299e1',
+    borderBottom: '2px solid var(--color-principal)',
   },
   modal: {
     position: 'fixed',
@@ -216,23 +222,7 @@ const styles = {
     marginRight: '0.5rem',
   },
   
-  tabs: {
-    display: 'flex',
-    borderBottom: '1px solid #2d3748',
-    marginTop: '1rem',
-  },
-  tab: {
-    flex: 1,
-    textAlign: 'center',
-    padding: '1rem 0',
-    background: 'none',
-    
-    color: 'white',
-    cursor: 'pointer',
-  },
-  activeTab: {
-    borderBottom: '2px solid #4299e1',
-  },
+ 
   acomodar:{
     display: 'flex',
     justifyContent:'space-Between',
@@ -279,6 +269,7 @@ const styles = {
   },
   
 }
+// Funciones
 export default function ProfilePage() {
   const { alias } = useParams();
   const navigate = useNavigate();
@@ -455,15 +446,17 @@ export default function ProfilePage() {
     setIsChanged(true); // Marca que ha habido un cambio
 };
 
-  
-  const [activeTab, setActiveTab] = useState('Posts');
+  // Esto es para los botones de las publicaciones en el perfil
+      // Esto dice cuál está activo en predeterminado
+  const [activeTab, setActiveTab] = useState('Todo');
+      // Esto dice que se muestra un componente según cuál está activo(ahora muestran el mismo)
   const renderContent = () => {
     switch (activeTab) {
-      case 'Posts':
+      case 'Todo':
         return <Posts />;
-      case 'Replies':
+      case 'Publicaciones':
         return <Replies />;
-      case 'Highlights':
+      case 'Posteos':
         return <Highlights />;
       default:
         return null;
@@ -472,21 +465,24 @@ export default function ProfilePage() {
     
   };
   
- 
 
+  const handleVolver = () => {
+    navigate('/'); // Especifica la ruta a la que quieres volver
+  };
+// Estructura
   return (
-    <div className="container">
+    <div style={styles.containerPerfil}>
       {/* Header */}
-      <header style={styles.header}>
-        <a href="/">
-        <button style={styles.backButton}>
+      <header style={styles.header} >
+        
+        <button style={styles.backButton} onClick={handleVolver}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M19 12H5M12 19l-7-7 7-7"/>
           </svg>
           
         </button>
         
-        </a>
+        
         
         <p style={styles.profileUsername}>@{userData.alias} </p>
         
@@ -507,11 +503,7 @@ export default function ProfilePage() {
         </div>
          
         <div style={styles.profileContent}>
-          <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-            <button onClick={() => setIsModalOpen(true)} style={styles.editButton}>
-              Edit profile
-            </button>
-          </div>
+          
           
           <div style={styles.acomodar}>
             <h2 style={styles.profileName}>{userData.nombre} {userData.apellido}</h2>
@@ -520,17 +512,22 @@ export default function ProfilePage() {
               <span><strong>{userData.c_seguidos}</strong>  Seguidos</span>
             </div>
           </div>
+          <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+            <button onClick={() => setIsModalOpen(true)} style={styles.editButton}>
+              Editar Perfil
+            </button>
+          </div>
           
           <div className="seccion-2">
           <p>{userData.descripcion}</p> 
-          </div>
+        </div>
 
          
           
 
           
           <nav style={styles.tabs}>
-        {['Posts', 'Replies', 'Highlights'].map((tab) => (
+        {['Todo','Publicaciones','Posteos'].map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}

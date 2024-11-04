@@ -6,7 +6,7 @@
 
 :root {
 
-    --color-fondo: #e8e8e8;
+   
     --color-fondoDiv: #d8d8d8;
     --color-fondoDivHover: #c4c4c4;
     --color-texto: #000000;
@@ -16,7 +16,7 @@
         --color-fondoDiv: #232224;
         --color-texto: #ffffff;
         --color-btn: black;
-        --color-fondo: #18191a;
+        
 
         --color-fondoDivHover: #2d2c2e;
     }
