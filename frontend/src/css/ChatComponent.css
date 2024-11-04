@@ -1,3 +1,23 @@
+.header-chat {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+  }
+
+  .boton-salir {
+    background-color: #ff5c5c;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .boton-salir:hover {
+    background-color: #ff2e2e;
+  }
+
 .fondo-chat {
     background-color: #242424;
     border-radius: 8px;
@@ -33,7 +53,7 @@
 }
 
 .mensajes {
-    height: 603px;
+    height: 572px;
     overflow-y: auto;
     margin-bottom: 10px;
 }

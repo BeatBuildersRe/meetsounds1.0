@@ -1,17 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom'; // Importa useNavigate
 import Cookies from 'js-cookie';
 import { BASE_URL, BASE_URL_SOCKET } from '../../config';
 import '../../css/ChatComponent.css';
 
 const ChatComponent = () => {
   const { chatId } = useParams();
+  const navigate = useNavigate(); // Inicializa useNavigate
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [socket, setSocket] = useState(null);
   const [userCache, setUserCache] = useState({});
   const socketUrl = `${BASE_URL_SOCKET}/ws-chat`;
-  const messagesEndRef = useRef(null); // Referencia para el final de los mensajes
+  const messagesEndRef = useRef(null);
 
   useEffect(() => {
     const fetchChat = async () => {
@@ -61,11 +62,10 @@ const ChatComponent = () => {
   }, [chatId]);
 
   useEffect(() => {
-    // Desplazar hacia abajo cada vez que se actualicen los mensajes
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [messages]); // Este efecto se ejecuta cada vez que `messages` cambia
+  }, [messages]);
 
   const attachUserName = async (message) => {
     const { idEmisor } = message;
@@ -90,15 +90,15 @@ const ChatComponent = () => {
         return { ...message, nombre };
       } catch (error) {
         console.error('Error al obtener el nombre del usuario:', error);
-        return message; // Devuelve el mensaje sin nombre si falla
+        return message;
       }
     }
   };
 
   const sendMessage = async () => {
-    if (!inputMessage.trim()) { // Validación: comprobar si el mensaje no está vacío
-      alert('Por favor, ingresa un mensaje.'); // Muestra la alerta
-      return; // Salir de la función si no hay mensaje
+    if (!inputMessage.trim()) {
+      alert('Por favor, ingresa un mensaje.');
+      return;
     }
 
     const alias = Cookies.get('alias');
@@ -127,7 +127,7 @@ const ChatComponent = () => {
 
       if (socket && socket.readyState === WebSocket.OPEN) {
         socket.send(JSON.stringify(message));
-        setInputMessage(''); // Limpia el campo de entrada
+        setInputMessage('');
       } else {
         console.error('WebSocket no está conectado');
       }
@@ -138,32 +138,31 @@ const ChatComponent = () => {
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      sendMessage(); 
-    }
-  };
-
-  const handleKeyPress = (event) => {
-    if (event.key === 'Enter' && inputMessage.trim().length > 0) {
       sendMessage();
     }
   };
-  
+
+  const handleExit = () => {
+    navigate('/mensajes'); // Redirige a la página de mensajes
+  };
+
   return (
     <div className='fondo-chat'>
+      <button onClick={handleExit} className='boton-salir'>Volver</button>
       <div className='mensajes scrollbar-enlarged'>
         {messages.map((msg, index) => (
           <p key={index} className='mensaje'>
             <strong>{msg.nombre}:</strong> {msg.contenido}
           </p>
         ))}
-        <div ref={messagesEndRef} /> {/* Este div es para el desplazamiento */}
+        <div ref={messagesEndRef} />
       </div>
       <div className='input-mensaje'>
         <input
           type="text"
           value={inputMessage}
           onChange={(e) => setInputMessage(e.target.value)}
-          onKeyDown={handleKeyDown} // Agrega el manejador de eventos aquí
+          onKeyDown={handleKeyDown}
           className='campo-input'
           placeholder='Escribe un mensaje...'
         />
@@ -171,7 +170,6 @@ const ChatComponent = () => {
       </div>
     </div>
   );
-  
 };
 
 export default ChatComponent;
