@@ -68,7 +68,7 @@ const MenuDerecho = () => {
             <Carrusel />
             <div className='seguir'>
                 <h4>Quizás te interese...</h4>
-               {/*  <Amigos /> */}
+                {/* {<Amigos />} */}
             </div>
         </div>
     );
