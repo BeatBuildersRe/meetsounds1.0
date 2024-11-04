@@ -113,29 +113,28 @@ function Registro() {
         <h1>Registrate</h1>
         <form onSubmit={handleSubmit} className="nuevo-registro-form">
           <div className="form-group">
-            <label htmlFor="nombre">Nombre</label>
+            <label className='palabras' htmlFor="nombre">Nombre</label>
             <input type="text" id="nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
           </div>
           <div className="form-group">
-            <label htmlFor="apellido">Apellido</label>
+            <label className='palabras' htmlFor="apellido">Apellido</label>
             <input type="text" id="apellido" value={apellido} onChange={(e) => setApellido(e.target.value)} required />
           </div>
           <div className="form-group">
-            <label htmlFor="email">Correo Electrónico</label>
+            <label className='palabras' htmlFor="email">Correo Electrónico</label>
             <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           </div>
           <div className="form-group">
-            <label htmlFor="username">Nombre de Usuario</label>
+            <label className='palabras' htmlFor="username">Nombre de Usuario</label>
             <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} required />
           </div>
           <div className="form-group">
-            <label htmlFor="password">
+            <label className='palabras' htmlFor="password">
               Contraseña {passwordStrength && <span className={`password-strength ${passwordStrength.toLowerCase()}`}>({passwordStrength})</span>}
             </label>
             <div className="input-with-button">
               <input
                 type={showPassword ? "text" : "password"}
-                id="password"
                 value={password}
                 onChange={handlePasswordChange}
                 required
@@ -150,7 +149,7 @@ function Registro() {
             </div>
           </div>
           <div className="form-group">
-            <label htmlFor="confirmPassword">Repite la Contraseña</label>
+            <label className='palabras' htmlFor="confirmPassword">Repite la Contraseña</label>
             <div className="input-with-button">
               <input
                 type={showConfirmPassword ? "text" : "password"}
@@ -169,11 +168,11 @@ function Registro() {
             </div>
           </div>
           <div className="form-group">
-            <label htmlFor="fechaNacimiento">Fecha de Nacimiento</label>
+            <label className='palabras' htmlFor="fechaNacimiento">Fecha de Nacimiento</label>
             <input type="date" id="fechaNacimiento" value={fechaNacimiento} onChange={(e) => setFechaNacimiento(e.target.value)} required />
           </div>
           <div className="form-group">
-            <label>Género</label>
+            <label className='palabras'>Género</label>
             <select value={genero} onChange={(e) => setGenero(e.target.value)} required>
               <option value="">Selecciona tu género</option>
               <option value="masculino">Masculino</option>
