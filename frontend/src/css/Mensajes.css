@@ -73,10 +73,6 @@
     margin-right: 10px;
 }
 
-.bottom_mensajes{
-
-}
-
 .bottom_mensajes p{
     margin-left: 15px;
 }
@@ -85,28 +81,18 @@
 /* CHAT */
 
 
-.chats-usuario-overlay {
-    position: absolute;
+.chat-componente-overlay {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
-    z-index: 10; /* Asegura que esté encima */
+    z-index: 1000; /* Asegúrate de que se superponga a otros componentes */
     display: flex;
     justify-content: center;
     align-items: center;
   }
   
-  /* Clase para el contenido de ChatsUsuario */
-  .chats-usuario-content {
-    background-color: #4646463a;
-    width: 80%; /* Ajusta el tamaño según prefieras */
-    max-height: 90%;
-    overflow-y: auto;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
   
 

@@ -116,8 +116,8 @@ const Mensajes = () => {
   };
 
   const abrirChat = (chatId) => {
-    setChatSeleccionado(chatId); 
-    navigate(`/chat/${chatId}`); 
+    setChatSeleccionado(chatId); // Establecer el chat seleccionado
+    navigate(`/chat/${chatId}`); // Navegar a la página del chat
   };
 
   const enviarMensaje = async (chatId) => {
@@ -160,7 +160,7 @@ const Mensajes = () => {
               chats.map(chat => {
                 // Verifica si el chat tiene mensajes
                 if (!chat.mensajes || chat.mensajes.length === 0) {
-                  return null; 
+                  return null; // Si no tiene mensajes, no lo muestra
                 }
 
                 const usuarioConElQueHabla = determinarUsuarioConElQueHabla(chat);
