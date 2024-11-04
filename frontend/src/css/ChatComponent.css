@@ -27,13 +27,13 @@
     box-shadow: 0 2px 10px rgba(17, 17, 17, 0.1);
 }
 
-/* Estilos de la barra de desplazamiento */
+
 ::-webkit-scrollbar {
-    width: 7px; /* Ancho de la barra */
+    width: 7px; 
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #000000; /* Color del "thumb" de la barra */
+    background-color: #000000; 
     border-radius: 10px;
 }
 
@@ -58,14 +58,14 @@
     margin-bottom: 10px;
 }
 
-/* Aplica scrollbar-enlarged cuando sea necesario */
+
 .scrollbar-enlarged .mensajes {
-    /* Aquí puedes aplicar el estilo de scrollbar más grande si es necesario */
+   
 }
 
 .mensaje {
     width: 95%;
-    height: auto; /* Cambia de 50px a auto para ajustarse al contenido */
+    height: auto; 
     background-color: #2a2b2b;
     border-radius: 15px;
     padding: 10px;
@@ -100,10 +100,10 @@
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    transition: transform 0.2s ease, background-color 0.2s ease; /* Transición suave */
+    transition: transform 0.2s ease, background-color 0.2s ease; 
 }
 
 .boton-enviar:hover {
     background-color: #0056b3;
-    transform: scale(1.05); /* Aumenta el tamaño del botón al 105% */
+    transform: scale(1.05); 
 }

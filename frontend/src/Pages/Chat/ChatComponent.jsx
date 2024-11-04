@@ -143,7 +143,7 @@ const ChatComponent = () => {
   };
 
   const handleExit = () => {
-    navigate('/mensajes'); // Redirige a la página de mensajes
+    navigate('/mensajes'); 
   };
 
   return (
