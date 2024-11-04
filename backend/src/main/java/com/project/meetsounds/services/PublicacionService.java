@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -55,7 +56,8 @@ public class PublicacionService {
 
         publi.setDescripcion(descripcion);
         publi.setIdUsuario(usu.getId());
-
+        publi.setFechaHora(LocalDateTime.now());
+        /*
         LocalDate fechaActual = LocalDate.now();
         int año = fechaActual.getYear();
         int mes = fechaActual.getMonthValue();
@@ -68,6 +70,8 @@ public class PublicacionService {
         int seg = horaActual.getSecond();
         publi.setHora(LocalTime.of(hs, min, seg));
 
+
+         */
         if(!file.isEmpty()){
             if (!file.getContentType().startsWith("image/")) {
                 System.out.println("El archivo debe ser una imagen");
@@ -109,7 +113,13 @@ public class PublicacionService {
             publicacionOut.setDescripcion(p.getDescripcion());
             publicacionOut.setMediaUrl(p.getMediaUrl());
             publicacionOut.setUsuario(usuario);
+            //publicacionOut.setFecha(p.getFecha());
+            //publicacionOut.setHora(p.getHora());
+            publicacionOut.setFechaHora(p.getFechaHora());
+            publicacionOut.setCount_coment(p.getCount_coment());
+            publicacionOut.setCount_likes(p.getCount_likes());
             publicacionesOut.add(publicacionOut);
+
         }
         return publicacionesOut;
     }

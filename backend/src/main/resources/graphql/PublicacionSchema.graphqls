@@ -8,11 +8,15 @@ type Publicacion{
     comentarios: [Comentario]
     usuario: UsuarioPublicacion
 }
+scalar T
 
 type PublicacionOut{
     id: String
     descripcion: String
     mediaUrl: String
+    count_coment: Int
+    count_likes: Int
+    fechaHora: Date
     comentariosOut: [ComentarioOut]
     usuario: UsuarioPublicacion
 }

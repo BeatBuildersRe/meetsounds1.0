@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +22,9 @@ public class Publicacion {
     private String id;
     private String descripcion;
     private String mediaUrl;
-    private LocalDate fecha;
-    private LocalTime hora;
-
+    //private LocalDate fecha;
+    //private LocalTime hora;
+    private LocalDateTime fechaHora;
     private int count_coment;
     private int count_likes;
     private List<Comentario> comentarios = new ArrayList<>();
