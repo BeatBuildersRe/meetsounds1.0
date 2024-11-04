@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom'; // Importa useNavigate
+import { useParams, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { BASE_URL, BASE_URL_SOCKET } from '../../config';
 import '../../css/ChatComponent.css';
 
 const ChatComponent = () => {
   const { chatId } = useParams();
-  const navigate = useNavigate(); // Inicializa useNavigate
+  const navigate = useNavigate();
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [socket, setSocket] = useState(null);
@@ -97,7 +97,6 @@ const ChatComponent = () => {
 
   const sendMessage = async () => {
     if (!inputMessage.trim()) {
-      alert('Por favor, ingresa un mensaje.');
       return;
     }
 
@@ -166,7 +165,13 @@ const ChatComponent = () => {
           className='campo-input'
           placeholder='Escribe un mensaje...'
         />
-        <button onClick={sendMessage} className='boton-enviar'>Enviar</button>
+        <button
+          onClick={sendMessage}
+          className='boton-enviar'
+          disabled={!inputMessage.trim()} 
+        >
+          Enviar
+        </button>
       </div>
     </div>
   );
