@@ -12,6 +12,7 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-bottom: 15px;
   }
 
   .boton-salir:hover {
@@ -53,7 +54,7 @@
 }
 
 .mensajes {
-    height: 572px;
+    height: 557px;
     overflow-y: auto;
     margin-bottom: 10px;
 }
