@@ -1,6 +1,10 @@
 package com.project.meetsounds.domain.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.project.meetsounds.config.LocalDateTimeDeserializer;
+import com.project.meetsounds.config.LocalDateTimeSerializer;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -22,14 +26,14 @@ public class Publicacion {
     private String id;
     private String descripcion;
     private String mediaUrl;
-    //private LocalDate fecha;
-    //private LocalTime hora;
-    private LocalDateTime fechaHora;
     private int count_coment;
     private int count_likes;
     private List<Comentario> comentarios = new ArrayList<>();
     private List<MeGusta> meGustas;
     private String idUsuario;
 
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime fechaPublicacion;
 
 }

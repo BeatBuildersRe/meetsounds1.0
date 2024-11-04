@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,29 +25,34 @@ public class PublicacionController {
     private PublicacionService publicacionService;
 
 
-    @QueryMapping(name = "listarPublicaciones")
-    public List<PublicacionOut> listarPublicaciones(){
-        return this.publicacionService.listarPublicaciones();
+    @GetMapping("/listarPublicaciones")
+    public List<Publicacion> listarPublicaciones(){
+        return publicacionService.listarPublicaciones();
     }
 
-    @QueryMapping(name ="listarPublicacionesUsuario")
-    public List<Publicacion> listarPublicacionesUsuario(@Argument String alias){
+    @GetMapping("/listarPublicacionesUsuario")
+    public List<Publicacion> listarPublicacionesUsuario(@RequestParam String alias){
         return publicacionService.listarPublicacionesUsuario(alias);
     }
 
-    @QueryMapping(name = "buscarPublicacionPorId")
-    public Publicacion buscarPublicacionPorId(@Argument String id){
-        return this.publicacionService.buscarPublicacionPorId(id);
+    @GetMapping("/buscarPublicacionPorId")
+    public Publicacion buscarPublicacionPorId(@RequestParam String id){
+        return publicacionService.buscarPublicacionPorId(id);
     }
 
-    @QueryMapping(name = "buscarPublicacionPorIdOut")
-    public PublicacionOut buscarPublicacionPorIdOut(@Argument String id){
-        return this.publicacionService.buscarPublicacionPorIdOut(id);
+    @PostMapping("/darMeGusta")
+        public Boolean darMeGusta(@RequestParam String idPublicacion, @RequestParam String usuarioAlias){
+        return this.publicacionService.darMeGusta(idPublicacion, usuarioAlias);
     }
 
-    @MutationMapping(name = "meGusta")
-        public Boolean meGusta(@Argument String idPublicacion, @Argument String usuarioAlias){
-        return this.publicacionService.meGusta(idPublicacion, usuarioAlias);
+    @PostMapping("/quitarMeGusta")
+    public Boolean quitarMeGusta(@RequestParam String idPublicacion, @RequestParam String usuarioAlias){
+        return this.publicacionService.quitarMeGusta(idPublicacion, usuarioAlias);
+    }
+
+    @PostMapping("/usuarioHaDadoMeGusta")
+    public Boolean usuarioHaDadoMeGusta(@RequestParam String idPublicacion, @RequestParam String usuarioAlias){
+        return this.publicacionService.usuarioHaDadoMeGusta(idPublicacion, usuarioAlias);
     }
     /*
     @MutationMapping(name = "crearPublicacion")
@@ -66,11 +72,7 @@ public class PublicacionController {
         publicacionService.eliminarPublicacion(idUsuario, idPublicacion);
     }
 
-    @QueryMapping(name ="misLikesPublicacion") //trae la lista de usuarios que dieron me gusta
-    public List<Usuario> misLikesPublicacion(@Argument String idPublicacion){
-        return this.publicacionService.misLikesPublicacion(idPublicacion);
 
-    }
 
 
 

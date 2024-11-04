@@ -17,7 +17,6 @@ public class PublicacionOut {
     private String id;
     private String descripcion;
     private String mediaUrl;
-    private LocalDateTime fechaHora;
     private int count_coment;
     private int count_likes;
     private List<ComentarioOut> comentariosOut = new ArrayList<>();

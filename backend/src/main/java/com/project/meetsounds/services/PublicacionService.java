@@ -56,22 +56,8 @@ public class PublicacionService {
 
         publi.setDescripcion(descripcion);
         publi.setIdUsuario(usu.getId());
-        publi.setFechaHora(LocalDateTime.now());
-        /*
-        LocalDate fechaActual = LocalDate.now();
-        int año = fechaActual.getYear();
-        int mes = fechaActual.getMonthValue();
-        int dia = fechaActual.getDayOfMonth();
-        publi.setFecha(LocalDate.of(año, mes, dia));
+        publi.setFechaPublicacion(LocalDateTime.now());
 
-        LocalTime horaActual = LocalTime.now();
-        int hs = horaActual.getHour();
-        int min = horaActual.getMinute();
-        int seg = horaActual.getSecond();
-        publi.setHora(LocalTime.of(hs, min, seg));
-
-
-         */
         if(!file.isEmpty()){
             if (!file.getContentType().startsWith("image/")) {
                 System.out.println("El archivo debe ser una imagen");
@@ -102,26 +88,9 @@ public class PublicacionService {
         return this.iPublicacionRepository.findAllById(user.getMisPublicaciones());
     }
 
-    public List<PublicacionOut> listarPublicaciones() {
-        List<Publicacion>  publicaciones = this.iPublicacionRepository.findAll();
-        List<PublicacionOut> publicacionesOut = new ArrayList<>();
-        for(Publicacion p : publicaciones){
-            Optional<Usuario> usuarioOptional = this.iUsuarioRepository.findById(p.getIdUsuario());
-            Usuario usuario = usuarioOptional.orElseThrow(()-> new IllegalArgumentException("No se ha encontrado el usuario con id: " + p.getIdUsuario()));
-            PublicacionOut publicacionOut = new PublicacionOut();
-            publicacionOut.setId(p.getId());
-            publicacionOut.setDescripcion(p.getDescripcion());
-            publicacionOut.setMediaUrl(p.getMediaUrl());
-            publicacionOut.setUsuario(usuario);
-            //publicacionOut.setFecha(p.getFecha());
-            //publicacionOut.setHora(p.getHora());
-            publicacionOut.setFechaHora(p.getFechaHora());
-            publicacionOut.setCount_coment(p.getCount_coment());
-            publicacionOut.setCount_likes(p.getCount_likes());
-            publicacionesOut.add(publicacionOut);
-
-        }
-        return publicacionesOut;
+    public List<Publicacion> listarPublicaciones() {
+        List<Publicacion>  publicaciones = iPublicacionRepository.findAll();
+        return publicaciones;
     }
 
     public void eliminarPublicacion(String idAlias, String idPublicacion) {
@@ -142,52 +111,96 @@ public class PublicacionService {
 
     }
 
-    public PublicacionOut buscarPublicacionPorIdOut(String id) {
 
-        Optional<Publicacion> publicacionOptional = this.iPublicacionRepository.findById(id);
-        Publicacion publicacion = publicacionOptional.orElseThrow(()-> new IllegalArgumentException("No se ha encontrado la publicacion con id: " + id ));
-        List<ComentarioOut> comentarioOuts = this.comentarioService.listarComentariosPorId(id);
 
-        Optional<Usuario> usuarioOptional = this.iUsuarioRepository.findById(publicacion.getIdUsuario());
-        Usuario usuario = new Usuario();
-        usuario = usuarioOptional.orElseThrow(()-> new IllegalArgumentException("No se ha encontrado el usuario con id: " + publicacion.getIdUsuario()));
-        PublicacionOut publicacionOut = new PublicacionOut();
-        publicacionOut.setUsuario(usuario);
-        publicacionOut.setId(publicacion.getId());
-        publicacionOut.setMediaUrl(publicacion.getMediaUrl());
-        publicacionOut.setDescripcion(publicacion.getDescripcion());
-        publicacionOut.setComentariosOut(comentarioOuts);
-        return publicacionOut;
-    }
+    public Boolean darMeGusta(String idPublicacion, String usuarioAlias) {
+        Optional<Publicacion> publicacionOptional = iPublicacionRepository.findById(idPublicacion);
+        Optional<Usuario> usuarioOptional = iUsuarioRepository.findByAlias(usuarioAlias);
 
-    public Boolean meGusta(String idPublicacion, String usuarioAlias) {
-        //Traer la publicacion
-        Optional<Publicacion> publiOptional = iPublicacionRepository.findById(idPublicacion);
-        Publicacion publicacion = publiOptional.orElseThrow(()-> new IllegalArgumentException("No se ha encontrado la publicacion con id: " + idPublicacion));
+        Publicacion publicacion = publicacionOptional.orElseThrow(() ->
+                new IllegalArgumentException("No se ha encontrado la publicacion con id: " + idPublicacion));
+        Usuario usuario = usuarioOptional.orElseThrow(() ->
+                new IllegalArgumentException("No se ha encontrado el usuario con alias: " + usuarioAlias));
 
-        publicacion.setCount_likes(publicacion.getCount_likes() + 1);
+        // Inicializar la lista si es null
+        List<MeGusta> meGustas = publicacion.getMeGustas();
+        if (meGustas == null) {
+            meGustas = new ArrayList<>();
+            publicacion.setMeGustas(meGustas);  // Actualizar la lista en la publicación
+        }
+
         MeGusta meGusta = new MeGusta();
-        meGusta.setPublicacionId(idPublicacion);
-        meGusta.setUsuarioAlias(usuarioAlias);
+        meGusta.setPublicacionId(publicacion.getId());
+        meGusta.setUsuarioAlias(usuario.getAlias());
+        meGustas.add(iMeGustaRepository.save(meGusta));
+        publicacion.setCount_likes(publicacion.getCount_likes() + 1);
+        // Guardar la publicación actualizada
+        iPublicacionRepository.save(publicacion);
 
-        this.iPublicacionRepository.save(publicacion);
-        this.iMeGustaRepository.save(meGusta);
         return true;
     }
 
-    public List<Usuario> misLikesPublicacion(String idPublicacion) {
-        List<MeGusta> listaMeGusta = this.iMeGustaRepository.findMeGustaByIdPublicacion(idPublicacion);
-        List<String> usuarioAliasList = new ArrayList<>();
-        for (MeGusta meGusta : listaMeGusta){
-            usuarioAliasList.add(meGusta.getUsuarioAlias());
+    public Boolean quitarMeGusta(String idPublicacion, String usuarioAlias) {
+        Optional<Publicacion> publicacionOptional = iPublicacionRepository.findById(idPublicacion);
+        Optional<Usuario> usuarioOptional = iUsuarioRepository.findByAlias(usuarioAlias);
+
+        Publicacion publicacion = publicacionOptional.orElseThrow(() ->
+                new IllegalArgumentException("No se ha encontrado la publicacion con id: " + idPublicacion));
+        Usuario usuario = usuarioOptional.orElseThrow(() ->
+                new IllegalArgumentException("No se ha encontrado el usuario con alias: " + usuarioAlias));
+
+        // Obtener la lista de "me gustas" y verificar si está vacía
+        List<MeGusta> meGustas = publicacion.getMeGustas();
+        if (meGustas == null || meGustas.isEmpty()) {
+            throw new IllegalArgumentException("No existen 'me gustas' en esta publicación para eliminar");
         }
-        return this.iUsuarioRepository.findAllByAlias(usuarioAliasList);
+
+        // Buscar el "me gusta" del usuario
+        MeGusta meGustaToRemove = meGustas.stream()
+                .filter(meGusta -> meGusta.getUsuarioAlias().equals(usuario.getAlias()))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("El usuario no ha dado 'me gusta' a esta publicación"));
+
+        // Eliminar el "me gusta" y reducir el contador
+        meGustas.remove(meGustaToRemove);
+        iMeGustaRepository.delete(meGustaToRemove);
+
+        // Disminuir el contador de "likes" si es mayor a 0
+        if (publicacion.getCount_likes() > 0) {
+            publicacion.setCount_likes(publicacion.getCount_likes() - 1);
+        }
+
+        // Guardar la publicación actualizada
+        iPublicacionRepository.save(publicacion);
+
+        return true;
     }
 
+    public Boolean usuarioHaDadoMeGusta(String idPublicacion, String usuarioAlias) {
+        // Buscar la publicación
+        Optional<Publicacion> publicacionOptional = iPublicacionRepository.findById(idPublicacion);
+        Publicacion publicacion = publicacionOptional.orElseThrow(() ->
+                new IllegalArgumentException("No se ha encontrado la publicacion con id: " + idPublicacion));
+
+        // Obtener la lista de "me gustas" de la publicación
+        List<MeGusta> meGustas = publicacion.getMeGustas();
+
+        // Verificar si la lista de "me gustas" contiene uno del usuario
+        if (meGustas != null) {
+            return meGustas.stream()
+                    .anyMatch(meGusta -> meGusta.getUsuarioAlias().equals(usuarioAlias));
+        }
+
+        return false;  // Retorna false si la lista es null o el usuario no ha dado "me gusta"
+    }
+
+
+
+
+
     public Publicacion buscarPublicacionPorId(String id) {
-        Publicacion publicacion = new Publicacion();
-        Optional<Publicacion> publicacionOptional = this.iPublicacionRepository.findById(id);
-        publicacion = publicacionOptional.orElseThrow(()-> new IllegalArgumentException("No se ha encontrado la publicacion con id: " + id));
+        Optional<Publicacion> publicacionOptional = iPublicacionRepository.findById(id);
+        Publicacion publicacion = publicacionOptional.orElseThrow(()-> new IllegalArgumentException("No se ha encontrado la publicacion con id: " + id));
         return publicacion;
     }
 
