@@ -1,32 +1,43 @@
-import { useState, useEffect } from "react";
-import { BASE_URL } from "../../src/config";
-import GetAlias from "./GetAlias";
-const useObtenerUsuarioID = () => {
-  const alias = GetAlias();
-  const [id, setId] = useState(null);
+import { useState, useEffect } from 'react';
+import { BASE_URL } from '../config';
+import GetAlias from './GetAlias';
+const useObtenerUsuarioLogeado = () => {
+  const [usuario, setUsuario] = useState(null);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
-
+  const Alias = GetAlias()
   useEffect(() => {
     // Verificar si el Alias está definido antes de hacer la consulta
-    if (!alias) {
+    if (!Alias) {
       setCargando(false); // Detener la carga si no hay Alias
-      setError("Alias no proporcionado.");
+      setError('Alias no proporcionado.');
       return;
     }
 
     const fetchUsuario = async () => {
       try {
         const response = await fetch(`${BASE_URL}/graphql`, {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             query: `
               query {
-                buscarPorAlias(alias: "${alias}") {
+                buscarPorAlias(alias: "${Alias}") {
                   id
+                  nombre
+                  apellido
+                  alias
+                  fotoPerfilUrl
+                  fotoPortadaUrl
+                  edad
+                  descripcion
+                  contrasena
+                  genero
+                  fechaNacimiento
+                  email
+                  telefono
                 }
               }
             `,
@@ -43,15 +54,15 @@ const useObtenerUsuarioID = () => {
 
         // Verificar si los datos fueron encontrados
         if (result.data && result.data.buscarPorAlias) {
-          setId(result.data.buscarPorAlias);
+          setUsuario(result.data.buscarPorAlias);
         } else {
-          // Caso de id no encontrado
-          setError("No se pudo encontrar el id con ese alias.");
+          // Caso de usuario no encontrado
+          setError('No se pudo encontrar el usuario con ese alias.');
         }
       } catch (error) {
         // Diferenciar errores de conexión o de servidor
-        if (error.message.includes("Failed to fetch")) {
-          setError("Fallo en la conexión con el servidor. Verifica tu red.");
+        if (error.message.includes('Failed to fetch')) {
+          setError('Fallo en la conexión con el servidor. Verifica tu red.');
         } else {
           setError(`Error al obtener los datose: ${error.message}`);
         }
@@ -61,10 +72,9 @@ const useObtenerUsuarioID = () => {
     };
 
     fetchUsuario();
-  }, [alias]); // Efecto se ejecuta cuando cambia el Alias
+  }, [Alias]); // Efecto se ejecuta cuando cambia el Alias
 
-   return  {id} ; 
-    // Devolver id, estado de carga y error
+  return { usuario, cargando, error }; // Devolver usuario, estado de carga y error
 };
 
-export default useObtenerUsuarioID;
+export default useObtenerUsuarioLogeado;

@@ -4,10 +4,14 @@ import ComentarPublicacion from "@services/UpdateComentar";
 import GetAlias from "../../services/GetAlias";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from 'react-router-dom';
+
 import useObtenerUsuarioID from "@services/GetUsuarioID";
 import useUpdateComentario from "@services/UpdateComentar";
 const Comentarios = ({ id_publicacion }) => {
     const {comentar} = useUpdateComentario()
+    const navigate = useNavigate();
+
     const alias = GetAlias()
     const {
     register,
@@ -28,10 +32,13 @@ const Comentarios = ({ id_publicacion }) => {
   if (!publicacion) return <p>No se encontró la publicación.</p>;
 
 
+  const handleBack = () => {
+      navigate(-1); // Volver una ruta atrás
+  };
 
   return (
     <>
-      <button >atras</button>
+      <button onClick={() => handleBack()}>atras</button>
       <h1>cometarios</h1>
 
       <div className="publicacion">
