@@ -45,9 +45,8 @@ public class ComentarioService {
 
         Optional<Publicacion> publicacionOptional = this.iPublicacionRepository.findById(publicacionId);
         Publicacion publicacion = publicacionOptional.orElseThrow(()-> new IllegalArgumentException("No se ha encontrado la publicacion con id: " + publicacionId));
-        System.out.println("descripcion: " + publicacion.getDescripcion());
-        List<Comentario> comentarios = publicacion.getComentarios();
 
+        List<Comentario> comentarios = publicacion.getComentarios();
         List<ComentarioOut> comentariosOut = new ArrayList<>();
 
         for (Comentario comentario : comentarios){

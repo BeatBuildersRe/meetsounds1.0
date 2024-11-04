@@ -67,6 +67,7 @@ public class PublicacionService {
         int min = horaActual.getMinute();
         int seg = horaActual.getSecond();
         publi.setHora(LocalTime.of(hs, min, seg));
+
         if(!file.isEmpty()){
             if (!file.getContentType().startsWith("image/")) {
                 System.out.println("El archivo debe ser una imagen");
@@ -98,8 +99,20 @@ public class PublicacionService {
         return user.getMisPublicaciones();
     }
 
-    public List<Publicacion> listarPublicaciones() {
-        return this.iPublicacionRepository.findAll();
+    public List<PublicacionOut> listarPublicaciones() {
+        List<Publicacion>  publicaciones = this.iPublicacionRepository.findAll();
+        List<PublicacionOut> publicacionesOut = new ArrayList<>();
+        for(Publicacion p : publicaciones){
+            Optional<Usuario> usuarioOptional = this.iUsuarioRepository.findById(p.getIdUsuario());
+            Usuario usuario = usuarioOptional.orElseThrow(()-> new IllegalArgumentException("No se ha encontrado el usuario con id: " + p.getIdUsuario()));
+            PublicacionOut publicacionOut = new PublicacionOut();
+            publicacionOut.setId(p.getId());
+            publicacionOut.setDescripcion(p.getDescripcion());
+            publicacionOut.setMediaUrl(p.getMediaUrl());
+            publicacionOut.setUsuario(usuario);
+            publicacionesOut.add(publicacionOut);
+        }
+        return publicacionesOut;
     }
 
     public void eliminarPublicacion(String idAlias, String idPublicacion) {
@@ -126,7 +139,11 @@ public class PublicacionService {
         Publicacion publicacion = publicacionOptional.orElseThrow(()-> new IllegalArgumentException("No se ha encontrado la publicacion con id: " + id ));
         List<ComentarioOut> comentarioOuts = this.comentarioService.listarComentariosPorId(id);
 
+        Optional<Usuario> usuarioOptional = this.iUsuarioRepository.findById(publicacion.getIdUsuario());
+        Usuario usuario = new Usuario();
+        usuario = usuarioOptional.orElseThrow(()-> new IllegalArgumentException("No se ha encontrado el usuario con id: " + publicacion.getIdUsuario()));
         PublicacionOut publicacionOut = new PublicacionOut();
+        publicacionOut.setUsuario(usuario);
         publicacionOut.setId(publicacion.getId());
         publicacionOut.setMediaUrl(publicacion.getMediaUrl());
         publicacionOut.setDescripcion(publicacion.getDescripcion());

@@ -17,7 +17,7 @@ type Query{
     buscarInstrumentoPorNombre(nombre: String) : Instrumento
 
     # Publiacion Query
-    listarPublicaciones: [Publicacion]
+    listarPublicaciones: [PublicacionOut]
     listarComentariosPorId(publicacionId: String): [ComentarioOut]
     misLikesPublicacion(idPublicacion: String!): [UsuariosLikes]
     buscarPublicacionPorId(id: String): Publicacion

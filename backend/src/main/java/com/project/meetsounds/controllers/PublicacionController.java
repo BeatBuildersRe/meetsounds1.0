@@ -25,7 +25,7 @@ public class PublicacionController {
 
 
     @QueryMapping(name = "listarPublicaciones")
-    public List<Publicacion> listarPublicaciones(){
+    public List<PublicacionOut> listarPublicaciones(){
         return this.publicacionService.listarPublicaciones();
     }
 
