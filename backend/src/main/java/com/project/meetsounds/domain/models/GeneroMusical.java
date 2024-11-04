@@ -10,8 +10,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "Intereses")
-public class Interes {
-    private int id;
+@Document(collection = "GeneroMusical")
+public class GeneroMusical {
+    private String id;
     private String nombre;
 }

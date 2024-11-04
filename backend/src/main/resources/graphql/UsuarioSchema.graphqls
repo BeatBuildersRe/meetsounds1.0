@@ -83,6 +83,15 @@ type Mutation{
     # Seguidores
     eliminarSeguidor(idAliasUsuario: String, idAliasSeguidor: String): Boolean
 
+    # Guardar About
+    guardarAbout(
+        usuarioId: String!,
+        rol: String!,
+        instrumentos: [String!]!,
+        generoMus: [String!]!,
+        descripcion: String
+    ): About
+
 }
 
 scalar Date
@@ -158,6 +167,15 @@ type TipoInstrumento{
     id: String
     nombre : String
 }
+type About {
+    id: ID!
+    usuarioId: String!
+    rol: String
+    instrumentos: [String]
+    generoMus: [String]
+    descripcion: String
+}
+
 
 input userInput{
     #Es la informacion escencial

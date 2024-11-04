@@ -1,24 +1,24 @@
 package com.project.meetsounds.controllers;
 
 
-import com.project.meetsounds.domain.models.Publicacion;
-import com.project.meetsounds.domain.models.Redes;
-import com.project.meetsounds.domain.models.Usuario;
-import com.project.meetsounds.services.UsuarioService;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import com.project.meetsounds.domain.models.Publicacion;
+import com.project.meetsounds.domain.models.Redes;
+import com.project.meetsounds.domain.models.Usuario;
+import com.project.meetsounds.services.UsuarioService;
 
 @RestController
 public class UsuarioController {
@@ -133,6 +133,7 @@ public class UsuarioController {
     public Usuario actualizarNombreApellidoPorAlias(@Argument String alias, @Argument String nombre, @Argument String apellido) {
         return usuarioService.actualizarNombreApellidoPorAlias(alias, nombre, apellido);
     }
+    
 
     @QueryMapping(name = "misLikesUsuario")
     public List<Publicacion> misLikesUsuario(@Argument String usuarioAlias){
@@ -143,4 +144,23 @@ public class UsuarioController {
     public Boolean existByAlias(@Argument String alias){
         return this.usuarioService.existByAlias(alias);
     }
+
+    /* DATOS DEL ONBOARDING */
+    @MutationMapping(name = "actualizarRolUsuario")
+    public Usuario actualizarRolUsuario(@Argument String userId, @Argument String rol) {
+        return usuarioService.actualizarRolUsuario(userId, rol);
+    }
+    public Usuario actualizarInstrumentosUsuario(@Argument String userId, @Argument List<String> instrumentoIds) {
+        return usuarioService.actualizarInstrumentosUsuario(userId, instrumentoIds);
+    }
+    @MutationMapping(name = "actualizarGenerosUsuario")
+        public Usuario actualizarGenerosUsuario(@Argument String userId, @Argument List<String> generoIds) {
+    return usuarioService.actualizarGenerosUsuario(userId, generoIds);
+    }
+    @MutationMapping(name = "actualizarDescripcionUsuario")
+    public ResponseEntity<String> actualizarDescripcionUsuario(@Argument String userId, @Argument String descripcion) {
+        return usuarioService.actualizarDescripcionUsuario(userId, descripcion);
+    }
+    
+
 }

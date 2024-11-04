@@ -10,6 +10,7 @@ import java.util.Optional;
 @Repository
 public interface IInstrumentoRepository extends MongoRepository<Instrumento,String>{
 
+    
     public List<Instrumento> findByTipoInstrumento(String tipo);
     public Optional<Instrumento> findByNombre(String nombre);
 }

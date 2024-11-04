@@ -19,7 +19,6 @@ import FotosPerfil from './Pages/Configuracion/Perfil/FotosPerfil';
 import Perfil_Y_Portada from './Pages/Configuracion/Perfil/Perfil_Y_Portada/Perfil_Y_Portada';
 import Login from './Pages/Login/LoginForm';
 import Registro from './Pages/Registro/Registro';
-import Registro2 from './Pages/Registro/Registro2';
 import ChatComponent from './Pages/Chat/ChatComponent';
 import Cuenta from './Pages/PerfilUsuario/PerfilUsuario';
 import Cuenta2 from './Pages/PerfilUsuario/PerfilUsuario2';
@@ -65,8 +64,7 @@ function App() {
         </Route>
 
         <Route path="/login" element={isAuthenticated ? <Navigate to="/" /> : <Login />} />
-        <Route path="/registro" element={<Registro />} />
-        <Route path="/registro2" element={<Registro2 />} />
+        <Route path="/registro" element={isAuthenticated ? <Navigate to="/" /> : <Registro />} />
         <Route path="*" element={<Error_404 />} />
 
 

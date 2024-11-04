@@ -37,13 +37,17 @@ public class Usuario {
     private List<String> seguidores = new ArrayList<>();
 
     private List<Instrumento> misInstru = new ArrayList<>();
-    private List<Interes> misIntereses = new ArrayList<>();
+    
+    private List<Roles> roles = new ArrayList<>();
     private List<Banda> misBandas = new ArrayList<>();
     private List<String> misPublicaciones = new ArrayList<>();
 
     private String descripcion;
     private Redes redes;
     private LocalDate date;
+
+    private String rol;
+    private List<GeneroMusical> misGeneros = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

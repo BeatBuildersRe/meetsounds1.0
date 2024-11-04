@@ -1,24 +1,47 @@
 // StepTwo.jsx
 import React, { useState } from 'react';
 import './StepTwo.css';
-import MusicoIcon from '../../assets/icons/musico.svg'; // Icono temporal para todas las tarjetas
+import MusicoIcon from '../../assets/icons/musico.svg';
+import axios from 'axios';
 
-const StepTwo = () => {
+const StepTwo = ({ userId, onComplete }) => {
   const [selectedInstruments, setSelectedInstruments] = useState([]);
 
   const instruments = [
-    "Guitarra", "Batería", "Piano", "Bajo", "Teclado",
-    "Saxofón", "Trompeta", "Violín", "Viola", "Violonchelo",
-    "Flauta", "Sintetizador"
+    { id: "1", nombre: "Guitarra" },
+    { id: "2", nombre: "Batería" },
+    { id: "3", nombre: "Piano" },
+    { id: "4", nombre: "Bajo" },
+    { id: "5", nombre: "Teclado" },
+    // Agrega el resto de los instrumentos con sus IDs reales
   ];
 
   const handleInstrumentClick = (instrument) => {
-    if (selectedInstruments.includes(instrument)) {
-      // Si ya está seleccionado, lo quitamos
-      setSelectedInstruments(selectedInstruments.filter(item => item !== instrument));
+    if (selectedInstruments.includes(instrument.id)) {
+      setSelectedInstruments(selectedInstruments.filter(item => item !== instrument.id));
     } else {
-      // Si no está seleccionado, lo agregamos
-      setSelectedInstruments([...selectedInstruments, instrument]);
+      setSelectedInstruments([...selectedInstruments, instrument.id]);
+    }
+  };
+
+  const saveInstruments = async () => {
+    try {
+      await axios.post('/graphql', {
+        query: `
+          mutation {
+            actualizarInstrumentosUsuario(userId: "${userId}", instrumentoIds: ${JSON.stringify(selectedInstruments)}) {
+              id
+              misInstru {
+                id
+                nombre
+              }
+            }
+          }
+        `,
+      });
+      onComplete();  // Avanzar al siguiente paso después de guardar los instrumentos
+    } catch (error) {
+      console.error("Error al guardar instrumentos", error);
     }
   };
 
@@ -28,15 +51,16 @@ const StepTwo = () => {
       <div className="option-grid">
         {instruments.map((instrument) => (
           <div
-            key={instrument}
-            className={`option-square ${selectedInstruments.includes(instrument) ? "selected" : ""}`}
+            key={instrument.id}
+            className={`option-square ${selectedInstruments.includes(instrument.id) ? "selected" : ""}`}
             onClick={() => handleInstrumentClick(instrument)}
           >
-            <img src={MusicoIcon} alt={instrument} className="option-icon" />
-            <span>{instrument}</span>
+            <img src={MusicoIcon} alt={instrument.nombre} className="option-icon" />
+            <span>{instrument.nombre}</span>
           </div>
         ))}
       </div>
+      <button onClick={saveInstruments} disabled={selectedInstruments.length === 0}>Guardar y Continuar</button>
     </div>
   );
 };

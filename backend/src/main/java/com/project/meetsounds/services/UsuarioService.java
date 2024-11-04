@@ -1,14 +1,18 @@
 package com.project.meetsounds.services;
 
-import com.project.meetsounds.controlErrores.AliasAlreadyExistsException;
-import com.project.meetsounds.controlErrores.AliasAndEmailAlreadyExistsException;
-import com.project.meetsounds.controlErrores.EmailAlreadyExistsException;
-import com.project.meetsounds.controlErrores.MenorDeEdadException;
-import com.project.meetsounds.domain.models.*;
-import com.project.meetsounds.repositories.IMeGustaRepository;
-import com.project.meetsounds.repositories.IPublicacionRepository;
-import com.project.meetsounds.repositories.IUsuarioRepository;
-import graphql.GraphQLException;
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -18,12 +22,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.time.LocalDate;
-import java.time.Period;
-import java.util.*;
-import java.util.stream.Collectors;
+import com.project.meetsounds.controlErrores.AliasAlreadyExistsException;
+import com.project.meetsounds.controlErrores.AliasAndEmailAlreadyExistsException;
+import com.project.meetsounds.controlErrores.EmailAlreadyExistsException;
+import com.project.meetsounds.controlErrores.MenorDeEdadException;
+import com.project.meetsounds.domain.models.Banda;
+import com.project.meetsounds.domain.models.GeneroMusical;
+import com.project.meetsounds.domain.models.Instrumento;
+import com.project.meetsounds.domain.models.MeGusta;
+import com.project.meetsounds.domain.models.Publicacion;
+import com.project.meetsounds.domain.models.Redes;
+import com.project.meetsounds.domain.models.Usuario;
+import com.project.meetsounds.repositories.IAboutRepository;
+import com.project.meetsounds.repositories.IMeGustaRepository;
+import com.project.meetsounds.repositories.IPublicacionRepository;
+import com.project.meetsounds.repositories.IUsuarioRepository;
 
 @Service
 public class UsuarioService {
@@ -40,6 +53,10 @@ public class UsuarioService {
     private IPublicacionRepository iPublicacionRepository;
     @Autowired
     S3Service s3Service;
+    @Autowired
+    private IAboutRepository aboutRepository;
+    @Autowired
+    private GeneroMusicalService generoMusicalService;
 
     /*--------------------------------REGISTRO----------------------------------------*/
     public void comprobarCredenciales(Usuario user){
@@ -85,6 +102,9 @@ public class UsuarioService {
         }
         return usuarioRepository.save(user);
     }
+
+    
+
 
     private boolean esMayorDeEdad(LocalDate fechaNacimiento){
         LocalDate hoy = LocalDate.now();
@@ -477,5 +497,71 @@ public class UsuarioService {
     public Boolean existByAlias(String alias) {
         return this.usuarioRepository.existsByAlias(alias);
     }
+
+    //GUARDADO DE DATOS DEL ONBNOARDING
+    public Usuario actualizarRolUsuario(String userId, String rol) {
+        Optional<Usuario> userOptional = usuarioRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            Usuario usuario = userOptional.get();
+            usuario.setRol(rol);
+            return usuarioRepository.save(usuario);  // Guardar el rol en la base de datos
+        } else {
+            throw new NoSuchElementException("Usuario no encontrado");
+        }
+    }
+
+    public Usuario actualizarInstrumentosUsuario(String userId, List<String> instrumentoIds) {
+        Optional<Usuario> userOptional = usuarioRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            Usuario usuario = userOptional.get();
+            
+            // Buscar los objetos Instrumento usando los IDs
+            List<Instrumento> instrumentos = instrumentoIds.stream()
+                    .map(id -> instrumentoService.buscarInstrumentoPorId(id))
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .collect(Collectors.toList());
+    
+            usuario.setMisInstru(instrumentos);  // Guardar los instrumentos en el usuario
+            return usuarioRepository.save(usuario);
+        } else {
+            throw new NoSuchElementException("Usuario no encontrado");
+        }
+    }
+
+    public Usuario actualizarGenerosUsuario(String userId, List<String> generoIds) {
+        Optional<Usuario> userOptional = usuarioRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            Usuario usuario = userOptional.get();
+            
+            // Buscar los objetos GeneroMusical usando los IDs con el servicio
+            List<GeneroMusical> generos = generoIds.stream()
+                    .map(id -> generoMusicalService.buscarGeneroPorId(id))
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .collect(Collectors.toList());
+
+            usuario.setMisGeneros(generos);  // Guardar los géneros en el usuario
+            return usuarioRepository.save(usuario);
+        } else {
+            throw new NoSuchElementException("Usuario no encontrado");
+        }
+    }
+    // UsuarioService.java
+    public ResponseEntity<String> actualizarDescripcionUsuario(String userId, String descripcion) {
+    Optional<Usuario> usuarioOptional = usuarioRepository.findById(userId);
+
+    if (!usuarioOptional.isPresent()) {
+        return ResponseEntity.badRequest().body("No existe usuario con el ID: " + userId);
+    }
+
+    Usuario usuario = usuarioOptional.get();
+    usuario.setDescripcion(descripcion);
+    usuarioRepository.save(usuario);
+
+    return ResponseEntity.ok("Descripción actualizada exitosamente");
+    }
+
+
 
 }

@@ -1,24 +1,47 @@
 // StepThree.jsx
 import React, { useState } from 'react';
 import './StepThree.css';
-import MusicoIcon from '../../assets/icons/musico.svg'; // Icono temporal para todas las tarjetas
+import MusicoIcon from '../../assets/icons/musico.svg';  // Usando icono temporal
+import axios from 'axios';
 
-const StepThree = () => {
+const StepThree = ({ userId, onComplete }) => {
   const [selectedGenres, setSelectedGenres] = useState([]);
 
   const genres = [
-    "Rock", "Pop", "Jazz", "Blues", "Electrónica", 
-    "Rap/Hip-Hop", "Reggae", "Metal", "Clásica", 
-    "Country", "Indie", "Música Experimental", "Folklore/Étnica"
+    { id: "1", nombre: "Rock" },
+    { id: "2", nombre: "Pop" },
+    { id: "3", nombre: "Cumbia" },
+    { id: "4", nombre: "Cuarteto" },
+    { id: "5", nombre: "Rap/Hip-Hop" },
+    // Agrega el resto de los géneros con sus IDs reales
   ];
 
   const handleGenreClick = (genre) => {
-    if (selectedGenres.includes(genre)) {
-      // Si ya está seleccionado, lo quitamos
-      setSelectedGenres(selectedGenres.filter(item => item !== genre));
+    if (selectedGenres.includes(genre.id)) {
+      setSelectedGenres(selectedGenres.filter(item => item !== genre.id));
     } else {
-      // Si no está seleccionado, lo agregamos
-      setSelectedGenres([...selectedGenres, genre]);
+      setSelectedGenres([...selectedGenres, genre.id]);
+    }
+  };
+
+  const saveGenres = async () => {
+    try {
+      await axios.post('/graphql', {
+        query: `
+          mutation {
+            actualizarGenerosUsuario(userId: "${userId}", generoIds: ${JSON.stringify(selectedGenres)}) {
+              id
+              misGeneros {
+                id
+                nombre
+              }
+            }
+          }
+        `,
+      });
+      onComplete();  // Avanzar al siguiente paso después de guardar los géneros
+    } catch (error) {
+      console.error("Error al guardar géneros musicales", error);
     }
   };
 
@@ -28,15 +51,16 @@ const StepThree = () => {
       <div className="option-grid">
         {genres.map((genre) => (
           <div
-            key={genre}
-            className={`option-square ${selectedGenres.includes(genre) ? "selected" : ""}`}
+            key={genre.id}
+            className={`option-square ${selectedGenres.includes(genre.id) ? "selected" : ""}`}
             onClick={() => handleGenreClick(genre)}
           >
-            <img src={MusicoIcon} alt={genre} className="option-icon" />
-            <span>{genre}</span>
+            <img src={MusicoIcon} alt={genre.nombre} className="option-icon" />
+            <span>{genre.nombre}</span>
           </div>
         ))}
       </div>
+      <button onClick={saveGenres} disabled={selectedGenres.length === 0}>Guardar y Continuar</button>
     </div>
   );
 };

@@ -1,8 +1,10 @@
+// StepFour.jsx
 import React, { useState, useCallback } from 'react';
 import Cropper from 'react-easy-crop';
 import './StepFour.css';
+import axios from 'axios';
 
-const StepFour = () => {
+const StepFour = ({ userId, onComplete }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
   const [croppedImage, setCroppedImage] = useState(null); // Imagen recortada
@@ -12,36 +14,32 @@ const StepFour = () => {
   const [description, setDescription] = useState(''); // Estado para la descripción
   const maxDescriptionLength = 400; // Longitud máxima de la descripción
 
-  // Función para manejar la selección de imagen
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       const imageUrl = URL.createObjectURL(file);
-      setProfileImage(imageUrl); // Mostrar imagen en el modal
-      setCroppedImage(null); // Restablecer la imagen recortada al abrir de nuevo
-      setIsModalOpen(true); // Abrir el modal
+      setProfileImage(imageUrl); 
+      setCroppedImage(null); 
+      setIsModalOpen(true);
     }
   };
 
-  // Función para abrir el modal al hacer clic en la imagen actual
   const handleImageClick = () => {
     if (profileImage) {
-      setIsModalOpen(true); // Reabrir el modal de recorte si ya hay una imagen
+      setIsModalOpen(true);
     }
   };
 
-  // Guardar el área recortada
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
   }, []);
 
-  // Procesar y guardar la imagen recortada
   const finishCropping = async () => {
     if (profileImage && croppedAreaPixels) {
       const canvas = document.createElement('canvas');
       const image = new Image();
       image.src = profileImage;
-      await image.decode(); // Espera a que la imagen cargue completamente
+      await image.decode(); 
       const ctx = canvas.getContext('2d');
 
       const { width, height } = croppedAreaPixels;
@@ -60,23 +58,60 @@ const StepFour = () => {
         height
       );
 
-      const croppedImageUrl = canvas.toDataURL('image/jpeg'); // Crear la URL de la imagen recortada
-      setCroppedImage(croppedImageUrl); // Guardar la imagen recortada
-      setIsModalOpen(false); // Cerrar el modal
+      const croppedImageUrl = canvas.toDataURL('image/jpeg'); 
+      setCroppedImage(croppedImageUrl); 
+      setIsModalOpen(false);
     }
   };
 
-  // Función para descartar la imagen seleccionada
   const discardImage = () => {
     setProfileImage(null);
     setCroppedImage(null);
   };
 
-  // Función para manejar el cambio en el campo de descripción
   const handleDescriptionChange = (event) => {
     if (event.target.value.length <= maxDescriptionLength) {
       setDescription(event.target.value);
     }
+  };
+
+  const saveProfileImage = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("file", profileImage);
+      formData.append("alias", userId); // O utiliza el alias del usuario si es necesario
+
+      await axios.post("/api/usuario/actualizarFotoPerfil", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+    } catch (error) {
+      console.error("Error al subir la foto de perfil", error);
+    }
+  };
+
+  const saveDescription = async () => {
+    try {
+      await axios.post("/graphql", {
+        query: `
+          mutation {
+            actualizarDescripcionUsuario(userId: "${userId}", descripcion: "${description}") {
+              id
+              descripcion
+            }
+          }
+        `,
+      });
+    } catch (error) {
+      console.error("Error al guardar la descripción", error);
+    }
+  };
+
+  const handleSaveAndContinue = async () => {
+    await saveProfileImage();
+    await saveDescription();
+    onComplete(); // Avanza al siguiente paso o finaliza el onboarding
   };
 
   return (
@@ -90,7 +125,7 @@ const StepFour = () => {
               src={croppedImage} 
               alt="Imagen recortada" 
               className="profile-image-preview" 
-              onClick={handleImageClick} // Reabrir el modal al hacer clic
+              onClick={handleImageClick}
             />
             <button className="discard-button" onClick={discardImage}>✕</button>
           </>
@@ -101,7 +136,7 @@ const StepFour = () => {
                 src={profileImage} 
                 alt="Vista previa del perfil" 
                 className="profile-image-preview" 
-                onClick={handleImageClick} // Reabrir el modal al hacer clic
+                onClick={handleImageClick}
               />
             ) : (
               <div>Haz clic para subir tu foto</div>
@@ -114,11 +149,10 @@ const StepFour = () => {
           accept="image/*"
           onChange={handleImageChange}
           style={{ display: 'none' }}
-          onClick={(e) => e.target.value = null} // Permitir seleccionar la misma imagen de nuevo
+          onClick={(e) => e.target.value = null} 
         />
       </div>
 
-      {/* Área para la descripción */}
       <div className="description-container">
         <textarea
           className="description-input"
@@ -132,7 +166,6 @@ const StepFour = () => {
         </div>
       </div>
 
-      {/* Modal personalizado para recortar la imagen */}
       {isModalOpen && (
         <div className="custom-modal-overlay" onClick={() => setIsModalOpen(false)}>
           <div className="custom-modal" onClick={(e) => e.stopPropagation()}>
@@ -142,7 +175,7 @@ const StepFour = () => {
                 image={profileImage}
                 crop={crop}
                 zoom={zoom}
-                aspect={1} // Relación de aspecto cuadrada para recorte circular
+                aspect={1}
                 cropShape="round"
                 onCropChange={setCrop}
                 onZoomChange={setZoom}
@@ -154,6 +187,8 @@ const StepFour = () => {
           </div>
         </div>
       )}
+      
+      <button onClick={handleSaveAndContinue} style={{ marginTop: '1em' }}>Guardar y Continuar</button>
     </div>
   );
 };
