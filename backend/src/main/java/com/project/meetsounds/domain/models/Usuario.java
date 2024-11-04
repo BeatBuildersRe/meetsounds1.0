@@ -39,7 +39,7 @@ public class Usuario {
     private List<Instrumento> misInstru = new ArrayList<>();
     private List<Interes> misIntereses = new ArrayList<>();
     private List<Banda> misBandas = new ArrayList<>();
-    private List<Publicacion> misPublicaciones = new ArrayList<>();
+    private List<String> misPublicaciones = new ArrayList<>();
 
     private String descripcion;
     private Redes redes;

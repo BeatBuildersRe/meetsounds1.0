@@ -82,8 +82,8 @@ public class PublicacionService {
         }
         Publicacion publicacion = iPublicacionRepository.save(publi);
 
-            List<Publicacion> publicacionsUsuario = usu.getMisPublicaciones();
-            publicacionsUsuario.add(publicacion);
+            List<String> publicacionsUsuario = usu.getMisPublicaciones();
+            publicacionsUsuario.add(publicacion.getId());
             usu.setMisPublicaciones(publicacionsUsuario);
             iUsuarioRepository.save(usu);
 
@@ -93,10 +93,9 @@ public class PublicacionService {
     public List<Publicacion> listarPublicacionesUsuario(String alias){
         Optional<Usuario> usuarioOptional=iUsuarioRepository.findByAlias(alias);
         Usuario user = new Usuario();
-        if(usuarioOptional.isPresent()){
-            user = usuarioOptional.get();
-        }
-        return user.getMisPublicaciones();
+        user = usuarioOptional.orElseThrow(()-> new IllegalArgumentException("No se ha encontrado el usuario con el alias: " + alias));
+
+        return this.iPublicacionRepository.findAllById(user.getMisPublicaciones());
     }
 
     public List<PublicacionOut> listarPublicaciones() {
@@ -121,8 +120,8 @@ public class PublicacionService {
         Optional<Usuario> usuarioOptional = this.iUsuarioRepository.findByAlias(idAlias);
         usuario = usuarioOptional.orElseThrow(()-> new IllegalArgumentException("No se ha encontrado el usuario con alias: " + idAlias));
 
-        List<Publicacion> misPublicaciones = usuario.getMisPublicaciones();
-        misPublicaciones.removeIf( p -> p.getId().equals(idPublicacion));
+        List<String> misPublicaciones = usuario.getMisPublicaciones();
+        misPublicaciones.removeIf( s -> s.equals(idPublicacion));
         usuario.setMisPublicaciones(misPublicaciones);
 
         Query queryUp = new Query(Criteria.where("alias").is(idAlias));

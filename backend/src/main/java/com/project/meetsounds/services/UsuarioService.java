@@ -419,6 +419,7 @@ public class UsuarioService {
 
     }
 
+    /*
     public void crearPublicacion(String id, Publicacion publi) {
         Optional<Usuario> usu = usuarioRepository.findByAlias(id);
         if(usu != null){
@@ -434,6 +435,8 @@ public class UsuarioService {
             }
         }
     }
+
+     */
 
     public void crearBanda(String idUsuario, Banda b) {
         Optional<Usuario> usu = usuarioRepository.findById(idUsuario);
