@@ -9,9 +9,12 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
@@ -46,7 +49,7 @@ public class PublicacionService {
     public Publicacion crearPublicacion(String idAlias, String descripcion, MultipartFile file) {
         Publicacion publi = new Publicacion();
 
-        Optional<Usuario> usuarioOptional = this.iUsuarioRepository.findByAlias(idAlias);
+        Optional<Usuario> usuarioOptional = iUsuarioRepository.findByAlias(idAlias);
         Usuario usuario = new Usuario();
 
         Usuario usu = usuarioOptional.orElseThrow(()-> new IllegalArgumentException("No se ha econtrado el usuario con el alias: " + idAlias));
@@ -70,15 +73,20 @@ public class PublicacionService {
         int min = horaActual.getMinute();
         int seg = horaActual.getSecond();
         publi.setHora(LocalTime.of(hs, min, seg));
+        if(!file.isEmpty()){
+            if (!file.getContentType().startsWith("image/")) {
+                System.out.println("El archivo debe ser una imagen");
+            }
+            try {
+                // Subir la imagen a S3 (con la lógica de verificación de duplicados)
+                String fileUrl = s3Service.uploadFile(file);
+                publi.setMediaUrl(fileUrl);
+            } catch (IOException | NoSuchAlgorithmException e) {
+                System.out.println("Error al subir la imagen");
+            }
+        }
 
-
-
-        //publi.setMediaUrl(this.s3Service.uploadFile(file));
-
-        this.iPublicacionRepository.save(publi);
-        //Guardamos la publicacion en la lista de "misPublicaciones" del usuario
-        usuarioService.crearPublicacion(idAlias, publi);
-        return publi;
+        return iPublicacionRepository.save(publi);
     }
 
 
