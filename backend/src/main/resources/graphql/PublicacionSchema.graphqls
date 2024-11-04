@@ -8,7 +8,6 @@ type Publicacion{
     comentarios: [Comentario]
     usuario: UsuarioPublicacion
 }
-scalar T
 
 type PublicacionOut{
     id: String
