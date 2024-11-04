@@ -1,5 +1,6 @@
 package com.project.meetsounds.domain.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -27,7 +28,7 @@ public class Publicacion {
     private int count_likes;
     private List<Comentario> comentarios = new ArrayList<>();
     private List<MeGusta> meGustas;
-    private Usuario usuario;
+    private String idUsuario;
 
 
 }

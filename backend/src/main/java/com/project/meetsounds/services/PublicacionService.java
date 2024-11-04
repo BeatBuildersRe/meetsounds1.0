@@ -46,21 +46,15 @@ public class PublicacionService {
 
 
 
-    public Publicacion crearPublicacion(String idAlias, String descripcion, MultipartFile file) {
+    public void crearPublicacion(String idAlias, String descripcion, MultipartFile file) {
         Publicacion publi = new Publicacion();
 
         Optional<Usuario> usuarioOptional = iUsuarioRepository.findByAlias(idAlias);
-        Usuario usuario = new Usuario();
 
         Usuario usu = usuarioOptional.orElseThrow(()-> new IllegalArgumentException("No se ha econtrado el usuario con el alias: " + idAlias));
-        usuario.setId(usu.getId());
-        usuario.setNombre(usu.getNombre());
-        usuario.setApellido(usu.getApellido());
-        usuario.setAlias(usu.getAlias());
-        usuario.setFotoPerfilUrl(usu.getFotoPerfilUrl());
 
-        publi.setUsuario(usuario);
         publi.setDescripcion(descripcion);
+        publi.setIdUsuario(usu.getId());
 
         LocalDate fechaActual = LocalDate.now();
         int año = fechaActual.getYear();
@@ -85,11 +79,24 @@ public class PublicacionService {
                 System.out.println("Error al subir la imagen");
             }
         }
+        Publicacion publicacion = iPublicacionRepository.save(publi);
 
-        return iPublicacionRepository.save(publi);
+            List<Publicacion> publicacionsUsuario = usu.getMisPublicaciones();
+            publicacionsUsuario.add(publicacion);
+            usu.setMisPublicaciones(publicacionsUsuario);
+            iUsuarioRepository.save(usu);
+
+
     }
 
-
+    public List<Publicacion> listarPublicacionesUsuario(String alias){
+        Optional<Usuario> usuarioOptional=iUsuarioRepository.findByAlias(alias);
+        Usuario user = new Usuario();
+        if(usuarioOptional.isPresent()){
+            user = usuarioOptional.get();
+        }
+        return user.getMisPublicaciones();
+    }
 
     public List<Publicacion> listarPublicaciones() {
         return this.iPublicacionRepository.findAll();
@@ -124,7 +131,6 @@ public class PublicacionService {
         publicacionOut.setMediaUrl(publicacion.getMediaUrl());
         publicacionOut.setDescripcion(publicacion.getDescripcion());
         publicacionOut.setComentariosOut(comentarioOuts);
-        publicacionOut.setUsuario(publicacion.getUsuario());
         return publicacionOut;
     }
 
