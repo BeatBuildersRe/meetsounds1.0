@@ -12,7 +12,7 @@ import Bandas from './Pages/Bandas/Bandas';
 import Configuracion from './Pages/Configuracion/Configuracion';
 import Perfil2 from './Pages/Configuracion/Perfil/Perfil2';
 import DatosPersonales from './Pages/Configuracion/Perfil/Datos_Personales/DatosPersonales';
-import Seguridad from './Pages/Configuracion/Seguridad/Seguridad';
+import Seguridad from './Pages/Configuracion/Seguridad/Seguridad2';
 import Apariencia from './Pages/Configuracion/Apariencia/Apariencia';
 import Error_404 from './Pages/Error/Error-404';
 import FotosPerfil from './Pages/Configuracion/Perfil/FotosPerfil';

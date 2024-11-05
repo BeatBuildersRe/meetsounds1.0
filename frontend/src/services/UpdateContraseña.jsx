@@ -6,7 +6,7 @@ const useUpdateContraseña = () => {
     const [error, setError] = useState(null); // Estado de error
 
     // Función para realizar la mutación de actualización de datos
-    const actualizarContraseña = async ({ id, contrasena }) => {
+    const actualizarContraseña = async ({ id, contrasea }) => {
         setCargando(true);
         setError(null);
 

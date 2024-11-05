@@ -1,49 +1,114 @@
-import { useState } from 'react';
-import { BASE_URL } from '../config';
+import { useState } from "react";
+import { BASE_URL } from "../config";
 const useUpdateUsuario = () => {
-    const [usuario, setUsuario] = useState(null);
-    const [cargando, setCargando] = useState(false); // Estado de carga
-    const [error, setError] = useState(null); // Estado de error
+  const [consulta, setconsulta] = useState(null);
+  const [cargando, setCargando] = useState(false); // Estado de carga
+  const [error, setError] = useState(null); // Estado de error
 
-    // Función para realizar la mutación de actualización de datos
-    const actualizarUsuario = async ({ alias, nombre, apellido }) => {
-        setCargando(true);
-        setError(null);
+  // Función para realizar la mutación de actualización de datos
+  const actualizarEmail = async ({ id, email }) => {
+    setCargando(true);
+    setError(null);
 
-        try {
-            const response = await fetch(`${BASE_URL}/graphql`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    query: `
-                    mutation {
-                        actualizarNombreApellidoPorAlias(alias: "${alias}", nombre: "${nombre}", apellido: "${apellido}") {
-                            nombre
-                            apellido
+    try {
+      const response = await fetch(`${BASE_URL}/graphql`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          query: `
+                    mutation{
+                        actualizarUsuario(id:"${id}", user:{email:"${email}"}){
+                            email
+   
                         }
-                    }
+                        }
+
+
                     `,
-                }),
-            });
+        }),
+      });
 
-            const result = await response.json();
+      const result = await response.json();
 
-            if (result.data && result.data.actualizarNombreApellidoPorAlias) {
-                setUsuario(result.data.actualizarNombreApellidoPorAlias); // Actualizar los datos del usuario
-            } else {
-                console.log('Falló la mutación');
-            }
-        } catch (error) {
-            console.error("Error al conectar con el servidor", error);
-            setError(error); // Guardar el error
-        } finally {
-            setCargando(false); // Finaliza la carga
-        }
-    };
+      if (result.data && result.data.actualizarUsuario) {
+        setconsulta(result.data.actualizarUsuario); // Actualizar los datos del consulta
+      } else {
+        console.log("Falló la mutación");
+      }
+    } catch (error) {
+      console.error("Error al conectar con el servidor", error);
+      setError(error); // Guardar el error
+    }
+  };
 
-    return { usuario, cargando, error, actualizarUsuario }; // Devolver estado y función de mutación
+  const actualizarContraseña = async ({ id, contrasena }) => {
+    setCargando(true);
+    setError(null);
+    console.log('id: ', {id}, 'contra:', {contrasena})
+    try {
+      const response = await fetch(`${BASE_URL}/graphql`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          query: `
+                    mutation{
+                        actualizarContrasena(id:"${id}", contrasena:"${contrasena}")  
+                        
+                    }
+                `,
+        }),
+      });
+
+      const result = await response.json();
+
+      
+    } catch (error) {
+      console.error("Error al conectar con el servidor", error);
+      setError(error); // Guardar el error
+    }
+  };
+
+  const actualizarTelefono = async ({ id, telefono }) => {
+    setCargando(true);
+    setError(null);
+
+    try {
+      const response = await fetch(`${BASE_URL}/graphql`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          query: `
+                    mutation{
+                        actualizarUsuario(id:"${id}", user:{telefono:"${telefono}"}){
+                            telefono
+                          }
+                        }
+
+
+                    `,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.data && result.data.actualizarUsuario) {
+        setconsulta(result.data.actualizarUsuario); // Actualizar los datos del consulta
+      } else {
+        console.log("Falló la mutación");
+      }
+    } catch (error) {
+      console.error("Error al conectar con el servidor", error);
+      setError(error); // Guardar el error
+    }
+  };
+
+  return { consulta, cargando, error, actualizarEmail, actualizarContraseña, actualizarTelefono }; // Devolver estado y función de mutación
 };
 
 export default useUpdateUsuario;

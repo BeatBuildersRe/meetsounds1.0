@@ -4,23 +4,25 @@ import { parsePhoneNumberFromString } from 'libphonenumber-js';
 function PhoneNumberValidation(phone) {
   const [valid, setValid] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState(null);
+  const [country, setCountry] = useState(null);
 
-  // Efecto para validar el número solo cuando cambia el número de teléfono
   useEffect(() => {
     const parsedPhoneNumber = parsePhoneNumberFromString('+' + phone);
 
     if (parsedPhoneNumber && parsedPhoneNumber.isValid()) {
       setValid(true);
       setPhoneNumber(parsedPhoneNumber);  // Guarda el número formateado
+      setCountry(parsedPhoneNumber.country);  // Guarda el país del número
       console.log('Número válido:', parsedPhoneNumber.number);
     } else {
       setValid(false);
-      setPhoneNumber(null);  // Resetea el valor si el número no es válido
+      setPhoneNumber(null);
+      setCountry(null);  // Resetea el valor del país si el número no es válido
       console.log('Número no válido');
     }
-  }, [phone]);  // El efecto se ejecuta solo cuando 'phone' cambia
+  }, [phone]);
 
-  return { validacion: valid, numero: phoneNumber };
+  return { validacion: valid, numero: phoneNumber, pais: country };
 }
 
 export default PhoneNumberValidation;

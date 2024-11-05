@@ -1,135 +1,127 @@
-/* Contenedor principal de la sección de seguridad */
-.izquierda-seguridad {
-    height: auto;
-    flex: 2;
-    background-color: var(--color-fondo);
-    padding-right: 10px;
+input[type="checkbox"] {
+  display: none; /* Ocultar el checkbox */
+}
+
+.toggle-button,.toggle-button-seguridad,.toggle-button-telefono {
+  padding: 1%;
+  border-radius: 10px;
+  background-color: #324668;
+}
+.seccion {
+  height: auto;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+}
+.botonesX {
+  background-color: #263247;
+  border-top: none;
+  width: 100%;
+  padding: 2%;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 15px;
+  align-items: center;
+}
+
+.box,.box-contraseña,.box-telefono {
+  margin-top: 2%;
+  position: relative;
+  width: 100%;
+  height: 0px;
+  overflow: hidden;
+  background-color: #263247;
+  transition: all 0.3s ease;
+    margin-bottom: 1%;
+  border-radius: 15px;
+}
+.advertencia {
+  margin: 2%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  .adventencia-icon {
+    width: 20px;
+  }
+}
+.formulario-seguridad {
+  .campo {
+    padding: 2%;
     display: flex;
-    flex-direction: column;
-    width: 100%;
-    position: relative;
-}
-
-/* Estilo del contenedor de seguridad */
-.seguridad {
-    padding: 1%;
-}
-
-/* Estilo del título de seguridad */
-.titulo-seguridad {
-    width: 100%;
-    text-align: center;
-    padding: 0.5%;
-    background-color: var(--color-fondoDiv);
-}
-
-/* Contenedor de la sección de contraseña */
-.seguridad-contraseña {
-    height: fit-content;
-    transition: height 0.3s ease;
-
-}
-
-/* Estilo del botón de editar contraseña */
-#btn-editar-contraseña, #btn-editar-contraseña2,#btn-editar-contraseña3  {
-    position: absolute;
-    right: 3%;
-    top: 0;
-    z-index: 1;
-    width: 3%;
-}
-
-/* Contenedor del formulario de contraseña */
-#Div1 {
-    width: 100%;
-    position: relative;
-
-    /* Oculta el checkbox */
-    .toggle {
-        display: none;
-    }
-}
-.errors{
-    display: flex;
-    justify-content: center;
+    flex-wrap: wrap;
     align-items: center;
+    gap: 10px;
     p{
-        color: red;
-        font-weight: bold;
-        padding: 1%;
+      color: red;
     }
-}
-/* Contenedor de la contraseña */
-.input-container {
-    margin-bottom: 2%;
-    position: relative;
+  }
+  .labels-seguridad {
+    font-weight: 500;
+  }
+  .botones-control{
+    width: 100%;
+    padding: 2%;
     display: flex;
-    align-items: center;
-    width: fit-content;
-    border-radius: 15px;
-    border: 3px solid var(--color-fondoDiv);
-    padding-left: 10px;
-    padding-right: 10px;
-}
+    justify-content: space-between;
+    .btnGuardar-seguridad {
+        all: unset;
+        padding: 2%;
+        background-color: #324668;
+        border-radius: 10px;
+        color: rgb(0, 204, 68);
+        font-weight: 600;
+        cursor: pointer;
+    }
+    .btnCancelar-seguridad{
+        all: unset;
+        padding: 2%;
+        background-color: #324668;
+        border-radius: 10px;
+        color: rgb(207, 0, 0);
+        font-weight: 600;
+        cursor: pointer;
+    }
+  }
+  
 
-/* Contenedor secundario de contraseñas */
-.input-container2,
-.input-container3 {
-    margin-bottom: 2%;
-}
-
-/* Estilo del input de contraseña */
-#password {
+  .inputs-seguridad {
     all: unset;
-    /* Elimina todos los estilos predeterminados */
+    background-color: rgb(36, 46, 61);
+    padding: 1%;
+    border-radius: 10px;
+    margin-left: 1%;
+
+    border: 0.5px solid rgba(255, 255, 255, 0.308);
+  }
+  .inputs-seguridad-cod {
+    all: unset;
+    background-color: rgb(36, 46, 61);
+    padding: 1%;
+    border-radius: 10px;
+    margin-left: 1%;
+    width: 40px;
+    border: 0.5px solid rgba(255, 255, 255, 0.308);
+  }
+  
+}
+#telefono-codigo{
+  all: unset;
+  width: 20px;
 }
 
-/* Contenedor del div oculto de nueva contraseña */
-.miDiv {
-    overflow: hidden;
-    width: fit-content;
-    height: 0;
-    transition: height 0.3s ease;
-    gap: 10px;
+input[type="checkbox"]:checked + .box {
+  height: 320px;
+  margin-bottom: 2%;
 }
+input[type="checkbox"]:checked + .box-contraseña {
+  height: 320px;
+  margin-bottom: 2%;
 
-/* Cambia la altura del div cuando el checkbox está marcado */
-.toggle:checked+.boton-expandir+.miDiv {
-    height: 150px;
-    /* Ajusta la altura cuando se expande */
 }
+input[type="checkbox"]:checked + .box-telefono {
+  height: 320px;
+  margin-bottom: 2%;
 
-
-
-
-/* ------------------------------------------------- */
-.toggle2, .toggle3 {
-    display: none;
-}
-
-.miDiv-email,.miDiv-telefono {
-    overflow: hidden;
-    width: fit-content;
-    height: 0;
-    transition: height 0.3s ease;
-    gap: 10px;
-}
-
-/* Cambia la altura del div cuando el checkbox está marcado */
-.toggle2:checked+.boton-expandir2+.miDiv-email {
-    height: 150px;
-    /* Ajusta la altura cuando se expande */
-}
-.toggle3:checked+.boton-expandir3+.miDiv-telefono {
-    height: 150px;
-    /* Ajusta la altura cuando se expande */
-}
-
-.guardar-seguridad{
-    display: flex;
-    justify-content: center;
-}
-
-.Formulario-Seguridad{
-    color:var(--color-texto);
 }
