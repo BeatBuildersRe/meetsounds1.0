@@ -84,7 +84,6 @@ const Layout = () => {
 
 
           </nav>
-          {console.log(alias)}
           <div className='Perfil'>
             <button style={{ all: 'none' }} onClick={handleClick}>
               <Avatar />

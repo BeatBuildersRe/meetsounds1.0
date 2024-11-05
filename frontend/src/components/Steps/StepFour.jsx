@@ -2,8 +2,8 @@
 import React, { useState, useCallback } from 'react';
 import Cropper from 'react-easy-crop';
 import './StepFour.css';
-import axios from 'axios';
-
+/* import axios from 'axios';
+ */
 const StepFour = ({ userId, onComplete }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [profileImage, setProfileImage] = useState(null);

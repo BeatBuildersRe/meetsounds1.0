@@ -62,7 +62,7 @@ export default function SizeAvatars() {
 	}, []); // La dependencia vacía asegura que esto se ejecute solo al montar el componente
   
 	return (
-	  <button id="btn-message" className="button-message">
+	  <div id="btn-message" className="button-message">
 		<div className="content-avatar">
 	
 			<Avatars imagen={userData.fotoPerfilUrl} width={40} height={40}/>
@@ -75,6 +75,6 @@ export default function SizeAvatars() {
 		  <div className="lable-message">{userData.alias}</div>
 		  <div className="user-id">@{userData.alias}</div>
 		</div>
-	  </button>
+	  </div>
 	);
   }

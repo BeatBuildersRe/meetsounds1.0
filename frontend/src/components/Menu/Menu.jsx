@@ -46,11 +46,6 @@ const MenuDerecho = () => {
         );
     };
 
-    // Hook para ejecutar lógica una sola vez
-    useEffect(() => {
-        // Aquí puedes colocar cualquier lógica que deba ejecutarse una vez, como obtener usuarios, cargar datos, etc.
-        console.log("MenuDerecho se ha montado.");
-    }, []); // Al no pasar dependencias, useEffect se ejecuta solo una vez cuando el componente se monta.
 
     return (
         <div className="Contenedor-menu" id='Contenedor-menuu'>

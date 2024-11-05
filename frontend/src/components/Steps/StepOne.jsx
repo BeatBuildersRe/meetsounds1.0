@@ -7,8 +7,8 @@ import ProductorIcon from '../../assets/icons/productor.svg';
 import CompositorIcon from '../../assets/icons/compositor.svg';
 import AficionadoIcon from '../../assets/icons/aficionado.svg';
 import DjIcon from '../../assets/icons/dj.svg';
-import axios from 'axios';
-
+/* import axios from 'axios';
+ */
 const StepOne = ({ userId, onComplete }) => {
   const [selectedOption, setSelectedOption] = useState(null);
 

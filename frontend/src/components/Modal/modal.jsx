@@ -162,7 +162,7 @@ export default function PostModal({
 
   return (
     <>
-      <li>
+      
         <button className='boton_crear_publicacion' onClick={() => setIsOpen(true)}>
           <div className="svg-wrapper-1">
             <div className="svg-wrapper">
@@ -171,7 +171,7 @@ export default function PostModal({
           </div>
           <span>Crear</span>
         </button>
-      </li>
+      
       {isOpen && (
         <div style={modalStyles.overlay}>
           <div style={modalStyles.modal}>

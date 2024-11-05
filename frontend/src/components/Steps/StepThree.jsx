@@ -2,8 +2,8 @@
 import React, { useState } from 'react';
 import './StepThree.css';
 import MusicoIcon from '../../assets/icons/musico.svg';  // Usando icono temporal
-import axios from 'axios';
-
+/* import axios from 'axios';
+ */
 const StepThree = ({ userId, onComplete }) => {
   const [selectedGenres, setSelectedGenres] = useState([]);
 

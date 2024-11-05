@@ -2,8 +2,8 @@
 import React, { useState } from 'react';
 import './StepTwo.css';
 import MusicoIcon from '../../assets/icons/musico.svg';
-import axios from 'axios';
-
+/* import axios from 'axios';
+ */
 const StepTwo = ({ userId, onComplete }) => {
   const [selectedInstruments, setSelectedInstruments] = useState([]);
 

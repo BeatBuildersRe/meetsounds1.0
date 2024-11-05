@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "@css/Home.css";
 import Foto from "@assets/ads.png";
 import Comentarios from "@c/Publicaciones/Comentarios";
-//import Publicaciones from "@c/Publicaciones/Publicaciones";
+import Publicaciones from "@c/Publicaciones/Publicaciones";
 import MenuDerechoDiv from "@c/Menu/Derecha";
 const Inicio = () => {
   const [activeDiv, setActiveDiv] = useState("div1");
@@ -30,21 +30,22 @@ const Inicio = () => {
 
   window.addEventListener("scroll", function () {
     const scrollY = window.scrollY; // Obtiene la posición de scroll
-    const miDiv = document.getElementById("Contenedor-menuu");
-
-    const maxLimit = 300; // Máximo desplazamiento hacia abajo en píxeles
-    const minLimit = 0; // Mínimo desplazamiento (0 = posición original)
-
-    const slowFactor = 0.15; // Factor de despacio (puedes ajustarlo)
-
-    // Calcula la nueva posición, asegurando que no sobrepase los límites
-    const newPosition = Math.max(
-      minLimit,
-      Math.min(maxLimit, scrollY * slowFactor)
-    );
-
-    // Aplica el desplazamiento limitado al div
-    miDiv.style.transform = `translateY(-${newPosition}px)`; // Mover hacia abajo
+    const miDiv = document.getElementById("Contenedor2");
+  
+    if (miDiv) { // Verificar si miDiv existe
+      const maxLimit = 300; // Máximo desplazamiento hacia abajo en píxeles
+      const minLimit = 0; // Mínimo desplazamiento (0 = posición original)
+      const slowFactor = 0.15; // Factor de despacio (ajustable)
+  
+      // Calcula la nueva posición, asegurando que no sobrepase los límites
+      const newPosition = Math.max(
+        minLimit,
+        Math.min(maxLimit, scrollY * slowFactor)
+      );
+  
+      // Aplica el desplazamiento limitado al div
+      miDiv.style.transform = `translateY(-${newPosition}px)`; // Mover hacia abajo
+    }
   });
 
   return (
@@ -84,7 +85,7 @@ const Inicio = () => {
               className="Div_1"
               style={{ display: activeDiv === "div1" ? "block" : "none" }}
             >
-              {/* {<Publicaciones />:} */}
+              <Publicaciones />
             </div>
             <div
               className="Div_2"
