@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "@css/Home.css";
 import Foto from "@assets/ads.png";
 import Comentarios from "@c/Publicaciones/Comentarios";
-import Publicaciones from "@c/Publicaciones/Publicaciones";
+//import Publicaciones from "@c/Publicaciones/Publicaciones";
 import MenuDerechoDiv from "@c/Menu/Derecha";
 const Inicio = () => {
   const [activeDiv, setActiveDiv] = useState("div1");
@@ -85,7 +85,7 @@ const Inicio = () => {
               className="Div_1"
               style={{ display: activeDiv === "div1" ? "block" : "none" }}
             >
-              <Publicaciones />
+              {/*<Publicaciones />*/}
             </div>
             <div
               className="Div_2"
