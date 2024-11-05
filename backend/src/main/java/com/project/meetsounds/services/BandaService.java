@@ -10,7 +10,10 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +24,9 @@ public class BandaService {
 
     @Autowired
     private IBandaRepository iBandaRepository;
+
+    @Autowired
+    private S3Service s3Service;
 
     @Autowired
     private UsuarioService usuarioService;
@@ -105,5 +111,25 @@ public class BandaService {
 
         banda.getMiembros().remove(idAlias);
         this.iBandaRepository.save(banda);
+    }
+
+    public List<Banda> listarBandasPorUsuario(String idUsuario) {
+        System.out.println(idUsuario);
+        return this.iBandaRepository.listarBandasPorUsuario(idUsuario);
+    }
+
+    public Boolean actualizarFotoPortada(String idBanda, MultipartFile file) {
+        try {
+            String urlFotoPortada = this.s3Service.uploadFile(file);
+            Optional<Banda> bandaOptional = this.iBandaRepository.findById(idBanda);
+            Banda banda = bandaOptional.orElseThrow(()-> new NullPointerException("No se ha encontrado la banda con id: " + idBanda));
+            banda.setUrlFotoBanda(urlFotoPortada);
+            this.iBandaRepository.save(banda);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+        return true;
     }
 }

@@ -68,6 +68,8 @@ public class PublicacionController {
         publicacionService.crearPublicacion(idAlias, descripcion, file);
     }
 
+
+
     @MutationMapping(name = "eliminarPublicacionPorId")
     public void eliminarPublicacionPorId(@Argument String idUsuario, @Argument String idPublicacion){
         publicacionService.eliminarPublicacion(idUsuario, idPublicacion);

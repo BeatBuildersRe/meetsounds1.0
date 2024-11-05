@@ -28,6 +28,7 @@ type Query{
     buscarBandaPorNombre(nombreBanda: String): Banda
     buscarBandaPorId(idBanda: String): Banda
     listarBandas: [Banda]
+    listarBandaPorUsuario(idUsuario: String): [Banda]
 
     # Seguidores
     misSeguidores(idAlias: String): [Seguidores]
@@ -135,6 +136,7 @@ type Banda{
     id : String
     nombreBanda : String
     descripcion: String
+    urlFotoPortada: String
     idCreador : String
     miembros : [String]
 }

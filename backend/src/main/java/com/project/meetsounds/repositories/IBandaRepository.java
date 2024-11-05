@@ -15,4 +15,7 @@ public interface IBandaRepository extends MongoRepository<Banda, String> {
     List<Banda> listarPorNombre(String nombre);
 
     Optional<Banda> findByNombreBanda(String nombreBanda);
+
+    @Query("{ 'miembros': ?0 }")
+    List<Banda> listarBandasPorUsuario(String idUsuario);
 }

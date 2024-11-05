@@ -9,12 +9,16 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 public class BandaController {
 
     @Autowired
@@ -24,6 +28,19 @@ public class BandaController {
     public List<Banda> listarBandas(){
         return bandaService.listarBandas();
     }
+
+    @QueryMapping(name = "listarBandaPorUsuario")
+    public List<Banda> listarBandaPorUsuario(@Argument String idUsuario){
+        return this.bandaService.listarBandasPorUsuario(idUsuario);
+    }
+
+    @PostMapping("/actualizarFotoBanda")
+    public Boolean actualizarFotoBanda(@RequestParam String idBanda, @RequestParam MultipartFile file){
+        return this.bandaService.actualizarFotoPortada(idBanda, file);
+
+    }
+
+
 
     @QueryMapping(name = "buscarBandaPorId")
     public Optional<Banda> buscarBandaPorId(@Argument String idBanda){

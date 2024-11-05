@@ -18,6 +18,7 @@ import java.util.List;
 public class Banda {
     @Id
     private String id;
+    private String urlFotoBanda;
     private String nombreBanda;
     private String descripcion;
     private String idCreador;
