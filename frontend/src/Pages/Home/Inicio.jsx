@@ -92,6 +92,14 @@ const Inicio = () => {
               style={{ display: activeDiv === "div2" ? "block" : "none" }}
             >
               <h1>Explorar contenido</h1>
+              <p>Todo bien por acá(imagenes para que el mauro vea que si se esconde la barra y que el texto no se va para arriba y que es responsive)</p>
+              <img src="https://th.bing.com/th/id/OIP.zdsrcd-logrMBd4Y08LJXQHaH2?rs=1&pid=ImgDetMain" alt="" />
+              <img src="https://th.bing.com/th/id/OIP.zdsrcd-logrMBd4Y08LJXQHaH2?rs=1&pid=ImgDetMain" alt="" />
+              <img src="https://th.bing.com/th/id/OIP.zdsrcd-logrMBd4Y08LJXQHaH2?rs=1&pid=ImgDetMain" alt="" />
+              <img src="https://th.bing.com/th/id/OIP.zdsrcd-logrMBd4Y08LJXQHaH2?rs=1&pid=ImgDetMain" alt="" />
+              <img src="https://th.bing.com/th/id/OIP.zdsrcd-logrMBd4Y08LJXQHaH2?rs=1&pid=ImgDetMain" alt="" />
+              <img src="https://th.bing.com/th/id/OIP.zdsrcd-logrMBd4Y08LJXQHaH2?rs=1&pid=ImgDetMain" alt="" />
+              <img src="https://th.bing.com/th/id/OIP.zdsrcd-logrMBd4Y08LJXQHaH2?rs=1&pid=ImgDetMain" alt="" />
             </div>
           </div>
 
