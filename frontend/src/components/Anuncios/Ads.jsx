@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import './ads.css'
+import '@css/ads.css'
+import '@css/Colores.css'
 import ads from '@assets/ads.png'
 import img_lit from '@assets/img_lit.png'
 import ads2 from '@assets/ads2.png'

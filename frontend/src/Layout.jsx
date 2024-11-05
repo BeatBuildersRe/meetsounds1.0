@@ -1,5 +1,7 @@
 /* Css */
+import '@css/Colores.css';
 import '@css/layout.css';
+
 /* React */
 import React, { useEffect, useState } from 'react'; // Asegúrate de incluir useEffect aquí
 import { Route, Routes, Link, Outlet, useNavigate, NavLink } from 'react-router-dom';

@@ -3,20 +3,6 @@
   margin: 0;
 }
 
-:root {
-
- 
-  --color-fondoDiv: #d8d8d8;
-  --color-fondoDivHover: #c4c4c4;
-  --color-texto: #000000;
-
-  #Dark {
-    
-    --color-fondoDiv: #232224;
-    --color-texto: #ffffff;
-
-  }
-}
 
 /* Estilos base para la división en dos columnas */
 .contenedor2 {
@@ -64,7 +50,7 @@
   width: 100%;
   position: relative;
 
-  .barra {
+  .isla {
     position: sticky; /* Mantener la barra fija en la parte superior */
     top: 10px;
     left: 0;
@@ -74,11 +60,11 @@
     z-index: 1; /* Para asegurarse de que esté por encima del contenido */
   }
   
-  .barra.oculta {
+  .isla.oculta {
     transform: translateY(-120%); /* Ocultar la barra moviéndola hacia arriba */
   }
 
-  .barra.visible {
+  .isla.visible {
     transform: translateY(0);
     /* Muestra la barra */
   }
@@ -97,21 +83,21 @@
   padding: 9px;
   
   width: 276px;
-  background-color: var(--color-fondoDiv);
-  border-radius: 25px;
+  background-color: var(--color-contenedores);
+  border-radius: 50px;
 }
 
 .indicator {
   content: "";
   width: 140px;
   height: 43px;
-  background: var(--color-fondoDivHover);
+  background: #f2f2f2;
   position: absolute;
   top: 2px;
   left: 2px;
   
   z-index: 1;
-  border: 0.5px solid rgba(0, 0, 0, 0.04);
+  
   box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.12), 0px 3px 1px rgba(0, 0, 0, 0.04);
   border-radius: 25px;
   transition: all 0.2s ease-out;
@@ -129,7 +115,7 @@
 .tab_label {
   width: 130px;
   height: 28px;
-
+color: var( --color-texto-secundario);
   position: relative;
   z-index: 2;
 
@@ -138,9 +124,9 @@
   justify-content: center;
 
   border: 0;
-  color: var(--color-texto);
+  
   font-size: 1rem;
-  opacity: 0.6;
+ 
 
   cursor: pointer;
 }
@@ -153,9 +139,7 @@
   left: calc(130px + 2px);
 }
 
-.tab--3:checked~.indicator {
-  left: calc(130px * 2 + 2px);
-}
+
 
 
 /*   

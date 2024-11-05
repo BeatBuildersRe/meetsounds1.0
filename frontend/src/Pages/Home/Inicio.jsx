@@ -53,7 +53,7 @@ const Inicio = () => {
       <div className="Contenedor">
         <div className="contenedor2">
           <div className="izquierda">
-            <div className={`barra ${showBar ? "visible" : "oculta"}`}>
+            <div className={`isla ${showBar ? "visible" : "oculta"}`}>
               <div className="tab-container">
                 <input
                   type="radio"
@@ -63,7 +63,7 @@ const Inicio = () => {
                   onClick={() => setActiveDiv("div1")}
                 />
                 <label className="tab_label" htmlFor="tab1">
-                  Profile
+                  Para tí
                 </label>
 
                 <input
@@ -74,7 +74,7 @@ const Inicio = () => {
                   onClick={() => setActiveDiv("div2")}
                 />
                 <label className="tab_label" htmlFor="tab2">
-                  Settings
+                  Explorar
                 </label>
 
                 <div className="indicator"></div>

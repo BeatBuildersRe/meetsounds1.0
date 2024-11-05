@@ -4,24 +4,6 @@
     user-select: none;
 }
 
-:root {
-
-   
-    --color-fondoDiv: #d8d8d8;
-    --color-fondoDivHover: #c4c4c4;
-    --color-texto: #000000;
-    --color-btn: black;
-
-    #Dark {
-        --color-fondoDiv: #232224;
-        --color-texto: #ffffff;
-        --color-btn: black;
-        
-
-        --color-fondoDivHover: #2d2c2e;
-    }
-    
-}
 
 .Contenedor-menu {
     display: flex;
@@ -34,7 +16,7 @@
         padding: 3%;
         width: 100%;
         display: flex;
-        background-color: var(--color-fondoDiv);
+        background-color: var(--color-contenedores);
         align-items: center;
         margin-bottom: 5%;
 
@@ -50,13 +32,13 @@
 
             border-radius: 25px;
             padding-left: 4%;
-            background-color: var(--color-fondoDiv);
+            background-color: var(--color-contenedores);
         }
     }
 
     .tendencia {
         border-radius: 15px;
-        background-color: var(--color-fondoDiv);
+        background-color: var(--color-contenedores);
         width: 100%;
         padding: 4%;
 
@@ -112,7 +94,7 @@
     .seguir{
         margin-top: 4%;
         border-radius: 15px;
-        background-color: var(--color-fondoDiv);
+        background-color: var(--color-contenedores);
         width: 100%;
         padding: 4%;
         #avatar{

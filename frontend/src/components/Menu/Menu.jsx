@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 /* Css */
-import './menu.css'
+
+import '@css/menu.css'
+import '@css/Colores.css'
 /* Iconos */
 import { CiSearch } from "react-icons/ci";
 import { IoPerson } from "react-icons/io5";

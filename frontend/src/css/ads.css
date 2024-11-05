@@ -2,22 +2,10 @@
     padding: 0;
     margin: 0;
 }
-:root {
 
-
-    --color-fondoDiv: #d8d8d8;
-    --color-fondoDivHover: #c4c4c4;
-    --color-texto: #000000;
-
-    #Dark {
-        --color-fondoDiv: #232224;
-        --color-texto: #ffffff;
-
-    }
-}
 .ads{
     margin-top: 4%;
-    background-color: var(--color-fondoDiv);
+    background-color: var(--color-contenedores);
     width: 100%;
     height: auto;
     border-radius: 20px;
