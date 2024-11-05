@@ -5,6 +5,9 @@ import com.project.meetsounds.repositories.IMeGustaRepository;
 import com.project.meetsounds.repositories.IPublicacionRepository;
 import com.project.meetsounds.repositories.IUsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -88,9 +91,9 @@ public class PublicacionService {
         return this.iPublicacionRepository.findAllById(user.getMisPublicaciones());
     }
 
-    public List<Publicacion> listarPublicaciones() {
-        List<Publicacion>  publicaciones = iPublicacionRepository.findAll();
-        return publicaciones;
+    public Page<Publicacion> listarPublicaciones(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return iPublicacionRepository.findAll(pageable);
     }
 
     public void eliminarPublicacion(String idAlias, String idPublicacion) {

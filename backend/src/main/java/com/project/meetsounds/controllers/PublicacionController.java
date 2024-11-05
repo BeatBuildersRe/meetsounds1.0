@@ -7,6 +7,7 @@ import com.project.meetsounds.domain.models.PublicacionOut;
 import com.project.meetsounds.domain.models.Usuario;
 import com.project.meetsounds.services.PublicacionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
@@ -26,8 +27,8 @@ public class PublicacionController {
 
 
     @GetMapping("/listarPublicaciones")
-    public List<Publicacion> listarPublicaciones(){
-        return publicacionService.listarPublicaciones();
+    public Page<Publicacion> listarPublicaciones(@RequestParam int page,@RequestParam int size){
+        return publicacionService.listarPublicaciones(page, size);
     }
 
     @GetMapping("/listarPublicacionesUsuario")

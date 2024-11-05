@@ -29,6 +29,7 @@ import OnboardingForm from './Pages/OnBoarding/OnboardingForm';
 import AliasGuard from './services/AliasGuard'; // Importa el nuevo componente de protección
 import ChatsUsuario from './Pages/Mensajes/ChatsUsuarios';
 import Publicaciones2 from './Pages/Home/InicioComentarios';
+import PublicacionesList from './components/Publicaciones/PublicacionesList';
 import '@css/App.css';
 
 function App() {
@@ -78,6 +79,7 @@ function App() {
         <Route path="cuenta/fotosperfil" element={<FotosPerfil />} />
         <Route path="/chat/:chatId" element={<ChatComponent />} />
         <Route path="/chats-usuario" element={<ChatsUsuario />} />
+        <Route path="/publicacionesList" element={<PublicacionesList />} />
       </Routes>
     </div>
   );

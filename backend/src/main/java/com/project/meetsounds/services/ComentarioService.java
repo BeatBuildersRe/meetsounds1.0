@@ -10,6 +10,7 @@ import com.project.meetsounds.repositories.IUsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,19 +27,19 @@ public class ComentarioService {
     @Autowired
     private IUsuarioRepository iUsuarioRepository;
 
-    public Boolean comentar(String publicacionId, String idAliasUsuario, String text) {
+    public void comentar(String publicacionId, String idAliasUsuario, String text) {
         Comentario comentario = new Comentario();
         comentario.setIdAliasUsuario(idAliasUsuario);
         comentario.setComentario(text);
-
+        comentario.setFechaEnvio(LocalDateTime.now());
         Comentario com = this.iComentarioRepository.save(comentario);
         Publicacion publicacion = new Publicacion();
         Optional<Publicacion> publiOptional = this.iPublicacionRepository.findById(publicacionId);
         publicacion = publiOptional.orElseThrow(()-> new IllegalArgumentException("No se ha encontrado la publicacion con la id: " + publicacionId));
         publicacion.getComentarios().add(com);
         publicacion.setCount_coment(publicacion.getCount_coment() + 1);
-        this.iPublicacionRepository.save(publicacion);
-        return this.iComentarioRepository.existsById(com.getId());
+        iPublicacionRepository.save(publicacion);
+        iComentarioRepository.existsById(com.getId());
     }
 
     public List<ComentarioOut> listarComentariosPorId(String publicacionId) {

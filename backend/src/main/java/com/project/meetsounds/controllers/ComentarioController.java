@@ -7,17 +7,20 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class ComentarioController {
     @Autowired
     private ComentarioService comentarioService;
 
-    @MutationMapping(name = "comentar")
-    public Boolean comentar(@Argument String publicacionId, @Argument String idAliasUsuario, @Argument String text){
-        return this.comentarioService.comentar(publicacionId, idAliasUsuario, text);
+    @PostMapping("/Comentar")
+    public void comentar(@RequestParam String publicacionId, @RequestParam String idAliasUsuario, @RequestParam String text){
+        comentarioService.comentar(publicacionId, idAliasUsuario, text);
     }
 
     @QueryMapping(name = "listarComentariosPorId")

@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie'; // Importa la librería para manejar cookies
 
 const PublicacionesList = () => {
   const [publicaciones, setPublicaciones] = useState([]);
@@ -75,8 +74,7 @@ const PublicacionesList = () => {
     publicaciones.forEach((publicacion) => fetchUsuario(publicacion.idUsuario));
   }, [publicaciones]);
 
-  const verificarMeGusta = async (idPublicacion) => {
-    const usuarioAlias = Cookies.get('alias'); // Obtén el alias del usuario de las cookies
+  const verificarMeGusta = async (idPublicacion, usuarioAlias) => {
     const response = await fetch('http://localhost:8080/usuarioHaDadoMeGusta', {
       method: 'POST',
       headers: {
@@ -95,14 +93,13 @@ const PublicacionesList = () => {
   };
 
   useEffect(() => {
-    const usuarioAlias = Cookies.get('alias'); // Obtén el alias del usuario de las cookies
+    const usuarioActual = 'usuarioAliasEjemplo'; // Reemplaza con el alias del usuario autenticado
     publicaciones.forEach((publicacion) => {
-      verificarMeGusta(publicacion.id);
+      verificarMeGusta(publicacion.id, usuarioActual);
     });
   }, [publicaciones]);
 
-  const manejarMeGusta = async (idPublicacion) => {
-    const usuarioAlias = Cookies.get('alias'); // Obtén el alias del usuario de las cookies
+  const manejarMeGusta = async (idPublicacion, usuarioAlias) => {
     const haDadoMeGusta = meGustaStatus[idPublicacion];
 
     const url = haDadoMeGusta ? 'http://localhost:8080/quitarMeGusta' : 'http://localhost:8080/darMeGusta';
@@ -118,12 +115,7 @@ const PublicacionesList = () => {
     });
 
     if (response.ok) {
-      const result = await response.json();
-      if (haDadoMeGusta) {
-        setMeGustaStatus((prev) => ({ ...prev, [idPublicacion]: false })); // Actualiza el estado a false al quitar me gusta
-      } else {
-        setMeGustaStatus((prev) => ({ ...prev, [idPublicacion]: true })); // Actualiza el estado a true al dar me gusta
-      }
+      setMeGustaStatus((prev) => ({ ...prev, [idPublicacion]: !haDadoMeGusta }));
     }
   };
 
@@ -141,6 +133,16 @@ const PublicacionesList = () => {
     }));
   };
 
+  const verMasComentarios = (index) => {
+    setComentariosVisibles((prev) => ({
+      ...prev,
+      [index]: {
+        ...prev[index],
+        cantidad: prev[index].cantidad + 10,
+      },
+    }));
+  };
+
   const handleComentarioChange = (publicacionId, text) => {
     setNuevoComentario((prev) => ({
       ...prev,
@@ -148,8 +150,7 @@ const PublicacionesList = () => {
     }));
   };
 
-  const enviarComentario = async (publicacionId) => {
-    const usuarioAlias = Cookies.get('alias'); // Obtén el alias del usuario de las cookies
+  const enviarComentario = async (publicacionId, idAliasUsuario) => {
     const text = nuevoComentario[publicacionId];
     const response = await fetch('http://localhost:8080/Comentar', {
       method: 'POST',
@@ -158,7 +159,7 @@ const PublicacionesList = () => {
       },
       body: new URLSearchParams({
         publicacionId,
-        idAliasUsuario: usuarioAlias,
+        idAliasUsuario,
         text,
       }).toString(),
     });
@@ -172,7 +173,7 @@ const PublicacionesList = () => {
               ...pub.comentarios,
               {
                 comentario: text,
-                idAliasUsuario: usuarioAlias,
+                idAliasUsuario,
                 fechaEnvio: new Date().toISOString(),
               },
             ],
@@ -190,6 +191,7 @@ const PublicacionesList = () => {
     <div>
       {publicaciones.map((publicacion, index) => {
         const usuario = usuarios[publicacion.idUsuario];
+        const comentariosAMostrar = publicacion.comentarios.slice(0, comentariosVisibles[index]?.cantidad || 0);
 
         return (
           <div key={index} style={{ border: '1px solid #ccc', padding: '16px', marginBottom: '16px' }}>
@@ -213,7 +215,7 @@ const PublicacionesList = () => {
               <span>Comentarios: {publicacion.count_coment}</span>
               <span>Likes: {publicacion.count_likes}</span>
               <button
-                onClick={() => manejarMeGusta(publicacion.id)}
+                onClick={() => manejarMeGusta(publicacion.id, usuario.alias)}
                 style={{ marginLeft: '8px' }}
               >
                 {meGustaStatus[publicacion.id] ? 'Quitar me gusta' : 'Dar me gusta'}
@@ -230,18 +232,39 @@ const PublicacionesList = () => {
               />
               {nuevoComentario[publicacion.id]?.trim() && (
                 <button
-                  onClick={() => enviarComentario(publicacion.id)}
+                  onClick={() => enviarComentario(publicacion.id, usuario.alias)}
                   style={{ marginTop: '8px', padding: '8px 16px', cursor: 'pointer' }}
                 >
                   Enviar
                 </button>
               )}
             </div>
-            {/* Aquí podrías agregar lógica para mostrar comentarios */}
+            <button onClick={() => toggleComentarios(index)}>
+              {comentariosVisibles[index]?.visible ? 'Ocultar comentarios' : 'Ver comentarios'}
+            </button>
+            {comentariosVisibles[index]?.visible && (
+              <div style={{ marginTop: '8px', padding: '8px', backgroundColor: '#f9f9f9', border: '1px solid #ddd' }}>
+                {comentariosAMostrar.length > 0 ? (
+                  comentariosAMostrar.map((comentario, idx) => (
+                    <div key={idx} style={{ borderBottom: '1px solid #eee', padding: '4px 0' }}>
+                      <strong>{comentario.idAliasUsuario}:</strong> {comentario.comentario}
+                      <div style={{ fontSize: 'small', color: 'gray' }}>{comentario.fechaEnvio}</div>
+                    </div>
+                  ))
+                ) : (
+                  <p>No hay comentarios aún.</p>
+                )}
+                {publicacion.count_coment > (comentariosVisibles[index]?.cantidad || 0) && (
+                  <button onClick={() => verMasComentarios(index)} style={{ marginTop: '8px' }}>
+                    Ver más comentarios
+                  </button>
+                )}
+              </div>
+            )}
           </div>
         );
       })}
-      {cargando && <div>Cargando...</div>}
+      {cargando && <p>Cargando más publicaciones...</p>}
     </div>
   );
 };
