@@ -1,249 +1,122 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie'; // Importa la librería para manejar cookies
-
-const PublicacionesList = () => {
-  const [publicaciones, setPublicaciones] = useState([]);
-  const [usuarios, setUsuarios] = useState({});
-  const [comentariosVisibles, setComentariosVisibles] = useState({});
-  const [nuevoComentario, setNuevoComentario] = useState({});
-  const [pagina, setPagina] = useState(0);
-  const [cargando, setCargando] = useState(false);
-  const [meGustaStatus, setMeGustaStatus] = useState({});
+import Cookies from 'js-cookie';
+import { AuthContext } from '../../js/otro/AuthContext';
+import Fondo from '@c/FondoLoginRegister/FondoLoginRegister';
+import MenuRedireccionable from '@c/MenuRedireccionable/MenuRedireccionable';
+import FormularioLogin from '@c/FormularioLogin/FormularioLogin';
+import { BASE_URL } from '../../config'
+const InfiniteBackground = () => {
+  const [showWelcome, setShowWelcome] = useState(true);
+  const [showSecondModal, setShowSecondModal] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [mensajeError, setMensajeError] = useState("");
+  const { setIsAuthenticated } = useContext(AuthContext);
   const navigate = useNavigate();
-  const TAMANO_PAGINA = 7;
-
-  const fetchPublicaciones = async (pagina) => {
-    setCargando(true);
-    const response = await fetch(`http://localhost:8080/listarPublicaciones?page=${pagina}&size=${TAMANO_PAGINA}`);
-    const result = await response.json();
-    setPublicaciones((prev) => [...prev, ...result.content]);
-    setCargando(false);
-  };
-
-  useEffect(() => {
-    fetchPublicaciones(pagina);
-  }, [pagina]);
-
-  const loadMore = useCallback(() => {
-    if (!cargando) {
-      setPagina((prev) => prev + 1);
-    }
-  }, [cargando]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
-        loadMore();
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [loadMore]);
-
-  const fetchUsuario = async (idUsuario) => {
-    if (!usuarios[idUsuario]) {
-      const response = await fetch('http://localhost:8080/graphql', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          query: `query {
-              buscarUsuarioPorId(id: "${idUsuario}") {
-                fotoPerfilUrl
-                nombre
-                apellido
-                alias
-              }
-            }`,
-        }),
+  const handleToggleWelcome = () => setShowWelcome(!showWelcome);
+  const handleShowSecondModal = () => setShowSecondModal(true);
+  const manejarLogin = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/autenticacion/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ username, password }),
+        credentials: "include",
       });
 
-      const result = await response.json();
-      setUsuarios((prevUsuarios) => ({
-        ...prevUsuarios,
-        [idUsuario]: result.data.buscarUsuarioPorId,
-      }));
-    }
-  };
-
-  useEffect(() => {
-    publicaciones.forEach((publicacion) => fetchUsuario(publicacion.idUsuario));
-  }, [publicaciones]);
-
-  const verificarMeGusta = async (idPublicacion) => {
-    const usuarioAlias = Cookies.get('alias'); // Obtén el alias del usuario de las cookies
-    const response = await fetch('http://localhost:8080/usuarioHaDadoMeGusta', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        idPublicacion,
-        usuarioAlias,
-      }).toString(),
-    });
-
-    if (response.ok) {
-      const result = await response.json();
-      setMeGustaStatus((prev) => ({ ...prev, [idPublicacion]: result }));
-    }
-  };
-
-  useEffect(() => {
-    const usuarioAlias = Cookies.get('alias'); // Obtén el alias del usuario de las cookies
-    publicaciones.forEach((publicacion) => {
-      verificarMeGusta(publicacion.id);
-    });
-  }, [publicaciones]);
-
-  const manejarMeGusta = async (idPublicacion) => {
-    const usuarioAlias = Cookies.get('alias'); // Obtén el alias del usuario de las cookies
-    const haDadoMeGusta = meGustaStatus[idPublicacion];
-
-    const url = haDadoMeGusta ? 'http://localhost:8080/quitarMeGusta' : 'http://localhost:8080/darMeGusta';
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        idPublicacion,
-        usuarioAlias,
-      }).toString(),
-    });
-
-    if (response.ok) {
-      const result = await response.json();
-      if (haDadoMeGusta) {
-        setMeGustaStatus((prev) => ({ ...prev, [idPublicacion]: false })); // Actualiza el estado a false al quitar me gusta
+      if (!response.ok) throw new Error(response.statusText);
+      const data = await response.text();
+      if (data === "Login exitoso") {
+        setMensajeError("");
+        Cookies.set('alias', username, { expires: 7 });
+        setIsAuthenticated(true);
+        navigate("/");
       } else {
-        setMeGustaStatus((prev) => ({ ...prev, [idPublicacion]: true })); // Actualiza el estado a true al dar me gusta
+        setMensajeError("Credenciales incorrectas o error en el servidor");
       }
+    } catch (error) {
+      console.error("Error en la conexión con el servidor:", error);
+      setMensajeError("Error en la conexión con el servidor");
     }
   };
+  useEffect(() => {
+    const timer = setTimeout(() => setMensajeError(""), 5000);
+    return () => clearTimeout(timer);
+  }, [mensajeError]);
 
-  const handleUserClick = (alias) => {
-    navigate(`/perfil-encontrado2/${alias}`);
-  };
-
-  const toggleComentarios = (index) => {
-    setComentariosVisibles((prev) => ({
-      ...prev,
-      [index]: {
-        visible: !prev[index]?.visible,
-        cantidad: 10,
-      },
-    }));
-  };
-
-  const handleComentarioChange = (publicacionId, text) => {
-    setNuevoComentario((prev) => ({
-      ...prev,
-      [publicacionId]: text,
-    }));
-  };
-
-  const enviarComentario = async (publicacionId) => {
-    const usuarioAlias = Cookies.get('alias'); // Obtén el alias del usuario de las cookies
-    const text = nuevoComentario[publicacionId];
-    const response = await fetch('http://localhost:8080/Comentar', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        publicacionId,
-        idAliasUsuario: usuarioAlias,
-        text,
-      }).toString(),
-    });
-
-    if (response.ok) {
-      const updatedPublicaciones = publicaciones.map((pub) => {
-        if (pub.id === publicacionId) {
-          return {
-            ...pub,
-            comentarios: [
-              ...pub.comentarios,
-              {
-                comentario: text,
-                idAliasUsuario: usuarioAlias,
-                fechaEnvio: new Date().toISOString(),
-              },
-            ],
-            count_coment: pub.count_coment + 1,
-          };
-        }
-        return pub;
-      });
-      setPublicaciones(updatedPublicaciones);
-      setNuevoComentario((prev) => ({ ...prev, [publicacionId]: '' }));
-    }
+  const styles = {
+    container: {
+      zIndex: 10,
+      position: "absolute",
+      width: "100vw",
+      height: "100vh",
+      overflow: "hidden",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    menu: {
+      transition: "transform 0.7s ease", // Animación de transición
+      transform: showSecondModal ? "translateX(-200%)" : "translateX(0)", // Mueve a la izquierda cuando se muestra el modal
+    },
+    form: {
+      transition: "transform 0.7s ease", // Animación de transición
+      transform: showSecondModal ? "translateX(0)" : "translateX(300%)", // Mueve desde la derecha
+      position: "absolute", // Para que se superponga sobre el menú
+     
+    },
+    errorMessage: {
+      color: "white",
+      backgroundColor: "red",
+      padding: "10px",
+      borderRadius: "5px",
+      position: "absolute",
+      top: "20px",
+      left: "50%",
+      transform: "translateX(-50%)",
+      zIndex: 1000,
+    },
   };
 
   return (
     <div>
-      {publicaciones.map((publicacion, index) => {
-        const usuario = usuarios[publicacion.idUsuario];
+      <Fondo />
+      <div style={styles.container}>
+        {/* Menú con animación hacia la izquierda */}
+        <div style={styles.menu}>
+          {showWelcome && (
+            <MenuRedireccionable
+              handleToggleWelcome={handleToggleWelcome}
+              handleShowSecondModal={handleShowSecondModal}
+            />
+          )}
+        </div>
+          {/* Formulario con animación desde la derecha */}
+          <div style={styles.form}>
+          {showSecondModal && (
+            <FormularioLogin
+              username={username}
+              setUsername={setUsername}
+              password={password}
+              setPassword={setPassword}
+              manejarLogin={manejarLogin}
+              mensajeError={mensajeError}
+            />
+          )}
+        </div>
 
-        return (
-          <div key={index} style={{ border: '1px solid #ccc', padding: '16px', marginBottom: '16px' }}>
-            {usuario && (
-              <div onClick={() => handleUserClick(usuario.alias)} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
-                <img
-                  src={usuario.fotoPerfilUrl || '/default-profile.png'}
-                  alt={`${usuario.nombre} ${usuario.apellido}`}
-                  style={{ width: '50px', height: '50px', borderRadius: '50%', marginRight: '8px' }}
-                />
-                <div>
-                  <strong>{usuario.nombre} {usuario.apellido}</strong>
-                </div>
-              </div>
-            )}
-            <p>{publicacion.descripcion}</p>
-            {publicacion.mediaUrl && (
-              <img src={publicacion.mediaUrl} alt="Publicación" style={{ maxWidth: '100%', marginTop: '8px' }} />
-            )}
-            <div>
-              <span>Comentarios: {publicacion.count_coment}</span>
-              <span>Likes: {publicacion.count_likes}</span>
-              <button
-                onClick={() => manejarMeGusta(publicacion.id)}
-                style={{ marginLeft: '8px' }}
-              >
-                {meGustaStatus[publicacion.id] ? 'Quitar me gusta' : 'Dar me gusta'}
-              </button>
-            </div>
-            {/* Formulario para comentar */}
-            <div style={{ marginTop: '16px' }}>
-              <textarea
-                placeholder="Escribe tu comentario..."
-                value={nuevoComentario[publicacion.id] || ''}
-                onChange={(e) => handleComentarioChange(publicacion.id, e.target.value)}
-                rows="3"
-                style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
-              />
-              {nuevoComentario[publicacion.id]?.trim() && (
-                <button
-                  onClick={() => enviarComentario(publicacion.id)}
-                  style={{ marginTop: '8px', padding: '8px 16px', cursor: 'pointer' }}
-                >
-                  Enviar
-                </button>
-              )}
-            </div>
-            {/* Aquí podrías agregar lógica para mostrar comentarios */}
-          </div>
-        );
-      })}
-      {cargando && <div>Cargando...</div>}
-    </div>
+        {mensajeError && <div style={styles.errorMessage}>{mensajeError}</div>}
+      </div>
+      </div>
   );
 };
 
-export default PublicacionesList;
+export default InfiniteBackground;
+
+
+
+
+
+
+

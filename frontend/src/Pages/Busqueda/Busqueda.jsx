@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { CiSearch } from "react-icons/ci";
 import { useNavigate } from 'react-router-dom'; // Cambiar a useNavigate
 import MenuDerechoDiv from "@c/Menu/Derecha";
+import '@css/Colores.css';
 import '@css/Busqueda.css';
 import { BASE_URL } from '../../config';
 import Cookies from 'js-cookie'; // Importar para manejar cookies
@@ -35,6 +36,7 @@ const Busqueda = () => {
                                         nombre
                                         apellido
                                         alias
+                                        fotoPerfilUrl
                                     }
                                 }
                             `,
@@ -80,7 +82,7 @@ const Busqueda = () => {
 
     const handleUserClick = (usuario) => {
         // Redirige a la página del perfil del usuario encontrado
-        navigate(`/perfil-encontrado/${usuario.alias}`); // Usar navigate en lugar de history.push
+        navigate(`/perfil-encontrado2/${usuario.alias}`); // Usar navigate en lugar de history.push
     };
 
     return (
@@ -105,11 +107,16 @@ const Busqueda = () => {
 
                         {/* Muestra los resultados */}
                         {loading && <p>Cargando...</p>}
-                        <ul className="result-list">
+                        <ul className="result-list" s>
                             {results.length > 0 ? (
                                 results.map((user) => (
-                                    <li key={user.alias} onClick={() => handleUserClick(user)} style={{ cursor: 'pointer' }}>
-                                        {user.nombre} {user.apellido} ({user.alias})
+                                    <li key={user.alias} onClick={() => handleUserClick(user)} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '10px',marginTop: '0px' }}>
+                                        <img src={user.fotoPerfilUrl || "/placeholder.svg"} alt={`${user.nombre} ${user.apellido}`} style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }} />
+                                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                        <span>{user.nombre} {user.apellido}</span>
+                                            <span style={{ fontWeight: 'bold' }}>@{user.alias}</span>
+                                            
+                                        </div>
                                     </li>
                                 ))
                             ) : (

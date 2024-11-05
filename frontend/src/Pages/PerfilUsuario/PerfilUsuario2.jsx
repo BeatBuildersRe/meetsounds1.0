@@ -26,8 +26,8 @@ import Highlights from '@c/Perfil/Publicaciones';
 // Iconos
 import { CameraIcon } from 'lucide-react'
 // Imágenes
-const imgFondoDefault = 'https://imagedelivery.net/WS9ABFRS6TfdqDudkFOT3w/grrraphic/previews/j6RAX7eRw0pyywtdOXK38whWXLrEmjDWb7Z6l54u.jpeg/thumb?height=200&width=600' // Imagen de fondo predeterminada
-const imgPerfilDefault = 'https://imagedelivery.net/WS9ABFRS6TfdqDudkFOT3w/grrraphic/previews/j6RAX7eRw0pyywtdOXK38whWXLrEmjDWb7Z6l54u.jpeg/thumb?height=400&width=400' // Imagen de perfil predeterminada
+const imgFondoDefault = 'https://wallpaperaccess.com/full/4600330.jpg' // Imagen de fondo predeterminada
+const imgPerfilDefault = 'https://static.vecteezy.com/system/resources/previews/022/644/544/non_2x/profile-icon-user-sign-vector.jpg' // Imagen de perfil predeterminada
 
 // Estilos
 const styles = {
@@ -467,7 +467,7 @@ export default function ProfilePage() {
   
 
   const handleVolver = () => {
-    navigate('/'); // Especifica la ruta a la que quieres volver
+    navigate('/busqueda'); // Especifica la ruta a la que quieres volver
   };
 // Estructura
   return (
@@ -559,7 +559,7 @@ export default function ProfilePage() {
         <div 
           style={{
             ...styles.coverImageContainer,
-            backgroundImage: `url(${tempImages.portada || imagenes.portada})`,
+            backgroundImage: `url(${tempImages.portada || imagenes.portada || imgFondoDefault})`,
           }}
         >
           {!estadoEdicion.portada && (
@@ -570,7 +570,7 @@ export default function ProfilePage() {
 
           <div style={styles.profileImageContainer}>
             <img 
-              src={tempImages.perfil || imagenes.perfil} 
+              src={tempImages.perfil || imagenes.perfil  || imgPerfilDefault} 
               alt="Profile" 
               style={styles.profileImageEdit} 
             />

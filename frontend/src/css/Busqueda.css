@@ -16,6 +16,10 @@
     /* Habilita el desplazamiento vertical */
     width: 100%;
     position: relative;
+    
+  justify-content: center;
+  align-items: center;
+  
 }
 .barra {
     display: flex;
@@ -120,12 +124,12 @@
   list-style: none; /* Elimina los puntos de las listas */
   padding: 0; /* Elimina el padding */
   margin-top: 10px;
-  /* border-radius: 10px; 
+  border-radius: 10px; 
   background-color: var(--color-fondoDiv); 
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);  */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
   max-height: 300px; /* Limita la altura máxima para que haya scroll */
   overflow-y: auto; /* Permite el desplazamiento vertical si es necesario */
-  
+  width: 40%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -133,9 +137,9 @@
 }
 
 .result-list li {
-  padding: 10px; /* Espaciado dentro de cada item */
+ width: 90%;
   margin: 5px 0; /* Espaciado entre cada item */
-  background-color: #ff1053; /* Color de fondo para cada resultado */
+  padding: 5px;
   border-radius: 5px; /* Bordes redondeados para cada item */
   display: flex;
   justify-content: space-between;
@@ -146,7 +150,7 @@
 
 .result-list li:hover {
   background-color: var(--color-hover); /* Cambia el fondo al pasar el mouse */
-  transform: translateX(5px); /* Mueve ligeramente el item hacia la derecha */
+  
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Aumenta la sombra */
 }
 
