@@ -4,6 +4,7 @@ import Foto from "@assets/ads.png";
 import Comentarios from "@c/Publicaciones/Comentarios";
 //import Publicaciones from "@c/Publicaciones/Publicaciones";
 import MenuDerechoDiv from "@c/Menu/Derecha";
+import PublicacionesList from "../../components/Publicaciones/PublicacionesList";
 const Inicio = () => {
   const [activeDiv, setActiveDiv] = useState("div1");
   const [isVisible, setIsVisible] = useState(true);
@@ -85,7 +86,7 @@ const Inicio = () => {
               className="Div_1"
               style={{ display: activeDiv === "div1" ? "block" : "none" }}
             >
-              {/*<Publicaciones />*/}
+              <PublicacionesList></PublicacionesList>
             </div>
             <div
               className="Div_2"
