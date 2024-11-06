@@ -115,7 +115,7 @@
 .tab_label {
   width: 130px;
   height: 28px;
-color: var( --color-texto-secundario);
+  color: var( --color-texto-secundario);
   position: relative;
   z-index: 2;
 
