@@ -1,6 +1,7 @@
 import * as React from 'react';
 import IconButton from '@mui/material/IconButton';
-import './BotonesMenu.css'
+import '@css/BotonesMenu.css'
+import '@css/Colores.css'
 
 
 export default function IconButtons({ icon: Icon, text }) {
