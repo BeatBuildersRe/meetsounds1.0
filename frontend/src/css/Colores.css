@@ -12,6 +12,7 @@
     --color-texto-normal: #222222;
     --color-texto-secundario: #6c757d;
     --color-texto-importante:#000000;
+    --color-fondo-botones:rgb(36, 41, 46);
 
     --color-fondoDiv: #d8d8d8;
     --color-fondoDiv2: #bdbdbd;
@@ -30,7 +31,7 @@
 
 
 
-        
+        /* #4a5568 */
 
 
         --color-fondo: #1a202c;
@@ -39,6 +40,7 @@
         --color-texto-normal: #f5f5f5;
         --color-texto-importante:#ffffff;
         --color-texto-secundario: #7b8085;
-
+        --color-fondo-botones:#ff1054d4;
+        
     }
 }

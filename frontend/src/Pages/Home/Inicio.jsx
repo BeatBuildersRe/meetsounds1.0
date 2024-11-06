@@ -86,6 +86,7 @@ const Inicio = () => {
               style={{ display: activeDiv === "div1" ? "block" : "none" }}
             >
               {/*<Publicaciones />*/}
+              <h1>Para ti contenido</h1>
             </div>
             <div
               className="Div_2"
