@@ -117,7 +117,7 @@ const Seguridad = () => {
                 <div className="box">
                   <div className="advertencia">
                     <img className="adventencia-icon" src={warning} alt="" />
-                    <p> Recuerda mantener las configuraciones actualizadas </p>
+                    <p className="advertencia-text"> Recuerda mantener las configuraciones actualizadas </p>
                     <img className="adventencia-icon" src={warning} alt="" />
                   </div>
                   <div className="formulario-seguridad">
@@ -159,9 +159,6 @@ const Seguridad = () => {
                       />
                     </div>
                     <div className="botones-control">
-                      <button className="btnCancelar-seguridad" type="submit">
-                        Cancelar
-                      </button>
                       <button className="btnGuardar-seguridad" type="submit">
                         Guardar
                       </button>
@@ -182,7 +179,7 @@ const Seguridad = () => {
                 <div className="box-contraseña">
                   <div className="advertencia">
                     <img className="adventencia-icon" src={warning} alt="" />
-                    <p> Recuerda mantener las configuraciones actualizadas </p>
+                    <p className="advertencia-text"> Recuerda mantener las configuraciones actualizadas </p>
                     <img className="adventencia-icon" src={warning} alt="" />
                   </div>
                   <div className="formulario-seguridad">
@@ -234,9 +231,6 @@ const Seguridad = () => {
                       />
                     </div>
                     <div className="botones-control">
-                      <button className="btnCancelar-seguridad" type="submit">
-                        Cancelar
-                      </button>
                       <button className="btnGuardar-seguridad" type="submit">
                         Guardar
                       </button>
@@ -257,7 +251,7 @@ const Seguridad = () => {
                 <div className="box-telefono">
                   <div className="advertencia">
                     <img className="adventencia-icon" src={warning} alt="" />
-                    <p> Recuerda mantener las configuraciones actualizadas </p>
+                    <p className="advertencia-text"> Recuerda mantener las configuraciones actualizadas </p>
                     <img className="adventencia-icon" src={warning} alt="" />
                   </div>
                   <div className="formulario-seguridad">
@@ -333,9 +327,7 @@ const Seguridad = () => {
                       )}
                     </div>
                     <div className="botones-control">
-                      <button className="btnCancelar-seguridad" type="submit">
-                        Cancelar
-                      </button>
+
                       <button className="btnGuardar-seguridad" type="submit">
                         Guardar
                       </button>

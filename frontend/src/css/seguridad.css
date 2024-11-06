@@ -9,12 +9,13 @@ input[type="checkbox"] {
 }
 .seccion {
   height: auto;
+  width: 100%;
   border-radius: 15px;
   display: flex;
   flex-direction: column;
 }
 .botonesX {
-  background-color: #263247;
+  background-color: #0648b9;
   border-top: none;
   width: 100%;
   padding: 2%;
@@ -37,14 +38,19 @@ input[type="checkbox"] {
   border-radius: 15px;
 }
 .advertencia {
-  margin: 2%;
+  margin: 1%;
   overflow: hidden;
-  display: flex;
   flex-direction: row;
-  justify-content: center;
+  display: flex;
+  justify-content: space-evenly;
   .adventencia-icon {
-    width: 20px;
+    width: 25px;
   }
+
+.advertencia-text{
+  font-size: 20px;
+}
+  
 }
 .formulario-seguridad {
   .campo {
@@ -54,7 +60,7 @@ input[type="checkbox"] {
     align-items: center;
     gap: 10px;
     p{
-      color: red;
+      color: rgb(255, 0, 0);
     }
   }
   .labels-seguridad {
@@ -64,22 +70,14 @@ input[type="checkbox"] {
     width: 100%;
     padding: 2%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
     .btnGuardar-seguridad {
         all: unset;
         padding: 2%;
-        background-color: #324668;
+        background-color: #0e7500;
         border-radius: 10px;
-        color: rgb(0, 204, 68);
-        font-weight: 600;
-        cursor: pointer;
-    }
-    .btnCancelar-seguridad{
-        all: unset;
-        padding: 2%;
-        background-color: #324668;
-        border-radius: 10px;
-        color: rgb(207, 0, 0);
+        color: rgb(255, 255, 255);
         font-weight: 600;
         cursor: pointer;
     }

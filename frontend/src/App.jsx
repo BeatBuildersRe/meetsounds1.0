@@ -53,7 +53,7 @@ function App() {
           <Route path="configuracion/perfil" element={<Perfil2 />} />
           <Route path="configuracion/perfil/Datos-Personales" element={<DatosPersonales />} />
           <Route path="configuracion/perfil/PerfilYPortada" element={<Perfil_Y_Portada />} />
-          <Route path="configuracion/perfil/Seguridad" element={<Seguridad />} />
+          <Route path="configuracion/Seguridad" element={<Seguridad />} />
           <Route path="configuracion/apariencia" element={<Apariencia />} />
           <Route path="/publicacion/:id" element={<Publicaciones2 />} />
           
