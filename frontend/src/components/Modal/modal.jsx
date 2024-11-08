@@ -1,8 +1,7 @@
-
-
-import React, { useState, useEffect } from 'react'
-import { CiCirclePlus } from 'react-icons/ci'
+import React, { useState, useEffect } from 'react';
+import { CiCirclePlus } from 'react-icons/ci';
 import './modal.css';
+
 const modalStyles = {
   overlay: {
     position: 'fixed',
@@ -86,29 +85,6 @@ const modalStyles = {
     cursor: 'pointer',
     backgroundColor: '#f3f4f6',
   },
-  input: {
-    width: '100%',
-    padding: '8px',
-    border: '1px solid #d1d5db',
-    borderRadius: '4px',
-  },
-  textarea: {
-    width: '100%',
-    padding: '8px',
-    border: '1px solid #d1d5db',
-    borderRadius: '4px',
-    minHeight: '100px',
-  },
-  locationInput: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '0.5rem',
-  },
-  mapLink: {
-    fontSize: '0.875rem',
-    color: '#3b82f6',
-    textDecoration: 'none',
-  },
   button: {
     padding: '10px 15px',
     backgroundColor: '#0070f3',
@@ -117,61 +93,142 @@ const modalStyles = {
     borderRadius: '5px',
     cursor: 'pointer',
   },
+};
+
+const aliasCookie = document.cookie
+  .split('; ')
+  .find(row => row.startsWith('alias='));
+
+if (aliasCookie) {
+  const alias = aliasCookie.split('=')[1];
+  console.log('Alias encontrado:', alias);
+} else {
+  console.error('Alias no encontrado en las cookies');
 }
 
-export default function PostModal({ 
-  username = "usuario", 
-  userAvatar = "/placeholder.svg?height=40&width=40",
-  onPost = () => {}
-}) {
-  const [isOpen, setIsOpen] = useState(false)
-  const [files, setFiles] = useState([])
-  const [description, setDescription] = useState('')
-  const [location, setLocation] = useState('')
+export default function PostModal({ onPost = () => {} }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [userData, setUserData] = useState({
+    nombre: 'Usuario',
+    apellido: '',
+    fotoPerfilUrl: '/placeholder.svg?height=40&width=40',
+  });
+  const [files, setFiles] = useState([]);
+  const [description, setDescription] = useState('');
+  const [charCount, setCharCount] = useState(500);
 
   useEffect(() => {
-    return () => files.forEach(file => URL.revokeObjectURL(file.preview))
-  }, [files])
+    const alias = document.cookie
+      .split('; ')
+      .find(row => row.startsWith('alias='))?.split('=')[1];
+
+    if (alias) {
+      fetch("http://localhost:8080/graphql", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          query: `
+            query {
+              buscarPorAlias(alias: "${alias}") {
+                fotoPerfilUrl
+                nombre
+                apellido
+              }
+            }
+          `,
+        }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data?.data?.buscarPorAlias) {
+            setUserData(data.data.buscarPorAlias);
+          } else {
+            console.error("Error en la consulta:", data.errors);
+          }
+        })
+        .catch(error => {
+          console.error("Error al hacer la solicitud:", error);
+        });
+    }
+  }, []);
 
   const handleFileChange = (e) => {
     if (e.target.files) {
-      const newFiles = Array.from(e.target.files).slice(0, 5 - files.length)
+      const newFiles = Array.from(e.target.files).slice(0, 1); // Solo permite un archivo
       const newFilesWithPreview = newFiles.map(file => ({
         file,
-        preview: URL.createObjectURL(file)
-      }))
-      setFiles(prev => [...prev, ...newFilesWithPreview].slice(0, 5))
+        preview: URL.createObjectURL(file),
+      }));
+      setFiles(newFilesWithPreview);
     }
-  }
-
-  const removeFile = (index) => {
-    setFiles(prev => prev.filter((_, i) => i !== index))
-  }
+  };
 
   const handlePost = () => {
-    onPost(files.map(f => f.file), description, location)
-    handleClose()
-  }
+    console.log("Publicando..."); // Verificar si se ejecuta esta línea
+    const alias = document.cookie
+      .split('; ')
+      .find(row => row.startsWith('alias='))?.split('=')[1];
+
+    if (alias) {
+      const formData = new FormData();
+      formData.append("idAlias", alias);
+      formData.append("descripcion", description);
+
+      // Si hay un archivo, agregarlo a la solicitud
+      if (files.length > 0) {
+        formData.append("file", files[0].file);
+      }
+
+      fetch("http://localhost:8080/crearPublicacion", {
+        method: "POST",
+        body: formData,
+      })
+        .then(response => {
+          console.log(response); // Verificar la respuesta de la API
+          if (response.ok) {
+            console.log("Publicación exitosa");
+            onPost(files[0]?.file, description); // Llamada a la función onPost sin location
+            handleClose(); // Cierra el modal después de publicar
+          } else {
+            console.error("Error al crear la publicación:", response.statusText);
+          }
+        })
+        .catch(error => {
+          console.error("Error al enviar la solicitud:", error);
+        });
+    } else {
+      console.error("Alias no válido.");
+    }
+  };
 
   const handleClose = () => {
-    setFiles([])
-    setDescription('')
-    setLocation('')
-    setIsOpen(false)
-  }
+    setFiles([]);
+    setDescription('');
+    setCharCount(500);
+    setIsOpen(false);
+  };
+
+  const handleDescriptionChange = (e) => {
+    const newText = e.target.value;
+    if (newText.length <= 500) {
+      setDescription(newText);
+      setCharCount(500 - newText.length);
+    }
+  };
 
   return (
     <>
-      
-        <button className='boton_crear_publicacion' onClick={() => setIsOpen(true)}>
-          <div className="svg-wrapper-1">
-            <div className="svg-wrapper">
-              <CiCirclePlus/>
-            </div>
+      <button className="boton_crear_publicacion" onClick={() => setIsOpen(true)}>
+        <div className="svg-wrapper-1">
+          <div className="svg-wrapper">
+            <CiCirclePlus />
           </div>
-          <span>Crear</span>
-        </button>
-      
+        </div>
+        <span>Crear</span>
+      </button>
+
       {isOpen && (
         <div style={modalStyles.overlay}>
           <div style={modalStyles.modal}>
@@ -179,30 +236,30 @@ export default function PostModal({
             <div style={modalStyles.container}>
               <div style={modalStyles.userInfo}>
                 <div style={modalStyles.avatar}>
-                  <img src={userAvatar} alt={username} style={{ width: '100%', height: '100%', borderRadius: '50%' }} />
+                  <img src={userData.fotoPerfilUrl} alt={`${userData.nombre} ${userData.apellido}`} style={{ width: '100%', height: '100%', borderRadius: '50%' }} />
                 </div>
-                <span style={{ fontWeight: 'bold' }}>{username}</span>
+                <span style={{ fontWeight: 'bold' }}>{`${userData.nombre} ${userData.apellido}`}</span>
               </div>
+              <textarea
+                style={modalStyles.textarea}
+                placeholder="Escribe una descripción..."
+                value={description}
+                onChange={handleDescriptionChange}
+              />
+              <p>{charCount} caracteres restantes</p>
               <div>
                 {files.length > 0 ? (
                   <div style={modalStyles.fileGrid}>
                     {files.map((file, index) => (
                       <div key={index} style={modalStyles.filePreview}>
-                        {file.file.type.startsWith('image/') ? (
-                          <img 
-                            src={file.preview} 
-                            alt={`Preview ${index + 1}`} 
-                            style={modalStyles.filePreviewImage}
-                          />
-                        ) : (
-                          <video 
-                            src={file.preview} 
-                            style={modalStyles.filePreviewImage}
-                          />
-                        )}
+                        <img 
+                          src={file.preview} 
+                          alt={`Preview ${index + 1}`} 
+                          style={modalStyles.filePreviewImage}
+                        />
                         <button
                           style={modalStyles.removeButton}
-                          onClick={() => removeFile(index)}
+                          onClick={() => setFiles([])} // Limpiar los archivos seleccionados
                         >
                           X
                         </button>
@@ -210,63 +267,29 @@ export default function PostModal({
                     ))}
                   </div>
                 ) : (
-                  <div style={modalStyles.dropzone}>
-                    <label htmlFor="dropzone-file">
-                      <div style={{ textAlign: 'center' }}>
-                        <p style={{ marginBottom: '0.5rem' }}><span style={{ fontWeight: 'bold' }}>Haz clic para subir</span> o arrastra y suelta</p>
-                        <p style={{ fontSize: '0.75rem' }}>SVG, PNG, JPG, GIF o MP4 (MAX. 5 archivos)</p>
-                      </div>
-                      <input 
-                        id="dropzone-file" 
-                        type="file" 
-                        style={{ display: 'none' }}
-                        accept="image/*,video/*"
-                        onChange={handleFileChange}
-                        multiple
-                      />
-                    </label>
-                  </div>
+                  <label style={modalStyles.dropzone}>
+                    Arrastra y suelta una imagen o haz clic para seleccionar
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileChange}
+                      style={{ display: 'none' }}
+                    />
+                  </label>
                 )}
               </div>
-              <textarea
-                style={modalStyles.textarea}
-                placeholder="Escribe una descripción..."
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-              <div style={modalStyles.locationInput}>
-                <span>📍</span>
-                <input
-                  style={modalStyles.input}
-                  placeholder="Añade una ubicación"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                />
-              </div>
-              {location && (
-                <a 
-                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={modalStyles.mapLink}
-                >
-                  Ver en Google Maps
-                </a>
-              )}
-              <button 
-                style={modalStyles.button} 
-                onClick={handlePost} 
-                disabled={files.length === 0 || !description.trim()}
+              <button
+                style={modalStyles.button}
+                onClick={handlePost}
+                disabled={description.trim() === '' && files.length === 0} // Habilitar si hay texto o archivo
               >
                 Publicar
               </button>
-              <button style={{ ...modalStyles.button, backgroundColor: '#f0f0f0', color: '#333' }} onClick={handleClose}>
-                Cancelar
-              </button>
+              <button onClick={handleClose}>Cerrar</button>
             </div>
           </div>
         </div>
       )}
     </>
-  )
+  );
 }

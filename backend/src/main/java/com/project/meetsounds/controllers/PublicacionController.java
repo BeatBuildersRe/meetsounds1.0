@@ -71,9 +71,10 @@ public class PublicacionController {
      */
 
     @PostMapping("/crearPublicacion")
-    public void crearPublicacion(@RequestParam String idAlias, @RequestParam(required=false) String descripcion, @RequestParam(required=false) MultipartFile file){
+    public void crearPublicacion(@RequestParam String idAlias, @RequestParam(required=false) String descripcion, @RequestParam(required=false) MultipartFile file) {
         publicacionService.crearPublicacion(idAlias, descripcion, file);
     }
+
 
 
 

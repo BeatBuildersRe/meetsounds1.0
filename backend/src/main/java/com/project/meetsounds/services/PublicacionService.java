@@ -56,13 +56,14 @@ public class PublicacionService {
 
         Optional<Usuario> usuarioOptional = iUsuarioRepository.findByAlias(idAlias);
 
-        Usuario usu = usuarioOptional.orElseThrow(()-> new IllegalArgumentException("No se ha econtrado el usuario con el alias: " + idAlias));
+        Usuario usu = usuarioOptional.orElseThrow(() -> new IllegalArgumentException("No se ha encontrado el usuario con el alias: " + idAlias));
 
         publi.setDescripcion(descripcion);
         publi.setIdUsuario(usu.getId());
         publi.setFechaPublicacion(LocalDateTime.now());
 
-        if(!file.isEmpty()){
+        // Verificar si el archivo es nulo o vacío antes de intentar acceder a sus propiedades
+        if (file != null && !file.isEmpty()) {
             if (!file.getContentType().startsWith("image/")) {
                 System.out.println("El archivo debe ser una imagen");
             }
@@ -74,15 +75,15 @@ public class PublicacionService {
                 System.out.println("Error al subir la imagen");
             }
         }
+
         Publicacion publicacion = iPublicacionRepository.save(publi);
 
-            List<String> publicacionsUsuario = usu.getMisPublicaciones();
-            publicacionsUsuario.add(publicacion.getId());
-            usu.setMisPublicaciones(publicacionsUsuario);
-            iUsuarioRepository.save(usu);
-
-
+        List<String> publicacionsUsuario = usu.getMisPublicaciones();
+        publicacionsUsuario.add(publicacion.getId());
+        usu.setMisPublicaciones(publicacionsUsuario);
+        iUsuarioRepository.save(usu);
     }
+
     public Page<Publicacion> listarMultimediaUsuario(String alias, int page, int size) {
         // Obtener el usuario a partir del alias
         Optional<Usuario> usuarioOptional = iUsuarioRepository.findByAlias(alias);
