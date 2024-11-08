@@ -50,32 +50,32 @@ const PublicacionesList = () => {
     };
   }, [loadMore]);
 
-  const fetchUsuario = async (idUsuario) => {
-    if (!usuarios[idUsuario]) {
-      const response = await fetch('http://localhost:8080/graphql', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          query: `query {
-            buscarUsuarioPorId(id: "${idUsuario}") {
-              fotoPerfilUrl
-              nombre
-              apellido
-              alias
-            }
-          }`,
-        }),
-      });
-  
-      const result = await response.json();
-      setUsuarios((prevUsuarios) => ({
-        ...prevUsuarios,
-        [idUsuario]: result.data.buscarUsuarioPorId,
-      }));
-    }
-  };
+const fetchUsuario = async (idUsuario) => {
+  if (!usuarios[idUsuario]) {
+    const response = await fetch('http://localhost:8080/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: `query {
+          buscarUsuarioPorId(id: "${idUsuario}") {
+            fotoPerfilUrl
+            nombre
+            apellido
+            alias
+          }
+        }`,
+      }),
+    });
+
+    const result = await response.json();
+    setUsuarios((prevUsuarios) => ({
+      ...prevUsuarios,
+      [idUsuario]: result.data.buscarUsuarioPorId,
+    }));
+  }
+};
 
   useEffect(() => {
     publicaciones.forEach((publicacion) => fetchUsuario(publicacion.idUsuario));

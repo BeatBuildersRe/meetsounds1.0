@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Publicacion = ({ publicacion, fetchUsuario, usuarios }) => {
   const [comentariosVisibles, setComentariosVisibles] = useState(false);
@@ -14,6 +15,7 @@ const Publicacion = ({ publicacion, fetchUsuario, usuarios }) => {
   };
 
   const usuarioAlias = getAliasFromCookies();
+  const navigate = useNavigate();
 
   useEffect(() => {
     verificarMeGusta();
@@ -95,6 +97,10 @@ const Publicacion = ({ publicacion, fetchUsuario, usuarios }) => {
 
   const comentariosAMostrar = publicacion.comentarios.slice(0, cantidadComentarios);
 
+  const irAlPerfil = (alias) => {
+    navigate(`/perfil-encontrado2/${alias}`);
+  };
+
   return (
     <div style={{ border: '1px solid #ccc', padding: '16px', marginBottom: '16px' }}>
       {usuarios[publicacion.idUsuario] && (
@@ -102,9 +108,15 @@ const Publicacion = ({ publicacion, fetchUsuario, usuarios }) => {
           <img
             src={usuarios[publicacion.idUsuario].fotoPerfilUrl || '/default-profile.png'}
             alt="Usuario"
-            style={{ width: '50px', height: '50px', borderRadius: '50%', marginRight: '8px' }}
+            style={{ width: '50px', height: '50px', borderRadius: '50%', marginRight: '8px', cursor: 'pointer' }}
+            onClick={() => irAlPerfil(usuarios[publicacion.idUsuario].alias)}
           />
-          <strong>{`${usuarios[publicacion.idUsuario].nombre} ${usuarios[publicacion.idUsuario].apellido}`}</strong>
+          <strong
+            style={{ cursor: 'pointer' }}
+            onClick={() => irAlPerfil(usuarios[publicacion.idUsuario].alias)}
+          >
+            {`${usuarios[publicacion.idUsuario].nombre} ${usuarios[publicacion.idUsuario].apellido}`}
+          </strong>
         </div>
       )}
       <p>{publicacion.descripcion}</p>

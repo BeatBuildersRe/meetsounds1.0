@@ -13,7 +13,6 @@ import Configuracion from './Pages/Configuracion/Configuracion';
 import Perfil2 from './Pages/Configuracion/Perfil/Perfil2';
 import DatosPersonales from './Pages/Configuracion/Perfil/Datos_Personales/DatosPersonales';
 import Seguridad from './Pages/Configuracion/Seguridad/Seguridad';
-import Apariencia from './Pages/Configuracion/Apariencia/Apariencia';
 import Error_404 from './Pages/Error/Error-404';
 import FotosPerfil from './Pages/Configuracion/Perfil/FotosPerfil';
 import Perfil_Y_Portada from './Pages/Configuracion/Perfil/Perfil_Y_Portada/Perfil_Y_Portada';
@@ -54,7 +53,6 @@ function App() {
           <Route path="configuracion/perfil/Datos-Personales" element={<DatosPersonales />} />
           <Route path="configuracion/perfil/PerfilYPortada" element={<Perfil_Y_Portada />} />
           <Route path="configuracion/Seguridad" element={<Seguridad />} />
-          <Route path="configuracion/apariencia" element={<Apariencia />} />
           <Route path="/publicacion/:id" element={<Publicaciones2 />} />
           
           {/* Usa AliasGuard aquí */}
