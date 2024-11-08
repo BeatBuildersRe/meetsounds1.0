@@ -32,9 +32,9 @@ import { BASE_URL } from '../../config'
 import UploadAvatar from '@c/UploadAvatar';
 import UploadPortada from '@c/UploadPortada';
 import { toast, ToastContainer } from 'react-toastify';
-import Posts from '@c/Perfil/Publicaciones';
-import Replies from '@c/Perfil/Publicaciones';
-import Highlights from '@c/Perfil/Publicaciones';
+import Posts from '@c/Publicaciones/PublicacionesPerfilUsuario/Todo/PublicacionesListTodo';
+import Replies from '@c/Publicaciones/PublicacionesPerfilUsuario/Multimedia/PublicacionesListMultimedia';
+import Highlights from '@c/Publicaciones/PublicacionesPerfilUsuario/Posteos/PublicacionesListPosteos';
 
 // Iconos
 import { CameraIcon } from 'lucide-react'
