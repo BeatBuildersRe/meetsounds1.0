@@ -11,7 +11,7 @@ const PublicacionesList = () => {
   const [meGustaStatus, setMeGustaStatus] = useState({});
   const navigate = useNavigate();
   const TAMANO_PAGINA = 7;
-  
+
   const fetchPublicaciones = async (pagina) => {
     setCargando(true);
     const response = await fetch(`http://localhost:8080/listarPublicaciones?page=${pagina}&size=${TAMANO_PAGINA}`);
@@ -29,9 +29,7 @@ const PublicacionesList = () => {
       setPagina((prev) => prev + 1);
     }
   }, [cargando]);
-  const comentar = (id) => {
-    navigate(`/publicacion/${id}`);
-  };
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
@@ -134,7 +132,7 @@ const PublicacionesList = () => {
       },
     }));
   };
-/* 
+
   const verMasComentarios = (index) => {
     setComentariosVisibles((prev) => ({
       ...prev,
@@ -150,8 +148,8 @@ const PublicacionesList = () => {
       ...prev,
       [publicacionId]: text,
     }));
-  }; */
-/* 
+  };
+
   const enviarComentario = async (publicacionId, idAliasUsuario) => {
     const text = nuevoComentario[publicacionId];
     const response = await fetch('http://localhost:8080/Comentar', {
@@ -188,13 +186,13 @@ const PublicacionesList = () => {
       setNuevoComentario((prev) => ({ ...prev, [publicacionId]: '' }));
     }
   };
- */
+
   return (
     <div>
       {publicaciones.map((publicacion, index) => {
         const usuario = usuarios[publicacion.idUsuario];
-/*         const comentariosAMostrar = publicacion.comentarios.slice(0, comentariosVisibles[index]?.cantidad || 0);
- */
+        const comentariosAMostrar = publicacion.comentarios.slice(0, comentariosVisibles[index]?.cantidad || 0);
+
         return (
           <div key={index} style={{ border: '1px solid #ccc', padding: '16px', marginBottom: '16px' }}>
             {usuario && (
@@ -209,7 +207,7 @@ const PublicacionesList = () => {
                 </div>
               </div>
             )}
-            <p>{publicacion.descripcion?  publicacion.descripcion : ''}</p>
+            <p>{publicacion.descripcion}</p>
             {publicacion.mediaUrl && (
               <img src={publicacion.mediaUrl} alt="Publicación" style={{ maxWidth: '100%', marginTop: '8px' }} />
             )}
@@ -222,15 +220,9 @@ const PublicacionesList = () => {
               >
                 {meGustaStatus[publicacion.id] ? 'Quitar me gusta' : 'Dar me gusta'}
               </button>
-              <button
-                onClick={() => comentar(publicacion.id)}
-                style={{ marginLeft: '8px' }}
-              >
-                comentar
-              </button>
             </div>
             {/* Formulario para comentar */}
-            {/* <div style={{ marginTop: '16px' }}>
+            <div style={{ marginTop: '16px' }}>
               <textarea
                 placeholder="Escribe tu comentario..."
                 value={nuevoComentario[publicacion.id] || ''}
@@ -268,7 +260,7 @@ const PublicacionesList = () => {
                   </button>
                 )}
               </div>
-            )} */}
+            )}
           </div>
         );
       })}
