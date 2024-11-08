@@ -38,6 +38,10 @@ public class PublicacionController {
     public Page<Publicacion> listarPosteosUsuario(@RequestParam String alias,@RequestParam int page,@RequestParam int size){
         return publicacionService.listarPosteosUsuario(alias, page, size);
     }
+    @GetMapping("/listarPublicacionesUsuario")
+    public Page<Publicacion> listarPublicacionesUsuario(@RequestParam String alias,@RequestParam int page,@RequestParam int size){
+        return publicacionService.listarPublicacionesUsuario(alias, page, size);
+    }
 
     @GetMapping("/buscarPublicacionPorId")
     public Publicacion buscarPublicacionPorId(@RequestParam String id){

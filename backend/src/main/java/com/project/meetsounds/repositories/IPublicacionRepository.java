@@ -13,5 +13,5 @@ public interface IPublicacionRepository extends MongoRepository<Publicacion, Str
 
     Page<Publicacion> findAllByIdUsuarioAndMediaUrlIsNull(String idUsuario, Pageable pageable);
     Page<Publicacion> findAllByIdUsuarioAndMediaUrlIsNotNull(String idUsuario, Pageable pageable);
-
+    Page<Publicacion> findAllByIdUsuario(String idUsuario, Pageable pageable);
 }
