@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Publicacion from './Publicacion'; // Asegúrate de importar el componente Publicacion
 
 const PublicacionesList = () => {
   const [publicaciones, setPublicaciones] = useState([]);
@@ -8,7 +9,7 @@ const PublicacionesList = () => {
   const [nuevoComentario, setNuevoComentario] = useState({});
   const [pagina, setPagina] = useState(0);
   const [cargando, setCargando] = useState(false);
-  const [meGustaStatus, setMeGustaStatus] = useState({});
+  const [noMasPublicaciones, setNoMasPublicaciones] = useState(false); // Nueva variable de estado
   const navigate = useNavigate();
   const TAMANO_PAGINA = 7;
 
@@ -16,7 +17,13 @@ const PublicacionesList = () => {
     setCargando(true);
     const response = await fetch(`http://localhost:8080/listarPublicaciones?page=${pagina}&size=${TAMANO_PAGINA}`);
     const result = await response.json();
-    setPublicaciones((prev) => [...prev, ...result.content]);
+
+    // Si no hay más publicaciones, actualizamos el estado
+    if (result.content.length === 0) {
+      setNoMasPublicaciones(true); // Ya no hay más publicaciones
+    } else {
+      setPublicaciones((prev) => [...prev, ...result.content]);
+    }
     setCargando(false);
   };
 
@@ -25,10 +32,10 @@ const PublicacionesList = () => {
   }, [pagina]);
 
   const loadMore = useCallback(() => {
-    if (!cargando) {
+    if (!cargando && !noMasPublicaciones) { // Si no hay más publicaciones, no cargamos más
       setPagina((prev) => prev + 1);
     }
-  }, [cargando]);
+  }, [cargando, noMasPublicaciones]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,16 +59,16 @@ const PublicacionesList = () => {
         },
         body: JSON.stringify({
           query: `query {
-              buscarUsuarioPorId(id: "${idUsuario}") {
-                fotoPerfilUrl
-                nombre
-                apellido
-                alias
-              }
-            }`,
+            buscarUsuarioPorId(id: "${idUsuario}") {
+              fotoPerfilUrl
+              nombre
+              apellido
+              alias
+            }
+          }`,
         }),
       });
-
+  
       const result = await response.json();
       setUsuarios((prevUsuarios) => ({
         ...prevUsuarios,
@@ -73,51 +80,6 @@ const PublicacionesList = () => {
   useEffect(() => {
     publicaciones.forEach((publicacion) => fetchUsuario(publicacion.idUsuario));
   }, [publicaciones]);
-
-  const verificarMeGusta = async (idPublicacion, usuarioAlias) => {
-    const response = await fetch('http://localhost:8080/usuarioHaDadoMeGusta', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        idPublicacion,
-        usuarioAlias,
-      }).toString(),
-    });
-
-    if (response.ok) {
-      const result = await response.json();
-      setMeGustaStatus((prev) => ({ ...prev, [idPublicacion]: result }));
-    }
-  };
-
-  useEffect(() => {
-    const usuarioActual = 'usuarioAliasEjemplo'; // Reemplaza con el alias del usuario autenticado
-    publicaciones.forEach((publicacion) => {
-      verificarMeGusta(publicacion.id, usuarioActual);
-    });
-  }, [publicaciones]);
-
-  const manejarMeGusta = async (idPublicacion, usuarioAlias) => {
-    const haDadoMeGusta = meGustaStatus[idPublicacion];
-
-    const url = haDadoMeGusta ? 'http://localhost:8080/quitarMeGusta' : 'http://localhost:8080/darMeGusta';
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        idPublicacion,
-        usuarioAlias,
-      }).toString(),
-    });
-
-    if (response.ok) {
-      setMeGustaStatus((prev) => ({ ...prev, [idPublicacion]: !haDadoMeGusta }));
-    }
-  };
 
   const handleUserClick = (alias) => {
     navigate(`/perfil-encontrado2/${alias}`);
@@ -194,77 +156,24 @@ const PublicacionesList = () => {
         const comentariosAMostrar = publicacion.comentarios.slice(0, comentariosVisibles[index]?.cantidad || 0);
 
         return (
-          <div key={index} style={{ border: '1px solid #ccc', padding: '16px', marginBottom: '16px' }}>
-            {usuario && (
-              <div onClick={() => handleUserClick(usuario.alias)} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
-                <img
-                  src={usuario.fotoPerfilUrl || '/default-profile.png'}
-                  alt={`${usuario.nombre} ${usuario.apellido}`}
-                  style={{ width: '50px', height: '50px', borderRadius: '50%', marginRight: '8px' }}
-                />
-                <div>
-                  <strong>{usuario.nombre} {usuario.apellido}</strong>
-                </div>
-              </div>
-            )}
-            <p>{publicacion.descripcion}</p>
-            {publicacion.mediaUrl && (
-              <img src={publicacion.mediaUrl} alt="Publicación" style={{ maxWidth: '100%', marginTop: '8px' }} />
-            )}
-            <div>
-              <span>Comentarios: {publicacion.count_coment}</span>
-              <span>Likes: {publicacion.count_likes}</span>
-              <button
-                onClick={() => manejarMeGusta(publicacion.id, usuario.alias)}
-                style={{ marginLeft: '8px' }}
-              >
-                {meGustaStatus[publicacion.id] ? 'Quitar me gusta' : 'Dar me gusta'}
-              </button>
-            </div>
-            {/* Formulario para comentar */}
-            <div style={{ marginTop: '16px' }}>
-              <textarea
-                placeholder="Escribe tu comentario..."
-                value={nuevoComentario[publicacion.id] || ''}
-                onChange={(e) => handleComentarioChange(publicacion.id, e.target.value)}
-                rows="3"
-                style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
-              />
-              {nuevoComentario[publicacion.id]?.trim() && (
-                <button
-                  onClick={() => enviarComentario(publicacion.id, usuario.alias)}
-                  style={{ marginTop: '8px', padding: '8px 16px', cursor: 'pointer' }}
-                >
-                  Enviar
-                </button>
-              )}
-            </div>
-            <button onClick={() => toggleComentarios(index)}>
-              {comentariosVisibles[index]?.visible ? 'Ocultar comentarios' : 'Ver comentarios'}
-            </button>
-            {comentariosVisibles[index]?.visible && (
-              <div style={{ marginTop: '8px', padding: '8px', backgroundColor: '#f9f9f9', border: '1px solid #ddd' }}>
-                {comentariosAMostrar.length > 0 ? (
-                  comentariosAMostrar.map((comentario, idx) => (
-                    <div key={idx} style={{ borderBottom: '1px solid #eee', padding: '4px 0' }}>
-                      <strong>{comentario.idAliasUsuario}:</strong> {comentario.comentario}
-                      <div style={{ fontSize: 'small', color: 'gray' }}>{comentario.fechaEnvio}</div>
-                    </div>
-                  ))
-                ) : (
-                  <p>No hay comentarios aún.</p>
-                )}
-                {publicacion.count_coment > (comentariosVisibles[index]?.cantidad || 0) && (
-                  <button onClick={() => verMasComentarios(index)} style={{ marginTop: '8px' }}>
-                    Ver más comentarios
-                  </button>
-                )}
-              </div>
-            )}
-          </div>
+          <Publicacion
+            key={index}
+            publicacion={publicacion}
+            fetchUsuario={fetchUsuario}
+            usuarios={usuarios}
+            usuarioAlias="usuarioAliasEjemplo" // Reemplaza con el alias del usuario autenticado
+            toggleComentarios={() => toggleComentarios(index)}
+            verMasComentarios={() => verMasComentarios(index)}
+            comentariosVisibles={comentariosVisibles[index]?.visible}
+            comentariosAMostrar={comentariosAMostrar}
+            handleComentarioChange={(text) => handleComentarioChange(publicacion.id, text)}
+            enviarComentario={() => enviarComentario(publicacion.id, usuario.alias)}
+            handleUserClick={() => handleUserClick(usuario.alias)}
+          />
         );
       })}
-      {cargando && <p>Cargando más publicaciones...</p>}
+      {cargando && !noMasPublicaciones && <p>Cargando más publicaciones...</p>} {/* Solo se muestra cuando hay más publicaciones */}
+      {noMasPublicaciones && <p>No hay más publicaciones para mostrar.</p>} {/* Mensaje cuando ya no hay más publicaciones */}
     </div>
   );
 };
