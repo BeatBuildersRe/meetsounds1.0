@@ -83,14 +83,30 @@ public class PublicacionService {
 
 
     }
+    public Page<Publicacion> listarMultimediaUsuario(String alias, int page, int size) {
+        // Obtener el usuario a partir del alias
+        Optional<Usuario> usuarioOptional = iUsuarioRepository.findByAlias(alias);
+        Usuario user = usuarioOptional.orElseThrow(() -> new IllegalArgumentException("No se ha encontrado el usuario con el alias: " + alias));
 
-    public List<Publicacion> listarPublicacionesUsuario(String alias){
-        Optional<Usuario> usuarioOptional=iUsuarioRepository.findByAlias(alias);
-        Usuario user = new Usuario();
-        user = usuarioOptional.orElseThrow(()-> new IllegalArgumentException("No se ha encontrado el usuario con el alias: " + alias));
+        // Crear el Pageable con paginación y ordenamiento
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "fechaPublicacion"));
 
-        return this.iPublicacionRepository.findAllById(user.getMisPublicaciones());
+        // Consultar las publicaciones del usuario con mediaUrl null, utilizando paginación
+        return iPublicacionRepository.findAllByIdUsuarioAndMediaUrlIsNotNull(user.getId(), pageable);
     }
+
+    public Page<Publicacion> listarPosteosUsuario(String alias, int page, int size) {
+        // Obtener el usuario a partir del alias
+        Optional<Usuario> usuarioOptional = iUsuarioRepository.findByAlias(alias);
+        Usuario user = usuarioOptional.orElseThrow(() -> new IllegalArgumentException("No se ha encontrado el usuario con el alias: " + alias));
+
+        // Crear el Pageable con paginación y ordenamiento
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "fechaPublicacion"));
+
+        // Consultar las publicaciones del usuario con mediaUrl null, utilizando paginación
+        return iPublicacionRepository.findAllByIdUsuarioAndMediaUrlIsNull(user.getId(), pageable);
+    }
+
 
     public Page<Publicacion> listarPublicaciones(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "fechaPublicacion"));

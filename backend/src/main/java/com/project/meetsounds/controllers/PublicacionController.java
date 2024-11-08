@@ -30,10 +30,13 @@ public class PublicacionController {
     public Page<Publicacion> listarPublicaciones(@RequestParam int page,@RequestParam int size){
         return publicacionService.listarPublicaciones(page, size);
     }
-
-    @GetMapping("/listarPublicacionesUsuario")
-    public List<Publicacion> listarPublicacionesUsuario(@RequestParam String alias){
-        return publicacionService.listarPublicacionesUsuario(alias);
+    @GetMapping("/listarMultimediaUsuario")
+    public Page<Publicacion> listarMultimediaUsuario(@RequestParam String alias,@RequestParam int page,@RequestParam int size){
+        return publicacionService.listarMultimediaUsuario(alias, page, size);
+    }
+    @GetMapping("/listarPosteosUsuario")
+    public Page<Publicacion> listarPosteosUsuario(@RequestParam String alias,@RequestParam int page,@RequestParam int size){
+        return publicacionService.listarPosteosUsuario(alias, page, size);
     }
 
     @GetMapping("/buscarPublicacionPorId")
