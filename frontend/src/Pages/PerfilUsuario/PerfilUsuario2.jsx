@@ -106,7 +106,9 @@ const styles = {
   tabs: {
     display: 'flex',
     borderBottom: '1px solid #2d3748',
+
     marginTop: '1rem',
+    
   },
   tab: {
     flex: 1,
@@ -118,7 +120,7 @@ const styles = {
     cursor: 'pointer',
   },
   activeTab: {
-    borderBottom: '2px solid var(--color-principal)',
+    borderBottom: '10px solid var(--color-principal)',
   },
   modal: {
     position: 'fixed',
@@ -454,7 +456,7 @@ export default function ProfilePage() {
     switch (activeTab) {
       case 'Todo':
         return <Posts />;
-      case 'Publicaciones':
+      case 'Multimedia':
         return <Replies />;
       case 'Posteos':
         return <Highlights />;
@@ -510,6 +512,7 @@ export default function ProfilePage() {
             <div style={styles.followInfo}>
               <span><strong>{userData.c_seguidores}</strong>  Seguidores</span>
               <span><strong>{userData.c_seguidos}</strong>  Seguidos</span>
+              <span><strong>0</strong>  Publicaciones</span>
             </div>
           </div>
           <div style={{display: 'flex', justifyContent: 'flex-end'}}>
@@ -527,7 +530,7 @@ export default function ProfilePage() {
 
           
           <nav style={styles.tabs}>
-        {['Todo','Publicaciones','Posteos'].map((tab) => (
+        {['Todo','Multimedia','Posteos'].map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}

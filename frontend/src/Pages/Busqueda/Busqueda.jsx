@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CiSearch } from "react-icons/ci";
 import { useNavigate } from 'react-router-dom'; // Cambiar a useNavigate
-import MenuDerechoDiv from "@c/Menu/Derecha";
 import '@css/Colores.css';
 import '@css/Busqueda.css';
 import { BASE_URL } from '../../config';
@@ -88,7 +87,7 @@ const Busqueda = () => {
     return (
         <>
             <div className="Contenedor">
-                <div className="contenedor2">
+                
                     <div className="izquierda-busqueda">
                         <div className="barra">
                             <div className="card">
@@ -106,18 +105,21 @@ const Busqueda = () => {
                         </div>
 
                         {/* Muestra los resultados */}
-                        {loading && <p>Cargando...</p>}
+                        
                         <ul className="result-list" s>
+                        {loading && <p>Buscando...</p>}
                             {results.length > 0 ? (
                                 results.map((user) => (
-                                    <li key={user.alias} onClick={() => handleUserClick(user)} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '10px',marginTop: '0px' }}>
-                                        <img src={user.fotoPerfilUrl || "/placeholder.svg"} alt={`${user.nombre} ${user.apellido}`} style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }} />
-                                        <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                        <span>{user.nombre} {user.apellido}</span>
-                                            <span style={{ fontWeight: 'bold' }}>@{user.alias}</span>
-                                            
-                                        </div>
-                                    </li>
+                                    <ul>
+                                        <li key={user.alias} onClick={() => handleUserClick(user)} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '10px',marginTop: '0px' }}>
+                                            <img src={user.fotoPerfilUrl || "/placeholder.svg"} alt={`${user.nombre} ${user.apellido}`} style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }} />
+                                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                                <span>{user.nombre} {user.apellido}</span>
+                                                <p>@{user.alias}</p>  
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    
                                 ))
                             ) : (
                                 !loading && query.length >= 1 && <li>No se encontraron resultados</li>
@@ -126,7 +128,7 @@ const Busqueda = () => {
                     </div>
 
                     {/* <MenuDerechoDiv></MenuDerechoDiv> */}
-                </div>
+                
             </div>
         </>
     );

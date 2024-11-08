@@ -1,7 +1,7 @@
 import { FcBusinessman } from "react-icons/fc";
 import { FcSafe } from "react-icons/fc";
 import '../Card/card.css'
-
+import '@css/Colores.css'
 const R_Card2 = (props) => {
 
     const R_Contenedor_Card2 = {

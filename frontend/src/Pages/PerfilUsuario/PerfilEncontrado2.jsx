@@ -384,7 +384,7 @@ const PerfilEncontrado = () => {
     switch (activeTab) {
       case 'Todo':
         return <Posts />;
-      case 'Publicaciones':
+      case 'Multimedia':
         return <Replies />;
       case 'Posteos':
         return <Highlights />;
@@ -437,6 +437,7 @@ const PerfilEncontrado = () => {
             <div style={styles.followInfo}>
               <span><strong>{userData.c_seguidores}</strong>  Seguidores</span>
               <span><strong>{userData.c_seguidos}</strong>  Seguidos</span>
+              <span><strong>0</strong>  Publicaciones</span>
             </div>
           </div>
           
@@ -453,7 +454,7 @@ const PerfilEncontrado = () => {
                 </div>
         </div>
         <nav style={styles.tabs}>
-        {['Todo','Publicaciones','Posteos'].map((tab) => (
+        {['Todo','Multimedia','Posteos'].map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
