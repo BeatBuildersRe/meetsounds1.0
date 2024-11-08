@@ -23,4 +23,6 @@ public class Banda {
     private String descripcion;
     private String idCreador;
     private List<String> miembros = new ArrayList<>();
+    private List<String>  galeria = new ArrayList<>();
+    private List<String> seguidores = new ArrayList<>();
 }
