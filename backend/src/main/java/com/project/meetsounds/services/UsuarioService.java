@@ -499,68 +499,75 @@ public class UsuarioService {
     }
 
     //GUARDADO DE DATOS DEL ONBNOARDING
-    public Usuario actualizarRolUsuario(String userId, String rol) {
-        Optional<Usuario> userOptional = usuarioRepository.findById(userId);
+    public Usuario actualizarRolUsuarioPorAlias(String alias, String rol) {
+        Optional<Usuario> userOptional = usuarioRepository.findByAlias(alias);
         if (userOptional.isPresent()) {
             Usuario usuario = userOptional.get();
             usuario.setRol(rol);
-            return usuarioRepository.save(usuario);  // Guardar el rol en la base de datos
+            return usuarioRepository.save(usuario);
         } else {
-            throw new NoSuchElementException("Usuario no encontrado");
+            throw new NoSuchElementException("Usuario no encontrado con alias: " + alias);
         }
     }
+    
 
-    public Usuario actualizarInstrumentosUsuario(String userId, List<String> instrumentoIds) {
-        Optional<Usuario> userOptional = usuarioRepository.findById(userId);
+    public Usuario actualizarInstrumentosUsuarioPorAlias(String alias, List<String> instrumentoIds) {
+        Optional<Usuario> userOptional = usuarioRepository.findByAlias(alias);
         if (userOptional.isPresent()) {
             Usuario usuario = userOptional.get();
-            
-            // Buscar los objetos Instrumento usando los IDs
+    
             List<Instrumento> instrumentos = instrumentoIds.stream()
                     .map(id -> instrumentoService.buscarInstrumentoPorId(id))
                     .filter(Optional::isPresent)
                     .map(Optional::get)
                     .collect(Collectors.toList());
     
-            usuario.setMisInstru(instrumentos);  // Guardar los instrumentos en el usuario
+            usuario.setMisInstru(instrumentos);
             return usuarioRepository.save(usuario);
         } else {
-            throw new NoSuchElementException("Usuario no encontrado");
+            throw new NoSuchElementException("Usuario no encontrado con alias: " + alias);
         }
     }
+    
+    public Usuario actualizarGenerosUsuarioPorAlias(String alias, List<String> generoIds) {
+    Optional<Usuario> userOptional = usuarioRepository.findByAlias(alias);
+    if (userOptional.isPresent()) {
+        Usuario usuario = userOptional.get();
 
-    public Usuario actualizarGenerosUsuario(String userId, List<String> generoIds) {
-        Optional<Usuario> userOptional = usuarioRepository.findById(userId);
-        if (userOptional.isPresent()) {
-            Usuario usuario = userOptional.get();
-            
-            // Buscar los objetos GeneroMusical usando los IDs con el servicio
-            List<GeneroMusical> generos = generoIds.stream()
-                    .map(id -> generoMusicalService.buscarGeneroPorId(id))
-                    .filter(Optional::isPresent)
-                    .map(Optional::get)
-                    .collect(Collectors.toList());
+        // Buscar los géneros musicales por sus IDs
+        List<GeneroMusical> generos = generoIds.stream()
+                .map(id -> generoMusicalService.buscarGeneroPorId(id))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toList());
 
-            usuario.setMisGeneros(generos);  // Guardar los géneros en el usuario
-            return usuarioRepository.save(usuario);
-        } else {
-            throw new NoSuchElementException("Usuario no encontrado");
+        if (generos.isEmpty()) {
+            throw new NoSuchElementException("No se encontraron géneros musicales con los IDs proporcionados");
         }
+
+        usuario.setMisGeneros(generos); // Actualizar la lista de géneros musicales del usuario
+        return usuarioRepository.save(usuario);
+    } else {
+        throw new NoSuchElementException("Usuario no encontrado con alias: " + alias);
     }
+}
+
+    
+    
     // UsuarioService.java
-    public ResponseEntity<String> actualizarDescripcionUsuario(String userId, String descripcion) {
-    Optional<Usuario> usuarioOptional = usuarioRepository.findById(userId);
-
-    if (!usuarioOptional.isPresent()) {
-        return ResponseEntity.badRequest().body("No existe usuario con el ID: " + userId);
+    public ResponseEntity<String> actualizarDescripcionUsuarioPorAlias(String alias, String descripcion) {
+        Optional<Usuario> usuarioOptional = usuarioRepository.findByAlias(alias);
+        if (!usuarioOptional.isPresent()) {
+            return ResponseEntity.badRequest().body("No existe usuario con el alias: " + alias);
+        }
+    
+        Usuario usuario = usuarioOptional.get();
+        usuario.setDescripcion(descripcion);
+        usuarioRepository.save(usuario);
+    
+        return ResponseEntity.ok("Descripción actualizada exitosamente");
     }
-
-    Usuario usuario = usuarioOptional.get();
-    usuario.setDescripcion(descripcion);
-    usuarioRepository.save(usuario);
-
-    return ResponseEntity.ok("Descripción actualizada exitosamente");
-    }
+    
 
 
 

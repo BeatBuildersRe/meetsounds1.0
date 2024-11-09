@@ -109,10 +109,6 @@ public class UsuarioController {
         this.usuarioService.actualizarDescripcion(id, descripcion);
     }
 
-    @MutationMapping(name = "actualizarInstrumentosUsuario")
-    public Usuario actualizarInstrumentosUsuario(@Argument String idInstrumento, @Argument String idUsuario){
-        return usuarioService.actualizarInstrumentosUsuario(idInstrumento,idUsuario);
-    }
 
     @QueryMapping(name = "buscarUsuariosPorInstrumentos")
     public List<Usuario> buscarUsuariosPorInstrumentos(@Argument List<String> instrumentos) {
@@ -146,21 +142,24 @@ public class UsuarioController {
     }
 
     /* DATOS DEL ONBOARDING */
-    @MutationMapping(name = "actualizarRolUsuario")
-    public Usuario actualizarRolUsuario(@Argument String userId, @Argument String rol) {
-        return usuarioService.actualizarRolUsuario(userId, rol);
+    @MutationMapping(name = "actualizarRolUsuarioPorAlias")
+    public Usuario actualizarRolUsuarioPorAlias(@Argument String alias, @Argument String rol) {
+        return usuarioService.actualizarRolUsuarioPorAlias(alias, rol);
     }
-    public Usuario actualizarInstrumentosUsuario(@Argument String userId, @Argument List<String> instrumentoIds) {
-        return usuarioService.actualizarInstrumentosUsuario(userId, instrumentoIds);
+    @MutationMapping(name = "actualizarInstrumentosUsuarioPorAlias")
+    public Usuario actualizarInstrumentosUsuarioPorAlias(@Argument String alias, @Argument List<String> instrumentoIds) {
+        return usuarioService.actualizarInstrumentosUsuarioPorAlias(alias, instrumentoIds);
     }
-    @MutationMapping(name = "actualizarGenerosUsuario")
-        public Usuario actualizarGenerosUsuario(@Argument String userId, @Argument List<String> generoIds) {
-    return usuarioService.actualizarGenerosUsuario(userId, generoIds);
+    @MutationMapping(name = "actualizarGenerosUsuarioPorAlias")
+    public Usuario actualizarGenerosUsuarioPorAlias(@Argument String alias, @Argument List<String> generoIds) {
+        return usuarioService.actualizarGenerosUsuarioPorAlias(alias, generoIds);
     }
-    @MutationMapping(name = "actualizarDescripcionUsuario")
-    public ResponseEntity<String> actualizarDescripcionUsuario(@Argument String userId, @Argument String descripcion) {
-        return usuarioService.actualizarDescripcionUsuario(userId, descripcion);
+    
+    @MutationMapping(name = "actualizarDescripcionUsuarioPorAlias")
+    public ResponseEntity<String> actualizarDescripcionUsuarioPorAlias(@Argument String alias, @Argument String descripcion) {
+        return usuarioService.actualizarDescripcionUsuarioPorAlias(alias, descripcion);
     }
+
     
 
 }

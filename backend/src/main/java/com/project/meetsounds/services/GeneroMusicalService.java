@@ -1,4 +1,3 @@
-// GeneroMusicalService.java
 package com.project.meetsounds.services;
 
 import com.project.meetsounds.domain.models.GeneroMusical;
@@ -15,19 +14,19 @@ public class GeneroMusicalService {
     @Autowired
     private IGeneroMusicalRepository generoMusicalRepository;
 
+    public List<GeneroMusical> listarTodosLosGeneros() {
+        return generoMusicalRepository.findAll();
+    }
+
     public Optional<GeneroMusical> buscarGeneroPorId(String id) {
         return generoMusicalRepository.findById(id);
     }
 
-    public List<GeneroMusical> traerTodosLosGeneros() {
-        return generoMusicalRepository.findAll();
+    public GeneroMusical guardarGenero(GeneroMusical generoMusical) {
+        return generoMusicalRepository.save(generoMusical);
     }
 
-    public GeneroMusical guardarGenero(GeneroMusical genero) {
-        return generoMusicalRepository.save(genero);
-    }
-    
-    public void eliminarGeneroPorId(String id) {
+    public void eliminarGenero(String id) {
         generoMusicalRepository.deleteById(id);
     }
 }

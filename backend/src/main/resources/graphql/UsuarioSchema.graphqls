@@ -10,11 +10,13 @@ type Query{
     existByAlias(alias: String): Boolean
     verificaSiSigue(aliasVisitante:String!, aliasPerfil:String!): Boolean
 
-    #Instrumentos y TipoInstrumentos
+    #Instrumentos y TipoInstrumentos/Generos Musicales
     buscarTodosLosInstrumentos : [Instrumento]
     buscarTodosLosTiposInstrumento : [TipoInstrumento]
     buscarInstrumentosPorTipo(tipo: String) : [Instrumento]
     buscarInstrumentoPorNombre(nombre: String) : Instrumento
+    listarTodosLosGeneros: [GeneroMusical]
+    buscarGeneroPorId(id: String!): GeneroMusical
 
     # Publiacion Query
     listarPublicaciones: [PublicacionOut]
@@ -34,7 +36,7 @@ type Query{
     misSeguidores(idAlias: String): [Seguidores]
     misSeguidoresBanda(idBanda : String): [Usuario]
 
-
+    
 
 }
 
@@ -71,11 +73,13 @@ type Mutation{
     seguirBanda(idBanda : String, aliasUsuario: String):Boolean
     dejarDeSeguirBanda(idBanda : String, aliasUsuario : String): Boolean
 
-    #Instrumentos y TipoInstrumentos Mutation
+    #Instrumentos y TipoInstrumentos Mutation/Generos Musicales
     guardarInstrumento(instrumento: InstrumentoInput, tipo:String) : Instrumento
     eliminarInstrumentoPorId(id: ID!): Boolean
     guardarTipoInstrumento(tipoInstrumento: TipoInstrumentoInput): TipoInstrumento
     eliminarTipoInstrumentoPorId(id: ID!): Boolean
+    guardarGenero(nombre: String!): GeneroMusical
+    eliminarGenero(id: String!): Boolean
 
     # Publicacion Mutation
     eliminarPublicacionPorId(idAlias: String!, idPublicacion: String!): Boolean
@@ -97,6 +101,13 @@ type Mutation{
         generoMus: [String!]!,
         descripcion: String
     ): About
+
+    #Guardar onboarding
+    actualizarRolUsuarioPorAlias(alias: String!, rol: String!): Usuario
+    actualizarInstrumentosUsuarioPorAlias(alias: String!, instrumentoIds: [String!]!): Usuario
+    actualizarGenerosUsuarioPorAlias(alias: String!, generoIds: [String!]!): Usuario
+    actualizarDescripcionUsuarioPorAlias(alias: String!, descripcion: String!): String
+
 
 }
 
@@ -127,6 +138,8 @@ type Usuario{
     fechaNacimiento: Date
     seguidos: [String]
     seguidores: [String]
+    rol: String 
+    misGeneros: [GeneroMusical] 
 }
 
 type Redes{
@@ -181,6 +194,10 @@ type About {
     instrumentos: [String]
     generoMus: [String]
     descripcion: String
+}
+type GeneroMusical {
+    id: String
+    nombre: String
 }
 
 

@@ -97,7 +97,7 @@ function Registro() {
         // Almacenar el alias del usuario en una cookie para mantener la sesión
         Cookies.set('alias', username, { expires: 7 });
         setIsAuthenticated(true);  // Actualizar el estado de autenticación
-        navigate('/');  // Redirigir al inicio
+        navigate('/onboarding');  // Redirigir al inicio
       } else if (result.errors) {
         alert(`Error: ${result.errors[0].message}`);
       }

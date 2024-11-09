@@ -1,59 +1,137 @@
-// OnboardingForm.jsx
-import React, { useState } from 'react';
-import StepOne from '@c/Steps/StepOne';
-import StepTwo from '@c/Steps/StepTwo';
-import StepThree from '@c/Steps/StepThree';
-import StepFour from '@c/Steps/StepFour';
-import FondoLoginRegister from '@c/FondoLoginRegister/FondoLoginRegister';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import './OnboardingForm.css';
+function Onboarding() {
+  const [rol, setRol] = useState("");
+  const [instrumentos, setInstrumentos] = useState([]);
+  const [generos, setGeneros] = useState([]);
+  const [descripcion, setDescripcion] = useState("");
+  const [fotoPerfil, setFotoPerfil] = useState(null);
 
-const OnboardingForm = () => {
-  const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({
-    rol: '',
-    instrumentos: [],
-    generos: [],
-    fotoPerfil: null,
-    descripcion: ''
-  });
+  const graphqlEndpoint = "http://localhost:8080/graphql";
+  const navigate = useNavigate();
 
-  const nextStep = () => setStep((prev) => prev + 1);
-  const prevStep = () => setStep((prev) => prev - 1);
+  const handleSubmit = async () => {
+    // Recuperar el alias o id del usuario desde las cookies o contexto
+    const userId = "USER_ID_FROM_CONTEXT_OR_COOKIE"; // Reemplazar con tu lógica
 
-  const updateFormData = (newData) => {
-    setFormData((prev) => ({ ...prev, ...newData }));
-  };
+    // Mutaciones para enviar los datos del onboarding
+    const queries = [
+      {
+        query: `
+          mutation {
+            actualizarRolUsuario(userId: "${userId}", rol: "${rol}") {
+              id
+            }
+          }
+        `,
+      },
+      {
+        query: `
+          mutation {
+            actualizarInstrumentosUsuario(userId: "${userId}", instrumentoIds: ${JSON.stringify(
+          instrumentos
+        )}) {
+              id
+            }
+          }
+        `,
+      },
+      {
+        query: `
+          mutation {
+            actualizarGenerosUsuario(userId: "${userId}", generoIds: ${JSON.stringify(
+          generos
+        )}) {
+              id
+            }
+          }
+        `,
+      },
+      {
+        query: `
+          mutation {
+            actualizarDescripcionUsuario(userId: "${userId}", descripcion: "${descripcion}") {
+              id
+            }
+          }
+        `,
+      },
+    ];
 
-  const renderStep = () => {
-    switch (step) {
-      case 1:
-        return <StepOne updateFormData={updateFormData} />;
-      case 2:
-        return <StepTwo updateFormData={updateFormData} />;
-      case 3:
-        return <StepThree updateFormData={updateFormData} />;
-      case 4:
-        return <StepFour updateFormData={updateFormData} handleFinish={() => alert('Finalizado')} />;
-      default:
-        return <StepOne updateFormData={updateFormData} />;
+    // Ejecutar las mutaciones
+    for (const { query } of queries) {
+      try {
+        await fetch(graphqlEndpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query }),
+        });
+      } catch (error) {
+        console.error("Error en la mutación:", error);
+      }
     }
+
+    // Navegar al home después del onboarding
+    navigate("/");
   };
 
   return (
-    <div className="onboarding-wrapper">
-      <FondoLoginRegister />
-      <div className="onboarding-container">
-        <h2>Bienvenido a MeetSounds</h2>
-        {renderStep()}
-        <div className="onboarding-buttons">
-          {step > 1 && <button onClick={prevStep}>Anterior</button>}
-          {step < 4 && <button onClick={nextStep} style={{ marginLeft: 'auto' }}>Siguiente</button>}
-          {step === 4 && <button onClick={() => alert('Finalizado')} style={{ marginLeft: 'auto' }}>Finalizar</button>}
-        </div>
+    <div>
+      <h1>Onboarding</h1>
+      <div>
+        <label>Selecciona tu rol:</label>
+        <select value={rol} onChange={(e) => setRol(e.target.value)}>
+          <option value="">Selecciona</option>
+          <option value="musico">Músico</option>
+          <option value="vocalista">Vocalista</option>
+          <option value="productor">Productor</option>
+          <option value="compositor">Compositor</option>
+          <option value="aficionado">Aficionado</option>
+          <option value="dj">DJ</option>
+        </select>
       </div>
+
+      <div>
+        <label>Selecciona tus instrumentos:</label>
+        <input
+          type="text"
+          placeholder="Ejemplo: Guitarra, Piano"
+          value={instrumentos}
+          onChange={(e) => setInstrumentos(e.target.value.split(","))}
+        />
+      </div>
+
+      <div>
+        <label>Selecciona tus géneros musicales:</label>
+        <input
+          type="text"
+          placeholder="Ejemplo: Rock, Pop"
+          value={generos}
+          onChange={(e) => setGeneros(e.target.value.split(","))}
+        />
+      </div>
+
+      <div>
+        <label>Descripción del perfil:</label>
+        <textarea
+          value={descripcion}
+          onChange={(e) => setDescripcion(e.target.value)}
+        />
+      </div>
+
+      <div>
+        <label>Foto de perfil:</label>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => setFotoPerfil(e.target.files[0])}
+        />
+      </div>
+
+      <button onClick={handleSubmit}>Finalizar</button>
     </div>
   );
-};
+}
 
-export default OnboardingForm;
+export default Onboarding;

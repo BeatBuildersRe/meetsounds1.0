@@ -1,63 +1,59 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useForm } from "react-hook-form";
 import ComponenteTexto from "./components/P_text";
-import CargadorImagenes from './components/P_imagen';
 import './CrearPublicacion.css';
-import { FcPicture } from "react-icons/fc";
 import Button from '@mui/material/Button';
 
-import { FcPlus } from "react-icons/fc";
-
 export default function CrearPublicacion(props) {
-  const { register, handleSubmit, reset, setValue } = useForm();
-  const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState([]);
+  const { register, handleSubmit, reset } = useForm();
 
-  const onSubmit = (datos) => {
-    // Maneja el envío del formulario aquí
-    console.log(datos); // Para verificar que se envían las imágenes correctamente
-  };
-
-  const manejarImagenesDesdeHijo = (imagenes) => {
-    setImagenesSeleccionadas(imagenes);
-  };
-
-  useEffect(() => {
-    // Cuando imagenesSeleccionadas cambia, actualiza el campo 'imagenes' en el formulario
-    if (imagenesSeleccionadas.length > 0) {
-      setValue('imagenes', imagenesSeleccionadas); // Establece el valor en el formulario
+  // Función para manejar el envío del formulario
+  const onSubmit = async (datos) => {
+    if (!datos.texto) {
+      alert("La descripción no puede estar vacía.");
+      return;
     }
-  }, [imagenesSeleccionadas, setValue]);
 
-  const manejarCancelar = () => {
-    // Resetea los valores del formulario
-    reset();
-    // Limpia el estado de las imágenes seleccionadas
-    setImagenesSeleccionadas([]);
+    // Crear FormData solo con idAlias y descripcion
+    const formData = new FormData();
+    formData.append("idAlias", "mi_alias");  // Reemplaza con el alias real
+    formData.append("descripcion", datos.texto);
+
+    // Enviar la solicitud con fetch
+    try {
+      const response = await fetch("http://localhost:8080/crearPublicacion", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        console.log("Publicación creada con éxito");
+        reset(); // Limpiar el formulario después de enviar
+        props.funcion(); // Cerrar modal o realizar otra acción
+      } else {
+        const errorText = await response.text();
+        console.error("Error en el servidor:", errorText);
+      }
+    } catch (error) {
+      console.error("Error en la solicitud:", error);
+    }
   };
 
   return (
     <>
       {props.condicion && (
         <div className='new-publicacion'>
-
           <div className="Form-new-publicacion">
-            <Button variant="text" id='btn-subir' color="success" type="submit">Subir</Button>
-            <Button variant="text" id='btn-cancelar' color='error' type="button" onClick={() => { manejarCancelar(); props.funcion() }}>Cancelar</Button>
-            
-            {/* Botón de cancelar */}
-            
-            {console.log(imagenesSeleccionadas)}
-            <form id='form' onSubmit={handleSubmit(onSubmit)}>
-              <h3>Nueva Publicacion</h3>
+            <Button variant="text" id='btn-subir' color="success" type="button" onClick={handleSubmit(onSubmit)}>
+              Publicar
+            </Button>
+            <Button variant="text" id='btn-cancelar' color='error' type="button" onClick={() => { reset(); props.funcion(); }}>
+              Cancelar
+            </Button>
+
+            <form id='form'>
+              <h3>Nueva Publicación</h3>
               <ComponenteTexto {...register("texto")} />
-              <br />
-              <CargadorImagenes pasarValorAlPadre={manejarImagenesDesdeHijo} />
-              <br />
-              <input type="file" {...register('imagenes')} multiple hidden /> {/* input oculto */}
-              
-
-
-
             </form>
           </div>
         </div>
