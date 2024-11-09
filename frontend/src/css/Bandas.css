@@ -17,4 +17,6 @@
     /* Habilita el desplazamiento vertical */
     width: 100%;
     position: relative;
+
+    z-index: 1;
 }

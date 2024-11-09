@@ -9,6 +9,7 @@ import Busqueda from './Pages/Busqueda/Busqueda';
 import Notificaciones from './Pages/Notificaciones/Notificaciones';
 import Mensajes from './Pages/Mensajes/Mensajes';
 import Bandas from './Pages/Bandas/Bandas';
+import CrearBanda from './Pages/Bandas/CrearBanda';
 import Configuracion from './Pages/Configuracion/Configuracion';
 import Perfil2 from './Pages/Configuracion/Perfil/Perfil2';
 import DatosPersonales from './Pages/Configuracion/Perfil/Datos_Personales/DatosPersonales';
@@ -48,6 +49,7 @@ function App() {
           <Route path="notificaciones" element={<Notificaciones />} />
           <Route path="Mensajes" element={<Mensajes />} />
           <Route path="Bandas" element={<Bandas />} />
+          <Route path="Bandas/CrearBanda" element={<CrearBanda />} />
           <Route path="Configuracion" element={<Configuracion />} />
           <Route path="configuracion/perfil" element={<Perfil2 />} />
           <Route path="configuracion/perfil/Datos-Personales" element={<DatosPersonales />} />
