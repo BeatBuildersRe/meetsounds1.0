@@ -166,7 +166,7 @@ export default function ImageUpload({ onImageSave }) {
       {isModalOpen && (
         <div className={styles.modal}>
           <div className={styles.modalContent}>
-            <div className={styles.modalHeader}>
+            <div className={styles.modalHeaderperfil}>
               <AiOutlineLeft
                 className={styles.backButton}
                 onClick={() => setIsModalOpen(false)} // Cierra el modal al hacer clic

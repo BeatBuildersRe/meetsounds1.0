@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import Publicacion from '../../Publicacion';
+import Publicacion from '../../PublicacionParaPerfil';
+import { DisplaySettings } from '@mui/icons-material';
 
 const PublicacionesListMultimedia = () => {
   const [publicaciones, setPublicaciones] = useState([]);
@@ -144,15 +145,22 @@ const PublicacionesListMultimedia = () => {
       setNuevoComentario((prev) => ({ ...prev, [publicacionId]: '' }));
     }
   };
-
+const styles={
+  fotoMultimediaPerfil: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(4, 1fr)', // 3 columnas de ancho flexible
+    gap: '1px', // espacio entre elementos
+  
+  },
+}
   return (
-    <div>
+    <div style={styles.fotoMultimediaPerfil}>
       {publicaciones.map((publicacion, index) => {
         const usuario = usuarios[publicacion.idUsuario];
         const comentariosAMostrar = publicacion.comentarios.slice(0, comentariosVisibles[index]?.cantidad || 0);
 
         return (
-          <Publicacion
+          <Publicacion 
             key={index}
             publicacion={publicacion}
             fetchUsuario={fetchUsuario}
