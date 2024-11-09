@@ -3,6 +3,7 @@ import '@css/Bandas.css'
 import { useNavigate } from "react-router-dom";
 import ServiceBandas from "../../services/ServiceBandas";
 import { useEffect, useState } from "react";
+import Default_img from '@public/perfil_imagen.png'
 const Bandas = () => {
     const  { cargando, error, CrearBanda, MisBandas, banda, Misbanda } = ServiceBandas()
     const estaVacio = (Misbanda) => Misbanda.length === 0;
@@ -25,6 +26,9 @@ const Bandas = () => {
     const irACrearBanda = () => {
         navigate("CrearBanda"); // Navega a la ruta especificada
     };
+    const irAmiBanda = (Nombre_Banda,Id_Banda) => {
+        navigate(`/Bandas/${Nombre_Banda}`, { state: { Id_Banda}});
+    };
     
     return (
         <>
@@ -35,8 +39,22 @@ const Bandas = () => {
                     
 
                     {Misbanda?.map((banda,index)=>(
-                        <div key={index}>
-                            <p>{banda.nombreBanda}</p>
+                        <div className="Card_Banda" key={index} onClick={()=> irAmiBanda(banda.nombreBanda, banda.id)}>
+                            <div className="Banda_img">
+                                <img src={Default_img} alt="" />
+
+                            </div>
+                            <div className="Banda_info">
+                                <p>{banda.nombreBanda}</p>
+                                <p>{banda.descripcion}</p>
+                                <div className="Banda_miembros">
+                                    <img src={Default_img} alt="" />
+                                    <img src={Default_img} alt="" />
+                                    <img src={Default_img} alt="" />
+
+                                </div>
+                            </div>
+
                         </div>
                     ))}
 

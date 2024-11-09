@@ -20,3 +20,35 @@
 
     z-index: 1;
 }
+
+
+/* borrar */
+
+.Card_Banda{
+    position: relative;
+    margin-bottom: 2%;
+    padding: 0;
+    display: flex;
+    background-color: #2d3748;
+    border-radius: 30px;
+    .Banda_img{
+        img{
+            width: 150px;
+            height: auto;
+            border-radius: 50%;
+            padding: 0;
+            margin: 0;
+        }
+    }
+    .Banda_info{
+    }
+    .Banda_miembros{
+        img{
+            width: 50px;
+            height: auto;
+            border-radius: 50%;
+            padding: 0;
+            margin: 0;
+        }
+    }
+}
