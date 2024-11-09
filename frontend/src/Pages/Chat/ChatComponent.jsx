@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import { BASE_URL, BASE_URL_SOCKET } from '../../config';
 import '../../css/ChatComponent.css';
 
-const ChatComponent = ({ chatId, mensajesChat, enviarMensaje, mensajeTexto, setMensajeTexto }) => {
+const ChatComponent = ({ chatId, mensajesChat, enviarMensaje, mensajeTexto, setMensajeTexto, setChatSeleccionado }) => {
   const [messages, setMessages] = useState([]);
   const [socket, setSocket] = useState(null);
   const [userCache, setUserCache] = useState({});
@@ -124,7 +124,7 @@ const ChatComponent = ({ chatId, mensajesChat, enviarMensaje, mensajeTexto, setM
 
       if (socket && socket.readyState === WebSocket.OPEN) {
         socket.send(JSON.stringify(message));
-        setMensajeTexto('');  // Limpiar el campo de mensaje
+        setMensajeTexto('');  
       } else {
         console.error('WebSocket no está conectado');
       }
@@ -133,15 +133,20 @@ const ChatComponent = ({ chatId, mensajesChat, enviarMensaje, mensajeTexto, setM
     }
   };
 
-  // Esta función maneja el evento de tecla presionada
+  
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && mensajeTexto.trim()) {
-      sendMessage(); // Enviar mensaje si se presiona Enter y hay texto
+      sendMessage(); 
     }
   };
 
   return (
     <div className="chat-component">
+      <div className="top-mensajes">
+        <button onClick={() => setChatSeleccionado(null)} className="boton-volver">
+          Volver
+        </button>
+      </div>
       <div className="messages">
         {messages.map((message) => (
           <div key={message.id}>
@@ -155,7 +160,7 @@ const ChatComponent = ({ chatId, mensajesChat, enviarMensaje, mensajeTexto, setM
           type="text"
           value={mensajeTexto}
           onChange={(e) => setMensajeTexto(e.target.value)}
-          onKeyDown={handleKeyDown}  // Llamar a la función cuando se presiona una tecla
+          onKeyDown={handleKeyDown} 
           placeholder="Escribe un mensaje..."
           className="input-mensaje"
         />

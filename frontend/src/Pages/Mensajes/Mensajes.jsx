@@ -163,15 +163,13 @@ const Mensajes = () => {
         <div className="izquierda-mensajes">
           {chatSeleccionado ? (
             <>
-              <button onClick={() => setChatSeleccionado(null)} className="boton-volver">
-                Volver
-              </button>
               <ChatComponent 
                 chatId={chatSeleccionado} 
                 mensajesChat={mensajesChat} 
                 enviarMensaje={() => enviarMensaje(chatSeleccionado)} 
                 mensajeTexto={mensajeTexto} 
                 setMensajeTexto={setMensajeTexto} 
+                setChatSeleccionado={setChatSeleccionado}
               />
             </>
           ) : (
