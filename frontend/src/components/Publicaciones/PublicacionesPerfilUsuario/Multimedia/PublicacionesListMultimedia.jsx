@@ -148,8 +148,8 @@ const PublicacionesListMultimedia = () => {
 const styles={
   fotoMultimediaPerfil: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(3, 1fr)', // 3 columnas de ancho flexible
-    gap: '0px', // espacio entre elementos
+    gridTemplateColumns: 'repeat(4, 1fr)', // 3 columnas de ancho flexible
+    gap: '1px', // espacio entre elementos
   
   },
 }

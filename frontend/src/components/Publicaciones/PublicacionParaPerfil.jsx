@@ -151,11 +151,16 @@ export default function PublicacionParaPerfil({ publicacion, fetchUsuario, usuar
   };
 
   const styles = {
-    containerPublicaciones: {
-      width:'100%',
+    imageContainer: {
+      width: '100%',
+      height: '300px', // Set a fixed height for all images
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'var(--color-contenedores)',
+      overflow: 'hidden',
       
       
-      // backgroundColor: 'var(--color-contenedores)',
     },
     header: {
       display: 'flex',
@@ -378,6 +383,23 @@ export default function PublicacionParaPerfil({ publicacion, fetchUsuario, usuar
       justifyContent: 'space-between',
       marginTop: '10px',
     },
+    imageSquare: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
+    },
+    imageVertical: {
+      height: '100%',
+      width: 'auto',
+      maxWidth: '100%',
+      objectFit: 'contain',
+    },
+    imageHorizontal: {
+      width: '100%',
+      height: 'auto',
+      maxHeight: '100%',
+      objectFit: 'contain',
+    },
   };
 
   const renderComentarios = () => (
@@ -526,19 +548,15 @@ export default function PublicacionParaPerfil({ publicacion, fetchUsuario, usuar
 
   return (
     <div style={styles.containerPublicaciones}>
-      
-      
-        
-        {publicacion.mediaUrl && (
+      {publicacion.mediaUrl && (
+        <div style={styles.imageContainer} onClick={abrirModal}>
           <img 
             src={publicacion.mediaUrl} 
             alt="Publicación" 
             style={getImageStyle()}
-            onClick={abrirModal}
           />
-        )}
-      
-      
+        </div>
+      )}
       
       {modalAbierto && (
         <div style={styles.modal} onClick={cerrarModal}>
