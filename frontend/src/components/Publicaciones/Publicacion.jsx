@@ -50,7 +50,7 @@ export default function Publicacion({ publicacion, fetchUsuario, usuarios, onPub
 
   const comprobarEsDuenoPublicacion = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/comprobarEsDuenoPublicacion?idPublicacion=${publicacion.id}&usuarioAlias=${usuarioAlias}`);
+      const response = await fetch(`${BASE_URL}/comprobarEsDuenoPublicacion?idPublicacion=${publicacion.id}&usuarioAlias=${usuarioAlias}`);
       if (response.ok) {
         const result = await response.json();
         setIsDuenoPublicacion(result);
@@ -75,7 +75,7 @@ export default function Publicacion({ publicacion, fetchUsuario, usuarios, onPub
   }, [modalAbierto]);
 
   const verificarMeGusta = async () => {
-    const response = await fetch('http://localhost:8080/usuarioHaDadoMeGusta', {
+    const response = await fetch(`${BASE_URL}/usuarioHaDadoMeGusta`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -94,7 +94,7 @@ export default function Publicacion({ publicacion, fetchUsuario, usuarios, onPub
 
   const manejarMeGusta = async (e) => {
     e.stopPropagation();
-    const url = meGustaStatus ? 'http://localhost:8080/quitarMeGusta' : 'http://localhost:8080/darMeGusta';
+    const url = meGustaStatus ? `${BASE_URL}/quitarMeGusta` : `${BASE_URL}/darMeGusta`;
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -128,7 +128,7 @@ export default function Publicacion({ publicacion, fetchUsuario, usuarios, onPub
 
   const enviarComentario = async (e) => {
     e.preventDefault();
-    const response = await fetch('http://localhost:8080/Comentar', {
+    const response = await fetch(`${BASE_URL}/Comentar`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
