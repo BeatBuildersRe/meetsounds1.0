@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { CiCirclePlus } from 'react-icons/ci';
 import './modal.css';
+import { BASE_URL } from '../../config';
 
 const modalStyles = {
   overlay: {
@@ -93,6 +94,11 @@ const modalStyles = {
     borderRadius: '5px',
     cursor: 'pointer',
   },
+  errorMessage: {
+    color: 'red',
+    fontSize: '12px',
+    marginTop: '5px',
+  },
 };
 
 const aliasCookie = document.cookie
@@ -116,6 +122,7 @@ export default function PostModal({ onPost = () => {} }) {
   const [files, setFiles] = useState([]);
   const [description, setDescription] = useState('');
   const [charCount, setCharCount] = useState(500);
+  const [error, setError] = useState(''); // Estado para los errores de tipo de archivo
 
   useEffect(() => {
     const alias = document.cookie
@@ -123,7 +130,7 @@ export default function PostModal({ onPost = () => {} }) {
       .find(row => row.startsWith('alias='))?.split('=')[1];
 
     if (alias) {
-      fetch("http://localhost:8080/graphql", {
+      fetch(`${BASE_URL}/graphql`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -157,6 +164,17 @@ export default function PostModal({ onPost = () => {} }) {
   const handleFileChange = (e) => {
     if (e.target.files) {
       const newFiles = Array.from(e.target.files).slice(0, 1); // Solo permite un archivo
+
+      // Verificar el tipo de archivo
+      const validTypes = ['image/png', 'image/jpg', 'image/jpeg'];
+      const invalidFile = newFiles.find(file => !validTypes.includes(file.type));
+
+      if (invalidFile) {
+        setError('Solo se permiten archivos PNG o JPG');
+        return;
+      }
+
+      setError(''); // Limpiar mensaje de error si el archivo es válido
       const newFilesWithPreview = newFiles.map(file => ({
         file,
         preview: URL.createObjectURL(file),
@@ -166,7 +184,7 @@ export default function PostModal({ onPost = () => {} }) {
   };
 
   const handlePost = () => {
-    console.log("Publicando..."); // Verificar si se ejecuta esta línea
+    console.log("Publicando...");
     const alias = document.cookie
       .split('; ')
       .find(row => row.startsWith('alias='))?.split('=')[1];
@@ -181,16 +199,16 @@ export default function PostModal({ onPost = () => {} }) {
         formData.append("file", files[0].file);
       }
 
-      fetch("http://localhost:8080/crearPublicacion", {
+      fetch(`${BASE_URL}/crearPublicacion`, {
         method: "POST",
         body: formData,
       })
         .then(response => {
-          console.log(response); // Verificar la respuesta de la API
+          console.log(response);
           if (response.ok) {
             console.log("Publicación exitosa");
             onPost(files[0]?.file, description); // Llamada a la función onPost sin location
-            handleClose(); // Cierra el modal después de publicar
+            window.location.reload();
           } else {
             console.error("Error al crear la publicación:", response.statusText);
           }
@@ -208,6 +226,7 @@ export default function PostModal({ onPost = () => {} }) {
     setDescription('');
     setCharCount(500);
     setIsOpen(false);
+    setError(''); // Limpiar el mensaje de error al cerrar el modal
   };
 
   const handleDescriptionChange = (e) => {
@@ -254,38 +273,39 @@ export default function PostModal({ onPost = () => {} }) {
                       <div key={index} style={modalStyles.filePreview}>
                         <img 
                           src={file.preview} 
-                          alt={`Preview ${index + 1}`} 
+                          alt="Vista previa" 
                           style={modalStyles.filePreviewImage}
                         />
                         <button
                           style={modalStyles.removeButton}
-                          onClick={() => setFiles([])} // Limpiar los archivos seleccionados
+                          onClick={() => setFiles([])}
                         >
-                          X
+                          ×
                         </button>
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <label style={modalStyles.dropzone}>
-                    Arrastra y suelta una imagen o haz clic para seleccionar
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleFileChange}
-                      style={{ display: 'none' }}
-                    />
-                  </label>
+                  <div
+                    style={modalStyles.dropzone}
+                    onClick={() => document.getElementById('fileInput').click()}
+                  >
+                    <p>Haz click o arrastra para agregar una imagen (PNG o JPG)</p>
+                  </div>
                 )}
+                <input
+                  type="file"
+                  id="fileInput"
+                  style={{ display: 'none' }}
+                  accept="image/png, image/jpg, image/jpeg"
+                  onChange={handleFileChange}
+                />
+                {error && <p style={modalStyles.errorMessage}>{error}</p>}
               </div>
-              <button
-                style={modalStyles.button}
-                onClick={handlePost}
-                disabled={description.trim() === '' && files.length === 0} // Habilitar si hay texto o archivo
-              >
-                Publicar
+              <button style={modalStyles.button} onClick={handlePost}>Publicar</button>
+              <button style={{ ...modalStyles.button, backgroundColor: '#f3f4f6', color: '#333' }} onClick={handleClose}>
+                Cerrar
               </button>
-              <button onClick={handleClose}>Cerrar</button>
             </div>
           </div>
         </div>

@@ -3,11 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { FaRegComment, FaRegHeart, FaHeart, FaArrowLeft } from 'react-icons/fa';
 import { IconButton, Button, Menu, MenuItem } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import {BASE_URL} from '../../config'
 
-export default function Publicacion({ publicacion, fetchUsuario, usuarios }) {
+
+export default function Publicacion({ publicacion, fetchUsuario, usuarios, onPublicacionEliminada }) {
+  const [publicacionEliminada, setPublicacionEliminada] = useState(false);  // Definición del estado
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const [isDuenoPublicacion, setIsDuenoPublicacion] = useState(false);
 
+  
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -30,9 +35,10 @@ export default function Publicacion({ publicacion, fetchUsuario, usuarios }) {
 
   const usuarioAlias = getAliasFromCookies();
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     verificarMeGusta();
+    comprobarEsDuenoPublicacion();
     if (publicacion.mediaUrl) {
       const img = new Image();
       img.onload = () => {
@@ -41,6 +47,20 @@ export default function Publicacion({ publicacion, fetchUsuario, usuarios }) {
       img.src = publicacion.mediaUrl;
     }
   }, []);
+
+  const comprobarEsDuenoPublicacion = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/comprobarEsDuenoPublicacion?idPublicacion=${publicacion.id}&usuarioAlias=${usuarioAlias}`);
+      if (response.ok) {
+        const result = await response.json();
+        setIsDuenoPublicacion(result);
+      }
+    } catch (error) {
+      console.error('Error al comprobar si es dueño de la publicación:', error);
+    }
+  };
+
+
 
   useEffect(() => {
     if (modalAbierto) {
@@ -55,7 +75,7 @@ export default function Publicacion({ publicacion, fetchUsuario, usuarios }) {
   }, [modalAbierto]);
 
   const verificarMeGusta = async () => {
-    const response = await fetch('http://localhost:8080/usuarioHaDadoMeGusta', {
+    const response = await fetch(`${BASE_URL}/usuarioHaDadoMeGusta`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -74,7 +94,7 @@ export default function Publicacion({ publicacion, fetchUsuario, usuarios }) {
 
   const manejarMeGusta = async (e) => {
     e.stopPropagation();
-    const url = meGustaStatus ? 'http://localhost:8080/quitarMeGusta' : 'http://localhost:8080/darMeGusta';
+    const url = meGustaStatus ? `${BASE_URL}/quitarMeGusta` : `${BASE_URL}/darMeGusta`;
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -108,7 +128,7 @@ export default function Publicacion({ publicacion, fetchUsuario, usuarios }) {
 
   const enviarComentario = async (e) => {
     e.preventDefault();
-    const response = await fetch('http://localhost:8080/Comentar', {
+    const response = await fetch(`${BASE_URL}/Comentar`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -539,25 +559,57 @@ export default function Publicacion({ publicacion, fetchUsuario, usuarios }) {
     </div>
   );
 
+  const handleEliminarPublicacion = async () => {
+    try {
+      // Realizar la solicitud DELETE al endpoint
+      const response = await fetch(`${BASE_URL}/eliminarPublicacionPorId?idAlias=${usuarioAlias}&idPublicacion=${publicacion.id}`, {
+        method: 'DELETE',
+      });
+  
+      if (response.ok) {
+        console.log('Publicación eliminada con éxito');
+        setPublicacionEliminada(true);
+        
+        // Llamada al callback (si existe) para manejar la eliminación
+        if (onPublicacionEliminada) {
+          onPublicacionEliminada(publicacion.id);
+        }
+  
+        // Recargar la página después de eliminar la publicación
+        window.location.reload();  // Recarga la página
+      } else {
+        // Si la respuesta no es ok, podemos considerar que hubo un problema
+        console.log('Error al eliminar la publicación');
+        setPublicacionEliminada(false);
+      }
+    } catch (error) {
+      console.error('Error al realizar la solicitud de eliminación:', error);
+    } finally {
+      handleClose(); // Cerramos el menú si se abrió
+    }
+  };
+
+
   return (
     <div style={styles.containerPublicaciones}>
-      <IconButton
-        aria-controls={open ? 'menu' : undefined}
-        aria-haspopup="true"
-        onClick={handleClick}
-      >
-        <MoreVertIcon />
-      </IconButton>
+{isDuenoPublicacion && (
+        <IconButton
+          aria-controls={open ? 'menu' : undefined}
+          aria-haspopup="true"
+          onClick={handleClick}
+        >
+          <MoreVertIcon />
+        </IconButton>
+      )}
       <Menu
         id="menu"
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>
-          <Button variant="text" color="error">
-            Eliminar
-          </Button>
+        <MenuItem>
+        <button onClick={handleEliminarPublicacion}>Eliminar</button>
+      {publicacionEliminada && <p>Publicación eliminada.</p>}  {/* Opcional, puedes mostrar un mensaje */}
         </MenuItem>
       </Menu>
       <div style={styles.header}>

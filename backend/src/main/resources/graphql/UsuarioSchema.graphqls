@@ -78,7 +78,7 @@ type Mutation{
     eliminarTipoInstrumentoPorId(id: ID!): Boolean
 
     # Publicacion Mutation
-    eliminarPublicacionPorId(idUsuario: ID!, idPublicacion: ID!): Boolean
+    eliminarPublicacionPorId(idAlias: String!, idPublicacion: String!): Boolean
     meGusta(idPublicacion: String!, usuarioAlias: String!): Boolean
     #crearPublicacion(idUsuario: ID!,descripcion: String): Publicacion
     comentar(publicacionId: String, idAliasUsuario: String, text: String): Boolean

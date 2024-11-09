@@ -11,10 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -47,6 +46,10 @@ public class PublicacionController {
     public Publicacion buscarPublicacionPorId(@RequestParam String id){
         return publicacionService.buscarPublicacionPorId(id);
     }
+    @GetMapping("/comprobarEsDuenoPublicacion")
+    public boolean comprobarEsDuenoPublicacion(@RequestParam String idPublicacion,@RequestParam String usuarioAlias){
+        return publicacionService.comprobarEsDuenoPublicacion(idPublicacion,usuarioAlias);
+    }
 
     @PostMapping("/darMeGusta")
         public Boolean darMeGusta(@RequestParam String idPublicacion, @RequestParam String usuarioAlias){
@@ -76,11 +79,15 @@ public class PublicacionController {
     }
 
 
-
-
-    @MutationMapping(name = "eliminarPublicacionPorId")
-    public void eliminarPublicacionPorId(@Argument String idUsuario, @Argument String idPublicacion){
-        publicacionService.eliminarPublicacion(idUsuario, idPublicacion);
+    @DeleteMapping("/eliminarPublicacionPorId")
+    public ResponseEntity<Void> eliminarPublicacionPorId(@RequestParam String idAlias, @RequestParam String idPublicacion) {
+        try {
+            publicacionService.eliminarPublicacion(idAlias, idPublicacion);
+            return ResponseEntity.ok().build(); // Responde con 200 OK si la eliminación fue exitosa
+        } catch (Exception e) {
+            // Si ocurre un error, respondemos con 400 Bad Request o 500 Internal Server Error
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
 

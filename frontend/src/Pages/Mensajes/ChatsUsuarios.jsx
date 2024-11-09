@@ -95,7 +95,7 @@ const ChatsUsuario = () => {
   };
 
   const abrirChat = (chatId) => {
-    navigate(`/chat/${chatId}`); // Navegar a la página del chat
+    navigate(`/mensajes/${chatId}`); // Navegar a la página del chat
   };
 
   return (

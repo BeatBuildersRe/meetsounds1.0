@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Publicacion from '../../Publicacion';
-
+import {BASE_URL} from '../../../../config'
 const PublicacionesListTodo = () => {
   const [publicaciones, setPublicaciones] = useState([]);
   const [usuarios, setUsuarios] = useState({});
@@ -16,7 +16,7 @@ const PublicacionesListTodo = () => {
 
   const fetchPublicaciones = async (pagina) => {
     setCargando(true);
-    const response = await fetch(`http://localhost:8080/listarPublicacionesUsuario?alias=${alias}&page=${pagina}&size=${TAMANO_PAGINA}`);
+    const response = await fetch(`${BASE_URL}/listarPublicacionesUsuario?alias=${alias}&page=${pagina}&size=${TAMANO_PAGINA}`);
     const result = await response.json();
 
     if (result.content.length === 0) {
@@ -51,7 +51,7 @@ const PublicacionesListTodo = () => {
 
   const fetchUsuario = async (idUsuario) => {
     if (!usuarios[idUsuario]) {
-      const response = await fetch('http://localhost:8080/graphql', {
+      const response = await fetch(`${BASE_URL}/graphql`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -110,7 +110,7 @@ const PublicacionesListTodo = () => {
 
   const enviarComentario = async (publicacionId, idAliasUsuario) => {
     const text = nuevoComentario[publicacionId];
-    const response = await fetch('http://localhost:8080/Comentar', {
+    const response = await fetch(`${BASE_URL}/Comentar`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
