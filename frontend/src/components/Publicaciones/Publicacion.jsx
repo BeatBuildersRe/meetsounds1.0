@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FaRegComment, FaRegHeart, FaHeart, FaArrowLeft } from 'react-icons/fa';
 
-const Publicacion = ({ publicacion, fetchUsuario, usuarios }) => {
+export default function Publicacion({ publicacion, fetchUsuario, usuarios }) {
   const [comentariosVisibles, setComentariosVisibles] = useState(false);
   const [cantidadComentarios, setCantidadComentarios] = useState(5);
   const [nuevoComentario, setNuevoComentario] = useState('');
   const [meGustaStatus, setMeGustaStatus] = useState(false);
+  const [modalAbierto, setModalAbierto] = useState(false);
+  const [imagenDimensiones, setImagenDimensiones] = useState({ width: 0, height: 0 });
 
-  // Obtener el alias del usuario autenticado desde las cookies
   const getAliasFromCookies = () => {
     const cookies = document.cookie.split('; ');
     const aliasCookie = cookies.find(cookie => cookie.startsWith('alias='));
@@ -19,7 +21,26 @@ const Publicacion = ({ publicacion, fetchUsuario, usuarios }) => {
 
   useEffect(() => {
     verificarMeGusta();
+    if (publicacion.mediaUrl) {
+      const img = new Image();
+      img.onload = () => {
+        setImagenDimensiones({ width: img.width, height: img.height });
+      };
+      img.src = publicacion.mediaUrl;
+    }
   }, []);
+
+  useEffect(() => {
+    if (modalAbierto) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [modalAbierto]);
 
   const verificarMeGusta = async () => {
     const response = await fetch('http://localhost:8080/usuarioHaDadoMeGusta', {
@@ -39,7 +60,8 @@ const Publicacion = ({ publicacion, fetchUsuario, usuarios }) => {
     }
   };
 
-  const manejarMeGusta = async () => {
+  const manejarMeGusta = async (e) => {
+    e.stopPropagation();
     const url = meGustaStatus ? 'http://localhost:8080/quitarMeGusta' : 'http://localhost:8080/darMeGusta';
     const response = await fetch(url, {
       method: 'POST',
@@ -54,24 +76,26 @@ const Publicacion = ({ publicacion, fetchUsuario, usuarios }) => {
 
     if (response.ok) {
       setMeGustaStatus(!meGustaStatus);
-      // Actualizar el contador de likes en tiempo real
       publicacion.count_likes = meGustaStatus ? publicacion.count_likes - 1 : publicacion.count_likes + 1;
     }
   };
 
-  const toggleComentarios = () => {
-    setComentariosVisibles(!comentariosVisibles);
-  };
+  const verMasComentarios = useCallback((e) => {
+    e.stopPropagation();
+    setCantidadComentarios(prevCantidad => prevCantidad + 5);
+  }, []);
 
-  const verMasComentarios = () => {
-    setCantidadComentarios(cantidadComentarios + 5);
-  };
+  const verMenosComentarios = useCallback((e) => {
+    e.stopPropagation();
+    setCantidadComentarios(prevCantidad => Math.max(prevCantidad - 5, 5));
+  }, []);
 
   const handleComentarioChange = (e) => {
     setNuevoComentario(e.target.value);
   };
 
-  const enviarComentario = async () => {
+  const enviarComentario = async (e) => {
+    e.preventDefault();
     const response = await fetch('http://localhost:8080/Comentar', {
       method: 'POST',
       headers: {
@@ -95,75 +119,388 @@ const Publicacion = ({ publicacion, fetchUsuario, usuarios }) => {
     }
   };
 
-  const comentariosAMostrar = publicacion.comentarios.slice(0, cantidadComentarios);
-
-  const irAlPerfil = (alias) => {
+  const irAlPerfil = (e, alias) => {
+    e.stopPropagation();
     navigate(`/perfil-encontrado2/${alias}`);
   };
 
-  return (
-    <div style={{ border: '1px solid #ccc', padding: '16px', marginBottom: '16px' }}>
-      {usuarios[publicacion.idUsuario] && (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <img
-            src={usuarios[publicacion.idUsuario].fotoPerfilUrl || '/default-profile.png'}
-            alt="Usuario"
-            style={{ width: '50px', height: '50px', borderRadius: '50%', marginRight: '8px', cursor: 'pointer' }}
-            onClick={() => irAlPerfil(usuarios[publicacion.idUsuario].alias)}
-          />
-          <strong
-            style={{ cursor: 'pointer' }}
-            onClick={() => irAlPerfil(usuarios[publicacion.idUsuario].alias)}
-          >
-            {`${usuarios[publicacion.idUsuario].nombre} ${usuarios[publicacion.idUsuario].apellido}`}
-          </strong>
+  const abrirModal = () => {
+    setModalAbierto(true);
+  };
+
+  const cerrarModal = (e) => {
+    e.stopPropagation();
+    setModalAbierto(false);
+    setCantidadComentarios(5);
+  };
+
+  function autoResize(event) {
+    event.target.style.height = 'auto';
+    event.target.style.height = `${event.target.scrollHeight}px`;
+  }
+
+  const getImageStyle = () => {
+    const { width, height } = imagenDimensiones;
+    if (width === height) {
+      return styles.imageSquare;
+    } else if (width > height) {
+      return styles.imageHorizontal;
+    } else {
+      return styles.imageVertical;
+    }
+  };
+
+  const styles = {
+    containerPublicaciones: {
+      width:'100%',
+      borderRadius: '25px',
+      padding: '25px',
+      marginBottom: '15px',
+      backgroundColor: 'var(--color-contenedores)',
+    },
+    header: {
+      display: 'flex',
+      alignItems: 'center',
+      marginBottom: '12px',
+    },
+    avatar: {
+      width: '48px',
+      height: '48px',
+      borderRadius: '50%',
+      marginRight: '12px',
+      cursor: 'pointer',
+    },
+    userName: {
+      color:'var(--color-texto-normal)',
+      fontWeight: 'bold',
+      marginRight: '8px',
+      cursor: 'pointer',
+    },
+    userHandle: {
+      color: '#6e767d',
+      marginRight: '8px',
+    },
+    dot: {
+      color: '#6e767d',
+      marginRight: '8px',
+    },
+    content: {
+      marginBottom: '12px',
+      fontSize: '15px',
+      lineHeight: '20px',
+    },
+    imageSquare: {
+      width: '100%',
+      height: 'auto',
+      aspectRatio: '1 / 1',
+      objectFit: 'cover',
+      borderRadius: '8px',
+      marginTop: '12px',
+      cursor: 'pointer',
+    },
+    imageVertical: {
+      width: '100%',
+      height: 'auto',
+      maxHeight: '400px',
+      objectFit: 'contain',
+      borderRadius: '8px',
+      marginTop: '12px',
+      cursor: 'pointer',
+    },
+    imageHorizontal: {
+      width: '100%',
+      height: 'auto',
+      maxHeight: '300px',
+      objectFit: 'cover',
+      borderRadius: '8px',
+      marginTop: '12px',
+      cursor: 'pointer',
+    },
+    actions: {
+      display: 'flex',
+      justifyContent: 'flex-start',
+      marginTop: '12px',
+    },
+    modalActions:{
+      display: 'flex',
+      justifyContent: 'flex-start',
+      marginTop: '12px',
+    },
+    actionButton: {
+      background: 'none',
+      border: 'none',
+      color: '#6e767d',
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      marginLeft: '20px',
+    },
+    actionIcon: {
+      fontSize: '25px',
+      color:'var(--color-texto-normal)',
+    },
+    actionText: {
+      marginLeft: '4px',
+    },
+    modal: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0, 0, 0, 0.8)',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      zIndex: 1000,
+    },
+    modalContent: {
+      backgroundColor: 'var(--color-contenedores)',
+      borderRadius: '16px',
+      maxWidth: '90%',
+      height: '90vh',
+      display: 'flex',
+      position: 'relative',
+      overflow: 'hidden',
+    },
+    modalImage: {
+      width: '60%',
+      height: '100%',
+      objectFit: 'cover',
+    },
+    modalSidebar: {
+      width: '40%',
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100%',
+    },
+    modalHeader: {
+      padding: '20px',
+      borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+    },
+    modalComments: {
+      flex: 1,
+      overflowY: 'auto',
+      padding: '20px',
+    },
+    modalFooter: {
+      padding: '20px',
+      borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+    },
+    backButton: {
+      position: 'absolute',
+      top: '10px',
+      left: '10px',
+      background: 'none',
+      border: 'none',
+      color: '#ffffff',
+      fontSize: '24px',
+      cursor: 'pointer',
+      zIndex: 1,
+    },
+    commentForm: {
+      marginTop: '16px',
+      border:'none',
+      width: '80%',
+    },
+    commentInput: {
+      width: '80%',
+      padding: '12px',
+      backgroundColor: 'var(--color-contenedores)',
+      border:'none',
+      fontFamily:'var(--fuente-Montserrat)',
+      color: '#ffffff',
+      resize: 'none',
+      minHeight: '20px',
+      height: 'auto',
+      overflow: 'hidden',
+      outline: 'none',
+      display:'flex',
+      alignItems:'center',
+      justifyContent:'center',
+      padding:'20px',
+    },
+    commentButton: {
+      padding: '8px 16px',
+      backgroundColor: '#1da1f2',
+      color: '#ffffff',
+      border: 'none',
+      borderRadius: '20px',
+      cursor: 'pointer',
+    },
+    commentsList: {
+      marginTop: '16px',
+    },
+    comment: {
+      borderBottom: '1px solid #2f3336',
+      padding: '12px 0',
+    },
+    commentHeader: {
+      display: 'flex',
+      alignItems: 'center',
+      marginBottom: '4px',
+    },
+    commentUser: {
+      fontWeight: 'bold',
+      marginRight: '8px',
+    },
+    commentDate: {
+      color: '#6e767d',
+      fontSize: '14px',
+    },
+    headerinfousuario:{
+      display:'flex',
+      flexDirection: 'column',
+    },
+    commentActions: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      marginTop: '10px',
+    },
+  };
+
+  const renderComentarios = () => (
+    <div style={styles.commentsList}>
+      {publicacion.comentarios.slice(0, cantidadComentarios).map((comentario, idx) => (
+        <div key={idx} style={styles.comment}>
+          <div style={styles.commentHeader}>
+            <span style={styles.commentUser}>{comentario.idAliasUsuario}</span>
+            <span style={styles.commentDate}>{new Date(comentario.fechaEnvio).toLocaleString()}</span>
+          </div>
+          <p>{comentario.comentario}</p>
         </div>
-      )}
-      <p>{publicacion.descripcion}</p>
-      {publicacion.mediaUrl && <img src={publicacion.mediaUrl} alt="Publicación" style={{ maxWidth: '100%', marginTop: '8px' }} />}
-      <div>
-        <span>Comentarios: {publicacion.count_coment}</span>
-        <span>Likes: {publicacion.count_likes}</span>
-        <button onClick={manejarMeGusta} style={{ marginLeft: '8px' }}>
-          {meGustaStatus ? 'Quitar me gusta' : 'Dar me gusta'}
+      ))}
+      <div style={styles.commentActions}>
+        {cantidadComentarios < publicacion.comentarios.length && (
+          <button onClick={verMasComentarios} style={styles.commentButton}>
+            Ver más comentarios
+          </button>
+        )}
+        {cantidadComentarios > 5 && (
+          <button onClick={verMenosComentarios} style={styles.commentButton}>
+            Ver menos comentarios
+          </button>
+        )}
+      </div>
+    </div>
+  );
+
+  return (
+    <div style={styles.containerPublicaciones}>
+      <div style={styles.header}>
+        <img
+          src={usuarios[publicacion.idUsuario]?.fotoPerfilUrl || '/default-profile.png'}
+          alt="Usuario"
+          style={styles.avatar}
+          onClick={(e) => irAlPerfil(e, usuarios[publicacion.idUsuario]?.alias)}
+        />
+        <div style={styles.headerinfousuario}>
+          <span style={styles.userName} onClick={(e) => irAlPerfil(e, usuarios[publicacion.idUsuario]?.alias)}>
+            {usuarios[publicacion.idUsuario]?.nombre} {usuarios[publicacion.idUsuario]?.apellido}
+          </span>
+          <span style={styles.userHandle}>@{usuarios[publicacion.idUsuario]?.alias}</span>
+        </div>
+      </div>
+      <div style={styles.content}>
+        <p>{publicacion.descripcion}</p>
+        {publicacion.mediaUrl && (
+          <img 
+            src={publicacion.mediaUrl} 
+            alt="Publicación" 
+            style={getImageStyle()}
+            onClick={abrirModal}
+          />
+        )}
+      </div>
+      <div style={styles.actions}>
+        <button style={styles.actionButton} onClick={manejarMeGusta}>
+          {meGustaStatus ? <FaHeart style={{...styles.actionIcon, color: "#e0245e"}} /> : <FaRegHeart style={styles.actionIcon} />}
+          <span style={styles.actionText}>{publicacion.count_likes}</span>
+        </button>
+        <button style={styles.actionButton} onClick={abrirModal}>
+          <FaRegComment style={styles.actionIcon} />
+          <span style={styles.actionText}>{publicacion.count_coment}</span>
         </button>
       </div>
-
-      <textarea
-        placeholder="Escribe tu comentario..."
-        value={nuevoComentario}
-        onChange={handleComentarioChange}
-        rows="3"
-        style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc', marginTop: '8px' }}
-      />
-      {nuevoComentario.trim() && (
-        <button onClick={enviarComentario} style={{ marginTop: '8px', padding: '8px 16px', cursor: 'pointer' }}>
-          Enviar
-        </button>
-      )}
-      <button onClick={toggleComentarios} style={{ marginTop: '8px', cursor: 'pointer' }}>
-        {comentariosVisibles ? 'Ocultar comentarios' : 'Ver comentarios'}
-      </button>
-      {comentariosVisibles && (
-        <div style={{ marginTop: '8px', padding: '8px', backgroundColor: '#f9f9f9', border: '1px solid #ddd' }}>
-          {comentariosAMostrar.length > 0 ? (
-            comentariosAMostrar.map((comentario, idx) => (
-              <div key={idx} style={{ borderBottom: '1px solid #eee', padding: '4px 0' }}>
-                <strong>{comentario.idAliasUsuario}:</strong>
-                <p>{comentario.comentario}</p>
-                <small>Fecha: {new Date(comentario.fechaEnvio).toLocaleString()}</small>
+      <form style={styles.commentForm} onSubmit={enviarComentario}>
+        <textarea
+          placeholder="Escribe tu comentario..."
+          value={nuevoComentario}
+          onChange={handleComentarioChange}
+          onInput={autoResize}
+          style={{
+            ...styles.commentInput,
+            height: nuevoComentario ? 'auto' : '20px',
+          }}
+          rows={nuevoComentario ? 'auto' : '1'}
+        />
+        {nuevoComentario.trim() && (
+          <button type="submit" style={styles.commentButton}>
+            Comentar
+          </button>
+        )}
+      </form>
+      {modalAbierto && (
+        <div style={styles.modal} onClick={cerrarModal}>
+          <div style={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+            <button style={styles.backButton} onClick={cerrarModal}>
+              <FaArrowLeft />
+            </button>
+            <img src={publicacion.mediaUrl} alt="Publicación" style={styles.modalImage} />
+            <div style={styles.modalSidebar}>
+              <div style={styles.modalHeader}>
+                <div style={styles.header}>
+                  <img
+                    src={usuarios[publicacion.idUsuario]?.fotoPerfilUrl || '/default-profile.png'}
+                    alt="Usuario"
+                    style={styles.avatar}
+                    onClick={(e) => irAlPerfil(e, usuarios[publicacion.idUsuario]?.alias)}
+                  />
+                  <div style={styles.headerinfousuario}>
+                    <span style={styles.userName} onClick={(e) => irAlPerfil(e, usuarios[publicacion.idUsuario]?.alias)}>
+                      {usuarios[publicacion.idUsuario]?.nombre} {usuarios[publicacion.idUsuario]?.apellido}
+                    </span>
+                    <span style={styles.userHandle}>@{usuarios[publicacion.idUsuario]?.alias}</span>
+                  </div>
+                </div>
+                <p>{publicacion.descripcion}</p>
               </div>
-            ))
-          ) : (
-            <p>No hay comentarios.</p>
-          )}
-          {comentariosAMostrar.length < publicacion.comentarios.length && (
-            <button onClick={verMasComentarios}>Ver más comentarios</button>
-          )}
+              <div style={styles.modalComments}>
+                {renderComentarios()}
+              </div>
+              <div style={styles.modalFooter}>
+                <div style={styles.modalActions}>
+                  <button style={styles.actionButton} onClick={manejarMeGusta}>
+                    {meGustaStatus ? <FaHeart style={{...styles.actionIcon, color: "#e0245e"}} /> : <FaRegHeart style={styles.actionIcon} />}
+                    <span style={styles.actionText}>{publicacion.count_likes}</span>
+                  </button>
+                  <button style={styles.actionButton}>
+                    <FaRegComment style={styles.actionIcon} />
+                    <span style={styles.actionText}>{publicacion.count_coment}</span>
+                  </button>
+                </div>
+                <form style={styles.commentForm} onSubmit={enviarComentario}>
+                  <textarea
+                    placeholder="Escribe tu comentario..."
+                    value={nuevoComentario}
+                    onChange={handleComentarioChange}
+                    style={{
+                      ...styles.commentInput,
+                      height: nuevoComentario ? 'auto' : '20px',
+                    }}
+                    rows={nuevoComentario ? 'auto' : '1'}
+                  />
+                  {nuevoComentario.trim() && (
+                    <button type="submit" style={styles.commentButton}>
+                      Comentar
+                    </button>
+                  )}
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
   );
-};
-
-export default Publicacion;
+}
