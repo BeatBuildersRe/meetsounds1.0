@@ -67,7 +67,7 @@ const IniciarChatButton = ({ aliasOtroUsuario }) => {
       if (!response.ok) throw new Error('Error al iniciar el chat');
   
       const chat = await response.json();
-      navigate(`/chat/${chat.id}`); // Redirige al chat con la ID recibida
+      navigate(`/mensajes/${chat.id}`); // Redirige al chat con la ID recibida
     } catch (error) {
       console.error('Error al iniciar el chat:', error);
     }

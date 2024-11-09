@@ -75,7 +75,8 @@ function App() {
 
         <Route path="configuracion/editarperfil/actualizar-nombre-apellido" element={<ActualizarNombreApellido />} />
         <Route path="cuenta/fotosperfil" element={<FotosPerfil />} />
-        <Route path="/chat/:chatId" element={<ChatComponent />} />
+        <Route path="/" element={<ChatComponent />} />
+        <Route path="/mensajes/:chatId" element={<ChatComponent />} />
         <Route path="/chats-usuario" element={<ChatsUsuario />} />
         <Route path="/publicacionesList" element={<PublicacionesList />} />
       </Routes>

@@ -3,9 +3,9 @@ import "@css/Colores.css";
 import "@css/Mensajes.css";
 import BadgeAvatars from "@c/avatar/AvatarActives";
 import MenuDerechoDiv from "@c/Menu/Derecha";
-import { useNavigate } from 'react-router-dom'; 
+import ChatComponent from "../Chat/ChatComponent";
 import { BASE_URL, BASE_URL_SOCKET } from '../../config';
-import { useWebSocket } from "../../services/WebSocketProvider"; // Importa tu contexto de WebSocket
+import { useWebSocket } from "../../services/WebSocketProvider"; 
 
 const Mensajes = () => {
   const [chats, setChats] = React.useState([]);
@@ -15,9 +15,8 @@ const Mensajes = () => {
   const [mensajeTexto, setMensajeTexto] = React.useState("");
   const [mensajesChat, setMensajesChat] = React.useState([]);
   const [chatSeleccionado, setChatSeleccionado] = React.useState(null);
-  const navigate = useNavigate();
 
-  const socket = useWebSocket(); // Obtén el WebSocket desde el contexto
+  const socket = useWebSocket(); 
 
   React.useEffect(() => {
     const aliasLocal = getCookie("alias");
@@ -26,10 +25,8 @@ const Mensajes = () => {
     }
   }, []);
 
-  // Efecto para manejar la conexión WebSocket al seleccionar un chat
   React.useEffect(() => {
     if (chatSeleccionado && socket) {
-      // Conectar al WebSocket con el chatId
       const ws = new WebSocket(`${BASE_URL_SOCKET}/ws-chat?chatId=${chatSeleccionado}`);
 
       ws.onopen = () => {
@@ -45,7 +42,6 @@ const Mensajes = () => {
         console.log(`Conexión WebSocket cerrada para el chat ${chatSeleccionado}`);
       };
 
-      // Limpiar la conexión al cambiar de chat o desmontar el componente
       return () => ws.close();
     }
   }, [chatSeleccionado, socket]);
@@ -131,8 +127,7 @@ const Mensajes = () => {
   };
 
   const abrirChat = (chatId) => {
-    setChatSeleccionado(chatId); // Establecer el chat seleccionado
-    navigate(`/chat/${chatId}`); // Navegar a la página del chat
+    setChatSeleccionado(chatId); 
   };
 
   const enviarMensaje = async (chatId) => {
@@ -154,7 +149,7 @@ const Mensajes = () => {
         body: JSON.stringify(mensaje),
       });
 
-      setMensajeTexto(""); // Limpiar el campo de texto después de enviar
+      setMensajeTexto("");
     } catch (error) {
       console.error('Error al enviar mensaje:', error);
     }
@@ -166,54 +161,68 @@ const Mensajes = () => {
     <div className="Contenedor">
       <div className="contenedor2">
         <div className="izquierda-mensajes">
-          <div className="usuarios">
-            <BadgeAvatars opcion={1} />
-          </div>
-          <div className="mensajes-usuario">
-            {chats && chats.length > 0 ? (
-              chats.map(chat => {
-                if (!chat.mensajes || chat.mensajes.length === 0) {
-                  return null; // Si no tiene mensajes, no lo muestra
-                }
+          {chatSeleccionado ? (
+            <>
+              <button onClick={() => setChatSeleccionado(null)} className="boton-volver">
+                Volver
+              </button>
+              <ChatComponent 
+                chatId={chatSeleccionado} 
+                mensajesChat={mensajesChat} 
+                enviarMensaje={() => enviarMensaje(chatSeleccionado)} 
+                mensajeTexto={mensajeTexto} 
+                setMensajeTexto={setMensajeTexto} 
+              />
+            </>
+          ) : (
+            <>
+              <div className="mensajes-usuario">
+                {chats && chats.length > 0 ? (
+                  chats.map(chat => {
+                    if (!chat.mensajes || chat.mensajes.length === 0) {
+                      return null; 
+                    }
 
-                const usuarioConElQueHabla = determinarUsuarioConElQueHabla(chat);
-                const ultimoMensaje = chat.mensajes[chat.mensajes.length - 1];
+                    const usuarioConElQueHabla = determinarUsuarioConElQueHabla(chat);
+                    const ultimoMensaje = chat.mensajes[chat.mensajes.length - 1];
 
-                return (
-                  <div className="UsuarioKey" key={chat.id}>
-                    <div
-                      className="perfiles_mensajes"
-                      role="button"
-                      tabIndex="0"
-                      onClick={() => abrirChat(chat.id)}
-                    >
-                      <div className="top_mensajes">
-                        {usuarioConElQueHabla && (
-                          <>
-                            {usuarioConElQueHabla.fotoPerfilUrl && (
-                              <img 
-                                src={usuarioConElQueHabla.fotoPerfilUrl} 
-                                alt={`${usuarioConElQueHabla.nombre} ${usuarioConElQueHabla.apellido}`} 
-                                style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }} 
-                              />
+                    return (
+                      <div className="UsuarioKey" key={chat.id}>
+                        <div 
+                          className="perfiles_mensajes"
+                          role="button"
+                          tabIndex="0"
+                          onClick={() => abrirChat(chat.id)}
+                        >
+                          <div className="top_mensajes">
+                            {usuarioConElQueHabla && (
+                              <>
+                                {usuarioConElQueHabla.fotoPerfilUrl && (
+                                  <img 
+                                    src={usuarioConElQueHabla.fotoPerfilUrl} 
+                                    alt={`${usuarioConElQueHabla.nombre} ${usuarioConElQueHabla.apellido}`} 
+                                    style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }} 
+                                  />
+                                )}
+                                <p>
+                                  {usuarioConElQueHabla.nombre} {usuarioConElQueHabla.apellido}
+                                </p>
+                              </>
                             )}
-                            <p>
-                              {usuarioConElQueHabla.nombre} {usuarioConElQueHabla.apellido}
-                            </p>
-                          </>
-                        )}
+                          </div>
+                          <div className="bottom_mensajes">
+                            <p>{ultimoMensaje ? ultimoMensaje.texto : "No hay mensajes recientes."}</p>
+                          </div>
+                        </div>
                       </div>
-                      <div className="bottom_mensajes">
-                        <p>{ultimoMensaje ? ultimoMensaje.texto : "No hay mensajes recientes."}</p>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })
-            ) : (
-              <p>No hay chats disponibles.</p>
-            )}
-          </div>
+                    );
+                  })
+                ) : (
+                  <p>No hay chats disponibles.</p>
+                )}
+              </div>
+            </>
+          )}
         </div>
         <MenuDerechoDiv />
       </div>

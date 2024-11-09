@@ -1,18 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom'; // Agrega useNavigate
 import Cookies from 'js-cookie';
 import { BASE_URL, BASE_URL_SOCKET } from '../../config';
 import '../../css/ChatComponent.css';
 
-const ChatComponent = () => {
-  const { chatId } = useParams();
-  const navigate = useNavigate();
+const ChatComponent = ({ chatId, mensajesChat, enviarMensaje, mensajeTexto, setMensajeTexto }) => {
   const [messages, setMessages] = useState([]);
-  const [inputMessage, setInputMessage] = useState('');
   const [socket, setSocket] = useState(null);
   const [userCache, setUserCache] = useState({});
-  const socketUrl = `${BASE_URL_SOCKET}/ws-chat`;
   const messagesEndRef = useRef(null);
+  
+  const navigate = useNavigate(); // useNavigate hook
 
   useEffect(() => {
     const fetchChat = async () => {
@@ -39,7 +37,7 @@ const ChatComponent = () => {
 
     fetchChat();
 
-    const ws = new WebSocket(socketUrl);
+    const ws = new WebSocket(`${BASE_URL_SOCKET}/ws-chat`);
     setSocket(ws);
 
     ws.onopen = () => {
@@ -96,7 +94,7 @@ const ChatComponent = () => {
   };
 
   const sendMessage = async () => {
-    if (!inputMessage.trim()) {
+    if (!mensajeTexto.trim()) {
       return;
     }
 
@@ -118,7 +116,7 @@ const ChatComponent = () => {
       const nombreEmisor = data.data.buscarPorAlias.nombre;
 
       const message = {
-        contenido: inputMessage,
+        contenido: mensajeTexto,
         idChat: chatId,
         idEmisor,
         fechaEnvio: new Date().toISOString().slice(0, -1),
@@ -126,55 +124,38 @@ const ChatComponent = () => {
 
       if (socket && socket.readyState === WebSocket.OPEN) {
         socket.send(JSON.stringify(message));
-        setInputMessage('');
+        setMensajeTexto('');
       } else {
         console.error('WebSocket no está conectado');
       }
     } catch (error) {
-      console.error('Error al obtener el ID del emisor o enviar mensaje:', error);
+      console.error('Error al enviar mensaje:', error);
     }
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      sendMessage();
-    }
-  };
-
-  const handleExit = () => {
-    navigate('/mensajes'); 
   };
 
   return (
-    <div className='fondo-chat'>
-      <button onClick={handleExit} className='boton-salir'>Volver</button>
-      <div className='mensajes scrollbar-enlarged'>
-        {messages.map((msg, index) => (
-          <p key={index} className='mensaje'>
-            <strong>{msg.nombre}:</strong> {msg.contenido}
-          </p>
+    <div className="chat-component">
+      <div className="messages">
+        {messages.map((message) => (
+          <div key={message.id}>
+            <p><strong>{message.nombre}</strong>: {message.contenido}</p>
+          </div>
         ))}
         <div ref={messagesEndRef} />
       </div>
-      <div className='input-mensaje'>
-        <input
-          type="text"
-          value={inputMessage}
-          onChange={(e) => setInputMessage(e.target.value)}
-          onKeyDown={handleKeyDown}
-          className='campo-input'
-          placeholder='Escribe un mensaje...'
-        />
-        <button
-          onClick={sendMessage}
-          className='boton-enviar'
-          disabled={!inputMessage.trim()} 
-        >
-          Enviar
-        </button>
-      </div>
+      <div className='mensajesyenviar'>
+      <input
+        type="text"
+        value={mensajeTexto}
+        onChange={(e) => setMensajeTexto(e.target.value)}
+        placeholder="Escribe un mensaje..."
+        className="input-mensaje" 
+      />
+      <button onClick={sendMessage} className="boton-enviar">Enviar</button>
     </div>
-  );
+  </div>
+);
 };
 
 export default ChatComponent;
+
