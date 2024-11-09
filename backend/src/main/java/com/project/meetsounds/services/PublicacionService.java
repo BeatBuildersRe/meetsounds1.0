@@ -126,23 +126,48 @@ public class PublicacionService {
 
 
     public void eliminarPublicacion(String idAlias, String idPublicacion) {
-        System.out.println(idPublicacion);
-        Usuario usuario = new Usuario();
-        Optional<Usuario> usuarioOptional = this.iUsuarioRepository.findByAlias(idAlias);
-        usuario = usuarioOptional.orElseThrow(()-> new IllegalArgumentException("No se ha encontrado el usuario con alias: " + idAlias));
+        // Busca el usuario por alias
+        Optional<Usuario> usuarioOptional = iUsuarioRepository.findByAlias(idAlias);
+        if (usuarioOptional.isEmpty()) {
+            throw new IllegalArgumentException("No se ha encontrado el usuario con alias: " + idAlias);
+        }
 
+        Usuario usuario = usuarioOptional.get();
+
+        // Elimina la publicación de las publicaciones del usuario
         List<String> misPublicaciones = usuario.getMisPublicaciones();
-        misPublicaciones.removeIf( s -> s.equals(idPublicacion));
-        usuario.setMisPublicaciones(misPublicaciones);
+        boolean isRemoved = misPublicaciones.removeIf(s -> s.equals(idPublicacion));
 
+        if (!isRemoved) {
+            throw new IllegalArgumentException("No se encontró la publicación con ID: " + idPublicacion);
+        }
+
+        // Actualiza la lista de publicaciones en la base de datos
         Query queryUp = new Query(Criteria.where("alias").is(idAlias));
-        Update update = new Update().set("misPublicaciones", usuario.getMisPublicaciones());
+        Update update = new Update().set("misPublicaciones", misPublicaciones);
         mongoTemplate.updateFirst(queryUp, update, Usuario.class);
 
+        // Elimina la publicación de la colección de publicaciones
         iPublicacionRepository.deleteById(idPublicacion);
-
     }
 
+
+    public Boolean comprobarEsDuenoPublicacion(String idPublicacion, String usuarioAlias){
+        Optional<Publicacion> publicacionOptional = iPublicacionRepository.findById(idPublicacion);
+        Optional<Usuario> usuarioOptional = iUsuarioRepository.findByAlias(usuarioAlias);
+
+        Publicacion publicacion = publicacionOptional.orElseThrow(() ->
+                new IllegalArgumentException("No se ha encontrado la publicacion con id: " + idPublicacion));
+        Usuario usuario = usuarioOptional.orElseThrow(() ->
+                new IllegalArgumentException("No se ha encontrado el usuario con alias: " + usuarioAlias));
+
+        if(publicacion.getIdUsuario().equals(usuario.getId())){
+            return true;
+        }else {
+            return false;
+        }
+
+    }
 
 
     public Boolean darMeGusta(String idPublicacion, String usuarioAlias) {

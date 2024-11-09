@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Publicacion from './Publicacion'; // Asegúrate de importar el componente Publicacion
-
+import {BASE_URL} from '../../config'
 const PublicacionesList = () => {
   const [publicaciones, setPublicaciones] = useState([]);
   const [usuarios, setUsuarios] = useState({});
@@ -15,7 +15,7 @@ const PublicacionesList = () => {
 
   const fetchPublicaciones = async (pagina) => {
     setCargando(true);
-    const response = await fetch(`http://localhost:8080/listarPublicaciones?page=${pagina}&size=${TAMANO_PAGINA}`);
+    const response = await fetch(`${BASE_URL}/listarPublicaciones?page=${pagina}&size=${TAMANO_PAGINA}`);
     const result = await response.json();
 
     // Si no hay más publicaciones, actualizamos el estado
@@ -52,7 +52,7 @@ const PublicacionesList = () => {
 
 const fetchUsuario = async (idUsuario) => {
   if (!usuarios[idUsuario]) {
-    const response = await fetch('http://localhost:8080/graphql', {
+    const response = await fetch(`${BASE_URL}/graphql`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -114,7 +114,7 @@ const fetchUsuario = async (idUsuario) => {
 
   const enviarComentario = async (publicacionId, idAliasUsuario) => {
     const text = nuevoComentario[publicacionId];
-    const response = await fetch('http://localhost:8080/Comentar', {
+    const response = await fetch(`${BASE_URL}/Comentar`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',

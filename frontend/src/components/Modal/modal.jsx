@@ -190,7 +190,7 @@ export default function PostModal({ onPost = () => {} }) {
           if (response.ok) {
             console.log("Publicación exitosa");
             onPost(files[0]?.file, description); // Llamada a la función onPost sin location
-            handleClose(); // Cierra el modal después de publicar
+            window.location.reload(); // Cierra el modal después de publicar
           } else {
             console.error("Error al crear la publicación:", response.statusText);
           }

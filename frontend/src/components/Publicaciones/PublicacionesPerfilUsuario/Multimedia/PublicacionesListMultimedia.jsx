@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Publicacion from '../../PublicacionParaPerfil';
 import { DisplaySettings } from '@mui/icons-material';
-
+import {BASE_URL} from '../../../../config'
 const PublicacionesListMultimedia = () => {
   const [publicaciones, setPublicaciones] = useState([]);
   const [usuarios, setUsuarios] = useState({});
@@ -17,7 +17,7 @@ const PublicacionesListMultimedia = () => {
 
   const fetchPublicaciones = async (pagina) => {
     setCargando(true);
-    const response = await fetch(`http://localhost:8080/listarMultimediaUsuario?alias=${alias}&page=${pagina}&size=${TAMANO_PAGINA}`);
+    const response = await fetch(`${BASE_URL}/listarMultimediaUsuario?alias=${alias}&page=${pagina}&size=${TAMANO_PAGINA}`);
     const result = await response.json();
 
     if (result.content.length === 0) {
@@ -52,7 +52,7 @@ const PublicacionesListMultimedia = () => {
 
   const fetchUsuario = async (idUsuario) => {
     if (!usuarios[idUsuario]) {
-      const response = await fetch('http://localhost:8080/graphql', {
+      const response = await fetch(`${BASE_URL}/graphql`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -111,7 +111,7 @@ const PublicacionesListMultimedia = () => {
 
   const enviarComentario = async (publicacionId, idAliasUsuario) => {
     const text = nuevoComentario[publicacionId];
-    const response = await fetch('http://localhost:8080/Comentar', {
+    const response = await fetch(`${BASE_URL}/Comentar`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
