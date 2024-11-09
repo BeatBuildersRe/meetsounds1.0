@@ -1,6 +1,7 @@
 package com.project.meetsounds.controllers;
 
 import com.project.meetsounds.domain.models.Usuario;
+import com.project.meetsounds.services.BandaService;
 import com.project.meetsounds.services.SeguidoresService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -15,9 +16,17 @@ public class SeguidoresController {
     @Autowired
     private SeguidoresService seguidoresService;
 
+    @Autowired
+    private BandaService bandaService;
+
     @QueryMapping(name = "misSeguidores")
     public List<Usuario> misSeguidores(@Argument String idAlias){
         return this.seguidoresService.misSeguidores(idAlias);
+    }
+
+    @QueryMapping(name = "misSeguidoresBanda") //Trae los usuario que siguen a tal banda
+    public List<Usuario> misSeguidoresBanda(@Argument String idBanda){
+        return this.bandaService.misSeguidores(idBanda);
     }
 
     @MutationMapping(name = "eliminarSeguidor")

@@ -14,10 +14,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Service
 public class BandaService {
@@ -125,11 +125,45 @@ public class BandaService {
             Banda banda = bandaOptional.orElseThrow(()-> new NullPointerException("No se ha encontrado la banda con id: " + idBanda));
             banda.setUrlFotoBanda(urlFotoPortada);
             this.iBandaRepository.save(banda);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchAlgorithmException e) {
+        } catch (IOException | NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
+        return true;
+    }
+
+    public Boolean subirContenido(String idBanda, MultipartFile file) {
+        Optional<Banda> bandaOptional = this.iBandaRepository.findById(idBanda);
+        try {
+            Banda banda = bandaOptional.orElseThrow(()->new IllegalArgumentException("No se ha encontrado la banda con id: " + idBanda));
+            String urlContenido = this.s3Service.uploadFile(file);
+            banda.getGaleria().add(urlContenido);
+            this.iBandaRepository.save(banda);
+        } catch (IOException | NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+        return true;
+    }
+
+    public Boolean seguirBanda(String idBanda, String aliasUsuario) {
+        Optional<Banda> bandaOptional = this.iBandaRepository.findById(idBanda);
+        Banda banda = bandaOptional.orElseThrow(()-> new IllegalArgumentException("No se ha encontrado la banda con id: " + idBanda));
+        banda.getSeguidores().add(aliasUsuario);
+        this.iBandaRepository.save(banda);
+        return true;
+    }
+
+    public List<Usuario> misSeguidores(String idBanda) {
+        Optional<Banda> bandaOptional = this.iBandaRepository.findById(idBanda);
+        Banda banda = bandaOptional.orElseThrow(()-> new IllegalArgumentException("No se ha encontrado la banda con id: " + idBanda));
+        return this.iUsuarioRepository.findAllByAlias(banda.getSeguidores());
+    }
+
+
+    public Boolean dejarDeSeguirBanda(String idBanda, String aliasUsuario) {
+        Optional<Banda> bandaOptional = this.iBandaRepository.findById(idBanda);
+        Banda banda = bandaOptional.orElseThrow(()-> new IllegalArgumentException("No se ha encontrado la banda con id: " + idBanda));
+        banda.getSeguidores().remove(aliasUsuario);
+        this.iBandaRepository.save(banda);
         return true;
     }
 }

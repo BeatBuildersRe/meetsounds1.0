@@ -32,6 +32,7 @@ import Publicaciones2 from './Pages/Home/InicioComentarios';
 import PublicacionesList from './components/Publicaciones/PublicacionesList';
 import '@css/App.css';
 
+import '@css/Colores.css';
 function App() {
   const { contextTheme, setContextTheme } = useThemeContext();
   const { isAuthenticated } = useContext(AuthContext);

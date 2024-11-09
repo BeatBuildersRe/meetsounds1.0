@@ -47,12 +47,12 @@
     max-width: 42rem;
   }
   
-  .modalHeader {
+  .modalHeaderperfil {
     padding: 1rem;
     border-bottom: 1px solid #e5e7eb;
   }
   
-  .modalHeader h2 {
+  .modalHeaderperfil h2 {
     font-size: 1.25rem;
     font-weight: 600;
   }

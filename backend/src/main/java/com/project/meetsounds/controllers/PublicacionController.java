@@ -30,10 +30,17 @@ public class PublicacionController {
     public Page<Publicacion> listarPublicaciones(@RequestParam int page,@RequestParam int size){
         return publicacionService.listarPublicaciones(page, size);
     }
-
+    @GetMapping("/listarMultimediaUsuario")
+    public Page<Publicacion> listarMultimediaUsuario(@RequestParam String alias,@RequestParam int page,@RequestParam int size){
+        return publicacionService.listarMultimediaUsuario(alias, page, size);
+    }
+    @GetMapping("/listarPosteosUsuario")
+    public Page<Publicacion> listarPosteosUsuario(@RequestParam String alias,@RequestParam int page,@RequestParam int size){
+        return publicacionService.listarPosteosUsuario(alias, page, size);
+    }
     @GetMapping("/listarPublicacionesUsuario")
-    public List<Publicacion> listarPublicacionesUsuario(@RequestParam String alias){
-        return publicacionService.listarPublicacionesUsuario(alias);
+    public Page<Publicacion> listarPublicacionesUsuario(@RequestParam String alias,@RequestParam int page,@RequestParam int size){
+        return publicacionService.listarPublicacionesUsuario(alias, page, size);
     }
 
     @GetMapping("/buscarPublicacionPorId")
@@ -64,9 +71,10 @@ public class PublicacionController {
      */
 
     @PostMapping("/crearPublicacion")
-    public void crearPublicacion(@RequestParam String idAlias, @RequestParam(required=false) String descripcion, @RequestParam(required=false) MultipartFile file){
+    public void crearPublicacion(@RequestParam String idAlias, @RequestParam(required=false) String descripcion, @RequestParam(required=false) MultipartFile file) {
         publicacionService.crearPublicacion(idAlias, descripcion, file);
     }
+
 
 
 

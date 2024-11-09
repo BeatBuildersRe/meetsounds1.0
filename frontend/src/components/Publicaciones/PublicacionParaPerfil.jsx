@@ -1,20 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaRegComment, FaRegHeart, FaHeart, FaArrowLeft } from 'react-icons/fa';
-import { IconButton, Button, Menu, MenuItem } from '@mui/material';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-export default function Publicacion({ publicacion, fetchUsuario, usuarios }) {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+export default function PublicacionParaPerfil({ publicacion, fetchUsuario, usuarios }) {
   const [comentariosVisibles, setComentariosVisibles] = useState(false);
   const [cantidadComentarios, setCantidadComentarios] = useState(5);
   const [nuevoComentario, setNuevoComentario] = useState('');
@@ -163,12 +151,16 @@ export default function Publicacion({ publicacion, fetchUsuario, usuarios }) {
   };
 
   const styles = {
-    containerPublicaciones: {
-      width:'100%',
-      borderRadius: '25px',
-      padding: '25px',
-      marginBottom: '15px',
+    imageContainer: {
+      width: '100%',
+      height: '300px', // Set a fixed height for all images
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
       backgroundColor: 'var(--color-contenedores)',
+      overflow: 'hidden',
+      
+      
     },
     header: {
       display: 'flex',
@@ -200,15 +192,13 @@ export default function Publicacion({ publicacion, fetchUsuario, usuarios }) {
       marginBottom: '12px',
       fontSize: '15px',
       lineHeight: '20px',
-      wordWrap: 'break-word',
     },
     imageSquare: {
       width: '100%',
       height: 'auto',
       aspectRatio: '1 / 1',
       objectFit: 'cover',
-      borderRadius: '8px',
-      marginTop: '12px',
+      
       cursor: 'pointer',
     },
     imageVertical: {
@@ -393,6 +383,23 @@ export default function Publicacion({ publicacion, fetchUsuario, usuarios }) {
       justifyContent: 'space-between',
       marginTop: '10px',
     },
+    imageSquare: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
+    },
+    imageVertical: {
+      height: '100%',
+      width: 'auto',
+      maxWidth: '100%',
+      objectFit: 'contain',
+    },
+    imageHorizontal: {
+      width: '100%',
+      height: 'auto',
+      maxHeight: '100%',
+      objectFit: 'contain',
+    },
   };
 
   const renderComentarios = () => (
@@ -541,78 +548,16 @@ export default function Publicacion({ publicacion, fetchUsuario, usuarios }) {
 
   return (
     <div style={styles.containerPublicaciones}>
-      <IconButton
-        aria-controls={open ? 'menu' : undefined}
-        aria-haspopup="true"
-        onClick={handleClick}
-      >
-        <MoreVertIcon />
-      </IconButton>
-      <Menu
-        id="menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-      >
-        <MenuItem onClick={handleClose}>
-          <Button variant="text" color="error">
-            Eliminar
-          </Button>
-        </MenuItem>
-      </Menu>
-      <div style={styles.header}>
-        <img
-          src={usuarios[publicacion.idUsuario]?.fotoPerfilUrl || '/default-profile.png'}
-          alt="Usuario"
-          style={styles.avatar}
-          onClick={(e) => irAlPerfil(e, usuarios[publicacion.idUsuario]?.alias)}
-        />
-        <div style={styles.headerinfousuario}>
-          <span style={styles.userName} onClick={(e) => irAlPerfil(e, usuarios[publicacion.idUsuario]?.alias)}>
-            {usuarios[publicacion.idUsuario]?.nombre} {usuarios[publicacion.idUsuario]?.apellido}
-          </span>
-          <span style={styles.userHandle}>@{usuarios[publicacion.idUsuario]?.alias}</span>
-        </div>
-      </div>
-      <div style={styles.content}>
-        <p>{publicacion.descripcion}</p>
-        {publicacion.mediaUrl && (
+      {publicacion.mediaUrl && (
+        <div style={styles.imageContainer} onClick={abrirModal}>
           <img 
             src={publicacion.mediaUrl} 
             alt="Publicación" 
             style={getImageStyle()}
-            onClick={abrirModal}
           />
-        )}
-      </div>
-      <div style={styles.actions}>
-        <button style={styles.actionButton} onClick={manejarMeGusta}>
-          {meGustaStatus ? <FaHeart style={{...styles.actionIcon, color: "#e0245e"}} /> : <FaRegHeart style={styles.actionIcon} />}
-          <span style={styles.actionText}>{publicacion.count_likes}</span>
-        </button>
-        <button style={styles.actionButton} onClick={abrirModal}>
-          <FaRegComment style={styles.actionIcon} />
-          <span style={styles.actionText}>{publicacion.count_coment}</span>
-        </button>
-      </div>
-      <form style={styles.commentForm} onSubmit={enviarComentario}>
-        <textarea
-          placeholder="Escribe tu comentario..."
-          value={nuevoComentario}
-          onChange={handleComentarioChange}
-          onInput={autoResize}
-          style={{
-            ...styles.commentInput,
-            height: nuevoComentario ? 'auto' : '20px',
-          }}
-          rows={nuevoComentario ? 'auto' : '1'}
-        />
-        {nuevoComentario.trim() && (
-          <button type="submit" style={styles.commentButton}>
-            Comentar
-          </button>
-        )}
-      </form>
+        </div>
+      )}
+      
       {modalAbierto && (
         <div style={styles.modal} onClick={cerrarModal}>
           {renderModalContent()}
