@@ -1,7 +1,7 @@
 .chat-component {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 90vh;
     width: 100%;
   }
   
@@ -14,26 +14,29 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease; 
+    transition: background-color 0.3s ease, transform 0.2s ease;
   }
   
   .boton-volver:hover {
     background-color: #860000;
   }
-
-.mensajesyenviar{
+  
+  .mensajesyenviar {
     display: flex;
-}
-
+    padding: 10px;
+    /* Asegura que el campo de texto y el botón estén al final */
+  }
+  
   .messages {
     flex-grow: 1;
-    overflow-y: auto;
+    overflow-y: auto; /* Permite desplazamiento si el contenido excede el límite */
     padding: 10px;
-    border-bottom: 1px solid #ddd;
+    max-height: calc(96vh - 120px); /* Establece un límite de altura para el área de los mensajes */
+    box-sizing: border-box; /* Incluye el padding en el cálculo de tamaño */
   }
   
   .input-mensaje {
-    width: calc(90% - 20px);
+    width: calc(90% - 20px); /* Ajusta el tamaño del campo de texto */
     padding: 10px;
     margin: 10px;
     border: 1px solid #ccc;
@@ -48,7 +51,7 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease; 
+    transition: background-color 0.3s ease, transform 0.2s ease;
   }
   
   .boton-enviar:hover {

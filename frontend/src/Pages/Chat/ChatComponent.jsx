@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom'; // Agrega useNavigate
+import { useParams, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { BASE_URL, BASE_URL_SOCKET } from '../../config';
 import '../../css/ChatComponent.css';
@@ -9,8 +9,8 @@ const ChatComponent = ({ chatId, mensajesChat, enviarMensaje, mensajeTexto, setM
   const [socket, setSocket] = useState(null);
   const [userCache, setUserCache] = useState({});
   const messagesEndRef = useRef(null);
-  
-  const navigate = useNavigate(); // useNavigate hook
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchChat = async () => {
@@ -124,12 +124,19 @@ const ChatComponent = ({ chatId, mensajesChat, enviarMensaje, mensajeTexto, setM
 
       if (socket && socket.readyState === WebSocket.OPEN) {
         socket.send(JSON.stringify(message));
-        setMensajeTexto('');
+        setMensajeTexto('');  // Limpiar el campo de mensaje
       } else {
         console.error('WebSocket no está conectado');
       }
     } catch (error) {
       console.error('Error al enviar mensaje:', error);
+    }
+  };
+
+  // Esta función maneja el evento de tecla presionada
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && mensajeTexto.trim()) {
+      sendMessage(); // Enviar mensaje si se presiona Enter y hay texto
     }
   };
 
@@ -143,19 +150,19 @@ const ChatComponent = ({ chatId, mensajesChat, enviarMensaje, mensajeTexto, setM
         ))}
         <div ref={messagesEndRef} />
       </div>
-      <div className='mensajesyenviar'>
-      <input
-        type="text"
-        value={mensajeTexto}
-        onChange={(e) => setMensajeTexto(e.target.value)}
-        placeholder="Escribe un mensaje..."
-        className="input-mensaje" 
-      />
-      <button onClick={sendMessage} className="boton-enviar">Enviar</button>
+      <div className="mensajesyenviar">
+        <input
+          type="text"
+          value={mensajeTexto}
+          onChange={(e) => setMensajeTexto(e.target.value)}
+          onKeyDown={handleKeyDown}  // Llamar a la función cuando se presiona una tecla
+          placeholder="Escribe un mensaje..."
+          className="input-mensaje"
+        />
+        <button onClick={sendMessage} className="boton-enviar">Enviar</button>
+      </div>
     </div>
-  </div>
-);
+  );
 };
 
 export default ChatComponent;
-
