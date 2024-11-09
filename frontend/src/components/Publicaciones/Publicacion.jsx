@@ -1,8 +1,20 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaRegComment, FaRegHeart, FaHeart, FaArrowLeft } from 'react-icons/fa';
+import { IconButton, Button, Menu, MenuItem } from '@mui/material';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 export default function Publicacion({ publicacion, fetchUsuario, usuarios }) {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const [comentariosVisibles, setComentariosVisibles] = useState(false);
   const [cantidadComentarios, setCantidadComentarios] = useState(5);
   const [nuevoComentario, setNuevoComentario] = useState('');
@@ -529,6 +541,25 @@ export default function Publicacion({ publicacion, fetchUsuario, usuarios }) {
 
   return (
     <div style={styles.containerPublicaciones}>
+      <IconButton
+        aria-controls={open ? 'menu' : undefined}
+        aria-haspopup="true"
+        onClick={handleClick}
+      >
+        <MoreVertIcon />
+      </IconButton>
+      <Menu
+        id="menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleClose}>
+          <Button variant="text" color="error">
+            Eliminar
+          </Button>
+        </MenuItem>
+      </Menu>
       <div style={styles.header}>
         <img
           src={usuarios[publicacion.idUsuario]?.fotoPerfilUrl || '/default-profile.png'}
