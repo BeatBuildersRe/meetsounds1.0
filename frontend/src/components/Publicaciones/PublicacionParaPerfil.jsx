@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaRegComment, FaRegHeart, FaHeart, FaArrowLeft } from 'react-icons/fa';
 
-export default function Publicacion({ publicacion, fetchUsuario, usuarios }) {
+export default function PublicacionParaPerfil({ publicacion, fetchUsuario, usuarios }) {
   const [comentariosVisibles, setComentariosVisibles] = useState(false);
   const [cantidadComentarios, setCantidadComentarios] = useState(5);
   const [nuevoComentario, setNuevoComentario] = useState('');
@@ -153,10 +153,9 @@ export default function Publicacion({ publicacion, fetchUsuario, usuarios }) {
   const styles = {
     containerPublicaciones: {
       width:'100%',
-      borderRadius: '25px',
-      padding: '25px',
-      marginBottom: '15px',
-      backgroundColor: 'var(--color-contenedores)',
+      
+      
+      // backgroundColor: 'var(--color-contenedores)',
     },
     header: {
       display: 'flex',
@@ -188,15 +187,13 @@ export default function Publicacion({ publicacion, fetchUsuario, usuarios }) {
       marginBottom: '12px',
       fontSize: '15px',
       lineHeight: '20px',
-      wordWrap: 'break-word',
     },
     imageSquare: {
       width: '100%',
       height: 'auto',
       aspectRatio: '1 / 1',
       objectFit: 'cover',
-      borderRadius: '8px',
-      marginTop: '12px',
+      
       cursor: 'pointer',
     },
     imageVertical: {
@@ -529,22 +526,9 @@ export default function Publicacion({ publicacion, fetchUsuario, usuarios }) {
 
   return (
     <div style={styles.containerPublicaciones}>
-      <div style={styles.header}>
-        <img
-          src={usuarios[publicacion.idUsuario]?.fotoPerfilUrl || '/default-profile.png'}
-          alt="Usuario"
-          style={styles.avatar}
-          onClick={(e) => irAlPerfil(e, usuarios[publicacion.idUsuario]?.alias)}
-        />
-        <div style={styles.headerinfousuario}>
-          <span style={styles.userName} onClick={(e) => irAlPerfil(e, usuarios[publicacion.idUsuario]?.alias)}>
-            {usuarios[publicacion.idUsuario]?.nombre} {usuarios[publicacion.idUsuario]?.apellido}
-          </span>
-          <span style={styles.userHandle}>@{usuarios[publicacion.idUsuario]?.alias}</span>
-        </div>
-      </div>
-      <div style={styles.content}>
-        <p>{publicacion.descripcion}</p>
+      
+      
+        
         {publicacion.mediaUrl && (
           <img 
             src={publicacion.mediaUrl} 
@@ -553,35 +537,9 @@ export default function Publicacion({ publicacion, fetchUsuario, usuarios }) {
             onClick={abrirModal}
           />
         )}
-      </div>
-      <div style={styles.actions}>
-        <button style={styles.actionButton} onClick={manejarMeGusta}>
-          {meGustaStatus ? <FaHeart style={{...styles.actionIcon, color: "#e0245e"}} /> : <FaRegHeart style={styles.actionIcon} />}
-          <span style={styles.actionText}>{publicacion.count_likes}</span>
-        </button>
-        <button style={styles.actionButton} onClick={abrirModal}>
-          <FaRegComment style={styles.actionIcon} />
-          <span style={styles.actionText}>{publicacion.count_coment}</span>
-        </button>
-      </div>
-      <form style={styles.commentForm} onSubmit={enviarComentario}>
-        <textarea
-          placeholder="Escribe tu comentario..."
-          value={nuevoComentario}
-          onChange={handleComentarioChange}
-          onInput={autoResize}
-          style={{
-            ...styles.commentInput,
-            height: nuevoComentario ? 'auto' : '20px',
-          }}
-          rows={nuevoComentario ? 'auto' : '1'}
-        />
-        {nuevoComentario.trim() && (
-          <button type="submit" style={styles.commentButton}>
-            Comentar
-          </button>
-        )}
-      </form>
+      
+      
+      
       {modalAbierto && (
         <div style={styles.modal} onClick={cerrarModal}>
           {renderModalContent()}
