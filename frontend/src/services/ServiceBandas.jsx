@@ -82,7 +82,7 @@ const ServiceBandas = () => {
                     id
                     nombreBanda
                     descripcion
-                    urlFotoPortada
+                    urlFotoBanda
                     miembros
                     idCreador
                 }
@@ -128,7 +128,7 @@ const ServiceBandas = () => {
                 id
                 nombreBanda
                 descripcion
-                urlFotoPortada
+                urlFotoBanda
                 idCreador
                 miembros
               }
@@ -249,7 +249,7 @@ const ServiceBandas = () => {
                 id
                 nombreBanda
                 descripcion
-                urlFotoPortada
+                urlFotoBanda
                 idCreador
                 miembros
               }

@@ -15,7 +15,8 @@ input[type="checkbox"] {
   flex-direction: column;
 }
 .botonesX {
-  background-color: #0648b9;
+  background-color: var(--color-contenedores); 
+
   border-top: none;
   width: 100%;
   padding: 2%;

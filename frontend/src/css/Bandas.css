@@ -5,50 +5,52 @@
 /* BORRAR SI YA LO LEISTE :v */
 
 .izquierda-bandas {
-    height: auto;
-    flex: 2;
-    height: fit-content;
-    background-color: var(--color-fondo);
-    padding-top: 20px;
-    padding-left: 10px;
-    padding-right: 10px;
-    display: flex;
-    flex-direction: column;
-    /* Habilita el desplazamiento vertical */
-    width: 100%;
-    position: relative;
+  height: 100vh;
+  flex: 2;
+  background-color: var(--color-fondo);
+  padding-top: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  display: flex;
+  flex-direction: column;
+  /* Habilita el desplazamiento vertical */
+  width: 100%;
+  position: relative;
 
-    z-index: 1;
+  z-index: 1;
 }
-
 
 /* borrar */
 
-.Card_Banda{
-    position: relative;
-    margin-bottom: 2%;
-    padding: 0;
+.Card_Banda {
+  padding: 3%;
+  position: relative;
+  margin-bottom: 2%;
+  min-height: 120px;
+  max-height: 121px;
+  display: flex;
+  background-color: #2d3748;
+  border-radius: 30px;
+    cursor: pointer;
+  .banda-nombre {
+    position: absolute;
+  }
+  .miebros-avatar{
+    gap: 7px;
+    position: absolute;
+    bottom: 8%;
     display: flex;
-    background-color: #2d3748;
-    border-radius: 30px;
-    .Banda_img{
-        img{
-            width: 150px;
-            height: auto;
-            border-radius: 50%;
-            padding: 0;
-            margin: 0;
-        }
-    }
-    .Banda_info{
-    }
-    .Banda_miembros{
-        img{
-            width: 50px;
-            height: auto;
-            border-radius: 50%;
-            padding: 0;
-            margin: 0;
-        }
+    flex-direction: row;
+  }
+
+  
+}
+.Btn-crear{
+    position: absolute;
+    bottom: 5%;
+    border-radius: 15px;
+    background-color: rgb(35, 252, 64);
+    img{
+        width: 40px;
     }
 }
