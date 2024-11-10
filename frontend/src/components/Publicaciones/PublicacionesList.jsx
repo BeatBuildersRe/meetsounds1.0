@@ -172,8 +172,8 @@ const fetchUsuario = async (idUsuario) => {
           />
         );
       })}
-      {cargando && !noMasPublicaciones && <p>Cargando más publicaciones...</p>} {/* Solo se muestra cuando hay más publicaciones */}
-      {noMasPublicaciones && <p>No hay más publicaciones para mostrar.</p>} {/* Mensaje cuando ya no hay más publicaciones */}
+      {/*{cargando && !noMasPublicaciones && <p>Cargando más publicaciones...</p>} {/* Solo se muestra cuando hay más publicaciones */}
+      {/*{noMasPublicaciones && <p>No hay más publicaciones para mostrar.</p>} {/* Mensaje cuando ya no hay más publicaciones */}
     </div>
   );
 };

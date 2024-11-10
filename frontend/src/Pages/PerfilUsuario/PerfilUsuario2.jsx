@@ -29,6 +29,7 @@ import { CameraIcon } from 'lucide-react'
 const imgFondoDefault = 'https://wallpaperaccess.com/full/4600330.jpg' // Imagen de fondo predeterminada
 const imgPerfilDefault = 'https://static.vecteezy.com/system/resources/previews/022/644/544/non_2x/profile-icon-user-sign-vector.jpg' // Imagen de perfil predeterminada
 
+
 // Estilos
 const styles = {
   containerPerfil: {
@@ -273,6 +274,7 @@ const styles = {
 }
 // Funciones
 export default function ProfilePage() {
+  const [contadorPubliaciones, setContadorPublicaciones] = useState(null);
   const { alias } = useParams();
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -286,11 +288,24 @@ export default function ProfilePage() {
       c_seguidos: '',
       descripcion: ''
   });
+  
   const toggleEdicion = (tipo) => {
     setEstadoEdicion((prev) => ({ ...prev, [tipo]: !prev[tipo] }));
   };
 
-  
+  const contarPublicaciones = async (idAlias) => {
+    try {
+      const response = await fetch(`http://localhost:8080/contarPublicacionesUsuario?idAlias=${idAlias}`);
+      if (!response.ok) {
+        throw new Error('Error en la solicitud');
+      }
+      const count = await response.json();
+      setContadorPublicaciones(count);
+    } catch (error) {
+      console.error('Error al contar publicaciones:', error);
+    }
+  };
+
   const guardarImagenTemp = (tipo, imagen) => {
     setTempImages((prev) => ({
         ...prev,
@@ -370,6 +385,7 @@ export default function ProfilePage() {
   useEffect(() => {
       if (alias) {
           fetchUserData();
+          contarPublicaciones(alias);
       } else {
           console.log("Alias no encontrado en la URL.");
           navigate('/404');
@@ -512,7 +528,7 @@ export default function ProfilePage() {
             <div style={styles.followInfo}>
               <span><strong>{userData.c_seguidores}</strong>  Seguidores</span>
               <span><strong>{userData.c_seguidos}</strong>  Seguidos</span>
-              <span><strong>0</strong>  Publicaciones</span>
+              <span><strong>{contadorPubliaciones}</strong>  Publicaciones</span>
             </div>
           </div>
           <div style={{display: 'flex', justifyContent: 'flex-end'}}>

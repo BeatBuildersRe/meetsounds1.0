@@ -282,6 +282,7 @@ const styles = {
     
   }
 const PerfilEncontrado = () => {
+  const [contadorPubliaciones, setContadorPublicaciones] = useState(null);
   const { alias } = useParams();
   const navigate = useNavigate();
   const [userData, setUserData] = useState({
@@ -299,11 +300,29 @@ const PerfilEncontrado = () => {
   const { contextTheme } = useThemeContext();
   const [alignment, setAlignment] = useState('web'); // Control del toggle
 
+  const contarPublicaciones = async (idAlias) => {
+    try {
+      const response = await fetch(`http://localhost:8080/contarPublicacionesUsuario?idAlias=${idAlias}`);
+      if (!response.ok) {
+        throw new Error('Error en la solicitud');
+      }
+      const count = await response.json();
+      setContadorPublicaciones(count);
+    } catch (error) {
+      console.error('Error al contar publicaciones:', error);
+    }
+  };
   useEffect(() => {
     const aliasVisitante = Cookies.get('alias');
     if (alias && aliasVisitante) fetchUserData(alias, aliasVisitante);
     else navigate('/404');
   }, [alias, navigate]);
+
+  useEffect(() => {
+    if (alias) {
+      contarPublicaciones(alias);
+    }
+  }, [alias]);
 
   const fetchUserData = async (alias, aliasVisitante) => {
     try {
@@ -437,7 +456,7 @@ const PerfilEncontrado = () => {
             <div style={styles.followInfo}>
               <span><strong>{userData.c_seguidores}</strong>  Seguidores</span>
               <span><strong>{userData.c_seguidos}</strong>  Seguidos</span>
-              <span><strong>0</strong>  Publicaciones</span>
+              <span><strong>{contadorPubliaciones}</strong>  Publicaciones</span>
             </div>
           </div>
           

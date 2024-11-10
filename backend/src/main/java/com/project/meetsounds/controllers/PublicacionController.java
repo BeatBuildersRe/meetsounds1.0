@@ -50,6 +50,10 @@ public class PublicacionController {
     public boolean comprobarEsDuenoPublicacion(@RequestParam String idPublicacion,@RequestParam String usuarioAlias){
         return publicacionService.comprobarEsDuenoPublicacion(idPublicacion,usuarioAlias);
     }
+    @GetMapping("/contarPublicacionesUsuario")
+    public int contarPublicacionesUsuario(@RequestParam String idAlias){
+        return publicacionService.contarPublicacionesUsuario(idAlias);
+    }
 
     @PostMapping("/darMeGusta")
         public Boolean darMeGusta(@RequestParam String idPublicacion, @RequestParam String usuarioAlias){
@@ -78,7 +82,7 @@ public class PublicacionController {
     public void crearPublicacion(@RequestParam String idAlias, @RequestParam(required=false) String descripcion, @RequestParam(required=false) MultipartFile file) {
         publicacionService.crearPublicacion(idAlias, descripcion, file);
     }
-    
+
 
 
 

@@ -176,8 +176,8 @@ const styles={
           />
         );
       })}
-      {cargando && !noMasPublicaciones && <p>Cargando más publicaciones...</p>}
-      {noMasPublicaciones && <p>No hay más publicaciones para mostrar.</p>}
+      {/*{cargando && !noMasPublicaciones && <p>Cargando más publicaciones...</p>}*/}
+      {/*{noMasPublicaciones && <p>No hay más publicaciones para mostrar.</p>}*/}
     </div>
   );
 };

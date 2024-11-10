@@ -50,6 +50,12 @@ public class PublicacionService {
 
 
 
+    public int contarPublicacionesUsuario(String idAlias){
+        Optional<Usuario> usuarioOptional = iUsuarioRepository.findByAlias(idAlias);
+        Usuario usu = usuarioOptional.orElseThrow(() -> new IllegalArgumentException("No se ha encontrado el usuario con el alias: " + idAlias));
+        int publicaciones = iPublicacionRepository.findAllByIdUsuario(usu.getId()).size();
+        return publicaciones;
+    }
 
     public void crearPublicacion(String idAlias, String descripcion, MultipartFile file) {
         Publicacion publi = new Publicacion();
