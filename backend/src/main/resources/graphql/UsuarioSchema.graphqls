@@ -106,7 +106,7 @@ type Mutation{
     actualizarRolUsuarioPorAlias(alias: String!, rol: String!): Usuario
     actualizarInstrumentosUsuarioPorAlias(alias: String!, instrumentoIds: [String!]!): Usuario
     actualizarGenerosUsuarioPorAlias(alias: String!, generoIds: [String!]!): Usuario
-    actualizarDescripcionUsuarioPorAlias(alias: String!, descripcion: String!): String
+    actualizarDescripcionUsuarioPorAlias(alias: String!, descripcion: String!): Usuario
 
 
 }

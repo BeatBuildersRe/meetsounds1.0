@@ -40,11 +40,12 @@ public class UsuarioController {
         return usuarioService.verificaSiSigue(aliasVisitante,aliasPerfil);
     }
 
-
+    /* */
     @PostMapping("/actualizarFotoPerfil")
     public ResponseEntity<String> actualizarFotoPerfil(@RequestParam("file") MultipartFile file, @RequestParam("alias") String alias){
         return usuarioService.actualizarFotoPerfilUsuario(file,alias);
     }
+
 
     @PostMapping("/actualizarFotoPortada")
     public ResponseEntity<String> actualizarFotoPortada(@RequestParam("file") MultipartFile file, @RequestParam("alias") String alias){
@@ -154,11 +155,24 @@ public class UsuarioController {
     public Usuario actualizarGenerosUsuarioPorAlias(@Argument String alias, @Argument List<String> generoIds) {
         return usuarioService.actualizarGenerosUsuarioPorAlias(alias, generoIds);
     }
-    
     @MutationMapping(name = "actualizarDescripcionUsuarioPorAlias")
-    public ResponseEntity<String> actualizarDescripcionUsuarioPorAlias(@Argument String alias, @Argument String descripcion) {
+    public Usuario actualizarDescripcionUsuarioPorAlias(@Argument String alias, @Argument String descripcion) {
         return usuarioService.actualizarDescripcionUsuarioPorAlias(alias, descripcion);
     }
+    @PostMapping("/onboarding")
+public ResponseEntity<Usuario> completarOnboarding(
+        @RequestParam("alias") String alias,
+        @RequestParam(value = "rol", required = false) String rol,
+        @RequestParam(value = "instrumentos", required = false) List<String> instrumentos,
+        @RequestParam(value = "generos", required = false) List<String> generos,
+        @RequestParam(value = "descripcion", required = false) String descripcion,
+        @RequestParam(value = "file", required = false) MultipartFile file
+) {
+    Usuario usuario = usuarioService.completarOnboarding(alias, rol, instrumentos, generos, descripcion, file);
+    return ResponseEntity.ok(usuario);
+}
+
+
 
     
 

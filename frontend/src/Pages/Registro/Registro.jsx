@@ -104,6 +104,23 @@ function Registro() {
     } catch (error) {
       alert('Hubo un error al enviar los datos. Inténtalo de nuevo más tarde.');
     }
+
+    if (result.data && result.data.guardarUsuario) {
+      // Guardar alias en cookies
+      Cookies.set('alias', username, { expires: 7 });
+    
+      // Verificar que la cookie se configuró correctamente
+      const savedAlias = Cookies.get("alias");
+      if (!savedAlias) {
+        alert("Hubo un problema configurando tu sesión. Inténtalo de nuevo.");
+        return;
+      }
+    
+      setIsAuthenticated(true);  // Actualizar el estado de autenticación
+      navigate('/onboarding');  // Redirigir al onboarding
+    }
+    
+
   };
 
   return (

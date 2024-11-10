@@ -530,44 +530,106 @@ public class UsuarioService {
     }
     
     public Usuario actualizarGenerosUsuarioPorAlias(String alias, List<String> generoIds) {
-    Optional<Usuario> userOptional = usuarioRepository.findByAlias(alias);
-    if (userOptional.isPresent()) {
-        Usuario usuario = userOptional.get();
+        Optional<Usuario> userOptional = usuarioRepository.findByAlias(alias);
+        if (userOptional.isPresent()) {
+            Usuario usuario = userOptional.get();
+    
+            // Buscar los géneros musicales por sus IDs
+            List<GeneroMusical> generos = generoIds.stream()
+                    .map(id -> generoMusicalService.buscarGeneroPorId(id))
+                    .filter(Optional::isPresent) // Filtro para evitar nulos
+                    .map(Optional::get)
+                    .collect(Collectors.toList());
+    
+            if (generos.isEmpty()) {
+                throw new NoSuchElementException("No se encontraron géneros musicales con los IDs proporcionados");
+            }
+    
+            usuario.setMisGeneros(generos); // Actualizar la lista de géneros musicales del usuario
+            return usuarioRepository.save(usuario);
+        } else {
+            throw new NoSuchElementException("Usuario no encontrado con alias: " + alias);
+        }
+    }
+    
 
-        // Buscar los géneros musicales por sus IDs
+    
+    
+    // UsuarioService.java
+    public Usuario actualizarDescripcionUsuarioPorAlias(String alias, String descripcion) {
+        Optional<Usuario> userOptional = usuarioRepository.findByAlias(alias);
+        if (userOptional.isPresent()) {
+            Usuario usuario = userOptional.get();
+            usuario.setDescripcion(descripcion); // Actualizamos la descripción
+            return usuarioRepository.save(usuario); // Guardamos los cambios en la base de datos
+        } else {
+            throw new NoSuchElementException("Usuario no encontrado con alias: " + alias);
+        }
+    }
+    
+    
+    //Carga del Onboarding    
+    public Usuario completarOnboarding(
+    String alias, 
+    String rol, 
+    List<String> instrumentoIds, 
+    List<String> generoIds, 
+    String descripcion, 
+    MultipartFile file) 
+    {
+    Optional<Usuario> userOptional = usuarioRepository.findByAlias(alias);
+    if (!userOptional.isPresent()) {
+        throw new NoSuchElementException("Usuario no encontrado con alias: " + alias);
+    }
+
+    Usuario usuario = userOptional.get();
+
+    // Actualizar rol
+    if (rol != null && !rol.isEmpty()) {
+        usuario.setRol(rol);
+    }
+
+    // Actualizar instrumentos
+    if (instrumentoIds != null && !instrumentoIds.isEmpty()) {
+        List<Instrumento> instrumentos = instrumentoIds.stream()
+                .map(id -> instrumentoService.buscarInstrumentoPorId(id))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toList());
+        usuario.setMisInstru(instrumentos);
+    }
+
+    // Actualizar géneros musicales
+    if (generoIds != null && !generoIds.isEmpty()) {
         List<GeneroMusical> generos = generoIds.stream()
                 .map(id -> generoMusicalService.buscarGeneroPorId(id))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.toList());
-
-        if (generos.isEmpty()) {
-            throw new NoSuchElementException("No se encontraron géneros musicales con los IDs proporcionados");
-        }
-
-        usuario.setMisGeneros(generos); // Actualizar la lista de géneros musicales del usuario
-        return usuarioRepository.save(usuario);
-    } else {
-        throw new NoSuchElementException("Usuario no encontrado con alias: " + alias);
+        usuario.setMisGeneros(generos);
     }
+
+    // Actualizar descripción
+    if (descripcion != null && !descripcion.isEmpty()) {
+        usuario.setDescripcion(descripcion);
+    }
+
+    // Subir foto de perfil
+    if (file != null && !file.isEmpty()) {
+        try {
+            String fileUrl = s3Service.uploadFile(file);
+            usuario.setFotoPerfilUrl(fileUrl);
+        } catch (IOException | NoSuchAlgorithmException e) {
+            throw new RuntimeException("Error al subir la foto de perfil: " + e.getMessage());
+        }
+    }
+
+    // Guardar cambios en la base de datos
+    return usuarioRepository.save(usuario);
 }
 
-    
-    
-    // UsuarioService.java
-    public ResponseEntity<String> actualizarDescripcionUsuarioPorAlias(String alias, String descripcion) {
-        Optional<Usuario> usuarioOptional = usuarioRepository.findByAlias(alias);
-        if (!usuarioOptional.isPresent()) {
-            return ResponseEntity.badRequest().body("No existe usuario con el alias: " + alias);
-        }
-    
-        Usuario usuario = usuarioOptional.get();
-        usuario.setDescripcion(descripcion);
-        usuarioRepository.save(usuario);
-    
-        return ResponseEntity.ok("Descripción actualizada exitosamente");
-    }
-    
+
+
 
 
 
