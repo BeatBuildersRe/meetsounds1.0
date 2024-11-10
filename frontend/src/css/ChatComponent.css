@@ -1,8 +1,8 @@
 .chat-component {
     display: flex;
     flex-direction: column;
-    height: 90vh;
-    width: 100%;
+    height: 100vh;
+    width: 707px;
   }
   
   .boton-volver {
@@ -24,19 +24,19 @@
   .mensajesyenviar {
     display: flex;
     padding: 10px;
-    /* Asegura que el campo de texto y el botón estén al final */
   }
   
   .messages {
     flex-grow: 1;
-    overflow-y: auto; /* Permite desplazamiento si el contenido excede el límite */
+    overflow-y: auto; 
     padding: 10px;
-    max-height: calc(96vh - 120px); /* Establece un límite de altura para el área de los mensajes */
-    box-sizing: border-box; /* Incluye el padding en el cálculo de tamaño */
+    max-height: calc(100% - 100px); 
+    box-sizing: border-box;
+    word-wrap: break-word; 
   }
   
   .input-mensaje {
-    width: calc(90% - 20px); /* Ajusta el tamaño del campo de texto */
+    width: calc(90% - 20px); 
     padding: 10px;
     margin: 10px;
     border: 1px solid #ccc;
