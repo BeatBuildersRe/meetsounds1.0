@@ -43,8 +43,8 @@ const CrearBanda = () => {
             />
             {errors.descripcion && <span className="error-text">{errors.descripcion.message}</span>}
 
-            <button type="submit" disabled={cargando2}>Crear Banda</button>
           </form>
+            <button type="submit" disabled={cargando2}>Crear Banda</button>
         </div>
 
         {/* Componente de menú */}

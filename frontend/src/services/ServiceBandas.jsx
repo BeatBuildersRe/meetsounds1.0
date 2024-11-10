@@ -15,6 +15,7 @@ const ServiceBandas = () => {
 
   // Función para realizar la mutación de actualización de datos
   const CrearBanda = async ({ idUsuario, nombre, descripcion }) => {
+    console.log(idUsuario, nombre, descripcion)
     setCargando(true);
     setError(null);
 

@@ -54,8 +54,8 @@ function App() {
           <Route path="Mensajes" element={<Mensajes />} />
           <Route path="Bandas" element={<Bandas />} />
           <Route path="Bandas/:Nombre_Banda" element={<Mibanda2 />} />
-          <Route path="Bandas/:nombre/Configurar" element={<BandaConfiguracion />} />
-
+{/*           <Route path="Bandas/:nombre/Configurar" element={<BandaConfiguracion />} />
+ */}
           <Route path="Bandas/CrearBanda" element={<BandaConfiguracion />} />
           <Route path="Configuracion" element={<Configuracion />} />
           <Route path="configuracion/perfil" element={<Perfil2 />} />
