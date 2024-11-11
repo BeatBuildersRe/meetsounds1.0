@@ -74,7 +74,7 @@ export default function PublicacionParaPerfil({ publicacion, fetchUsuario, usuar
   }, [modalAbierto]);
 
   const verificarMeGusta = async () => {
-    const response = await fetch('http://localhost:8080/usuarioHaDadoMeGusta', {
+    const response = await fetch(`${BASE_URL}/usuarioHaDadoMeGusta`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -93,7 +93,7 @@ export default function PublicacionParaPerfil({ publicacion, fetchUsuario, usuar
 
   const manejarMeGusta = async (e) => {
     e.stopPropagation();
-    const url = meGustaStatus ? 'http://localhost:8080/quitarMeGusta' : 'http://localhost:8080/darMeGusta';
+    const url = meGustaStatus ? `${BASE_URL}/quitarMeGusta` : `${BASE_URL}/darMeGusta`;
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -127,7 +127,7 @@ export default function PublicacionParaPerfil({ publicacion, fetchUsuario, usuar
 
   const enviarComentario = async (e) => {
     e.preventDefault();
-    const response = await fetch('http://localhost:8080/Comentar', {
+    const response = await fetch(`${BASE_URL}/Comentar`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',

@@ -302,7 +302,7 @@ const PerfilEncontrado = () => {
 
   const contarPublicaciones = async (idAlias) => {
     try {
-      const response = await fetch(`http://localhost:8080/contarPublicacionesUsuario?idAlias=${idAlias}`);
+      const response = await fetch(`${BASE_URL}/contarPublicacionesUsuario?idAlias=${idAlias}`);
       if (!response.ok) {
         throw new Error('Error en la solicitud');
       }

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import "./OnboardingForm.css";
 import Fondo from '@c/FondoLoginRegister/FondoLoginRegister';
-
+import {BASE_URL} from '../../config'
 
 const OnboardingForm = () => {
   const navigate = useNavigate();
@@ -121,7 +121,7 @@ const OnboardingForm = () => {
         formData.append("file", fotoPerfil);
         formData.append("alias", alias);
 
-        const fotoResponse = await fetch("http://localhost:8080/actualizarFotoPerfil", {
+        const fotoResponse = await fetch(`${BASE_URL}/actualizarFotoPerfil`, {
           method: "POST",
           body: formData,
         });
@@ -133,7 +133,7 @@ const OnboardingForm = () => {
 
 
       // Enviar los datos restantes al backend
-      const response = await fetch("http://localhost:8080/graphql", {
+      const response = await fetch(`${BASE_URL}/graphql`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import {BASE_URL} from '../config'
 const GetPublicaciones = () => {
   const [publicaciones, setPublicaciones] = useState([]);
   const [cargando, setCargando] = useState(false);
@@ -9,7 +9,7 @@ const GetPublicaciones = () => {
   const fetchPublicaciones = async (paginaActual) => {
     setCargando(true);
     try {
-      const response = await fetch(`http://localhost:8080/listarPublicaciones?page=${paginaActual}&size=${TAMANO_PAGINA}`);
+      const response = await fetch(`${BASE_URL}/listarPublicaciones?page=${paginaActual}&size=${TAMANO_PAGINA}`);
       if (!response.ok) {
         throw new Error('Error al obtener publicaciones');
       }

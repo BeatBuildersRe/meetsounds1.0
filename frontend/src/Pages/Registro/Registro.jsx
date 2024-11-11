@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import { AuthContext } from '../../js/otro/AuthContext';
 import FondoLoginRegister from '@c/FondoLoginRegister/FondoLoginRegister';
 import '@css/Registro.css';
-
+import { BASE_URL } from '../../config'
 function Registro() {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
@@ -19,7 +19,7 @@ function Registro() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const navigate = useNavigate();
-  const graphqlEndpoint = "http://localhost:8080/graphql";
+  const graphqlEndpoint = `${BASE_URL}/graphql`;
   const { setIsAuthenticated } = useContext(AuthContext);
 
   const validatePasswordStrength = (password) => {
