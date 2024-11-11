@@ -1,23 +1,27 @@
-import React, { useEffect } from 'react';
-/* Css */
-
-import '@css/menu.css'
-import '@css/Colores.css'
-/* Iconos */
+import React, { useState } from 'react';
+import '@css/menu.css';
+import '@css/Colores.css';
 import { CiSearch } from "react-icons/ci";
-import { IoPerson } from "react-icons/io5";
-import { IoMdMusicalNote } from "react-icons/io";
-import { PiVideoFill } from "react-icons/pi";
-import { IoMdImage } from "react-icons/io";
-import Avatar from '@mui/material/Avatar';
+import { IoMdMusicalNote, IoMdImage } from "react-icons/io";
+import { useNavigate } from 'react-router-dom'; // Importamos useNavigate
+import useBuscarUsuarios from '../../Pages/Busqueda/useBuscarUsuarios'; // Importa el hook personalizado
+
 /* Componentes */
-import Amigos from './Amigos';
 import Carrusel from '../Anuncios/Ads';
-/* Imágenes */
-import avatari from '@assets/perfil_imagen.png'
-import useObtenerUsuarios from '../../services/GetUsuarios';
 
 const MenuDerecho = () => {
+    const [query, setQuery] = useState(""); // Estado para la búsqueda
+    const { results, loading } = useBuscarUsuarios(query); // Usa el hook personalizado de búsqueda
+    const navigate = useNavigate(); // Inicializa navigate para la navegación
+
+    const handleChange = (e) => {
+        setQuery(e.target.value);
+    };
+
+    const handleUserClick = (usuario) => {
+        navigate(`/perfil-encontrado2/${usuario.alias}`); // Redirige al perfil del usuario
+    };
+
     const formatNumber = (number) => {
         if (number < 1000) return number;
         if (number < 1000000) return Math.floor(number / 1000) + 'k';
@@ -48,13 +52,39 @@ const MenuDerecho = () => {
         );
     };
 
-
     return (
         <div className="Contenedor-menu" id='Contenedor-menuu'>
             <label id='label'>
                 <CiSearch id='icon' />
-                <input type="search" placeholder='Buscar' />
+                <input 
+                    type="search" 
+                    placeholder='Buscar'
+                    value={query} 
+                    onChange={handleChange} // Llama a handleChange para actualizar el estado de búsqueda
+                />
             </label>
+
+            {/* Resultados de búsqueda */}
+            {loading && <p>Buscando...</p>}
+            <ul className="result-list">
+                {results.length > 0 ? (
+                    results.map((user) => (
+                        <li 
+                            key={user.alias} 
+                            onClick={() => handleUserClick(user)} // Redirige al perfil del usuario al hacer clic
+                            style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '10px' }}
+                        >
+                            <img src={user.fotoPerfilUrl || "/placeholder.svg"} alt={`${user.nombre} ${user.apellido}`} style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }} />
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                <span>{user.nombre} {user.apellido}</span>
+                                <p>@{user.alias}</p>
+                            </div>
+                        </li>
+                    ))
+                ) : (
+                    !loading && query.length >= 1 && <li>No se encontraron resultados</li>
+                )}
+            </ul>
 
             <div className='tendencia'>
                 <h4>Los Más Escuchados</h4>
@@ -65,7 +95,6 @@ const MenuDerecho = () => {
             <Carrusel />
             <div className='seguir'>
                 <h4>Quizás te interese...</h4>
-                {/* {<Amigos />} */}
             </div>
         </div>
     );
