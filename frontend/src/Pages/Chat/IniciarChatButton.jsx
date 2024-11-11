@@ -25,6 +25,10 @@ const IniciarChatButton = ({ aliasOtroUsuario }) => {
     const aliasLocal = getCookie('alias');
     if (aliasLocal) buscarUsuarioPorAlias(aliasLocal, setIdUsuarioLocal);
     if (aliasOtroUsuario) buscarUsuarioPorAlias(aliasOtroUsuario, setIdOtroUsuario);
+
+    // Recuperar estado de chat desde localStorage
+    const chatStatus = localStorage.getItem('chatAbierto');
+    if (chatStatus === 'true') setChatAbierto(true);
   }, [aliasOtroUsuario]);
 
   const getCookie = (name) => {
@@ -70,6 +74,7 @@ const IniciarChatButton = ({ aliasOtroUsuario }) => {
       const chat = await response.json();
       setChatId(chat.id);
       setChatAbierto(true);
+      localStorage.setItem('chatAbierto', 'true');  // Guardar estado en localStorage
 
       // Envía el mensaje de bienvenida
       enviarMensajeBienvenida(chat.id);
@@ -108,7 +113,6 @@ const IniciarChatButton = ({ aliasOtroUsuario }) => {
           Iniciar Chat
         </button>
       ) : (
-        // Aquí ya no está el ChatComponent
         <div>
           <p>Chat Iniciado, Revisa Mensajes</p>
         </div>
