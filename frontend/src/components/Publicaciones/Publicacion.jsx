@@ -181,7 +181,7 @@ export default function Publicacion({ publicacion, fetchUsuario, usuarios, onPub
       return styles.imageVertical;
     }
   };
-
+  const paddingValue = '20px';
   const styles = {
     containerPublicaciones: {
       width:'100%',
@@ -330,11 +330,11 @@ export default function Publicacion({ publicacion, fetchUsuario, usuarios, onPub
       borderLeft: '1px solid rgba(255, 255, 255, 0.1)',
     },
     modalHeader: {
-      padding: '20px',
+      padding: paddingValue,
       borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
     },
     modalHeaderNoImage: {
-      padding: '20px',
+      padding: paddingValue,
       borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
       width: '50%',
     },
@@ -344,7 +344,7 @@ export default function Publicacion({ publicacion, fetchUsuario, usuarios, onPub
       padding: '20px',
     },
     modalFooter: {
-      padding: '20px',
+      padding: paddingValue,
       borderTop: '1px solid rgba(255, 255, 255, 0.1)',
     },
     backButton: {

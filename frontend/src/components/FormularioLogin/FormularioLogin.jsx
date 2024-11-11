@@ -5,7 +5,7 @@ import { CiLock, CiUser } from "react-icons/ci";
 import { FaGoogle } from 'react-icons/fa';
 import Meetsounds from '@c/logotipo/Logo';
 import BotonGoogle from '@c/Buttons/ButtonGoogle/ButtonGoogle';
-import Divider from '../Divider/Divider';
+import DividerText from '../divider/Divider';
 import '../../css/FormularioLogin.css';
 
 const FormularioLogin = ({ username, setUsername, password, setPassword, manejarLogin, mensajeError }) => {
@@ -14,7 +14,7 @@ const FormularioLogin = ({ username, setUsername, password, setPassword, manejar
         <div className='contenedor_formulario'>
             <Meetsounds />
             <BotonGoogle icon={FaGoogle} />
-            <Divider />
+            <DividerText />
             <form className='formulario_login' onSubmit={(e) => { e.preventDefault(); manejarLogin(); }}>
                 <div className='contenedor_inputs'>
                     <input

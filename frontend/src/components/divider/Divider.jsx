@@ -17,7 +17,7 @@ export default function DividerText() {
         }
       }}
     >
-      o
+      
     </Divider>
   );
 }
