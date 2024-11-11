@@ -1,6 +1,8 @@
 package com.project.meetsounds.repositories;
 
 import com.project.meetsounds.domain.models.Usuario;
+
+import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -23,6 +25,11 @@ public interface IUsuarioRepository extends MongoRepository<Usuario, String> {
     @Query("{ 'alias' : ?0 }")
     Optional<Usuario> findByAlias(String alias);
 
+    
+    @Aggregation(pipeline = {
+            "{ $sample: { size: 3 } }"
+    })
+    List<Usuario> findRandomUsers();
 
 
 

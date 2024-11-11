@@ -10,6 +10,7 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -160,18 +161,23 @@ public class UsuarioController {
         return usuarioService.actualizarDescripcionUsuarioPorAlias(alias, descripcion);
     }
     @PostMapping("/onboarding")
-public ResponseEntity<Usuario> completarOnboarding(
+    public ResponseEntity<Usuario> completarOnboarding(
         @RequestParam("alias") String alias,
         @RequestParam(value = "rol", required = false) String rol,
         @RequestParam(value = "instrumentos", required = false) List<String> instrumentos,
         @RequestParam(value = "generos", required = false) List<String> generos,
         @RequestParam(value = "descripcion", required = false) String descripcion,
         @RequestParam(value = "file", required = false) MultipartFile file
-) {
-    Usuario usuario = usuarioService.completarOnboarding(alias, rol, instrumentos, generos, descripcion, file);
-    return ResponseEntity.ok(usuario);
-}
+    ) {
+        Usuario usuario = usuarioService.completarOnboarding(alias, rol, instrumentos, generos, descripcion, file);
+        return ResponseEntity.ok(usuario);
+    }
 
+    /*MENÚ DERECHO */
+    @QueryMapping(name = "usuariosAleatorios")
+    public List<Usuario> obtenerUsuariosAleatorios() {
+        return usuarioService.obtenerUsuariosAleatorios();
+    }
 
 
     

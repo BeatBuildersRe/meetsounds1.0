@@ -9,6 +9,8 @@ type Query{
     misLikesUsuario(usuarioAlias: String!): [Publicacion]
     existByAlias(alias: String): Boolean
     verificaSiSigue(aliasVisitante:String!, aliasPerfil:String!): Boolean
+    usuariosAleatorios: [Usuario]
+
 
     #Instrumentos y TipoInstrumentos/Generos Musicales
     buscarTodosLosInstrumentos : [Instrumento]

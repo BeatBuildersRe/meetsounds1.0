@@ -626,7 +626,14 @@ public class UsuarioService {
 
     // Guardar cambios en la base de datos
     return usuarioRepository.save(usuario);
-}
+    }
+    
+    // Trae usuarios aleatorios
+    public List<Usuario> obtenerUsuariosAleatorios() {
+        return usuarioRepository.findRandomUsers();
+    }
+
+
 
 
 
