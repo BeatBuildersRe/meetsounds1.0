@@ -195,6 +195,12 @@ export default function Publicacion({ publicacion, fetchUsuario, usuarios, onPub
       alignItems: 'center',
       marginBottom: '12px',
     },
+    headerconBoton: {
+      display: 'flex',
+      justifyContent:'space-between',
+      alignItems: 'center',
+      width:'100%',
+    },
     avatar: {
       width: '48px',
       height: '48px',
@@ -451,20 +457,46 @@ export default function Publicacion({ publicacion, fetchUsuario, usuarios, onPub
           <img src={publicacion.mediaUrl} alt="Publicación" style={styles.modalImage} />
           <div style={styles.modalSidebar}>
             <div style={styles.modalHeader}>
-              <div style={styles.header}>
-                <img
-                  src={usuarios[publicacion.idUsuario]?.fotoPerfilUrl || '/default-profile.png'}
-                  alt="Usuario"
-                  style={styles.avatar}
-                  onClick={(e) => irAlPerfil(e, usuarios[publicacion.idUsuario]?.alias)}
-                />
-                <div style={styles.headerinfousuario}>
-                  <span style={styles.userName} onClick={(e) => irAlPerfil(e, usuarios[publicacion.idUsuario]?.alias)}>
-                    {usuarios[publicacion.idUsuario]?.nombre} {usuarios[publicacion.idUsuario]?.apellido}
-                  </span>
-                  <span style={styles.userHandle}>@{usuarios[publicacion.idUsuario]?.alias}</span>
-                </div>
-              </div>
+            <div style={styles.headerconBoton}>
+        <div style={styles.header}>
+        <img
+          src={usuarios[publicacion.idUsuario]?.fotoPerfilUrl || '/default-profile.png'}
+          alt="Usuario"
+          style={styles.avatar}
+          onClick={(e) => irAlPerfil(e, usuarios[publicacion.idUsuario]?.alias)}
+        />
+        <div style={styles.headerinfousuario}>
+          <span style={styles.userName} onClick={(e) => irAlPerfil(e, usuarios[publicacion.idUsuario]?.alias)}>
+            {usuarios[publicacion.idUsuario]?.nombre} {usuarios[publicacion.idUsuario]?.apellido}
+          </span>
+          <span style={styles.userHandle}>@{usuarios[publicacion.idUsuario]?.alias}</span>
+        </div>
+        </div>
+        
+        <div style={styles.botonEliminar}>
+      {isDuenoPublicacion && (
+              <IconButton
+                aria-controls={open ? 'menu' : undefined}
+                aria-haspopup="true"
+                onClick={handleClick}
+              >
+                <MoreVertIcon />
+              </IconButton>
+            )}
+            <Menu
+              id="menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+            >
+              <MenuItem>
+              <button onClick={handleEliminarPublicacion}>Eliminar</button>
+            {publicacionEliminada && <p>Publicación eliminada.</p>}  
+              </MenuItem>
+            </Menu>
+        
+      </div>
+      </div>
               <p>{publicacion.descripcion}</p>
             </div>
             <div style={styles.modalComments}>
@@ -592,27 +624,9 @@ export default function Publicacion({ publicacion, fetchUsuario, usuarios, onPub
 
   return (
     <div style={styles.containerPublicaciones}>
-{isDuenoPublicacion && (
-        <IconButton
-          aria-controls={open ? 'menu' : undefined}
-          aria-haspopup="true"
-          onClick={handleClick}
-        >
-          <MoreVertIcon />
-        </IconButton>
-      )}
-      <Menu
-        id="menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-      >
-        <MenuItem>
-        <button onClick={handleEliminarPublicacion}>Eliminar</button>
-      {publicacionEliminada && <p>Publicación eliminada.</p>}  {/* Opcional, puedes mostrar un mensaje */}
-        </MenuItem>
-      </Menu>
-      <div style={styles.header}>
+
+      <div style={styles.headerconBoton}>
+        <div style={styles.header}>
         <img
           src={usuarios[publicacion.idUsuario]?.fotoPerfilUrl || '/default-profile.png'}
           alt="Usuario"
@@ -625,6 +639,31 @@ export default function Publicacion({ publicacion, fetchUsuario, usuarios, onPub
           </span>
           <span style={styles.userHandle}>@{usuarios[publicacion.idUsuario]?.alias}</span>
         </div>
+        </div>
+        
+        <div style={styles.botonEliminar}>
+      {isDuenoPublicacion && (
+              <IconButton
+                aria-controls={open ? 'menu' : undefined}
+                aria-haspopup="true"
+                onClick={handleClick}
+              >
+                <MoreVertIcon />
+              </IconButton>
+            )}
+            <Menu
+              id="menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+            >
+              <MenuItem>
+              <button onClick={handleEliminarPublicacion}>Eliminar</button>
+            {publicacionEliminada && <p>Publicación eliminada.</p>}  
+              </MenuItem>
+            </Menu>
+        
+      </div>
       </div>
       <div style={styles.content}>
         <p>{publicacion.descripcion}</p>

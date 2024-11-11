@@ -1,15 +1,32 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaRegComment, FaRegHeart, FaHeart, FaArrowLeft } from 'react-icons/fa';
+import { IconButton, Button, Menu, MenuItem } from '@mui/material';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import {BASE_URL} from '../../config'
 
-export default function PublicacionParaPerfil({ publicacion, fetchUsuario, usuarios }) {
+export default function PublicacionParaPerfil({ publicacion, fetchUsuario, usuarios, onPublicacionEliminada }) {
   const [comentariosVisibles, setComentariosVisibles] = useState(false);
   const [cantidadComentarios, setCantidadComentarios] = useState(5);
   const [nuevoComentario, setNuevoComentario] = useState('');
   const [meGustaStatus, setMeGustaStatus] = useState(false);
   const [modalAbierto, setModalAbierto] = useState(false);
   const [imagenDimensiones, setImagenDimensiones] = useState({ width: 0, height: 0 });
+  const [publicacionEliminada, setPublicacionEliminada] = useState(false);  // Definición del estado
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const [isDuenoPublicacion, setIsDuenoPublicacion] = useState(false);
 
+
+  
+  
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const getAliasFromCookies = () => {
     const cookies = document.cookie.split('; ');
     const aliasCookie = cookies.find(cookie => cookie.startsWith('alias='));
@@ -21,6 +38,7 @@ export default function PublicacionParaPerfil({ publicacion, fetchUsuario, usuar
 
   useEffect(() => {
     verificarMeGusta();
+    comprobarEsDuenoPublicacion();
     if (publicacion.mediaUrl) {
       const img = new Image();
       img.onload = () => {
@@ -29,6 +47,19 @@ export default function PublicacionParaPerfil({ publicacion, fetchUsuario, usuar
       img.src = publicacion.mediaUrl;
     }
   }, []);
+  
+  const comprobarEsDuenoPublicacion = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/comprobarEsDuenoPublicacion?idPublicacion=${publicacion.id}&usuarioAlias=${usuarioAlias}`);
+      if (response.ok) {
+        const result = await response.json();
+        setIsDuenoPublicacion(result);
+      }
+    } catch (error) {
+      console.error('Error al comprobar si es dueño de la publicación:', error);
+    }
+  };
+
 
   useEffect(() => {
     if (modalAbierto) {
@@ -166,6 +197,12 @@ export default function PublicacionParaPerfil({ publicacion, fetchUsuario, usuar
       display: 'flex',
       alignItems: 'center',
       marginBottom: '12px',
+    },
+    headerconBoton: {
+      display: 'flex',
+      justifyContent:'space-between',
+      alignItems: 'center',
+      width:'100%',
     },
     avatar: {
       width: '48px',
@@ -438,20 +475,46 @@ export default function PublicacionParaPerfil({ publicacion, fetchUsuario, usuar
           <img src={publicacion.mediaUrl} alt="Publicación" style={styles.modalImage} />
           <div style={styles.modalSidebar}>
             <div style={styles.modalHeader}>
-              <div style={styles.header}>
-                <img
-                  src={usuarios[publicacion.idUsuario]?.fotoPerfilUrl || '/default-profile.png'}
-                  alt="Usuario"
-                  style={styles.avatar}
-                  onClick={(e) => irAlPerfil(e, usuarios[publicacion.idUsuario]?.alias)}
-                />
-                <div style={styles.headerinfousuario}>
-                  <span style={styles.userName} onClick={(e) => irAlPerfil(e, usuarios[publicacion.idUsuario]?.alias)}>
-                    {usuarios[publicacion.idUsuario]?.nombre} {usuarios[publicacion.idUsuario]?.apellido}
-                  </span>
-                  <span style={styles.userHandle}>@{usuarios[publicacion.idUsuario]?.alias}</span>
-                </div>
-              </div>
+            <div style={styles.headerconBoton}>
+        <div style={styles.header}>
+        <img
+          src={usuarios[publicacion.idUsuario]?.fotoPerfilUrl || '/default-profile.png'}
+          alt="Usuario"
+          style={styles.avatar}
+          onClick={(e) => irAlPerfil(e, usuarios[publicacion.idUsuario]?.alias)}
+        />
+        <div style={styles.headerinfousuario}>
+          <span style={styles.userName} onClick={(e) => irAlPerfil(e, usuarios[publicacion.idUsuario]?.alias)}>
+            {usuarios[publicacion.idUsuario]?.nombre} {usuarios[publicacion.idUsuario]?.apellido}
+          </span>
+          <span style={styles.userHandle}>@{usuarios[publicacion.idUsuario]?.alias}</span>
+        </div>
+        </div>
+        
+        <div style={styles.botonEliminar}>
+      {isDuenoPublicacion && (
+              <IconButton
+                aria-controls={open ? 'menu' : undefined}
+                aria-haspopup="true"
+                onClick={handleClick}
+              >
+                <MoreVertIcon />
+              </IconButton>
+            )}
+            <Menu
+              id="menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+            >
+              <MenuItem>
+              <button onClick={handleEliminarPublicacion}>Eliminar</button>
+            {publicacionEliminada && <p>Publicación eliminada.</p>}  
+              </MenuItem>
+            </Menu>
+        
+      </div>
+      </div>
               <p>{publicacion.descripcion}</p>
             </div>
             <div style={styles.modalComments}>
@@ -545,6 +608,35 @@ export default function PublicacionParaPerfil({ publicacion, fetchUsuario, usuar
       )}
     </div>
   );
+  const handleEliminarPublicacion = async () => {
+    try {
+      // Realizar la solicitud DELETE al endpoint
+      const response = await fetch(`${BASE_URL}/eliminarPublicacionPorId?idAlias=${usuarioAlias}&idPublicacion=${publicacion.id}`, {
+        method: 'DELETE',
+      });
+  
+      if (response.ok) {
+        console.log('Publicación eliminada con éxito');
+        setPublicacionEliminada(true);
+        
+        // Llamada al callback (si existe) para manejar la eliminación
+        if (onPublicacionEliminada) {
+          onPublicacionEliminada(publicacion.id);
+        }
+  
+        // Recargar la página después de eliminar la publicación
+        window.location.reload();  // Recarga la página
+      } else {
+        // Si la respuesta no es ok, podemos considerar que hubo un problema
+        console.log('Error al eliminar la publicación');
+        setPublicacionEliminada(false);
+      }
+    } catch (error) {
+      console.error('Error al realizar la solicitud de eliminación:', error);
+    } finally {
+      handleClose(); // Cerramos el menú si se abrió
+    }
+  };
 
   return (
     <div style={styles.containerPublicaciones}>

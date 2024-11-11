@@ -466,6 +466,7 @@ const PerfilEncontrado = () => {
                     <IniciarChatButton 
                             aliasOtroUsuario={userData.alias} 
                             onChatIniciado={handleChatToggle} 
+                            
                     />
                     <button onClick={handleSendFriendRequest} style={styles.editButton}>
                     {isFollowing ? 'Siguiendo' : 'Seguir'}
