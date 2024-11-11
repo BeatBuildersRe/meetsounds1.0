@@ -61,7 +61,9 @@ public class BandaService {
         banda.setDescripcion(bandaInput.getDescripcion());
         banda.setIdCreador(idUsuario);
         if (banda.getMiembros() == null || banda.getMiembros().isEmpty()) {
-            banda.setMiembros(List.of(idUsuario));
+            for(String idMiembro : bandaInput.getMiembros()){
+                banda.getMiembros().add(idMiembro);
+            }
         }
         return iBandaRepository.save(banda);
     }
