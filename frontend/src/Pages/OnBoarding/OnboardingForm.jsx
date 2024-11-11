@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import "./OnboardingForm.css";
+import Fondo from '@c/FondoLoginRegister/FondoLoginRegister';
+
 
 const OnboardingForm = () => {
   const navigate = useNavigate();
@@ -58,6 +61,7 @@ const OnboardingForm = () => {
   // fetchOpciones();
 
   // Usar datos estáticos si no hay backend para cargar dinámicamente
+
     setInstrumentosOpciones([
       { id: "672fc8c7dcf8d013012b20b0", nombre: "Piano" },
       { id: "672fc8d3dcf8d013012b20b1", nombre: "Guitarra Eléctrica" },
@@ -74,21 +78,21 @@ const OnboardingForm = () => {
     ]);
 
     setGenerosOpciones([
-      { id: "672fce9282148c6f5d8eb23d", nombre: "Rock" },
-      { id: "672fcef782148c6f5d8eb23e", nombre: "Cumbia" },
-      { id: "672fcf1a82148c6f5d8eb23f", nombre: "Reggeaton" },
-      { id: "672fcf2482148c6f5d8eb240", nombre: "Pop" },
-      { id: "672fcf4182148c6f5d8eb241", nombre: "Folclore" },
-      { id: "672fcf7882148c6f5d8eb242", nombre: "Rap" },
-      { id: "672fcf8082148c6f5d8eb243", nombre: "Hip-Hop" },
-      { id: "672fcf8682148c6f5d8eb244", nombre: "Trap" },
-      { id: "672fcf8e82148c6f5d8eb245", nombre: "RKT" },
-      { id: "672fcf9982148c6f5d8eb246", nombre: "Electrónica" },
-      { id: "672fcfa382148c6f5d8eb247", nombre: "Tango" },
-      { id: "672fcfa782148c6f5d8eb248", nombre: "Jazz" },
-      { id: "672fcfac82148c6f5d8eb249", nombre: "Blues" },
-      { id: "672fcfc682148c6f5d8eb24a", nombre: "Alternativo" },
-      { id: "672fcfcc82148c6f5d8eb24b", nombre: "Experimental" },
+      { "id": "672fce9282148c6f5d8eb23d", "nombre": "Rock" },
+  { "id": "672fcef782148c6f5d8eb23e", "nombre": "Cumbia" },
+  { "id": "672fcf1a82148c6f5d8eb23f", "nombre": "Reggeaton" },
+  { "id": "672fcf2482148c6f5d8eb240", "nombre": "Pop" },
+  { "id": "672fcf4182148c6f5d8eb241", "nombre": "Folclore" },
+  { "id": "672fcf7882148c6f5d8eb242", "nombre": "Rap" },
+  { "id": "672fcf8082148c6f5d8eb243", "nombre": "Hip-Hop" },
+  { "id": "672fcf8682148c6f5d8eb244", "nombre": "Trap" },
+  { "id": "672fcf8e82148c6f5d8eb245", "nombre": "RKT" },
+  { "id": "672fcf9982148c6f5d8eb246", "nombre": "Electrónica" },
+  { "id": "672fcfa382148c6f5d8eb247", "nombre": "Tango" },
+  { "id": "672fcfa782148c6f5d8eb248", "nombre": "Jazz" },
+  { "id": "672fcfac82148c6f5d8eb249", "nombre": "Blues" },
+  { "id": "672fcfc682148c6f5d8eb24a", "nombre": "Alternativo" },
+  { "id": "672fcfcc82148c6f5d8eb24b", "nombre": "Experimental" }
     ]);
   }, []);
 
@@ -127,6 +131,7 @@ const OnboardingForm = () => {
         }
       }
 
+
       // Enviar los datos restantes al backend
       const response = await fetch("http://localhost:8080/graphql", {
         method: "POST",
@@ -154,7 +159,7 @@ const OnboardingForm = () => {
               }
               actualizarDescripcionUsuarioPorAlias(
                 alias: "${alias}",
-                descripcion: "${descripcion}"
+                descripcion: """${descripcion}"""
               ) {
                 alias
                 descripcion
@@ -178,78 +183,82 @@ const OnboardingForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>Completa tu perfil</h1>
+    <div>
+      <Fondo />
+      <form className="onboarding-form-ob" onSubmit={handleSubmit}>
+        <h1>Completa tu perfil</h1>
+  
+        <h2>¿Cuál es tu rol en MeetSounds?</h2>
+        <div className="buttons-group-ob">
+          {["Músico", "Vocalista", "Productor", "Compositor", "DJ"].map((r) => (
+            <button
+              key={r}
+              type="button"
+              className={`role-button-ob ${rol === r ? "selected-ob" : ""}`}
+              onClick={() => setRol(r)}
+            >
+              {r}
+            </button>
+          ))}
+        </div>
+  
+        <h2>¿Cuáles son tus instrumentos favoritos?</h2>
+        <div className="buttons-group-ob">
+          {instrumentosOpciones.map((instrumento) => (
+            <button
+              key={instrumento.id}
+              type="button"
+              className={`instrument-button-ob ${
+                instrumentos.includes(instrumento.id) ? "selected-ob" : ""
+              }`}
+              onClick={() => toggleSelection(instrumento.id, setInstrumentos, instrumentos)}
+            >
+              {instrumento.nombre}
+            </button>
+          ))}
+        </div>
+  
+        <h2>¿Cuáles son tus géneros musicales favoritos?</h2>
+        <div className="buttons-group-ob">
+          {generosOpciones.map((genero) => (
+            <button
+              key={genero.id}
+              type="button"
+              className={`genre-button-ob ${
+                generos.includes(genero.id) ? "selected-ob" : ""
+              }`}
+              onClick={() => toggleSelection(genero.id, setGeneros, generos)}
+            >
+              {genero.nombre}
+            </button>
+          ))}
+        </div>
+  
+        <h2>Sube una foto de perfil</h2>
+        <input
+          className="file-input-ob"
+          type="file"
+          onChange={(e) => setFotoPerfil(e.target.files[0])}
+        />
+  
+        <h2>Cuéntanos sobre ti</h2>
+        <textarea
+  className="description-textarea-ob"
+  value={descripcion}
+  onChange={(e) => setDescripcion(e.target.value)}
+  rows="4"
+  cols="50"
+  placeholder="Escribe algo sobre ti..."
+></textarea>
 
-      {/* Selección de rol */}
-      <h2>¿Cuál es tu rol en MeetSounds?</h2>
-      <div>
-        {["Músico", "Vocalista", "Productor", "Compositor", "DJ"].map((r) => (
-          <button
-            key={r}
-            type="button"
-            onClick={() => setRol(r)}
-            style={{ backgroundColor: rol === r ? "lightblue" : "white" }}
-          >
-            {r}
-          </button>
-        ))}
-      </div>
-
-      {/* Selección de instrumentos */}
-      <h2>¿Cuáles son tus instrumentos favoritos?</h2>
-      <div>
-        {instrumentosOpciones.map((instrumento) => (
-          <button
-            key={instrumento.id}
-            type="button"
-            onClick={() =>
-              toggleSelection(instrumento.id, setInstrumentos, instrumentos)
-            }
-            style={{
-              backgroundColor: instrumentos.includes(instrumento.id)
-                ? "lightblue"
-                : "white",
-            }}
-          >
-            {instrumento.nombre}
-          </button>
-        ))}
-      </div>
-
-      {/* Selección de géneros musicales */}
-      <h2>¿Cuáles son tus géneros musicales favoritos?</h2>
-      <div>
-        {generosOpciones.map((genero) => (
-          <button
-            key={genero.id}
-            type="button"
-            onClick={() => toggleSelection(genero.id, setGeneros, generos)}
-            style={{
-              backgroundColor: generos.includes(genero.id) ? "lightblue" : "white",
-            }}
-          >
-            {genero.nombre}
-          </button>
-        ))}
-      </div>
-
-      {/* Subir foto de perfil */}
-      <h2>Sube una foto de perfil</h2>
-      <input type="file" onChange={(e) => setFotoPerfil(e.target.files[0])} />
-
-      {/* Descripción del perfil */}
-      <h2>Cuéntanos sobre ti</h2>
-      <textarea
-        value={descripcion}
-        onChange={(e) => setDescripcion(e.target.value)}
-        rows="4"
-        cols="50"
-      ></textarea>
-
-      <button type="submit">Guardar y continuar</button>
-    </form>
+  
+        <button className="submit-button-ob" type="submit">
+          Guardar y continuar
+        </button>
+      </form>
+    </div>
   );
+  
 };
 
 export default OnboardingForm;
