@@ -110,7 +110,7 @@ const IniciarChatButton = ({ aliasOtroUsuario }) => {
       ) : (
         // Aquí ya no está el ChatComponent
         <div>
-          <p>Chat iniciado. Mensajes: {messages.length}</p>
+          <p>Chat Iniciado, Revisa Mensajes</p>
         </div>
       )}
     </div>
