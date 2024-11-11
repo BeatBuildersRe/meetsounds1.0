@@ -1,8 +1,11 @@
-
 import { useLocation } from "react-router-dom";
 import ServiceBandas from "../../services/ServiceBandas";
 import "@css/CssPefilUsuario.css";
 import MenuDerecho from "@c/Menu/Menu";
+import '@css/CrearBanda.css';
+import 'react-toastify/dist/ReactToastify.css';
+import plus from '@public/plus2.svg'
+import perfil from '@public/perfil_imagen.png'
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useParams, useNavigate } from "react-router-dom";
@@ -259,7 +262,7 @@ const BandaConfiguracion = () => {
   const onSubmit = async (data) => {
     try {
       console.log("Formulario enviado con datos:", data);
-      const idUsuario = usuario?.id || '6724d794e7a89c7dc3dc9ae1';
+      const idUsuario = usuario?.id ;
       const { nombre, descripcion } = data;
     
       await CrearBanda({ idUsuario, nombre, descripcion });
@@ -311,60 +314,54 @@ const BandaConfiguracion = () => {
           <div style={styles.profileInfo}>
             <img src={previewImage} alt="Cover" style={styles.coverImage} />
           </div>
-
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <label style={{display:'none'}} >nombre</label>
-            <input
+          <input
               type="file"
               {...register("portada")} // Registrar el input en react-hook-form
               onChange={handleImageChange} // Actualizar la vista previa al seleccionar una imagen
               accept="image/*" // Limitar a archivos de imagen
             />
-            <div style={styles.profileContent}>
-              <div style={styles.acomodar}>
-              <label style={{display:'none'}}>descripcion</label>
-                <input
-                  type="text"
-                  placeholder="Nombre"
-                  style={{ padding: "1%", borderRadius: "15px" }}
-                  {...register("nombre", {
-                    required: "Este campo es obligatorio",
-                  })}
-                />
-                <div style={styles.followInfo}>
-                  <span>
-                    <strong>10K</strong> Seguidores
-                  </span>
-                  <span>
-                    <strong>10K</strong> Seguidos
-                  </span>
-                  <span>
-                    <strong>10K</strong> Publicaciones
-                  </span>
-                </div>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="formularioCrearBanda"> 
+              <div className="izquierdo">
+              <div className="inputLabels">
+                <label style={{display:'none'}} >nombre</label>
+              
+                <label style={{display:'none'}}>descripcion</label>
+                  <input
+                    type="text"
+                    className="inputZ"
+                    placeholder="Nombre"
+                   
+                    {...register("nombre", {
+                      required: "Este campo es obligatorio",
+                    })}
+                  />
               </div>
-
-              <div className="seccion-2">
-                <input
+        
+                <textarea
                   type="text"
+                  className="inputZZ"
                   placeholder="descripcion"
-                  style={{ padding: "1%", borderRadius: "15px" }}
+                 
                   {...register("descripcion", {
                     required: "Este campo es obligatorio",
                   })}
                 />
+                <button className="Agregar_miembros">  
+                    Agregar Miembros
+                      <img src={plus} alt="" />
+                  </button>
+              </div>
+              <div className="derecho">
+                <div className="card_user">
+                  <img src={perfil} alt="" />
+                  <p>Mauro Berni</p>
+                </div>
               </div>
             </div>
             <button
               type="submit"
-              style={{
-                backgroundColor: "green",
-                color: "white",
-                fontWeight: "bold",
-                margin: "1%",
-                padding: "1%",
-                borderRadius: "15px",
-              }}
+              className="guardarBanda"
             >
               guardar
             </button>

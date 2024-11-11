@@ -1,0 +1,71 @@
+.Agregar_miembros {
+  all: unset;
+  margin-top: 4%;
+  display: flex;
+  align-items: center;
+  padding: 1%;
+  border-radius: 15px;
+  color: aliceblue;
+  font-weight: bold;
+  background-color: var(--color-fondo-botones);
+
+  img {
+    width: 40px;
+    border-radius: 50%;
+  }
+}
+.guardarBanda{
+    all: unset;
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    margin: 3%;
+    padding: 2%;
+    border-radius: 15px;
+    position: absolute;
+    left: 42%;
+    
+    
+}
+.formularioCrearBanda {
+  display: flex;
+  position: relative;
+  height: auto;
+
+  .izquierdo {
+    width: 50%;
+    padding: 2%;
+  }
+
+  
+  .inputZ {
+    all: unset;
+    border: 0.5px solid rgb(65, 65, 65);
+    padding: 2%;
+    border-radius: 15px;
+    width: 70%;
+  }
+  .inputZZ {
+    margin-top: 3%;
+    all: unset;
+    border: 0.5px solid rgb(65, 65, 65);
+
+    padding: 2%;
+    border-radius: 15px;
+    width: 80%;
+    height: 150px;
+  }
+}
+
+.derecho {
+    width: 50%;
+    border: 1px solid rebeccapurple;
+
+    .card_user{
+        align-items: center;
+        display: flex;
+        img{
+            width: 80px;
+        };
+    }
+  }
