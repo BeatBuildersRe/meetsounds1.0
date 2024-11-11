@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { BASE_URL } from "../config";
 import GetAlias from "./GetAlias";
+import Cookies from 'js-cookie';
+
 const ServiceBandas = () => {
+  const alias2 = GetAlias()
   const [banda, setBanda] = useState(null);
   const [cargando, setCargando] = useState(false); 
   const [error, setError] = useState(null); 
@@ -12,13 +15,16 @@ const ServiceBandas = () => {
   const [Mibanda, setMiBanda] = useState(null);
   const [Miscargando, setMisCargando] = useState(false); 
   const [Miserror, setMisError] = useState(null); 
-
+  const [amigo, setAmigo] = useState(null); 
+  
+  
   // Función para realizar la mutación de actualización de datos
-  const CrearBanda = async ({ idUsuario, nombre, descripcion }) => {
+  const CrearBanda = async ({ idUsuario, nombre, descripcion,miembrosArray }) => {
     console.log(idUsuario, nombre, descripcion)
     setCargando(true);
     setError(null);
-
+    
+    console.dir(miembrosArray)
     try {
       const response = await fetch(`${BASE_URL}/graphql`, {
         method: "POST",
@@ -28,13 +34,11 @@ const ServiceBandas = () => {
         body: JSON.stringify({
           query: `
             mutation{
-                crearBanda(idUsuario:"${idUsuario}", banda:{
+                crearBanda(idUsuario: "${idUsuario}", banda: {
                     nombreBanda: "${nombre}",
                     descripcion: "${descripcion}",
-                    miembros:[
-                    "${idUsuario}"
-                    ]
-                } ){
+                    miembros: [${miembrosArray.join(", ")}]
+                }) {
                     id
                     nombreBanda
                     descripcion
@@ -51,10 +55,14 @@ const ServiceBandas = () => {
       // Validación de la respuesta
       if (result.errors) {
         console.error("Error en la mutación:", result.errors);
+        console.dir(miembrosSeleccionados);
+
         setError(result.errors[0].message);
       } else if (result.data && result.data.crearBanda) {
         setBanda(result.data.crearBanda); // Actualizar los datos de la banda
       } else {
+        console.log("Falló la mutación");
+        console.dir(miembrosSeleccionados);
         console.log("Falló la mutación");
       }
     } catch (error) {
@@ -279,8 +287,53 @@ const ServiceBandas = () => {
     return Mibanda
   }
 };
+const ConsultarMiembros = async (alias) =>{
+  
+  setCargando(true);
+  setError(null);
 
-  return { cargando, error, CrearBanda, MisBandas,ActualizarPortada,finish,MiBandas,ListarMiembros,Mibanda,Miembros, banda, Misbanda }; // Devolver estado, función de mutación y datos de la banda
+  try {
+    const response = await fetch(`${BASE_URL}/graphql`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: `
+          query{
+              misSeguidores(idAlias:"Mauro777"){
+                id
+                alias
+                nombre
+                apellido
+                fotoPerfilUrl
+              }
+            }
+        `,
+      }),
+    });
+
+    const result = await response.json();
+
+    // Validación de la respuesta
+    if (result.errors) {
+      console.error("Error en la consulta:", result.errors);
+      setError(result.errors[0].message);
+    } else if (result.data && result.data.misSeguidores) {
+      setAmigo(result.data.misSeguidores); // Actualizar los datos de la banda
+    } else {
+      console.log("Falló la mutación");
+    }
+  } catch (error) {
+    console.error("Error al conectar con el servidor", error);
+    setError("Error al conectar con el servidor"); // Guardar el error
+  } finally {
+    setCargando(false); // Finaliza la carga
+  }
+  
+}
+
+  return { cargando, error, CrearBanda, MisBandas,ActualizarPortada,finish,MiBandas,ListarMiembros,ConsultarMiembros,amigo,Mibanda,Miembros, banda, Misbanda }; // Devolver estado, función de mutación y datos de la banda
 
 };
 

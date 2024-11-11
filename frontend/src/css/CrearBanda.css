@@ -7,6 +7,7 @@
   border-radius: 15px;
   color: aliceblue;
   font-weight: bold;
+  cursor: pointer;
   background-color: var(--color-fondo-botones);
 
   img {
@@ -59,13 +60,127 @@
 
 .derecho {
     width: 50%;
-    border: 1px solid rebeccapurple;
-
+    padding: 2%;
     .card_user{
+
+        padding-left: 2%;
+        padding-right: 5%;
+        border-radius: 15px;
+        margin-bottom: 4%;
+        width: fit-content;
+        background-color: var( --color-contenedores);
         align-items: center;
         display: flex;
         img{
-            width: 80px;
+            width: 50px;
         };
+    }
+  }
+
+  .Agregar_miembro{
+    position: absolute;
+    width: 53%;
+    height: 100vh;
+    background-color: var(--color-fondo);
+    
+
+    nav{
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      position: relative;
+      padding: 10px 10px;
+      border-bottom: 1px solid gray;
+     
+      .btn{
+
+        all: unset;
+        position: absolute;
+        background-color: red;
+        padding: 0.5%;
+        border-radius: 5px;
+        left: 1%;
+        font-weight: bold;
+
+      }
+      .btn2{
+
+        all: unset;
+        position: absolute;
+        background-color: rgb(2, 231, 52);
+        padding: 0.5%;
+        border-radius: 5px;
+        right:  1%;
+        font-weight: bold;
+
+      }
+
+    }
+    label {
+      border-radius: 25px;
+      padding: 1%;
+      width: auto;
+      display: flex;
+      background-color: var(--color-contenedores);
+      align-items: center;
+      margin-top: 1%;
+      margin-left: 2%;
+      margin-right: 2%;
+      margin-bottom: 1%;
+
+      #icon {
+          font-size: x-large;
+          cursor: pointer;
+      }
+
+      input {
+          all: unset;
+          width: 90%;
+          height: 100%;
+
+          border-radius: 25px;
+          padding-left: 4%;
+          background-color: var(--color-contenedores);
+      }
+  }
+    .centroA{
+      display: flex;
+      width: 100%;
+
+      .izquierdoA{
+        width: 50%;
+        border-right: 0.5px solid gray;
+        height: 100%;
+        padding: 1%;
+
+        .card-a{
+          gap: 5px;
+          background-color: var(--color-contenedores);
+          display: flex;
+          width: fit-content;
+          padding-left: 1%;
+          padding-right: 3%;
+          border-radius: 25px;
+          margin: 2%;
+          cursor: pointer;
+          align-items: center;
+        }
+      }
+      .derechoAaa{
+        width: 50%;
+        padding: 1%;
+        .card-a{
+          gap: 5px;
+          background-color: var(--color-contenedores);
+          display: flex;
+          width: fit-content;
+          padding-left: 1%;
+          padding-right: 3%;
+          border-radius: 25px;
+          margin: 2%;
+          cursor: pointer;
+          align-items: center;
+        }
+      }
     }
   }

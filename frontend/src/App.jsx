@@ -10,8 +10,6 @@ import Notificaciones from './Pages/Notificaciones/Notificaciones';
 import Mensajes from './Pages/Mensajes/Mensajes';
 import Bandas from './Pages/Bandas/Bandas';
 import Mibanda2 from './Pages/Bandas/Mibanda2';
-import BandaConfiguracion from './Pages/Bandas/CrearBanda2';
-import BandaConfigurar from './Pages/Bandas/BandaConfigurar';
 import CrearBanda from './Pages/Bandas/CrearBanda';
 import Configuracion from './Pages/Configuracion/Configuracion';
 import Perfil2 from './Pages/Configuracion/Perfil/Perfil2';
@@ -54,9 +52,7 @@ function App() {
           <Route path="Mensajes" element={<Mensajes />} />
           <Route path="Bandas" element={<Bandas />} />
           <Route path="Bandas/:Nombre_Banda" element={<Mibanda2 />} />
-{/*           <Route path="Bandas/:nombre/Configurar" element={<BandaConfiguracion />} />
- */}
-          <Route path="Bandas/CrearBanda" element={<BandaConfiguracion />} />
+          <Route path="Bandas/CrearBanda" element={<CrearBanda />} />
           <Route path="Configuracion" element={<Configuracion />} />
           <Route path="configuracion/perfil" element={<Perfil2 />} />
           <Route path="configuracion/perfil/Datos-Personales" element={<DatosPersonales />} />
