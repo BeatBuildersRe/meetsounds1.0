@@ -5,7 +5,7 @@ import { CiLock, CiUser } from "react-icons/ci";
 import { FaGoogle } from 'react-icons/fa';
 import Meetsounds from '@c/logotipo/Logo';
 import BotonGoogle from '@c/Buttons/ButtonGoogle/ButtonGoogle';
-import Divider from '@c/Divider/Divider';
+import Divider from '../Divider/Divider';
 import '../../css/FormularioLogin.css';
 
 const FormularioLogin = ({ username, setUsername, password, setPassword, manejarLogin, mensajeError }) => {
