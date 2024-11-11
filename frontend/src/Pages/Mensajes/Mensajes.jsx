@@ -5,18 +5,18 @@ import BadgeAvatars from "@c/avatar/AvatarActives";
 import MenuDerechoDiv from "@c/Menu/Derecha";
 import ChatComponent from "../Chat/ChatComponent";
 import { BASE_URL, BASE_URL_SOCKET } from '../../config';
-import { useWebSocket } from "../../services/WebSocketProvider"; 
+import { useWebSocket } from "../../services/WebSocketProvider";
 
-const Mensajes = () => {
+const Mensajes = ({ chatId }) => {  // Recibe el chatId como prop
   const [chats, setChats] = React.useState([]);
   const [usuarioLocalId, setUsuarioLocalId] = React.useState(null);
   const [usuarioDetalles, setUsuarioDetalles] = React.useState({});
   const [cargando, setCargando] = React.useState(true);
   const [mensajeTexto, setMensajeTexto] = React.useState("");
   const [mensajesChat, setMensajesChat] = React.useState([]);
-  const [chatSeleccionado, setChatSeleccionado] = React.useState(null);
+  const [chatSeleccionado, setChatSeleccionado] = React.useState(chatId); // Usa el chatId de la prop
 
-  const socket = useWebSocket(); 
+  const socket = useWebSocket();
 
   React.useEffect(() => {
     const aliasLocal = getCookie("alias");
@@ -162,66 +162,59 @@ const Mensajes = () => {
       <div className="contenedor2">
         <div className="izquierda-mensajes">
           {chatSeleccionado ? (
-            <>
-              <ChatComponent 
-                chatId={chatSeleccionado} 
-                mensajesChat={mensajesChat} 
-                enviarMensaje={() => enviarMensaje(chatSeleccionado)} 
-                mensajeTexto={mensajeTexto} 
-                setMensajeTexto={setMensajeTexto} 
-                setChatSeleccionado={setChatSeleccionado}
-              />
-            </>
+            <ChatComponent 
+              chatId={chatSeleccionado} 
+              mensajesChat={mensajesChat} 
+              enviarMensaje={() => enviarMensaje(chatSeleccionado)} 
+              mensajeTexto={mensajeTexto} 
+              setMensajeTexto={setMensajeTexto} 
+              setChatSeleccionado={setChatSeleccionado}
+            />
           ) : (
-            <>
-              <div className="mensajes-usuario">
-                {chats && chats.length > 0 ? (
-                  chats.map(chat => {
-                    if (!chat.mensajes || chat.mensajes.length === 0) {
-                      return null; 
-                    }
+            <div className="mensajes-usuario">
+              {chats && chats.length > 0 ? (
+                chats.map(chat => {
+                  const usuarioConElQueHabla = determinarUsuarioConElQueHabla(chat);
+                  const ultimoMensaje = chat.mensajes[chat.mensajes.length - 1];
 
-                    const usuarioConElQueHabla = determinarUsuarioConElQueHabla(chat);
-                    const ultimoMensaje = chat.mensajes[chat.mensajes.length - 1];
-
-                    return (
-                      <div className="UsuarioKey" key={chat.id}>
-                        <div 
-                          className="perfiles_mensajes"
-                          role="button"
-                          tabIndex="0"
-                          onClick={() => abrirChat(chat.id)}
-                        >
-                          <div className="top_mensajes">
-                            {usuarioConElQueHabla && (
-                              <>
-                                {usuarioConElQueHabla.fotoPerfilUrl && (
-                                  <img 
-                                    src={usuarioConElQueHabla.fotoPerfilUrl} 
-                                    alt={`${usuarioConElQueHabla.nombre} ${usuarioConElQueHabla.apellido}`} 
-                                    style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }} 
-                                  />
-                                )}
-                                <p>
-                                  {usuarioConElQueHabla.nombre} {usuarioConElQueHabla.apellido}
-                                </p>
-                              </>
-                            )}
-                          </div>
-                          <div className="bottom_mensajes">
-                            <p>{ultimoMensaje ? ultimoMensaje.texto : "No hay mensajes recientes."}</p>
-                          </div>
+                  return (
+                    <div className="UsuarioKey" key={chat.id}>
+                      <div 
+                        className="perfiles_mensajes"
+                        role="button"
+                        tabIndex="0"
+                        onClick={() => abrirChat(chat.id)}
+                      >
+                        <div className="top_mensajes">
+                          {usuarioConElQueHabla && (
+                            <>
+                              {usuarioConElQueHabla.fotoPerfilUrl && (
+                                <img 
+                                  src={usuarioConElQueHabla.fotoPerfilUrl} 
+                                  alt={`${usuarioConElQueHabla.nombre} ${usuarioConElQueHabla.apellido}`} 
+                                  style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }} 
+                                />
+                              )}
+                              <p>{usuarioConElQueHabla.nombre} {usuarioConElQueHabla.apellido}</p>
+                            </>
+                          )}
+                          {ultimoMensaje && (
+                            <div className="ultimo-mensaje">
+                              <p>{ultimoMensaje.texto}</p>
+                            </div>
+                          )}
                         </div>
                       </div>
-                    );
-                  })
-                ) : (
-                  <p>No hay chats disponibles.</p>
-                )}
-              </div>
-            </>
+                    </div>
+                  );
+                })
+              ) : (
+                <p>No tienes chats.</p>
+              )}
+            </div>
           )}
         </div>
+
         <MenuDerechoDiv />
       </div>
     </div>

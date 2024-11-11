@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Importa useNavigate
 import { BASE_URL } from '../../config';
 
 const styles = {
@@ -18,9 +17,8 @@ const IniciarChatButton = ({ aliasOtroUsuario }) => {
   const [idUsuarioLocal, setIdUsuarioLocal] = useState(null);
   const [idOtroUsuario, setIdOtroUsuario] = useState(null);
   const [chatId, setChatId] = useState(null);
+  const [messages, setMessages] = useState([]);
   const [chatAbierto, setChatAbierto] = useState(false);
-
-  const navigate = useNavigate(); // Hook de React Router para redirigir
 
   // Al cargar el componente, busca el alias del usuario local en las cookies y obtiene su ID
   useEffect(() => {
@@ -73,18 +71,48 @@ const IniciarChatButton = ({ aliasOtroUsuario }) => {
       setChatId(chat.id);
       setChatAbierto(true);
 
-      // Redirige al chat creado
-      navigate(`/mensajes/${chat.id}`);
+      // Envía el mensaje de bienvenida
+      enviarMensajeBienvenida(chat.id);
     } catch (error) {
       console.error('Error al iniciar el chat:', error);
     }
   };
 
+  const enviarMensajeBienvenida = async (chatId) => {
+    const mensajeBienvenida = {
+      contenido: `Bienvenidos al chat entre ${idUsuarioLocal} y ${idOtroUsuario}`,
+      idChat: chatId,
+      idEmisor: idUsuarioLocal,
+      fechaEnvio: new Date().toISOString().slice(0, -1),
+    };
+
+    try {
+      const response = await fetch(`${BASE_URL}/enviarMensaje`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(mensajeBienvenida),
+      });
+
+      if (!response.ok) throw new Error('Error al enviar el mensaje de bienvenida');
+
+      setMessages([mensajeBienvenida]);  // Solo establece el mensaje de bienvenida en la lista de mensajes
+    } catch (error) {
+      console.error('Error al enviar mensaje de bienvenida:', error);
+    }
+  };
+
   return (
     <div>
-      <button onClick={iniciarChat} style={styles.editButton}>
-        Iniciar Chat
-      </button>
+      {!chatAbierto ? (
+        <button onClick={iniciarChat} style={styles.editButton}>
+          Iniciar Chat
+        </button>
+      ) : (
+        // Aquí ya no está el ChatComponent
+        <div>
+          <p>Chat iniciado. Mensajes: {messages.length}</p>
+        </div>
+      )}
     </div>
   );
 };
