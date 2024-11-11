@@ -342,6 +342,7 @@ export default function Publicacion({ publicacion, fetchUsuario, usuarios, onPub
       flex: 1,
       overflowY: 'auto',
       padding: '20px',
+      color:'var(--color-texto-normal)',
     },
     modalFooter: {
       padding: paddingValue,
@@ -362,6 +363,7 @@ export default function Publicacion({ publicacion, fetchUsuario, usuarios, onPub
       marginTop: '16px',
       border:'none',
       width: '100%',
+      
     },
     commentInput: {
       width: '100%',
@@ -369,7 +371,7 @@ export default function Publicacion({ publicacion, fetchUsuario, usuarios, onPub
       backgroundColor: 'var(--color-contenedores)',
       border:'none',
       fontFamily:'var(--fuente-Montserrat)',
-      color: '#ffffff',
+      color:'var(--color-texto-normal)',
       resize: 'none',
       minHeight: '20px',
       height: 'auto',

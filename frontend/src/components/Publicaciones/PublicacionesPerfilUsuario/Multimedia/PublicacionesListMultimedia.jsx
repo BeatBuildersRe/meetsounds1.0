@@ -147,10 +147,10 @@ const PublicacionesListMultimedia = () => {
   };
 const styles={
   fotoMultimediaPerfil: {
+    width:'100%',
     display: 'grid',
-    gridTemplateColumns: 'repeat(4, 1fr)', // 3 columnas de ancho flexible
-    gap: '1px', // espacio entre elementos
-  
+    gridTemplateColumns: 'repeat(3, 1fr)', // 3 columnas de ancho flexible
+    gap: '3px', // espacio entre elementos
   },
 }
   return (

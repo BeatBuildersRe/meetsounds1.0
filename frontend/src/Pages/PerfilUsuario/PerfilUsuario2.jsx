@@ -1,7 +1,7 @@
 // Import
 /* React */
 import React, { useState, useEffect } from 'react'
-
+import '@css/CssPefilUsuario.css';
 import { useForm } from 'react-hook-form';
 import { Dialog } from '@headlessui/react'
 import { useParams, useNavigate } from 'react-router-dom'
@@ -22,6 +22,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import Posts from '@c/Publicaciones/PublicacionesPerfilUsuario/Todo/PublicacionesListTodo';
 import Replies from '@c/Publicaciones/PublicacionesPerfilUsuario/Multimedia/PublicacionesListMultimedia';
 import Highlights from '@c/Publicaciones/PublicacionesPerfilUsuario/Posteos/PublicacionesListPosteos';
+import MenuDerecho from '@c/Menu/Menu';
 
 // Iconos
 import { CameraIcon } from 'lucide-react'
@@ -37,7 +38,11 @@ const styles = {
     backgroundColor: 'var(--color-fondo)',
     color: 'white',
     marginLeft:'18vw',
-    width:'100%',
+    width:'100vw',
+    display: 'flex',
+    height: '100vh',
+    
+    
   },
     header: {
     padding: '1rem',
@@ -270,6 +275,9 @@ const styles = {
     bottom: '10px',
     right: '10px',
   },
+  content:{
+    width:'100%',
+  }
   
 }
 // Funciones
@@ -489,9 +497,11 @@ export default function ProfilePage() {
   };
 // Estructura
   return (
-    <div style={styles.containerPerfil}>
-      {/* Header */}
-      <header style={styles.header} >
+    <div className="Contenedor-perfil-usuario">
+     
+      <div className="izquierda-perfil-usuario">
+        {/* Header */}
+        <header style={styles.header} >
         
         <button style={styles.backButton} onClick={handleVolver}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -504,8 +514,8 @@ export default function ProfilePage() {
         
         <p style={styles.profileUsername}>@{userData.alias} </p>
         
-      </header>
-      <div style={{ flex: 1 }}>
+        </header>
+        <div style={{ flex: 1 }}>
         
         <div style={styles.profileInfo}>
         <img
@@ -555,182 +565,189 @@ export default function ProfilePage() {
             {tab}
           </button>
         ))}
-      </nav>
-      <div style={styles.content}>
-        {renderContent()}
-      </div>
+        </nav>
+        <div style={styles.content}>
+          {renderContent()}
+        </div>
 
           
-
-        </div>
-      </div>
-
       
-
-      {/* Edit Profile Modal */}
-      <Dialog open={isModalOpen} onClose={() => setIsModalOpen(false)}>
-  <div style={styles.modal}>
-    <Dialog.Panel className="modal-content">
-      <Dialog.Title as="h3" style={styles.modalTitle}>
-        Editar Perfil
-      </Dialog.Title>
-      <form onSubmit={handleSubmit(onSubmit)} style={styles.form}>
-        <div 
-          style={{
-            ...styles.coverImageContainer,
-            backgroundImage: `url(${tempImages.portada || imagenes.portada || imgFondoDefault})`,
-          }}
-        >
-          {!estadoEdicion.portada && (
-            <label htmlFor="cover-upload" style={{...styles.cameraIcon, ...styles.coverCameraIcon}} onClick={() => toggleEdicion('portada')}>
-              <CameraIcon color="white" size={24} />
-            </label>
-          )}
-
-          <div style={styles.profileImageContainer}>
-            <img 
-              src={tempImages.perfil || imagenes.perfil  || imgPerfilDefault} 
-              alt="Profile" 
-              style={styles.profileImageEdit} 
-            />
-            {!estadoEdicion.perfil && (
-              <label htmlFor="profile-upload" style={{...styles.cameraIcon, ...styles.profileCameraIcon}} onClick={() => toggleEdicion('perfil')}>
-                <CameraIcon color="white" size={24} />
-              </label>
-            )}
-          </div>
         </div>
+        
+      </div>
 
-        {/* Editar portada */}
-        {estadoEdicion.portada && (
-          <UploadPortada
-            btn_cancelar={() => toggleEdicion('portada')}
-            onImageSave={(imagen) => guardarImagenTemp('portada', imagen)}
-            Imagen={tempImages.perfil || imagenes.perfil}
-            Portada={tempImages.portada || imagenes.portada}
-            alias={user}
-          />
-        )}
+     
 
-        {estadoEdicion.perfil && (
-          <UploadAvatar
-            btn_cancelar={() => toggleEdicion('perfil')}
-            onImageSave={(imagen) => guardarImagenTemp('perfil', imagen)}
-            Imagen={tempImages.perfil || imagenes.perfil}
-            Portada={tempImages.portada || imagenes.portada}
-            alias={user}
-          />
-        )}
+                {/* Edit Profile Modal */}
+                <Dialog open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+            <div style={styles.modal}>
+              <Dialog.Panel className="modal-content">
+                <Dialog.Title as="h3" style={styles.modalTitle}>
+                  Editar Perfil
+                </Dialog.Title>
+                <form onSubmit={handleSubmit(onSubmit)} style={styles.form}>
+                  <div 
+                    style={{
+                      ...styles.coverImageContainer,
+                      backgroundImage: `url(${tempImages.portada || imagenes.portada || imgFondoDefault})`,
+                    }}
+                  >
+                    {!estadoEdicion.portada && (
+                      <label htmlFor="cover-upload" style={{...styles.cameraIcon, ...styles.coverCameraIcon}} onClick={() => toggleEdicion('portada')}>
+                        <CameraIcon color="white" size={24} />
+                      </label>
+                    )}
 
-        <div style={styles.acomodar}>
-          <div style={styles.formGroup}>
-            <label htmlFor="name" style={styles.label}>Nombre</label>
-            <input 
-              {...register("Nombre", { required: true })} 
-              placeholder="Nombre" 
-              style={styles.input} 
-              onChange={handleInputChange}
-            />
-            {errors.Nombre && <span>El nombre es obligatorio</span>}
-          </div>
+                    <div style={styles.profileImageContainer}>
+                      <img 
+                        src={tempImages.perfil || imagenes.perfil  || imgPerfilDefault} 
+                        alt="Profile" 
+                        style={styles.profileImageEdit} 
+                      />
+                      {!estadoEdicion.perfil && (
+                        <label htmlFor="profile-upload" style={{...styles.cameraIcon, ...styles.profileCameraIcon}} onClick={() => toggleEdicion('perfil')}>
+                          <CameraIcon color="white" size={24} />
+                        </label>
+                      )}
+                    </div>
+                  </div>
 
-          <div style={styles.formGroup}>
-            <label htmlFor="surname" style={styles.label}>Apellido</label>
-            <input 
-              {...register("Apellido", { required: true })} 
-              placeholder="Apellido" 
-              style={styles.input}
-              onChange={handleInputChange} 
-            />
-            {errors.Apellido && <span>El apellido es obligatorio</span>}
-          </div>
-        </div>
+                  {/* Editar portada */}
+                  {estadoEdicion.portada && (
+                    <UploadPortada
+                      btn_cancelar={() => toggleEdicion('portada')}
+                      onImageSave={(imagen) => guardarImagenTemp('portada', imagen)}
+                      Imagen={tempImages.perfil || imagenes.perfil}
+                      Portada={tempImages.portada || imagenes.portada}
+                      alias={user}
+                    />
+                  )}
 
-        <div style={styles.acomodar}>
-          <div style={styles.formGroup}>
-            <label htmlFor="username" style={styles.label}>Usuario</label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              defaultValue={userData.alias}
-              style={{...styles.input, ...styles.inputDisabled}}
-              disabled
-            />
-          </div>
-        </div>
+                  {estadoEdicion.perfil && (
+                    <UploadAvatar
+                      btn_cancelar={() => toggleEdicion('perfil')}
+                      onImageSave={(imagen) => guardarImagenTemp('perfil', imagen)}
+                      Imagen={tempImages.perfil || imagenes.perfil}
+                      Portada={tempImages.portada || imagenes.portada}
+                      alias={user}
+                    />
+                  )}
 
-        <div style={styles.formGroup}>
-          <label htmlFor="description" style={styles.label}>Descripción</label>
-          <textarea 
-            id="description" 
-            name="description" 
-            rows="4" 
-            {...register("Descripcion")} 
-            style={styles.input} 
-            placeholder="Introduce aquí tu descripción..."
-            onChange={handleInputChange}
-          />
-        </div>
+                  <div style={styles.acomodar}>
+                    <div style={styles.formGroup}>
+                      <label htmlFor="name" style={styles.label}>Nombre</label>
+                      <input 
+                        {...register("Nombre", { required: true })} 
+                        placeholder="Nombre" 
+                        style={styles.input} 
+                        onChange={handleInputChange}
+                      />
+                      {errors.Nombre && <span>El nombre es obligatorio</span>}
+                    </div>
 
-        <div style={styles.acomodar}>
-        <div style={styles.formGroup}>
-            <label htmlFor="birthdate" style={styles.label}>Fecha de Nacimiento</label>
-            <input 
-              type="date" 
-              {...register("Fecha", { required: true })}
-              style={styles.input}
-              onChange={handleInputChange}
-            />
-            {errors.Fecha && <span>La fecha de nacimiento es obligatoria</span>}
-          </div>
-          <div style={styles.formGroup}>
-            <label htmlFor="edad" style={styles.label}>Edad</label>
-            <input 
-              type="number"
-              {...register("Edad", { required: true, maxLength: 2 })}
-              placeholder="Edad"
-              style={{...styles.input, ...styles.inputDisabled}}
-              disabled
-            />
-            {errors.Edad && <span>La edad es obligatoria y debe tener un máximo de 2 dígitos</span>}
-          </div>
+                    <div style={styles.formGroup}>
+                      <label htmlFor="surname" style={styles.label}>Apellido</label>
+                      <input 
+                        {...register("Apellido", { required: true })} 
+                        placeholder="Apellido" 
+                        style={styles.input}
+                        onChange={handleInputChange} 
+                      />
+                      {errors.Apellido && <span>El apellido es obligatorio</span>}
+                    </div>
+                  </div>
 
-          
-        </div>
+                  <div style={styles.acomodar}>
+                    <div style={styles.formGroup}>
+                      <label htmlFor="username" style={styles.label}>Usuario</label>
+                      <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        defaultValue={userData.alias}
+                        style={{...styles.input, ...styles.inputDisabled}}
+                        disabled
+                      />
+                    </div>
+                  </div>
 
-        <div style={styles.formGroup}>
-          <label htmlFor="gender" style={styles.label}>Género</label>
-          <select id="gender" {...register("Genero")} style={styles.input}>
-            <option value="">Seleccione...</option>
-            <option value="Hombre">Hombre</option>
-            <option value="Mujer">Mujer</option>
-            <option value="Otro">Otro</option>
-          </select>
-        </div>
+                  <div style={styles.formGroup}>
+                    <label htmlFor="description" style={styles.label}>Descripción</label>
+                    <textarea 
+                      id="description" 
+                      name="description" 
+                      rows="4" 
+                      {...register("Descripcion")} 
+                      style={styles.input} 
+                      placeholder="Introduce aquí tu descripción..."
+                      onChange={handleInputChange}
+                    />
+                  </div>
 
-        <div style={styles.buttonGroup}>
-          <button 
-            type="button" 
-            onClick={() => {
-              setIsModalOpen(false);
-              setTempImages({ perfil: '', portada: '' });
-            }} 
-            style={{...styles.button, ...styles.cancelButton}}
-          >
-            Cancelar
-          </button>
-          <button type="submit" style={isChanged ? {...styles.button, ...styles.saveButton}: {...styles.button, ...styles.buttonDisabled}}  disabled={!isChanged}// Deshabilita el botón si no ha habido cambios
-          >
-            Guardar
-          </button>
-        </div>
-      </form>
-    </Dialog.Panel>
-  </div>
-</Dialog>
-<ToastContainer />
+                  <div style={styles.acomodar}>
+                  <div style={styles.formGroup}>
+                      <label htmlFor="birthdate" style={styles.label}>Fecha de Nacimiento</label>
+                      <input 
+                        type="date" 
+                        {...register("Fecha", { required: true })}
+                        style={styles.input}
+                        onChange={handleInputChange}
+                      />
+                      {errors.Fecha && <span>La fecha de nacimiento es obligatoria</span>}
+                    </div>
+                    <div style={styles.formGroup}>
+                      <label htmlFor="edad" style={styles.label}>Edad</label>
+                      <input 
+                        type="number"
+                        {...register("Edad", { required: true, maxLength: 2 })}
+                        placeholder="Edad"
+                        style={{...styles.input, ...styles.inputDisabled}}
+                        disabled
+                      />
+                      {errors.Edad && <span>La edad es obligatoria y debe tener un máximo de 2 dígitos</span>}
+                    </div>
 
+                    
+                  </div>
+
+                  <div style={styles.formGroup}>
+                    <label htmlFor="gender" style={styles.label}>Género</label>
+                    <select id="gender" {...register("Genero")} style={styles.input}>
+                      <option value="">Seleccione...</option>
+                      <option value="Hombre">Hombre</option>
+                      <option value="Mujer">Mujer</option>
+                      <option value="Otro">Otro</option>
+                    </select>
+                  </div>
+
+                  <div style={styles.buttonGroup}>
+                    <button 
+                      type="button" 
+                      onClick={() => {
+                        setIsModalOpen(false);
+                        setTempImages({ perfil: '', portada: '' });
+                      }} 
+                      style={{...styles.button, ...styles.cancelButton}}
+                    >
+                      Cancelar
+                    </button>
+                    <button type="submit" style={isChanged ? {...styles.button, ...styles.saveButton}: {...styles.button, ...styles.buttonDisabled}}  disabled={!isChanged}// Deshabilita el botón si no ha habido cambios
+                    >
+                      Guardar
+                    </button>
+                  </div>
+                </form>
+              </Dialog.Panel>
+            </div>
+          </Dialog>
+          <ToastContainer />
+    
+      </div>
+      <div className="derecha-perfil-usuario">
+        <MenuDerecho />
+      </div>
+      
+      
     </div>
   )
 }

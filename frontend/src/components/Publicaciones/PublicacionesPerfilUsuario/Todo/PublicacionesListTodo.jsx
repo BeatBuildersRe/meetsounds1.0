@@ -144,9 +144,16 @@ const PublicacionesListTodo = () => {
       setNuevoComentario((prev) => ({ ...prev, [publicacionId]: '' }));
     }
   };
-
+  const styles={
+    fotoMultimediaPerfil: {
+      width:'100%',
+      display: 'grid',
+      gridTemplateColumns: 'repeat(3, 1fr)', // 3 columnas de ancho flexible
+      gap: '3px', // espacio entre elementos
+    },
+  }
   return (
-    <div>
+    <div style={styles.fotoMultimediaPerfil}>
       {publicaciones.map((publicacion, index) => {
         const usuario = usuarios[publicacion.idUsuario];
         const comentariosAMostrar = publicacion.comentarios.slice(0, comentariosVisibles[index]?.cantidad || 0);

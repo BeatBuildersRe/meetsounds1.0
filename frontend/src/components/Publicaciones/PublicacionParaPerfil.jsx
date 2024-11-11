@@ -190,8 +190,11 @@ export default function PublicacionParaPerfil({ publicacion, fetchUsuario, usuar
       alignItems: 'center',
       backgroundColor: 'var(--color-contenedores)',
       overflow: 'hidden',
-      
-      
+    },
+    image: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',  // La imagen cubrirá todo el contenedor manteniendo su proporción
     },
     header: {
       display: 'flex',
@@ -343,6 +346,7 @@ export default function PublicacionParaPerfil({ publicacion, fetchUsuario, usuar
       flex: 1,
       overflowY: 'auto',
       padding: '20px',
+      color:'var(--color-texto-normal)',
     },
     modalFooter: {
       padding: '20px',
@@ -370,7 +374,7 @@ export default function PublicacionParaPerfil({ publicacion, fetchUsuario, usuar
       backgroundColor: 'var(--color-contenedores)',
       border:'none',
       fontFamily:'var(--fuente-Montserrat)',
-      color: '#ffffff',
+      color:'var(--color-texto-normal)',
       resize: 'none',
       minHeight: '20px',
       height: 'auto',
@@ -438,7 +442,6 @@ export default function PublicacionParaPerfil({ publicacion, fetchUsuario, usuar
       objectFit: 'contain',
     },
   };
-
   const renderComentarios = () => (
     <div style={styles.commentsList}>
       {publicacion.comentarios.slice(0, cantidadComentarios).map((comentario, idx) => (
@@ -464,7 +467,6 @@ export default function PublicacionParaPerfil({ publicacion, fetchUsuario, usuar
       </div>
     </div>
   );
-
   const renderModalContent = () => (
     <div style={publicacion.mediaUrl ? styles.modalContent : styles.modalContentNoImage} onClick={(e) => e.stopPropagation()}>
       <button style={styles.backButton} onClick={cerrarModal}>
@@ -637,19 +639,18 @@ export default function PublicacionParaPerfil({ publicacion, fetchUsuario, usuar
       handleClose(); // Cerramos el menú si se abrió
     }
   };
-
   return (
     <div style={styles.containerPublicaciones}>
       {publicacion.mediaUrl && (
         <div style={styles.imageContainer} onClick={abrirModal}>
           <img 
             src={publicacion.mediaUrl} 
-            alt="Publicación" 
-            style={getImageStyle()}
+            alt="Publicación"
+            style={styles.image}
           />
         </div>
       )}
-      
+
       {modalAbierto && (
         <div style={styles.modal} onClick={cerrarModal}>
           {renderModalContent()}
