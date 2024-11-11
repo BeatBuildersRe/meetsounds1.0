@@ -152,3 +152,8 @@
     }
 
   }
+
+.Agregar_miembros{
+    display: flex;
+    background-color: var(--color-fondo-botones);
+}

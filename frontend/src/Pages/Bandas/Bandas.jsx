@@ -7,22 +7,19 @@ import ServiceBandas from "../../services/ServiceBandas";
 import { useEffect, useState } from "react";
 import Default_img from '@public/perfil_imagen.png';
 import React from "react"; // Importa React para usar React.memo
+import useObtenerUsuarioLogeado from "@services/GetUsuarioLogeado";
 
 const Bandas = () => {
     const { cargando, error, CrearBanda, MisBandas, banda, Misbanda } = ServiceBandas();
+    const { usuario, cargando: car, error: errUsuario } = useObtenerUsuarioLogeado();
     const [vacio,setVacio] = useState('')
-    
+
     useEffect(() => {
-        const idUsuario = "6724d794e7a89c7dc3dc9ae1";
+        const idUsuario = usuario?.id;
         MisBandas({ idUsuario });   
-    }, []);
+    }, [usuario]);
     
-    const handleCrearBanda = async () => {
-        const idUsuario = '6724d794e7a89c7dc3dc9ae1';
-        const nombre = "One bandaaaas";
-        const descripcion = "Creada desde el for 3";
-        await CrearBanda({ idUsuario, nombre, descripcion });
-    };
+    
 
     const navigate = useNavigate();
 
@@ -33,11 +30,7 @@ const Bandas = () => {
     const irAmiBanda = (Nombre_Banda, Id_Banda) => {
         navigate(`/Bandas/${Nombre_Banda}`, { state: { Id_Banda } });
     };
-    const Configurar = (Nombre_Banda) => {
-        const banda = Mibanda;
-        localStorage.setItem("banda", JSON.stringify(banda));
-        navigate(`/Bandas/${Nombre_Banda}/Configurar`, { state: { banda } });
-      };
+   
     
     return (
         <>
@@ -45,6 +38,7 @@ const Bandas = () => {
                 <div className="contenedor2">
                     <div className="izquierda-bandas">
                         {!Misbanda && (<h1>Crea una Banda</h1>)}
+                        {cargando && (<h4>Cargando</h4>)}
                         {Misbanda?.map((banda, index) => (
                             <div 
                                 className="Card_Banda" 
