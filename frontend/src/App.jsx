@@ -59,23 +59,24 @@ function App() {
           <Route path="configuracion/perfil/PerfilYPortada" element={<Perfil_Y_Portada />} />
           <Route path="configuracion/Seguridad" element={<Seguridad />} />
           <Route path="/publicacion/:id" element={<Publicaciones2 />} />
-          
+
           {/* Usa AliasGuard aquí */}
           <Route path="perfil-encontrado/:alias" element={<><AliasGuard /><PerfilEncontrado /></>} />
           <Route path="perfil-encontrado2/:alias" element={<><AliasGuard /><PerfilEncontrado2 /></>} />
           <Route path="cuenta/:alias" element={<><AliasGuard /><Cuenta /></>} />
           <Route path="cuenta2/:alias" element={<><AliasGuard /><Cuenta2 /></>} />
+          <Route path="/login" element={isAuthenticated ? <Navigate to="/" /> : <Login />} />
+          <Route path="/registro" element={isAuthenticated ? <Navigate to="/" /> : <Registro />} />
+          <Route path="/onboarding" element={<OnboardingForm />} />
         </Route>
 
-        <Route path="/login" element={isAuthenticated ? <Navigate to="/" /> : <Login />} />
-        <Route path="/registro" element={isAuthenticated ? <Navigate to="/" /> : <Registro />} />
-        <Route path="*" element={<Error_404 />} />
+
 
 
         {/* Ruta para el onboarding */}
-        <Route path="/onboarding" element={<OnboardingForm />} />
 
-        {/* {/Ruta para actualizar nombre y apellido (SOLO PRUEBA)/} */} 
+        <Route path="*" element={<Error_404 />} />
+        {/* {/Ruta para actualizar nombre y apellido (SOLO PRUEBA)/} */}
 
 
         <Route path="configuracion/editarperfil/actualizar-nombre-apellido" element={<ActualizarNombreApellido />} />
