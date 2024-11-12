@@ -1,4 +1,3 @@
-// App.js
 import React, { useContext } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useThemeContext } from './context/ThemeContext';
@@ -32,12 +31,13 @@ import ChatsUsuario from './Pages/Mensajes/ChatsUsuarios';
 import Publicaciones2 from './Pages/Home/InicioComentarios';
 import PublicacionesList from './components/Publicaciones/PublicacionesList';
 import '@css/App.css';
-
 import '@css/Colores.css';
+
 function App() {
   const { contextTheme, setContextTheme } = useThemeContext();
   const { isAuthenticated } = useContext(AuthContext);
 
+  // Si aún se está verificando la autenticación, muestra un loading
   if (isAuthenticated === null) {
     return <div>Cargando...</div>;
   }
@@ -45,6 +45,7 @@ function App() {
   return (
     <div id={contextTheme}>
       <Routes>
+        {/* Si el usuario está autenticado, muestra el Layout, sino redirige a /login */}
         <Route path="/" element={isAuthenticated ? <Layout /> : <Navigate to="/login" />}>
           <Route path="busqueda" element={<Busqueda />} />
           <Route path="/" element={<Home />} />
@@ -60,25 +61,22 @@ function App() {
           <Route path="configuracion/Seguridad" element={<Seguridad />} />
           <Route path="/publicacion/:id" element={<Publicaciones2 />} />
 
-          {/* Usa AliasGuard aquí */}
+          {/* Protege las rutas con AliasGuard */}
           <Route path="perfil-encontrado/:alias" element={<><AliasGuard /><PerfilEncontrado /></>} />
           <Route path="perfil-encontrado2/:alias" element={<><AliasGuard /><PerfilEncontrado2 /></>} />
           <Route path="cuenta/:alias" element={<><AliasGuard /><Cuenta /></>} />
           <Route path="cuenta2/:alias" element={<><AliasGuard /><Cuenta2 /></>} />
-          <Route path="/login" element={isAuthenticated ? <Navigate to="/" /> : <Login />} />
-          <Route path="/registro" element={isAuthenticated ? <Navigate to="/" /> : <Registro />} />
-          <Route path="/onboarding" element={<OnboardingForm />} />
         </Route>
 
+        {/* Rutas de autenticación (Login y Registro) */}
+        <Route path="/login" element={isAuthenticated ? <Navigate to="/" /> : <Login />} />
+        <Route path="/registro" element={isAuthenticated ? <Navigate to="/" /> : <Registro />} />
+        <Route path="/onboarding" element={<OnboardingForm />} />
 
-
-
-        {/* Ruta para el onboarding */}
-
+        {/* Ruta para 404 */}
         <Route path="*" element={<Error_404 />} />
-        {/* {/Ruta para actualizar nombre y apellido (SOLO PRUEBA)/} */}
 
-
+        {/* Rutas adicionales */}
         <Route path="configuracion/editarperfil/actualizar-nombre-apellido" element={<ActualizarNombreApellido />} />
         <Route path="cuenta/fotosperfil" element={<FotosPerfil />} />
         <Route path="/mensajes/:chatId" element={<ChatComponent />} />
