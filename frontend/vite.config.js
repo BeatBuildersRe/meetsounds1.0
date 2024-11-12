@@ -25,6 +25,8 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 5173,
     hot: true,
-    historyApiFallback: true,
+    historyApiFallback: true, // Esto es importante para manejar las rutas del lado del cliente
   },
+  base: '/',  // Cambia esto si tu app se encuentra en un subdirectorio
 });
+
