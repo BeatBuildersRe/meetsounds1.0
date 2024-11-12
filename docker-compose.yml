@@ -1,17 +1,16 @@
 version: '3.8'
 
 services:
-  # Servicio para la aplicación Spring Boot
   meetsounds:
-    build: ./backend
+    build:
+      context: ./backend  # Correcta ubicación del contexto de construcción
+      dockerfile: Dockerfile
     container_name: meetsounds-app
     ports:
-      - "8080:8080" # Mapea el puerto del contenedor 8080 al puerto local 8080
+      - "8080:8080"
     environment:
-      # Variables de entorno que se pasan a la aplicación, en tu caso para la conexión a S3 y MongoDB
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
       AWS_S3_BUCKET: ${AWS_S3_BUCKET}
       AWS_S3_REGION: ${AWS_S3_REGION}
       SPRING_DATA_MONGODB_URI: ${SPRING_DATA_MONGODB_URI}
-

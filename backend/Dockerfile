@@ -1,23 +1,35 @@
-# Usa una imagen base que tenga OpenJDK 17 y Maven
-FROM maven:3.8.6-openjdk-17-slim AS builder
+# Usa una imagen base de OpenJDK 17 con Alpine Linux
+FROM openjdk:17-alpine AS build
 
-# Define el directorio de trabajo
+# Establece el directorio de trabajo en /app
 WORKDIR /app
 
-# Copia el contenido del proyecto al contenedor
-COPY . /app/
+# Actualiza los certificados del sistema
+RUN apk update && apk add --no-cache ca-certificates
 
-# Construye el JAR usando Maven
+# Instala Maven usando apk (gestor de paquetes para Alpine)
+RUN apk add --no-cache maven
+
+# Copia el archivo pom.xml
+COPY pom.xml .
+
+# Instala las dependencias necesarias sin construir el proyecto
+RUN mvn dependency:go-offline
+
+# Copia todo el contenido del directorio actual (backend) al contenedor
+COPY . /app
+
+# Ejecuta el comando de Maven para compilar y empaquetar la aplicación
 RUN mvn clean package -DskipTests
 
-# Usa la imagen base de OpenJDK para la ejecución
+# Usa la imagen de OpenJDK como entorno de ejecución
 FROM openjdk:17
 
-# Copia el archivo JAR desde la imagen builder
-COPY --from=builder /app/target/meetsounds-0.0.1-SNAPSHOT.jar /app_meetsounds.jar
-
-# Expón el puerto 8080
+# Establece el puerto en el que tu aplicación se ejecutará
 EXPOSE 8080
 
-# Define el comando de inicio para ejecutar el JAR
-ENTRYPOINT ["java", "-jar", "/app_meetsounds.jar"]
+# Copia el archivo JAR desde la etapa de construcción
+COPY --from=build /app/target/meetsounds-0.0.1-SNAPSHOT.jar app_meetsounds.jar
+
+# Comando para ejecutar la aplicación
+ENTRYPOINT ["java", "-jar", "app_meetsounds.jar"]
