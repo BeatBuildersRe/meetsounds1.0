@@ -147,6 +147,7 @@ export default function Publicacion({ publicacion, fetchUsuario, usuarios, onPub
         fechaEnvio: new Date().toISOString(),
       };
       publicacion.comentarios.push(comentario);
+      publicacion.count_coment = publicacion.count_coment + 1;
       setNuevoComentario('');
     }
   };
