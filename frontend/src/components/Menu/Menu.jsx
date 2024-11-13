@@ -86,16 +86,16 @@ const MenuDerecho = () => {
                 )}
             </ul>
 
-            <div className='tendencia'>
+            {/* <div className='tendencia'>
                 <h4>Los Más Escuchados</h4>
                 <Tendencias />
                 <h4 id='btn-mas'>Más Tendencias <IoMdMusicalNote /></h4>
-            </div>
+            </div> */}
 
             <Carrusel />
-            <div className='seguir'>
+            {/* <div className='seguir'>
                 <h4>Quizás te interese...</h4>
-            </div>
+            </div> */}
         </div>
     );
 }

@@ -70,7 +70,7 @@ const Layout = () => {
             <ul>
               <li><NavLink to="/" className={({ isActive }) => isActive ? 'active' : ''}><ButtonMenu icon={TiHome} text="Inicio" /></NavLink></li>
               <li id='Buscar'><NavLink to="/busqueda" className={({ isActive }) => isActive ? 'active' : ''}><ButtonMenu icon={CiSearch} text="Buscar" /></NavLink></li>
-              <li><NavLink to="/bandas" className={({ isActive }) => isActive ? 'active' : ''}><ButtonMenu icon={GoPeople} text="Bandas" /></NavLink></li>
+              {/* <li><NavLink to="/bandas" className={({ isActive }) => isActive ? 'active' : ''}><ButtonMenu icon={GoPeople} text="Bandas" /></NavLink></li> */}
               <li><NavLink to="/mensajes" className={({ isActive }) => isActive ? 'active' : ''}><ButtonMenu icon={IoChatbubbleEllipsesOutline} text="Mensajes" /></NavLink></li>
               {/* <li><NavLink to="/notificaciones"><ButtonMenu icon={FaFire} text="Notificaciones" /></NavLink></li> */}
               {/*  <li><NavLink to="/notificaciones className={({ isActive }) => isActive ? 'active' : ''}"><ButtonMenu icon={FaFire} text="Notificaciones" /></NavLink></li> */}
@@ -87,7 +87,13 @@ const Layout = () => {
 
           </nav>
           <div className='Perfil'>
-            <button style={{ all: 'none' }} onClick={handleClick}>
+            <button style={{
+    background: 'transparent', // Fondo transparente
+    border: 'none',            // Sin borde
+    padding: 0,                // Sin padding adicional
+    cursor: 'pointer',         // Cambia el cursor a pointer para indicar clic
+    outline: 'none',           // Elimina el contorno en algunos navegadores
+  }} onClick={handleClick}>
               <Avatar />
             </button>
           </div>

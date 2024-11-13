@@ -20,7 +20,7 @@
 }
 
 .nuevo-registro-container h1 {
-  color: #ff0000;
+  color: var(--color-principal);
   margin-bottom: 20px;
 }
 
@@ -60,7 +60,7 @@
   transform: translateY(-50%);
   background: none;
   border: none;
-  color: #ff4500;
+  color:var(--color-principal) ;
   font-size: 0.9rem;
   cursor: pointer;
 }
@@ -68,7 +68,7 @@
 /* Estilos para la fuerza de la contraseña */
 .password-strength {
   font-size: 0.85rem;
-  color: #ff4500;
+  color:var(--color-principal);
   margin-left: 5px;
 }
 
@@ -76,7 +76,7 @@
 .btn-registro {
   width: 100%;
   padding: 10px;
-  background-color: #ff0000;
+  background-color: var(--color-principal);
   color: white;
   border: none;
   border-radius: 5px;
@@ -86,5 +86,39 @@
 }
 
 .palabras{
-  color: black;
+  font-size: 0.8em;
+    padding: 5px 10px;
+    background: #000;
+    border-radius: 25px;
+    margin: 5px 5px;
+    color: #fff;
+    border: 2px;
+}
+
+.nuevo-registro-form{
+ .link_registro{
+  margin-top: 40px;
+ }
+.Debilidad-Contra {
+      text-align: end;
+      margin-right: 10px;
+    }
+  .form-group{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    .contenedor_inputs{
+      width: 100%;
+    }
+    select{
+      border-radius: 25px;
+    }
+    
+  }
+  input{
+    border-radius: 25px;
+    height: 45px;
+    width: 100%;
+  }
 }

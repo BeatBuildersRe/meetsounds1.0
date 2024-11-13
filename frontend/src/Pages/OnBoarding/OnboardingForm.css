@@ -29,11 +29,11 @@
 
 /* Títulos */
 .onboarding-form-ob h1 {
-  color: #c62828;
+  color: var(--color-principal);
 }
 
 .onboarding-form-ob h2 {
-  color: #d32f2f;
+  color: var(--color-principal);
   margin-bottom: 10px;
 }
 
@@ -50,10 +50,10 @@ button.role-button-ob,
 button.instrument-button-ob,
 button.genre-button-ob {
   padding: 10px 15px;
-  border: 1px solid #d32f2f;
-  border-radius: 5px;
+  border: 1px solid var(--color-principal);
+  border-radius: 25px;
   background-color: white;
-  color: #d32f2f;
+  color: var(--color-principal);
   cursor: pointer;
   transition: all 0.3s;
 }
@@ -61,14 +61,14 @@ button.genre-button-ob {
 button.role-button-ob:hover,
 button.instrument-button-ob:hover,
 button.genre-button-ob:hover {
-  background-color: #d32f2f;
+  background-color: var(--color-principal);
   color: white;
 }
 
 button.role-button-ob.selected-ob,
 button.instrument-button-ob.selected-ob,
 button.genre-button-ob.selected-ob {
-  background-color: #d32f2f;
+  background-color: var(--color-principal);
   color: white;
 }
 
@@ -82,7 +82,7 @@ button.genre-button-ob.selected-ob {
 /* Área de texto */
 .description-textarea-ob {
   width: 100%;
-  border: 1px solid #d32f2f;
+  border: 1px solidvar(--color-principal);
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 20px;
@@ -90,7 +90,7 @@ button.genre-button-ob.selected-ob {
 
 /* Botón de envío */
 .submit-button-ob {
-  background-color: #c62828;
+  background-color: var(--color-principal);
   color: white;
   padding: 10px 15px;
   border: none;
@@ -101,10 +101,28 @@ button.genre-button-ob.selected-ob {
 }
 
 .submit-button-ob:hover {
-  background-color: #b71c1c;
+  background-color: var(--color-principal);
 }
 
 .text-display-ob {
   white-space: pre-line; /* Preserva saltos de línea y permite el ajuste automático del texto */
   word-wrap: break-word; /* Asegura que las palabras largas no se salgan del contenedor */
+}
+.onboarding-form-ob{
+  .custom-file-button {
+    background-color: #4CAF50; /* Color de fondo */
+    color: white; /* Color del texto */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .custom-file-button:hover {
+    background-color: #45a049; /* Cambia el color al pasar el cursor */
+  }
+  img{
+    border-radius: 20px;
+  }
 }

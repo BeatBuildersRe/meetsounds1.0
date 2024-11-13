@@ -10,7 +10,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")  // Permite CORS en todas las rutas
-                .allowedOrigins("https://meetsounds.netlify.app/")  // Permitir solo el origen del frontend
+                //.allowedOrigins("http://localhost:5173/")  // Permitir solo el origen del frontend
+                .allowedOrigins("https://meetsounds.netlify.app/") // Permitir solo el origen del frontend
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")  // Métodos permitidos
                 .allowedHeaders("*")  // Permitir todos los encabezados
                 .allowCredentials(true);  // Permitir credenciales (cookies, etc.)

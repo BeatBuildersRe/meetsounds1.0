@@ -14,7 +14,7 @@ const OnboardingForm = () => {
   const [generos, setGeneros] = useState([]);
   const [fotoPerfil, setFotoPerfil] = useState(null);
   const [descripcion, setDescripcion] = useState("");
-
+  const [previewUrl, setPreviewUrl] = useState(null);
   // Colecciones de instrumentos y géneros
   const [instrumentosOpciones, setInstrumentosOpciones] = useState([]);
   const [generosOpciones, setGenerosOpciones] = useState([]);
@@ -181,6 +181,15 @@ const OnboardingForm = () => {
       alert(`Error: ${error.message}`);
     }
   };
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFotoPerfil(file);
+      // Crear una URL de objeto para vista previa
+      const url = URL.createObjectURL(file);
+      setPreviewUrl(url);
+    }
+  };
 
   return (
     <div>
@@ -236,10 +245,18 @@ const OnboardingForm = () => {
   
         <h2>Sube una foto de perfil</h2>
         <input
-          className="file-input-ob"
-          type="file"
-          onChange={(e) => setFotoPerfil(e.target.files[0])}
+        className="file-input-ob"
+        type="file"
+        accept="image/*"
+        onChange={handleFileChange}
+      />
+      {previewUrl && (
+        <img
+          src={previewUrl}
+          alt="Vista previa"
+          style={{ width: '200px', marginTop: '10px' }}
         />
+      )}
   
         <h2>Cuéntanos sobre ti</h2>
         <textarea

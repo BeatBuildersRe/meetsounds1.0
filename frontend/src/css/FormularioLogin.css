@@ -62,20 +62,20 @@
     pointer-events: none;
     font-size: 12px;
     color: #000;
-    text-transform: uppercase;
+    
     transition: 0.5s;
-    letter-spacing: 3px;
+    
     border-radius: 15px;
     
   }
   
   .contenedor_inputs input:focus~span,
   .contenedor_inputs input:not(:placeholder-shown)~span { /* Aplica cuando el campo no está vacío o está enfocado */
-    transform: translateX(100%) translateY(-15px);
+    transform:  translateX(-15px) translateY(-20px);
     font-size: 0.8em;
     padding: 5px 10px;
     background: #000;
-    letter-spacing: 0.2em;
+    
     color: #fff;
     border: 2px;
   }

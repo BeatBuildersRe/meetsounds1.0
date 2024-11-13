@@ -16,10 +16,10 @@ export default function MenuRedireccionable({ handleToggleWelcome, handleShowSec
             <p>Iniciar Sesión</p>
           </button>
           <a href="/registro" className='boton_a_link'>
-            <button  className='boton_registro'>
+            
               <CiCirclePlus size={30} style={{ marginRight: '10px' }} />
               <p>Registrarte</p>
-            </button>
+            
           </a>
         </div>
       </div>

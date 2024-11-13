@@ -674,8 +674,9 @@ export default function ProfilePage() {
                   <div style={styles.formGroup}>
                     <label htmlFor="description" style={styles.label}>Descripción</label>
                     <textarea 
-                      id="description" 
-                      name="description" 
+                      id="descripcion" 
+                      name="descripcion"
+                      defaultValue={userData.descripcion}
                       rows="4" 
                       {...register("Descripcion")} 
                       style={styles.input} 
@@ -712,7 +713,7 @@ export default function ProfilePage() {
 
                   <div style={styles.formGroup}>
                     <label htmlFor="gender" style={styles.label}>Género</label>
-                    <select id="gender" {...register("Genero")} style={styles.input}>
+                    <select id="gender" name='Genero' defaultValue={userData.Genero}{...register("Genero")} style={styles.input}>
                       <option value="">Seleccione...</option>
                       <option value="Hombre">Hombre</option>
                       <option value="Mujer">Mujer</option>

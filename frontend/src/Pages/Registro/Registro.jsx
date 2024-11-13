@@ -5,6 +5,8 @@ import { AuthContext } from '../../js/otro/AuthContext';
 import FondoLoginRegister from '@c/FondoLoginRegister/FondoLoginRegister';
 import '@css/Registro.css';
 import { BASE_URL } from '../../config'
+import { CiLock, CiUser,CiMail } from "react-icons/ci";
+
 function Registro() {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
@@ -130,22 +132,93 @@ function Registro() {
         <h1>Registrate</h1>
         <form onSubmit={handleSubmit} className="nuevo-registro-form">
           <div className="form-group">
+          <div className='contenedor_inputs'>
+                    <input type="text" id="nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} required placeholder="" className='input'/>
+                    <span className='text_inputs'>
+                        <CiUser size={20} style={{ marginRight: '10px' }} />
+                        Nombre
+                    </span>
+                </div>
+          </div>
+          <div className="form-group">
+          <div className='contenedor_inputs'>
+                    <input type="text" id="apellido" value={apellido} onChange={(e) => setApellido(e.target.value)} required placeholder="" className='input'/>
+                    <span className='text_inputs'>
+                        <CiUser size={20} style={{ marginRight: '10px' }} />
+                        Apellido
+                    </span>
+                </div>
+          </div>
+          <div className="form-group">
+          <div className='contenedor_inputs'>
+                    <input type="text" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required placeholder="" className='input' />
+                    <span className='text_inputs'>
+                        <CiMail size={20} style={{ marginRight: '10px' }} />
+                        Correo Electrónico
+                    </span>
+                </div>
+          </div>
+          <div className="form-group">
+          <div className='contenedor_inputs'>
+          <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} required placeholder="" className='input'/>
+                    <span className='text_inputs'>
+                        <CiUser size={20} style={{ marginRight: '10px' }} />
+                        Nombre de Usuario
+                    </span>
+                </div>
+          </div>
+         
+          {/* <div className="form-group">
             <label className='palabras' htmlFor="nombre">Nombre</label>
             <input type="text" id="nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
-          </div>
-          <div className="form-group">
+          </div> */}
+          {/* <div className="form-group">
             <label className='palabras' htmlFor="apellido">Apellido</label>
             <input type="text" id="apellido" value={apellido} onChange={(e) => setApellido(e.target.value)} required />
-          </div>
-          <div className="form-group">
+          </div> */}
+          {/* <div className="form-group">
             <label className='palabras' htmlFor="email">Correo Electrónico</label>
             <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-          </div>
-          <div className="form-group">
+          </div> */}
+          {/* <div className="form-group">
             <label className='palabras' htmlFor="username">Nombre de Usuario</label>
             <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} required />
+          </div> */}
+          <div className="Debilidad-Contra">
+              <span>
+              {passwordStrength && (
+                        <span className={`password-strength ${passwordStrength.toLowerCase()}`}>
+                          {passwordStrength}
+                        </span>
+                              )}
+              </span>
           </div>
           <div className="form-group">
+            <div className='contenedor_inputs'>
+              <input
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={handlePasswordChange}
+                required
+                placeholder=""
+                className='input'
+                variant="outlined"
+              />    
+              <span className='text_inputs'>
+                <CiLock size={20} style={{ marginRight: '10px' }} />
+                Contraseña 
+              </span>  
+              {/* <button
+                type="button"
+                className="toggle-visibility"
+                onClick={() => setShowPassword(!showPassword)}
+                >
+                {showPassword ? "Ocultar" : "Mostrar"}
+              </button> */}
+            </div>    
+          </div>
+          
+          {/* <div className="form-group">
             <label className='palabras' htmlFor="password">
               Contraseña {passwordStrength && <span className={`password-strength ${passwordStrength.toLowerCase()}`}>({passwordStrength})</span>}
             </label>
@@ -164,8 +237,32 @@ function Registro() {
                 {showPassword ? "Ocultar" : "Mostrar"}
               </button>
             </div>
-          </div>
+          </div> */}
           <div className="form-group">
+          <div className='contenedor_inputs'>
+              <input
+              type={showConfirmPassword ? "text" : "password"}
+              id="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+                placeholder=""
+                className='input'
+              />    
+              <span className='text_inputs'>
+                <CiLock size={20} style={{ marginRight: '10px' }} />
+                Repita la Contraseña
+              </span>
+              {/* <button
+                type="button"
+                className="toggle-visibility"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              >
+                {showConfirmPassword ? "Ocultar" : "Mostrar"}
+              </button> */}
+            </div>
+          </div>
+          {/* <div className="form-group">
             <label className='palabras' htmlFor="confirmPassword">Repite la Contraseña</label>
             <div className="input-with-button">
               <input
@@ -183,7 +280,9 @@ function Registro() {
                 {showConfirmPassword ? "Ocultar" : "Mostrar"}
               </button>
             </div>
-          </div>
+          </div> */}
+
+
           <div className="form-group">
             <label className='palabras' htmlFor="fechaNacimiento">Fecha de Nacimiento</label>
             <input type="date" id="fechaNacimiento" value={fechaNacimiento} onChange={(e) => setFechaNacimiento(e.target.value)} required />
@@ -197,7 +296,15 @@ function Registro() {
               <option value="otro">Otro</option>
             </select>
           </div>
-          <button type="submit" className="btn-registro">Registrarse</button>
+          <div className="link_registro">
+            <button  type="submit" className='boton_mandar_al_registro'>
+              Crear cuenta nueva
+              <div className="arrow-wrapper">
+                  <div className="arrow"></div>
+              </div>
+            </button>
+          </div>
+          {/* <button type="submit" className="btn-registro">Registrarse</button> */}
         </form>
       </div>
     </div>
