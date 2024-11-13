@@ -493,7 +493,7 @@ export default function ProfilePage() {
   
 
   const handleVolver = () => {
-    navigate('/busqueda'); // Especifica la ruta a la que quieres volver
+    navigate('/'); // Especifica la ruta a la que quieres volver
   };
 // Estructura
   return (
