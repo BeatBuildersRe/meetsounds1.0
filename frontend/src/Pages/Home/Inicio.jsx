@@ -5,6 +5,7 @@ import Comentarios from "@c/Publicaciones/Comentarios";
 //import Publicaciones from "@c/Publicaciones/Publicaciones";
 import MenuDerechoDiv from "@c/Menu/Derecha";
 import PublicacionesList from "../../components/Publicaciones/PublicacionesList";
+
 const Inicio = () => {
   const [activeDiv, setActiveDiv] = useState("div1");
   const [isVisible, setIsVisible] = useState(true);
@@ -90,17 +91,11 @@ const Inicio = () => {
             </div>
             <div
               className="Div_2"
-              style={{ display: activeDiv === "div2" ? "block" : "none" }}
+              style={{ display: activeDiv === "div2" ? "block" : "none",marginTop:'50px' }}
             >
-              <h1>Explorar contenido</h1>
-              <p>Todo bien por acá(imagenes para que el mauro vea que si se esconde la barra y que el texto no se va para arriba y que es responsive)</p>
-              <img src="https://th.bing.com/th/id/OIP.zdsrcd-logrMBd4Y08LJXQHaH2?rs=1&pid=ImgDetMain" alt="" />
-              <img src="https://th.bing.com/th/id/OIP.zdsrcd-logrMBd4Y08LJXQHaH2?rs=1&pid=ImgDetMain" alt="" />
-              <img src="https://th.bing.com/th/id/OIP.zdsrcd-logrMBd4Y08LJXQHaH2?rs=1&pid=ImgDetMain" alt="" />
-              <img src="https://th.bing.com/th/id/OIP.zdsrcd-logrMBd4Y08LJXQHaH2?rs=1&pid=ImgDetMain" alt="" />
-              <img src="https://th.bing.com/th/id/OIP.zdsrcd-logrMBd4Y08LJXQHaH2?rs=1&pid=ImgDetMain" alt="" />
-              <img src="https://th.bing.com/th/id/OIP.zdsrcd-logrMBd4Y08LJXQHaH2?rs=1&pid=ImgDetMain" alt="" />
-              <img src="https://th.bing.com/th/id/OIP.zdsrcd-logrMBd4Y08LJXQHaH2?rs=1&pid=ImgDetMain" alt="" />
+             
+             <PublicacionesList></PublicacionesList>
+              
             </div>
           </div>
 
